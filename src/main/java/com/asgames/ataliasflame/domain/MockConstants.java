@@ -1,16 +1,20 @@
 package com.asgames.ataliasflame.domain;
 
 import com.asgames.ataliasflame.domain.model.entities.Booster;
+import com.asgames.ataliasflame.domain.model.entities.CasteDetails;
 import com.asgames.ataliasflame.domain.model.entities.Modifier;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
+import static com.asgames.ataliasflame.domain.model.enums.Caste.FIGHTER;
 import static com.asgames.ataliasflame.domain.model.enums.Caste.ROGUE;
 import static com.asgames.ataliasflame.domain.model.enums.God.*;
 import static com.asgames.ataliasflame.domain.model.enums.Race.*;
+import static java.util.Collections.emptyList;
 
 public final class MockConstants {
 
@@ -24,13 +28,8 @@ public final class MockConstants {
     // Level-up bonus
     public static final int LEVEL_ATTRIBUTE_POINTS = 5;
 
-    // Starting caste and attributes
+    // Starting caste
     public static final Caste STARTING_CASTE = ROGUE;
-    public static final int STARTING_STRENGTH = 1;
-    public static final int STARTING_DEXTERITY = 1;
-    public static final int STARTING_CONSTITUTION = 1;
-    public static final int STARTING_AGILITY = 1;
-    public static final int STARTING_INTELLIGENCE = 1;
 
     // Base character values
     public static final int BASE_HEALTH = 100;
@@ -300,6 +299,29 @@ public final class MockConstants {
             Map.entry(98, Optional.of(270000000)),
             Map.entry(99, Optional.of(310000000)),
             Map.entry(100, Optional.empty())
+    );
+
+    public static final Map<Caste, CasteDetails> CASTE_DETAILS = Map.of(
+            ROGUE, CasteDetails.builder()
+                    .caste(ROGUE)
+                    .nextCastes(List.of(FIGHTER))
+                    .minimumAttributes(Map.of(
+                            STRENGTH, 1,
+                            DEXTERITY, 1,
+                            CONSTITUTION, 1,
+                            AGILITY, 1,
+                            INTELLIGENCE, 1
+                    )).build(),
+            FIGHTER, CasteDetails.builder()
+                    .caste(FIGHTER)
+                    .nextCastes(emptyList())
+                    .minimumAttributes(Map.of(
+                            STRENGTH, 5,
+                            DEXTERITY, 5,
+                            CONSTITUTION, 5,
+                            AGILITY, 5,
+                            INTELLIGENCE, 2
+                    )).build()
     );
 
 }

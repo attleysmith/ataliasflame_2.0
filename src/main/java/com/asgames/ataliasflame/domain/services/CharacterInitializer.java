@@ -1,5 +1,6 @@
 package com.asgames.ataliasflame.domain.services;
 
+import com.asgames.ataliasflame.domain.model.entities.CasteDetails;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,11 +35,12 @@ public class CharacterInitializer {
     }
 
     private void setStartingAttributes(Character character) {
-        attributeService.addAttributePoints(character, STRENGTH, STARTING_STRENGTH);
-        attributeService.addAttributePoints(character, DEXTERITY, STARTING_DEXTERITY);
-        attributeService.addAttributePoints(character, CONSTITUTION, STARTING_CONSTITUTION);
-        attributeService.addAttributePoints(character, AGILITY, STARTING_AGILITY);
-        attributeService.addAttributePoints(character, INTELLIGENCE, STARTING_INTELLIGENCE);
+        CasteDetails casteDetails = CASTE_DETAILS.get(character.getCaste());
+        attributeService.addAttributePoints(character, STRENGTH, casteDetails.getMinimumAttributes().get(STRENGTH));
+        attributeService.addAttributePoints(character, DEXTERITY, casteDetails.getMinimumAttributes().get(DEXTERITY));
+        attributeService.addAttributePoints(character, CONSTITUTION, casteDetails.getMinimumAttributes().get(CONSTITUTION));
+        attributeService.addAttributePoints(character, AGILITY, casteDetails.getMinimumAttributes().get(AGILITY));
+        attributeService.addAttributePoints(character, INTELLIGENCE, casteDetails.getMinimumAttributes().get(INTELLIGENCE));
     }
 
     private void setStartingLevel(Character character) {

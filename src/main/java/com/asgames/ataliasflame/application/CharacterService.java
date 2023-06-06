@@ -5,12 +5,10 @@ import com.asgames.ataliasflame.application.model.CharacterInput;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
-import com.asgames.ataliasflame.domain.services.AttributeService;
-import com.asgames.ataliasflame.domain.services.CombatService;
-import com.asgames.ataliasflame.domain.services.ExperienceService;
-import com.asgames.ataliasflame.domain.services.CharacterInitializer;
-import com.asgames.ataliasflame.infrastructure.repositories.MonsterRepository;
+import com.asgames.ataliasflame.domain.model.enums.Caste;
+import com.asgames.ataliasflame.domain.services.*;
 import com.asgames.ataliasflame.infrastructure.repositories.CharacterRepository;
+import com.asgames.ataliasflame.infrastructure.repositories.MonsterRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,13 +33,14 @@ public class CharacterService {
     private ExperienceService experienceService;
     @Autowired
     private AttributeService attributeService;
+    @Autowired
+    private CasteService casteService;
 
     public Character createCharacter(CharacterInput characterInput) {
         Character character = characterMapper.toCharacter(characterInput);
         character = characterInitializer.initialize(character);
 
-        characterRepository.save(character);
-        return character;
+        return characterRepository.save(character);
     }
 
     public Character getCharacter() {
@@ -50,7 +49,14 @@ public class CharacterService {
 
     public Character addAttributePoints(Attribute attribute, int points) {
         Character character = characterRepository.getCharacter();
-        return attributeService.addAttributePoints(character, attribute, points);
+        character = attributeService.addAttributePoints(character, attribute, points);
+        return characterRepository.save(character);
+    }
+
+    public Character upgradeCaste(Caste newCaste) {
+        Character character = characterRepository.getCharacter();
+        character = casteService.upgradeCaste(character, newCaste);
+        return characterRepository.save(character);
     }
 
     public void combat() {

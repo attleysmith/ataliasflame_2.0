@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CharacterRepository {
 
-    void save(Character character);
+    Character save(Character character);
 
     Character getCharacter();
 }

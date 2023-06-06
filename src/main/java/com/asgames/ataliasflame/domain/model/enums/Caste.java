@@ -1,5 +1,6 @@
 package com.asgames.ataliasflame.domain.model.enums;
 
 public enum Caste {
-    ROGUE
+    ROGUE,
+    FIGHTER
 }

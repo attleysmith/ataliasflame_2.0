@@ -17,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.stream.Stream;
 
 import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
+import static com.asgames.ataliasflame.domain.model.enums.Caste.FIGHTER;
 import static com.asgames.ataliasflame.domain.model.enums.Caste.ROGUE;
 import static com.asgames.ataliasflame.domain.model.enums.Gender.FEMALE;
 import static com.asgames.ataliasflame.domain.model.enums.Gender.MALE;
@@ -25,6 +26,7 @@ import static com.asgames.ataliasflame.domain.model.enums.Race.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 @SpringBootTest
@@ -108,6 +110,9 @@ class CharacterServiceTest {
         assertThat(character.getDamage(), is(5));
         assertThat(character.getDamageMultiplier(), is(3));
         assertThat(character.getTotalHealth(), is(110));
+        // and
+        assertThrows(IllegalArgumentException.class,
+                () -> characterService.upgradeCaste(FIGHTER));
 
         // when
         characterService.combat();
@@ -134,6 +139,9 @@ class CharacterServiceTest {
         assertThat(character.getDamage(), is(5));
         assertThat(character.getDamageMultiplier(), is(5));
         assertThat(character.getTotalHealth(), is(120));
+        // and
+        assertThrows(IllegalArgumentException.class,
+                () -> characterService.upgradeCaste(FIGHTER));
 
         // when
         characterService.combat();
@@ -160,6 +168,9 @@ class CharacterServiceTest {
         assertThat(character.getDamage(), is(5));
         assertThat(character.getDamageMultiplier(), is(7));
         assertThat(character.getTotalHealth(), is(130));
+        // and
+        assertThrows(IllegalArgumentException.class,
+                () -> characterService.upgradeCaste(FIGHTER));
 
         // when
         characterService.combat();
@@ -185,6 +196,9 @@ class CharacterServiceTest {
         assertThat(character.getDamage(), is(6));
         assertThat(character.getDamageMultiplier(), is(13));
         assertThat(character.getTotalHealth(), is(150));
+        // and
+        assertThrows(IllegalArgumentException.class,
+                () -> characterService.upgradeCaste(FIGHTER));
 
         // when
         characterService.combat();
@@ -211,6 +225,12 @@ class CharacterServiceTest {
         assertThat(character.getDamage(), is(6));
         assertThat(character.getDamageMultiplier(), is(15));
         assertThat(character.getTotalHealth(), is(150));
+
+        // then
+        character = characterService.upgradeCaste(FIGHTER);
+
+        // expect
+        assertThat(character.getCaste(), is(FIGHTER));
     }
 
     @Test

@@ -2,5 +2,8 @@ package com.asgames.ataliasflame.domain.model.enums;
 
 public enum Caste {
     ROGUE,
-    FIGHTER
+    FIGHTER,
+    PALADIN,
+    GRANDMASTER,
+    TITAN
 }

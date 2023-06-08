@@ -260,22 +260,32 @@ class CharacterServiceTest {
                 arguments(HUMAN, FEMALE, GETON, elderScrollsFaker.firstName()),
                 arguments(HUMAN, MALE, RUNID, elderScrollsFaker.firstName()),
                 arguments(HUMAN, FEMALE, ALATE, elderScrollsFaker.firstName()),
+                arguments(HUMAN, MALE, HORA, elderScrollsFaker.firstName()),
+                arguments(HUMAN, FEMALE, GINDON, elderScrollsFaker.firstName()),
                 arguments(ELF, MALE, SIFER, elderScrollsFaker.firstName()),
                 arguments(ELF, FEMALE, GETON, elderScrollsFaker.firstName()),
                 arguments(ELF, MALE, RUNID, elderScrollsFaker.firstName()),
                 arguments(ELF, FEMALE, ALATE, elderScrollsFaker.firstName()),
+                arguments(ELF, MALE, HORA, elderScrollsFaker.firstName()),
+                arguments(ELF, FEMALE, GINDON, elderScrollsFaker.firstName()),
                 arguments(HALF_ELF, MALE, SIFER, elderScrollsFaker.firstName()),
                 arguments(HALF_ELF, FEMALE, GETON, elderScrollsFaker.firstName()),
                 arguments(HALF_ELF, MALE, RUNID, elderScrollsFaker.firstName()),
                 arguments(HALF_ELF, FEMALE, ALATE, elderScrollsFaker.firstName()),
+                arguments(HALF_ELF, MALE, HORA, elderScrollsFaker.firstName()),
+                arguments(HALF_ELF, FEMALE, GINDON, elderScrollsFaker.firstName()),
                 arguments(NIGHT_ELF, MALE, SIFER, elderScrollsFaker.firstName()),
                 arguments(NIGHT_ELF, FEMALE, GETON, elderScrollsFaker.firstName()),
                 arguments(NIGHT_ELF, MALE, RUNID, elderScrollsFaker.firstName()),
                 arguments(NIGHT_ELF, FEMALE, ALATE, elderScrollsFaker.firstName()),
+                arguments(NIGHT_ELF, MALE, HORA, elderScrollsFaker.firstName()),
+                arguments(NIGHT_ELF, FEMALE, GINDON, elderScrollsFaker.firstName()),
                 arguments(HALFLING, MALE, SIFER, elderScrollsFaker.firstName()),
                 arguments(HALFLING, FEMALE, GETON, elderScrollsFaker.firstName()),
                 arguments(HALFLING, MALE, RUNID, elderScrollsFaker.firstName()),
-                arguments(HALFLING, FEMALE, ALATE, elderScrollsFaker.firstName())
+                arguments(HALFLING, FEMALE, ALATE, elderScrollsFaker.firstName()),
+                arguments(HALFLING, MALE, HORA, elderScrollsFaker.firstName()),
+                arguments(HALFLING, FEMALE, GINDON, elderScrollsFaker.firstName())
         );
     }
 }

@@ -10,8 +10,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
-import static com.asgames.ataliasflame.domain.model.enums.Caste.FIGHTER;
-import static com.asgames.ataliasflame.domain.model.enums.Caste.ROGUE;
+import static com.asgames.ataliasflame.domain.model.enums.Caste.*;
 import static com.asgames.ataliasflame.domain.model.enums.God.*;
 import static com.asgames.ataliasflame.domain.model.enums.Race.*;
 import static java.util.Collections.emptyList;
@@ -87,6 +86,17 @@ public final class MockConstants {
     );
 
     // Divine boosters
+    public static final Booster HORA_BOOSTER = Booster.builder()
+            .code(HORA.name())
+            .effects(Map.of(
+                    STRENGTH, 0,
+                    DEXTERITY, 0,
+                    CONSTITUTION, 0,
+                    AGILITY, 0,
+                    INTELLIGENCE, 0
+            ))
+            .build();
+
     public static final Booster SIFER_BOOSTER = Booster.builder()
             .code(SIFER.name())
             .effects(Map.of(
@@ -125,6 +135,17 @@ public final class MockConstants {
             .effects(Map.of(
                     STRENGTH, 0,
                     DEXTERITY, 3,
+                    CONSTITUTION, 0,
+                    AGILITY, 0,
+                    INTELLIGENCE, 0
+            ))
+            .build();
+
+    public static final Booster GINDON_BOOSTER = Booster.builder()
+            .code(GINDON.name())
+            .effects(Map.of(
+                    STRENGTH, 0,
+                    DEXTERITY, 0,
                     CONSTITUTION, 0,
                     AGILITY, 0,
                     INTELLIGENCE, 0
@@ -175,6 +196,17 @@ public final class MockConstants {
             ))
             .build();
 
+    public static final Booster ARIMASPI_BOOSTER = Booster.builder()
+            .code(ARIMASPI.name())
+            .effects(Map.of(
+                    STRENGTH, 5,
+                    DEXTERITY, 5,
+                    CONSTITUTION, 5,
+                    AGILITY, 5,
+                    INTELLIGENCE, -1
+            ))
+            .build();
+
     public static final Booster HALFLING_BOOSTER = Booster.builder()
             .code(HALFLING.name())
             .effects(Map.of(
@@ -186,16 +218,19 @@ public final class MockConstants {
             ))
             .build();
 
-    public static final Map<String, Booster> BOOSTERS = Map.of(
-            SIFER_BOOSTER.getCode(), SIFER_BOOSTER,
-            GETON_BOOSTER.getCode(), GETON_BOOSTER,
-            RUNID_BOOSTER.getCode(), RUNID_BOOSTER,
-            ALATE_BOOSTER.getCode(), ALATE_BOOSTER,
-            HUMAN_BOOSTER.getCode(), HUMAN_BOOSTER,
-            ELF_BOOSTER.getCode(), ELF_BOOSTER,
-            HALF_ELF_BOOSTER.getCode(), HALF_ELF_BOOSTER,
-            NIGHT_ELF_BOOSTER.getCode(), NIGHT_ELF_BOOSTER,
-            HALFLING_BOOSTER.getCode(), HALFLING_BOOSTER
+    public static final Map<String, Booster> BOOSTERS = Map.ofEntries(
+            Map.entry(HORA_BOOSTER.getCode(), HORA_BOOSTER),
+            Map.entry(SIFER_BOOSTER.getCode(), SIFER_BOOSTER),
+            Map.entry(GETON_BOOSTER.getCode(), GETON_BOOSTER),
+            Map.entry(RUNID_BOOSTER.getCode(), RUNID_BOOSTER),
+            Map.entry(ALATE_BOOSTER.getCode(), ALATE_BOOSTER),
+            Map.entry(GINDON_BOOSTER.getCode(), GINDON_BOOSTER),
+            Map.entry(HUMAN_BOOSTER.getCode(), HUMAN_BOOSTER),
+            Map.entry(ELF_BOOSTER.getCode(), ELF_BOOSTER),
+            Map.entry(HALF_ELF_BOOSTER.getCode(), HALF_ELF_BOOSTER),
+            Map.entry(NIGHT_ELF_BOOSTER.getCode(), NIGHT_ELF_BOOSTER),
+            Map.entry(ARIMASPI_BOOSTER.getCode(), ARIMASPI_BOOSTER),
+            Map.entry(HALFLING_BOOSTER.getCode(), HALFLING_BOOSTER)
     );
 
     public static final Map<Integer, Optional<Integer>> LEVELS = Map.ofEntries(
@@ -314,13 +349,43 @@ public final class MockConstants {
                     )).build(),
             FIGHTER, CasteDetails.builder()
                     .caste(FIGHTER)
-                    .nextCastes(emptyList())
+                    .nextCastes(List.of(PALADIN))
                     .minimumAttributes(Map.of(
                             STRENGTH, 5,
                             DEXTERITY, 5,
                             CONSTITUTION, 5,
                             AGILITY, 5,
                             INTELLIGENCE, 2
+                    )).build(),
+            PALADIN, CasteDetails.builder()
+                    .caste(PALADIN)
+                    .nextCastes(List.of(GRANDMASTER))
+                    .minimumAttributes(Map.of(
+                            STRENGTH, 20,
+                            DEXTERITY, 20,
+                            CONSTITUTION, 20,
+                            AGILITY, 20,
+                            INTELLIGENCE, 7
+                    )).build(),
+            GRANDMASTER, CasteDetails.builder()
+                    .caste(GRANDMASTER)
+                    .nextCastes(List.of(TITAN))
+                    .minimumAttributes(Map.of(
+                            STRENGTH, 50,
+                            DEXTERITY, 50,
+                            CONSTITUTION, 50,
+                            AGILITY, 50,
+                            INTELLIGENCE, 20
+                    )).build(),
+            TITAN, CasteDetails.builder()
+                    .caste(TITAN)
+                    .nextCastes(emptyList())
+                    .minimumAttributes(Map.of(
+                            STRENGTH, 100,
+                            DEXTERITY, 100,
+                            CONSTITUTION, 100,
+                            AGILITY, 100,
+                            INTELLIGENCE, 40
                     )).build()
     );
 

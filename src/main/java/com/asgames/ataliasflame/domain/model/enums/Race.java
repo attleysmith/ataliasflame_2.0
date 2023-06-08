@@ -5,5 +5,6 @@ public enum Race {
     ELF,
     HALF_ELF,
     NIGHT_ELF,
+    ARIMASPI,
     HALFLING
 }

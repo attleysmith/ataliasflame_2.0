@@ -1,7 +1,10 @@
 package com.asgames.ataliasflame.application;
 
 import com.asgames.ataliasflame.application.model.CharacterInput;
+import com.asgames.ataliasflame.domain.model.entities.CasteDetails;
 import com.asgames.ataliasflame.domain.model.entities.Character;
+import com.asgames.ataliasflame.domain.model.enums.Attribute;
+import com.asgames.ataliasflame.domain.model.enums.Caste;
 import com.asgames.ataliasflame.domain.model.enums.God;
 import com.asgames.ataliasflame.domain.services.CharacterCalculationService;
 import com.asgames.ataliasflame.infrastructure.repositories.CharacterRepository;
@@ -11,9 +14,12 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Map;
 import java.util.stream.Stream;
 
+import static com.asgames.ataliasflame.domain.MockConstants.CASTE_DETAILS;
 import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
+import static com.asgames.ataliasflame.domain.model.enums.Caste.*;
 import static com.asgames.ataliasflame.domain.model.enums.Gender.MALE;
 import static com.asgames.ataliasflame.domain.model.enums.God.*;
 import static com.asgames.ataliasflame.domain.model.enums.Race.NIGHT_ELF;
@@ -41,9 +47,10 @@ class NightElfCalculationTest {
                 .defensiveGod(god)
                 .name("Takemoto")
                 .build();
-        characterService.createCharacter(characterInput);
+        Character character = characterService.createCharacter(characterInput);
+        assertThat(character.getCaste(), is(ROGUE));
 
-        Character character = characterRepository.getCharacter();
+        character = characterRepository.getCharacter();
         assertThat(character.getAttack(), is(equalTo(attack)));
         assertThat(character.getDefense(), is(equalTo(defense)));
         assertThat(character.getDamage(), is(equalTo(damage)));
@@ -53,6 +60,7 @@ class NightElfCalculationTest {
 
     private static Stream<Arguments> rogueCalculations() {
         return Stream.of(
+                arguments(HORA, 82, 21, 5, 3, 110),
                 arguments(SIFER, 82, 21, 5, 3, 110),
                 arguments(GETON, 82, 21, 5, 3, 110),
                 arguments(RUNID, 82, 21, 5, 3, 110),
@@ -69,10 +77,10 @@ class NightElfCalculationTest {
                 .defensiveGod(god)
                 .name("Takemoto")
                 .build();
-        characterService.createCharacter(characterInput);
-        setAttributes(5, 5, 5, 5, 2);
+        Character character = characterService.createCharacter(characterInput);
+        upgradeCaste(character.getCaste(), FIGHTER);
 
-        Character character = characterRepository.getCharacter();
+        character = characterRepository.getCharacter();
         assertThat(character.getAttack(), is(equalTo(attack)));
         assertThat(character.getDefense(), is(equalTo(defense)));
         assertThat(character.getDamage(), is(equalTo(damage)));
@@ -82,6 +90,7 @@ class NightElfCalculationTest {
 
     private static Stream<Arguments> fighterCalculations() {
         return Stream.of(
+                arguments(HORA, 94, 23, 6, 16, 150),
                 arguments(SIFER, 94, 23, 6, 16, 150),
                 arguments(GETON, 94, 23, 6, 16, 150),
                 arguments(RUNID, 94, 23, 6, 16, 150),
@@ -98,10 +107,10 @@ class NightElfCalculationTest {
                 .defensiveGod(god)
                 .name("Takemoto")
                 .build();
-        characterService.createCharacter(characterInput);
-        setAttributes(20, 20, 20, 20, 7);
+        Character character = characterService.createCharacter(characterInput);
+        upgradeCaste(character.getCaste(), PALADIN);
 
-        Character character = characterRepository.getCharacter();
+        character = characterRepository.getCharacter();
         assertThat(character.getAttack(), is(equalTo(attack)));
         assertThat(character.getDefense(), is(equalTo(defense)));
         assertThat(character.getDamage(), is(equalTo(damage)));
@@ -111,6 +120,7 @@ class NightElfCalculationTest {
 
     private static Stream<Arguments> paladinCalculations() {
         return Stream.of(
+                arguments(HORA, 131, 32, 8, 62, 300),
                 arguments(SIFER, 131, 32, 8, 62, 300),
                 arguments(GETON, 131, 33, 8, 64, 300),
                 arguments(RUNID, 131, 32, 8, 62, 300),
@@ -127,10 +137,10 @@ class NightElfCalculationTest {
                 .defensiveGod(god)
                 .name("Takemoto")
                 .build();
-        characterService.createCharacter(characterInput);
-        setAttributes(50, 50, 50, 50, 20);
+        Character character = characterService.createCharacter(characterInput);
+        upgradeCaste(character.getCaste(), GRANDMASTER);
 
-        Character character = characterRepository.getCharacter();
+        character = characterRepository.getCharacter();
         assertThat(character.getAttack(), is(equalTo(attack)));
         assertThat(character.getDefense(), is(equalTo(defense)));
         assertThat(character.getDamage(), is(equalTo(damage)));
@@ -140,6 +150,7 @@ class NightElfCalculationTest {
 
     private static Stream<Arguments> grandmasterCalculations() {
         return Stream.of(
+                arguments(HORA, 208, 51, 13, 155, 600),
                 arguments(SIFER, 208, 51, 13, 155, 600),
                 arguments(GETON, 208, 51, 13, 159, 600),
                 arguments(RUNID, 208, 51, 13, 155, 600),
@@ -156,10 +167,10 @@ class NightElfCalculationTest {
                 .defensiveGod(god)
                 .name("Takemoto")
                 .build();
-        characterService.createCharacter(characterInput);
-        setAttributes(100, 100, 100, 100, 40);
+        Character character = characterService.createCharacter(characterInput);
+        upgradeCaste(character.getCaste(), TITAN);
 
-        Character character = characterRepository.getCharacter();
+        character = characterRepository.getCharacter();
         assertThat(character.getAttack(), is(equalTo(attack)));
         assertThat(character.getDefense(), is(equalTo(defense)));
         assertThat(character.getDamage(), is(equalTo(damage)));
@@ -169,6 +180,7 @@ class NightElfCalculationTest {
 
     private static Stream<Arguments> titanCalculations() {
         return Stream.of(
+                arguments(HORA, 336, 82, 21, 310, 1090),
                 arguments(SIFER, 336, 82, 21, 310, 1100),
                 arguments(GETON, 336, 83, 21, 316, 1090),
                 arguments(RUNID, 336, 82, 21, 310, 1090),
@@ -176,13 +188,25 @@ class NightElfCalculationTest {
         );
     }
 
-    private void setAttributes(int strength, int dexterity, int constitution, int agility, int intelligence) {
+    private void upgradeCaste(Caste actualCaste, Caste targetCaste) {
+        if (actualCaste.equals(targetCaste)) {
+            return;
+        }
+        Caste nextCaste = CASTE_DETAILS.get(actualCaste).getNextCastes().get(0);
+        CasteDetails nextCasteDetails = CASTE_DETAILS.get(nextCaste);
+        setAttributes(nextCasteDetails.getMinimumAttributes());
+
+        Character character = characterService.upgradeCaste(nextCaste);
+        upgradeCaste(character.getCaste(), targetCaste);
+    }
+
+    private void setAttributes(Map<Attribute, Integer> targetAttributes) {
         Character character = characterRepository.getCharacter();
-        character.getAttributes().put(STRENGTH, strength);
-        character.getAttributes().put(DEXTERITY, dexterity);
-        character.getAttributes().put(CONSTITUTION, constitution);
-        character.getAttributes().put(AGILITY, agility);
-        character.getAttributes().put(INTELLIGENCE, intelligence);
+        character.getAttributes().put(STRENGTH, targetAttributes.get(STRENGTH));
+        character.getAttributes().put(DEXTERITY, targetAttributes.get(DEXTERITY));
+        character.getAttributes().put(CONSTITUTION, targetAttributes.get(CONSTITUTION));
+        character.getAttributes().put(AGILITY, targetAttributes.get(AGILITY));
+        character.getAttributes().put(INTELLIGENCE, targetAttributes.get(INTELLIGENCE));
 
         characterRepository.save(
                 characterCalculationService.recalculateProperties(character)

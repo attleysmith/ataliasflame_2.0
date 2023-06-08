@@ -22,14 +22,14 @@ import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
 import static com.asgames.ataliasflame.domain.model.enums.Caste.*;
 import static com.asgames.ataliasflame.domain.model.enums.Gender.MALE;
 import static com.asgames.ataliasflame.domain.model.enums.God.*;
-import static com.asgames.ataliasflame.domain.model.enums.Race.ELF;
+import static com.asgames.ataliasflame.domain.model.enums.Race.ARIMASPI;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 @SpringBootTest
-class ElfCalculationTest {
+class ArimaspiCalculationTest {
 
     @Autowired
     private CharacterService characterService;
@@ -42,7 +42,7 @@ class ElfCalculationTest {
     @MethodSource("rogueCalculations")
     void rogueTest(God god, int attack, int defense, int damage, int damageMultiplier, int health) {
         CharacterInput characterInput = CharacterInput.builder()
-                .race(ELF)
+                .race(ARIMASPI)
                 .gender(MALE)
                 .defensiveGod(god)
                 .name("Takemoto")
@@ -72,7 +72,7 @@ class ElfCalculationTest {
     @MethodSource("fighterCalculations")
     void fighterTest(God god, int attack, int defense, int damage, int damageMultiplier, int health) {
         CharacterInput characterInput = CharacterInput.builder()
-                .race(ELF)
+                .race(ARIMASPI)
                 .gender(MALE)
                 .defensiveGod(god)
                 .name("Takemoto")
@@ -90,11 +90,11 @@ class ElfCalculationTest {
 
     private static Stream<Arguments> fighterCalculations() {
         return Stream.of(
-                arguments(HORA, 94, 23, 6, 14, 150),
-                arguments(SIFER, 94, 23, 6, 14, 150),
-                arguments(GETON, 94, 23, 6, 14, 150),
-                arguments(RUNID, 94, 23, 6, 14, 150),
-                arguments(ALATE, 94, 23, 6, 14, 150)
+                arguments(HORA, 92, 23, 6, 15, 150),
+                arguments(SIFER, 92, 23, 6, 15, 150),
+                arguments(GETON, 92, 23, 6, 15, 150),
+                arguments(RUNID, 92, 23, 6, 15, 150),
+                arguments(ALATE, 92, 23, 6, 15, 150)
         );
     }
 
@@ -102,7 +102,7 @@ class ElfCalculationTest {
     @MethodSource("paladinCalculations")
     void paladinTest(God god, int attack, int defense, int damage, int damageMultiplier, int health) {
         CharacterInput characterInput = CharacterInput.builder()
-                .race(ELF)
+                .race(ARIMASPI)
                 .gender(MALE)
                 .defensiveGod(god)
                 .name("Takemoto")
@@ -120,11 +120,11 @@ class ElfCalculationTest {
 
     private static Stream<Arguments> paladinCalculations() {
         return Stream.of(
-                arguments(HORA, 134, 32, 8, 52, 280),
-                arguments(SIFER, 134, 32, 8, 52, 280),
-                arguments(GETON, 134, 32, 8, 54, 280),
-                arguments(RUNID, 134, 32, 8, 52, 280),
-                arguments(ALATE, 136, 32, 8, 53, 280)
+                arguments(HORA, 130, 33, 8, 63, 310),
+                arguments(SIFER, 130, 33, 8, 63, 310),
+                arguments(GETON, 130, 33, 8, 65, 310),
+                arguments(RUNID, 130, 33, 8, 63, 310),
+                arguments(ALATE, 132, 33, 8, 64, 310)
         );
     }
 
@@ -132,7 +132,7 @@ class ElfCalculationTest {
     @MethodSource("grandmasterCalculations")
     void grandmasterTest(God god, int attack, int defense, int damage, int damageMultiplier, int health) {
         CharacterInput characterInput = CharacterInput.builder()
-                .race(ELF)
+                .race(ARIMASPI)
                 .gender(MALE)
                 .defensiveGod(god)
                 .name("Takemoto")
@@ -141,6 +141,7 @@ class ElfCalculationTest {
         upgradeCaste(character.getCaste(), GRANDMASTER);
 
         character = characterRepository.getCharacter();
+        System.out.println(character);
         assertThat(character.getAttack(), is(equalTo(attack)));
         assertThat(character.getDefense(), is(equalTo(defense)));
         assertThat(character.getDamage(), is(equalTo(damage)));
@@ -150,11 +151,11 @@ class ElfCalculationTest {
 
     private static Stream<Arguments> grandmasterCalculations() {
         return Stream.of(
-                arguments(HORA, 216, 49, 12, 130, 550),
-                arguments(SIFER, 216, 49, 12, 130, 560),
-                arguments(GETON, 216, 49, 12, 134, 550),
-                arguments(RUNID, 216, 49, 12, 130, 550),
-                arguments(ALATE, 219, 49, 12, 132, 550)
+                arguments(HORA, 205, 51, 13, 156, 620),
+                arguments(SIFER, 205, 51, 13, 156, 630),
+                arguments(GETON, 205, 52, 13, 160, 620),
+                arguments(RUNID, 205, 51, 13, 156, 620),
+                arguments(ALATE, 208, 52, 13, 158, 620)
         );
     }
 
@@ -162,7 +163,7 @@ class ElfCalculationTest {
     @MethodSource("titanCalculations")
     void titanTest(God god, int attack, int defense, int damage, int damageMultiplier, int health) {
         CharacterInput characterInput = CharacterInput.builder()
-                .race(ELF)
+                .race(ARIMASPI)
                 .gender(MALE)
                 .defensiveGod(god)
                 .name("Takemoto")
@@ -180,11 +181,11 @@ class ElfCalculationTest {
 
     private static Stream<Arguments> titanCalculations() {
         return Stream.of(
-                arguments(HORA, 352, 78, 18, 260, 1000),
-                arguments(SIFER, 352, 78, 18, 260, 1010),
-                arguments(GETON, 352, 79, 18, 266, 1000),
-                arguments(RUNID, 352, 78, 18, 260, 1000),
-                arguments(ALATE, 357, 79, 18, 263, 1000)
+                arguments(HORA, 332, 83, 21, 315, 1150),
+                arguments(SIFER, 332, 83, 21, 315, 1160),
+                arguments(GETON, 332, 84, 21, 321, 1150),
+                arguments(RUNID, 332, 83, 21, 315, 1150),
+                arguments(ALATE, 337, 84, 21, 318, 1150)
         );
     }
 

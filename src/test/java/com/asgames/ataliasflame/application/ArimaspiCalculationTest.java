@@ -151,11 +151,11 @@ class ArimaspiCalculationTest {
 
     private static Stream<Arguments> grandmasterCalculations() {
         return Stream.of(
-                arguments(HORA, 205, 51, 13, 156, 620),
-                arguments(SIFER, 205, 51, 13, 156, 630),
-                arguments(GETON, 205, 52, 13, 160, 620),
-                arguments(RUNID, 205, 51, 13, 156, 620),
-                arguments(ALATE, 208, 52, 13, 158, 620)
+                arguments(HORA, 207, 52, 13, 159, 630),
+                arguments(SIFER, 207, 52, 13, 159, 630),
+                arguments(GETON, 207, 52, 13, 161, 630),
+                arguments(RUNID, 207, 52, 13, 159, 630),
+                arguments(ALATE, 209, 52, 13, 160, 630)
         );
     }
 

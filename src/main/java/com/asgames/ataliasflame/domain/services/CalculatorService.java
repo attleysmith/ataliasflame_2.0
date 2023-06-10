@@ -12,6 +12,6 @@ public class CalculatorService {
     public int calculate(int base, int... multipliers) {
         int multiplier = stream(multipliers).reduce(0, Integer::sum);
 
-        return max(0, round(base * (1 + multiplier / 100f)));
+        return max(0, round(base + (base * multiplier / 100f)));
     }
 }

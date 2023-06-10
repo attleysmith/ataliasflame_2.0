@@ -11,6 +11,8 @@ import java.util.Optional;
 
 import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
 import static com.asgames.ataliasflame.domain.model.enums.Caste.*;
+import static com.asgames.ataliasflame.domain.model.enums.CasteGroup.UNSPECIALIZED;
+import static com.asgames.ataliasflame.domain.model.enums.CasteGroup.WARRIOR;
 import static com.asgames.ataliasflame.domain.model.enums.God.*;
 import static com.asgames.ataliasflame.domain.model.enums.Race.*;
 import static java.util.Collections.emptyList;
@@ -21,16 +23,13 @@ public final class MockConstants {
         // utility class
     }
 
-    // Single-handed damage
-    public static final int CHARACTER_DAMAGE = 5;
-
-    // Level-up bonus
-    public static final int LEVEL_ATTRIBUTE_POINTS = 5;
-
-    // Starting caste
+    // Character development rules
     public static final Caste STARTING_CASTE = ROGUE;
+    public static final int LEVEL_ATTRIBUTE_POINTS = 5;
+    public static final int MAX_ATTRIBUTE_POINTS = 100;
 
     // Base character values
+    public static final int CHARACTER_DAMAGE = 5;
     public static final int BASE_HEALTH = 100;
     public static final int BASE_ATTACK = 80;
     public static final int BASE_DEFENSE = 20;
@@ -338,6 +337,7 @@ public final class MockConstants {
 
     public static final Map<Caste, CasteDetails> CASTE_DETAILS = Map.of(
             ROGUE, CasteDetails.builder()
+                    .group(UNSPECIALIZED)
                     .caste(ROGUE)
                     .nextCastes(List.of(FIGHTER))
                     .minimumAttributes(Map.of(
@@ -348,6 +348,7 @@ public final class MockConstants {
                             INTELLIGENCE, 1
                     )).build(),
             FIGHTER, CasteDetails.builder()
+                    .group(WARRIOR)
                     .caste(FIGHTER)
                     .nextCastes(List.of(PALADIN))
                     .minimumAttributes(Map.of(
@@ -358,6 +359,7 @@ public final class MockConstants {
                             INTELLIGENCE, 2
                     )).build(),
             PALADIN, CasteDetails.builder()
+                    .group(WARRIOR)
                     .caste(PALADIN)
                     .nextCastes(List.of(GRANDMASTER))
                     .minimumAttributes(Map.of(
@@ -368,6 +370,7 @@ public final class MockConstants {
                             INTELLIGENCE, 7
                     )).build(),
             GRANDMASTER, CasteDetails.builder()
+                    .group(WARRIOR)
                     .caste(GRANDMASTER)
                     .nextCastes(List.of(TITAN))
                     .minimumAttributes(Map.of(
@@ -378,6 +381,7 @@ public final class MockConstants {
                             INTELLIGENCE, 20
                     )).build(),
             TITAN, CasteDetails.builder()
+                    .group(WARRIOR)
                     .caste(TITAN)
                     .nextCastes(emptyList())
                     .minimumAttributes(Map.of(

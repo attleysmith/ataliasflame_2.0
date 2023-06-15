@@ -5,5 +5,7 @@ public enum Caste {
     FIGHTER,
     PALADIN,
     GRANDMASTER,
-    TITAN
+    TITAN,
+    TRACKER,
+    HERMIT
 }

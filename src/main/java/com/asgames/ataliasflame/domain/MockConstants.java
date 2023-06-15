@@ -11,8 +11,7 @@ import java.util.Optional;
 
 import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
 import static com.asgames.ataliasflame.domain.model.enums.Caste.*;
-import static com.asgames.ataliasflame.domain.model.enums.CasteGroup.UNSPECIALIZED;
-import static com.asgames.ataliasflame.domain.model.enums.CasteGroup.WARRIOR;
+import static com.asgames.ataliasflame.domain.model.enums.CasteGroup.*;
 import static com.asgames.ataliasflame.domain.model.enums.God.*;
 import static com.asgames.ataliasflame.domain.model.enums.Race.*;
 import static java.util.Collections.emptyList;
@@ -339,7 +338,7 @@ public final class MockConstants {
             ROGUE, CasteDetails.builder()
                     .group(UNSPECIALIZED)
                     .caste(ROGUE)
-                    .nextCastes(List.of(FIGHTER))
+                    .nextCastes(List.of(FIGHTER, TRACKER, HERMIT))
                     .minimumAttributes(Map.of(
                             STRENGTH, 1,
                             DEXTERITY, 1,
@@ -390,6 +389,28 @@ public final class MockConstants {
                             CONSTITUTION, 100,
                             AGILITY, 100,
                             INTELLIGENCE, 40
+                    )).build(),
+            TRACKER, CasteDetails.builder()
+                    .group(WANDERER)
+                    .caste(TRACKER)
+                    .nextCastes(emptyList())
+                    .minimumAttributes(Map.of(
+                            STRENGTH, 4,
+                            DEXTERITY, 5,
+                            CONSTITUTION, 5,
+                            AGILITY, 5,
+                            INTELLIGENCE, 2
+                    )).build(),
+            HERMIT, CasteDetails.builder()
+                    .group(NATURE_DWELLER)
+                    .caste(HERMIT)
+                    .nextCastes(emptyList())
+                    .minimumAttributes(Map.of(
+                            STRENGTH, 3,
+                            DEXTERITY, 3,
+                            CONSTITUTION, 4,
+                            AGILITY, 3,
+                            INTELLIGENCE, 4
                     )).build()
     );
 

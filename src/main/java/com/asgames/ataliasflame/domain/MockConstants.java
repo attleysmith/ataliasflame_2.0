@@ -3,7 +3,9 @@ package com.asgames.ataliasflame.domain;
 import com.asgames.ataliasflame.domain.model.entities.Booster;
 import com.asgames.ataliasflame.domain.model.entities.CasteDetails;
 import com.asgames.ataliasflame.domain.model.entities.Modifier;
+import com.asgames.ataliasflame.domain.model.entities.Weapon;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
+import com.asgames.ataliasflame.domain.services.SelectionValue;
 
 import java.util.List;
 import java.util.Map;
@@ -28,7 +30,6 @@ public final class MockConstants {
     public static final int MAX_ATTRIBUTE_POINTS = 100;
 
     // Base character values
-    public static final int CHARACTER_DAMAGE = 5;
     public static final int BASE_HEALTH = 100;
     public static final int BASE_ATTACK = 80;
     public static final int BASE_DEFENSE = 20;
@@ -412,6 +413,43 @@ public final class MockConstants {
                             AGILITY, 3,
                             INTELLIGENCE, 4
                     )).build()
+    );
+
+    // Weapons
+    public static final Map<String, Weapon> WEAPONS = Map.of(
+            "FIST", Weapon.builder()
+                    .code("FIST")
+                    .damage(1)
+                    .defense(0)
+                    .build(),
+            "STAFF", Weapon.builder()
+                    .code("STAFF")
+                    .damage(3)
+                    .defense(10)
+                    .build(),
+            "DAGGER", Weapon.builder()
+                    .code("DAGGER")
+                    .damage(5)
+                    .defense(1)
+                    .build(),
+            "SPEAR", Weapon.builder()
+                    .code("SPEAR")
+                    .damage(8)
+                    .defense(10)
+                    .build(),
+            "SWORD", Weapon.builder()
+                    .code("SWORD")
+                    .damage(10)
+                    .defense(8)
+                    .build()
+    );
+
+    public static final List<SelectionValue<Weapon>> STARTING_WEAPON_DROPS = List.of(
+            new SelectionValue<>(5, WEAPONS.get("FIST")),
+            new SelectionValue<>(30, WEAPONS.get("STAFF")),
+            new SelectionValue<>(30, WEAPONS.get("DAGGER")),
+            new SelectionValue<>(20, WEAPONS.get("SPEAR")),
+            new SelectionValue<>(15, WEAPONS.get("SWORD"))
     );
 
 }

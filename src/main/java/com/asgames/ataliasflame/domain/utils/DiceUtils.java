@@ -4,6 +4,8 @@ import java.util.Random;
 
 public final class DiceUtils {
 
+    private static final int DEFAULT_POSSIBILITES = 100;
+
     private DiceUtils() {
         // utility class
     }
@@ -12,8 +14,16 @@ public final class DiceUtils {
         if (chance <= 0) {
             return false;
         }
-        Random random = new Random();
-        int hit = random.nextInt(100) + 1;
+        int hit = roll();
         return hit < chance;
+    }
+
+    public static int roll() {
+        return roll(DEFAULT_POSSIBILITES);
+    }
+
+    public static int roll(int possibilities) {
+        Random random = new Random();
+        return random.nextInt(possibilities) + 1;
     }
 }

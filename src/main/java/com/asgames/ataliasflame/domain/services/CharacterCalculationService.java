@@ -22,7 +22,7 @@ public class CharacterCalculationService {
         recalculateDamage(character);
         recalculateHealth(character);
 
-        character.setDamage(calculatorService.calculate(CHARACTER_DAMAGE, character.getDamageMultiplier()));
+        character.setDamage(calculatorService.calculate(character.getWeapon().getDamage(), character.getDamageMultiplier()));
 
         return character;
     }
@@ -37,7 +37,7 @@ public class CharacterCalculationService {
     }
 
     private void recalculateDefense(Character character) {
-        character.setDefense(calculatorService.calculate(BASE_DEFENSE,
+        character.setDefense(calculatorService.calculate(actualDefense(character),
                 calculateDefenseMultiplier(character, STRENGTH),
                 calculateDefenseMultiplier(character, DEXTERITY),
                 calculateDefenseMultiplier(character, CONSTITUTION),
@@ -92,5 +92,9 @@ public class CharacterCalculationService {
                 baseValue,
                 BOOSTERS.get(race.name()).getEffects().get(attribute),
                 BOOSTERS.get(god.name()).getEffects().get(attribute));
+    }
+
+    private int actualDefense(Character character) {
+        return BASE_DEFENSE + character.getWeapon().getDefense();
     }
 }

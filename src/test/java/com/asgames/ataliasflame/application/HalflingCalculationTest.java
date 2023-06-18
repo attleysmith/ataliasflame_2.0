@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import static com.asgames.ataliasflame.domain.MockConstants.CASTE_DETAILS;
+import static com.asgames.ataliasflame.domain.MockConstants.WEAPONS;
 import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
 import static com.asgames.ataliasflame.domain.model.enums.Caste.*;
 import static com.asgames.ataliasflame.domain.model.enums.Gender.MALE;
@@ -49,6 +50,7 @@ class HalflingCalculationTest {
                 .build();
         Character character = characterService.createCharacter(characterInput);
         assertThat(character.getCaste(), is(ROGUE));
+        addDagger();
 
         character = characterRepository.getCharacter();
         assertThat(character.getAttack(), is(equalTo(attack)));
@@ -60,11 +62,11 @@ class HalflingCalculationTest {
 
     private static Stream<Arguments> rogueCalculations() {
         return Stream.of(
-                arguments(HORA, 84, 21, 5, 4, 110),
-                arguments(SIFER, 84, 21, 5, 4, 110),
-                arguments(GETON, 84, 21, 5, 4, 110),
-                arguments(RUNID, 84, 21, 5, 4, 110),
-                arguments(ALATE, 84, 21, 5, 4, 110)
+                arguments(HORA, 84, 22, 5, 4, 110),
+                arguments(SIFER, 84, 22, 5, 4, 110),
+                arguments(GETON, 84, 22, 5, 4, 110),
+                arguments(RUNID, 84, 22, 5, 4, 110),
+                arguments(ALATE, 84, 22, 5, 4, 110)
         );
     }
 
@@ -79,6 +81,7 @@ class HalflingCalculationTest {
                 .build();
         Character character = characterService.createCharacter(characterInput);
         upgradeCaste(character.getCaste(), FIGHTER);
+        addDagger();
 
         character = characterRepository.getCharacter();
         assertThat(character.getAttack(), is(equalTo(attack)));
@@ -90,11 +93,11 @@ class HalflingCalculationTest {
 
     private static Stream<Arguments> fighterCalculations() {
         return Stream.of(
-                arguments(HORA, 97, 23, 6, 16, 150),
-                arguments(SIFER, 97, 23, 6, 16, 150),
-                arguments(GETON, 97, 23, 6, 16, 150),
-                arguments(RUNID, 97, 23, 6, 16, 150),
-                arguments(ALATE, 97, 23, 6, 16, 150)
+                arguments(HORA, 97, 25, 6, 16, 150),
+                arguments(SIFER, 97, 25, 6, 16, 150),
+                arguments(GETON, 97, 25, 6, 16, 150),
+                arguments(RUNID, 97, 25, 6, 16, 150),
+                arguments(ALATE, 97, 25, 6, 16, 150)
         );
     }
 
@@ -109,6 +112,7 @@ class HalflingCalculationTest {
                 .build();
         Character character = characterService.createCharacter(characterInput);
         upgradeCaste(character.getCaste(), PALADIN);
+        addDagger();
 
         character = characterRepository.getCharacter();
         assertThat(character.getAttack(), is(equalTo(attack)));
@@ -120,11 +124,11 @@ class HalflingCalculationTest {
 
     private static Stream<Arguments> paladinCalculations() {
         return Stream.of(
-                arguments(HORA, 143, 33, 8, 58, 280),
-                arguments(SIFER, 143, 33, 8, 58, 280),
-                arguments(GETON, 143, 33, 8, 60, 280),
-                arguments(RUNID, 143, 33, 8, 58, 280),
-                arguments(ALATE, 145, 33, 8, 59, 280)
+                arguments(HORA, 143, 34, 8, 58, 280),
+                arguments(SIFER, 143, 34, 8, 58, 280),
+                arguments(GETON, 143, 34, 8, 60, 280),
+                arguments(RUNID, 143, 34, 8, 58, 280),
+                arguments(ALATE, 145, 34, 8, 59, 280)
         );
     }
 
@@ -139,6 +143,7 @@ class HalflingCalculationTest {
                 .build();
         Character character = characterService.createCharacter(characterInput);
         upgradeCaste(character.getCaste(), GRANDMASTER);
+        addDagger();
 
         character = characterRepository.getCharacter();
         assertThat(character.getAttack(), is(equalTo(attack)));
@@ -150,11 +155,11 @@ class HalflingCalculationTest {
 
     private static Stream<Arguments> grandmasterCalculations() {
         return Stream.of(
-                arguments(HORA, 238, 52, 12, 145, 550),
-                arguments(SIFER, 238, 52, 12, 145, 560),
-                arguments(GETON, 238, 52, 12, 149, 550),
-                arguments(RUNID, 238, 52, 12, 145, 550),
-                arguments(ALATE, 242, 52, 12, 147, 550)
+                arguments(HORA, 238, 54, 12, 145, 550),
+                arguments(SIFER, 238, 54, 12, 145, 560),
+                arguments(GETON, 238, 55, 12, 149, 550),
+                arguments(RUNID, 238, 54, 12, 145, 550),
+                arguments(ALATE, 242, 55, 12, 147, 550)
         );
     }
 
@@ -169,6 +174,7 @@ class HalflingCalculationTest {
                 .build();
         Character character = characterService.createCharacter(characterInput);
         upgradeCaste(character.getCaste(), TITAN);
+        addDagger();
 
         character = characterRepository.getCharacter();
         assertThat(character.getAttack(), is(equalTo(attack)));
@@ -180,11 +186,11 @@ class HalflingCalculationTest {
 
     private static Stream<Arguments> titanCalculations() {
         return Stream.of(
-                arguments(HORA, 396, 83, 20, 290, 1000),
-                arguments(SIFER, 396, 83, 20, 290, 1010),
-                arguments(GETON, 396, 84, 20, 296, 1000),
-                arguments(RUNID, 396, 83, 20, 290, 1000),
-                arguments(ALATE, 401, 84, 20, 293, 1000)
+                arguments(HORA, 396, 87, 20, 290, 1000),
+                arguments(SIFER, 396, 87, 20, 290, 1010),
+                arguments(GETON, 396, 88, 20, 296, 1000),
+                arguments(RUNID, 396, 87, 20, 290, 1000),
+                arguments(ALATE, 401, 88, 20, 293, 1000)
         );
     }
 
@@ -207,6 +213,15 @@ class HalflingCalculationTest {
         character.getAttributes().put(CONSTITUTION, targetAttributes.get(CONSTITUTION));
         character.getAttributes().put(AGILITY, targetAttributes.get(AGILITY));
         character.getAttributes().put(INTELLIGENCE, targetAttributes.get(INTELLIGENCE));
+
+        characterRepository.save(
+                characterCalculationService.recalculateProperties(character)
+        );
+    }
+
+    private void addDagger() {
+        Character character = characterRepository.getCharacter();
+        character.setWeapon(WEAPONS.get("DAGGER"));
 
         characterRepository.save(
                 characterCalculationService.recalculateProperties(character)

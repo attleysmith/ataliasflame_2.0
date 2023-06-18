@@ -4,10 +4,12 @@ import com.asgames.ataliasflame.domain.model.entities.CasteDetails;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import static com.asgames.ataliasflame.domain.MockConstants.CASTE_DETAILS;
 
+@Slf4j
 @Service
 public class CasteService {
 
@@ -15,6 +17,7 @@ public class CasteService {
         validateAvailability(character, newCaste);
         validateAttributes(character, newCaste);
 
+        log.info("New caste: " + newCaste);
         character.setCaste(newCaste);
         return character;
     }

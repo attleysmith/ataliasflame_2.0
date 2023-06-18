@@ -29,6 +29,8 @@ public class Character implements Combatant {
     private int experience;
     private int attributePoints;
 
+    private Weapon weapon;
+
     private Map<Attribute, Integer> attributes;
 
     @Override

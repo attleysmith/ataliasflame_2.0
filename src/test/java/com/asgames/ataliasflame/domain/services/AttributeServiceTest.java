@@ -3,6 +3,7 @@ package com.asgames.ataliasflame.domain.services;
 import com.asgames.ataliasflame.application.CharacterService;
 import com.asgames.ataliasflame.application.model.CharacterInput;
 import com.asgames.ataliasflame.domain.model.entities.Character;
+import com.asgames.ataliasflame.infrastructure.repositories.CharacterRepository;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import static com.asgames.ataliasflame.domain.MockConstants.WEAPONS;
 import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
 import static com.asgames.ataliasflame.domain.model.enums.Gender.MALE;
 import static com.asgames.ataliasflame.domain.model.enums.God.ALATE;
@@ -23,6 +25,10 @@ class AttributeServiceTest {
 
     @Autowired
     private CharacterService characterService;
+    @Autowired
+    private CharacterRepository characterRepository;
+    @Autowired
+    private CharacterCalculationService characterCalculationService;
     @Autowired
     private AttributeService attributeService;
 
@@ -39,6 +45,7 @@ class AttributeServiceTest {
                 .name("Takemoto")
                 .build();
         character = characterService.createCharacter(characterInput);
+        addDagger();
 
         // and
         character.setAttributePoints(4);
@@ -49,7 +56,7 @@ class AttributeServiceTest {
         // then
         assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttack(), is(82));
-        assertThat(character.getDefense(), is(21));
+        assertThat(character.getDefense(), is(22));
         assertThat(character.getDamage(), is(6));
         assertThat(character.getDamageMultiplier(), is(11));
         assertThat(character.getTotalHealth(), is(110));
@@ -67,7 +74,7 @@ class AttributeServiceTest {
         // then
         assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttack(), is(89));
-        assertThat(character.getDefense(), is(22));
+        assertThat(character.getDefense(), is(23));
         assertThat(character.getDamage(), is(6));
         assertThat(character.getDamageMultiplier(), is(15));
         assertThat(character.getTotalHealth(), is(110));
@@ -85,7 +92,7 @@ class AttributeServiceTest {
         // then
         assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttack(), is(89));
-        assertThat(character.getDefense(), is(22));
+        assertThat(character.getDefense(), is(23));
         assertThat(character.getDamage(), is(6));
         assertThat(character.getDamageMultiplier(), is(15));
         assertThat(character.getTotalHealth(), is(150));
@@ -103,7 +110,7 @@ class AttributeServiceTest {
         // then
         assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttack(), is(92));
-        assertThat(character.getDefense(), is(23));
+        assertThat(character.getDefense(), is(24));
         assertThat(character.getDamage(), is(6));
         assertThat(character.getDamageMultiplier(), is(15));
         assertThat(character.getTotalHealth(), is(150));
@@ -121,10 +128,19 @@ class AttributeServiceTest {
         // then
         assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttack(), is(92));
-        assertThat(character.getDefense(), is(23));
+        assertThat(character.getDefense(), is(24));
         assertThat(character.getDamage(), is(6));
         assertThat(character.getDamageMultiplier(), is(15));
         assertThat(character.getTotalHealth(), is(150));
+    }
+
+    private void addDagger() {
+        Character character = characterRepository.getCharacter();
+        character.setWeapon(WEAPONS.get("DAGGER"));
+
+        characterRepository.save(
+                characterCalculationService.recalculateProperties(character)
+        );
     }
 
 }

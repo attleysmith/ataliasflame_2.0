@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import static com.asgames.ataliasflame.domain.MockConstants.CASTE_DETAILS;
+import static com.asgames.ataliasflame.domain.MockConstants.WEAPONS;
 import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
 import static com.asgames.ataliasflame.domain.model.enums.Caste.*;
 import static com.asgames.ataliasflame.domain.model.enums.Gender.MALE;
@@ -49,6 +50,7 @@ class ElfCalculationTest {
                 .build();
         Character character = characterService.createCharacter(characterInput);
         assertThat(character.getCaste(), is(ROGUE));
+        addDagger();
 
         character = characterRepository.getCharacter();
         assertThat(character.getAttack(), is(equalTo(attack)));
@@ -60,11 +62,11 @@ class ElfCalculationTest {
 
     private static Stream<Arguments> rogueCalculations() {
         return Stream.of(
-                arguments(HORA, 82, 21, 5, 3, 110),
-                arguments(SIFER, 82, 21, 5, 3, 110),
-                arguments(GETON, 82, 21, 5, 3, 110),
-                arguments(RUNID, 82, 21, 5, 3, 110),
-                arguments(ALATE, 82, 21, 5, 3, 110)
+                arguments(HORA, 82, 22, 5, 3, 110),
+                arguments(SIFER, 82, 22, 5, 3, 110),
+                arguments(GETON, 82, 22, 5, 3, 110),
+                arguments(RUNID, 82, 22, 5, 3, 110),
+                arguments(ALATE, 82, 22, 5, 3, 110)
         );
     }
 
@@ -79,6 +81,7 @@ class ElfCalculationTest {
                 .build();
         Character character = characterService.createCharacter(characterInput);
         upgradeCaste(character.getCaste(), FIGHTER);
+        addDagger();
 
         character = characterRepository.getCharacter();
         assertThat(character.getAttack(), is(equalTo(attack)));
@@ -90,11 +93,11 @@ class ElfCalculationTest {
 
     private static Stream<Arguments> fighterCalculations() {
         return Stream.of(
-                arguments(HORA, 94, 23, 6, 14, 150),
-                arguments(SIFER, 94, 23, 6, 14, 150),
-                arguments(GETON, 94, 23, 6, 14, 150),
-                arguments(RUNID, 94, 23, 6, 14, 150),
-                arguments(ALATE, 94, 23, 6, 14, 150)
+                arguments(HORA, 94, 24, 6, 14, 150),
+                arguments(SIFER, 94, 24, 6, 14, 150),
+                arguments(GETON, 94, 24, 6, 14, 150),
+                arguments(RUNID, 94, 24, 6, 14, 150),
+                arguments(ALATE, 94, 24, 6, 14, 150)
         );
     }
 
@@ -109,6 +112,7 @@ class ElfCalculationTest {
                 .build();
         Character character = characterService.createCharacter(characterInput);
         upgradeCaste(character.getCaste(), PALADIN);
+        addDagger();
 
         character = characterRepository.getCharacter();
         assertThat(character.getAttack(), is(equalTo(attack)));
@@ -120,11 +124,11 @@ class ElfCalculationTest {
 
     private static Stream<Arguments> paladinCalculations() {
         return Stream.of(
-                arguments(HORA, 134, 32, 8, 52, 280),
-                arguments(SIFER, 134, 32, 8, 52, 280),
-                arguments(GETON, 134, 32, 8, 54, 280),
-                arguments(RUNID, 134, 32, 8, 52, 280),
-                arguments(ALATE, 136, 32, 8, 53, 280)
+                arguments(HORA, 134, 33, 8, 52, 280),
+                arguments(SIFER, 134, 33, 8, 52, 280),
+                arguments(GETON, 134, 33, 8, 54, 280),
+                arguments(RUNID, 134, 33, 8, 52, 280),
+                arguments(ALATE, 136, 33, 8, 53, 280)
         );
     }
 
@@ -139,6 +143,7 @@ class ElfCalculationTest {
                 .build();
         Character character = characterService.createCharacter(characterInput);
         upgradeCaste(character.getCaste(), GRANDMASTER);
+        addDagger();
 
         character = characterRepository.getCharacter();
         assertThat(character.getAttack(), is(equalTo(attack)));
@@ -150,11 +155,11 @@ class ElfCalculationTest {
 
     private static Stream<Arguments> grandmasterCalculations() {
         return Stream.of(
-                arguments(HORA, 216, 49, 12, 130, 550),
-                arguments(SIFER, 216, 49, 12, 130, 560),
-                arguments(GETON, 216, 49, 12, 134, 550),
-                arguments(RUNID, 216, 49, 12, 130, 550),
-                arguments(ALATE, 219, 49, 12, 132, 550)
+                arguments(HORA, 216, 51, 12, 130, 550),
+                arguments(SIFER, 216, 51, 12, 130, 560),
+                arguments(GETON, 216, 52, 12, 134, 550),
+                arguments(RUNID, 216, 51, 12, 130, 550),
+                arguments(ALATE, 219, 52, 12, 132, 550)
         );
     }
 
@@ -169,6 +174,7 @@ class ElfCalculationTest {
                 .build();
         Character character = characterService.createCharacter(characterInput);
         upgradeCaste(character.getCaste(), TITAN);
+        addDagger();
 
         character = characterRepository.getCharacter();
         assertThat(character.getAttack(), is(equalTo(attack)));
@@ -180,11 +186,11 @@ class ElfCalculationTest {
 
     private static Stream<Arguments> titanCalculations() {
         return Stream.of(
-                arguments(HORA, 352, 78, 18, 260, 1000),
-                arguments(SIFER, 352, 78, 18, 260, 1010),
-                arguments(GETON, 352, 79, 18, 266, 1000),
-                arguments(RUNID, 352, 78, 18, 260, 1000),
-                arguments(ALATE, 357, 79, 18, 263, 1000)
+                arguments(HORA, 352, 82, 18, 260, 1000),
+                arguments(SIFER, 352, 82, 18, 260, 1010),
+                arguments(GETON, 352, 83, 18, 266, 1000),
+                arguments(RUNID, 352, 82, 18, 260, 1000),
+                arguments(ALATE, 357, 83, 18, 263, 1000)
         );
     }
 
@@ -207,6 +213,15 @@ class ElfCalculationTest {
         character.getAttributes().put(CONSTITUTION, targetAttributes.get(CONSTITUTION));
         character.getAttributes().put(AGILITY, targetAttributes.get(AGILITY));
         character.getAttributes().put(INTELLIGENCE, targetAttributes.get(INTELLIGENCE));
+
+        characterRepository.save(
+                characterCalculationService.recalculateProperties(character)
+        );
+    }
+
+    private void addDagger() {
+        Character character = characterRepository.getCharacter();
+        character.setWeapon(WEAPONS.get("DAGGER"));
 
         characterRepository.save(
                 characterCalculationService.recalculateProperties(character)

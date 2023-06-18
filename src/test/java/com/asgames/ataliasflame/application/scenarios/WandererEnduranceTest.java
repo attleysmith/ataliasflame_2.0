@@ -17,7 +17,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@Disabled
+@Disabled("May be killed in action")
 @SpringBootTest
 public class WandererEnduranceTest {
 
@@ -47,8 +47,6 @@ public class WandererEnduranceTest {
         assertThat(character.getAttributes().get(INTELLIGENCE), is(1));
         // and
         assertThat(character.getAttack(), is(82));
-        assertThat(character.getDefense(), is(21));
-        assertThat(character.getDamage(), is(5));
         assertThat(character.getDamageMultiplier(), is(3));
         assertThat(character.getTotalHealth(), is(110));
         // and
@@ -77,8 +75,6 @@ public class WandererEnduranceTest {
         assertThat(character.getAttributes().get(INTELLIGENCE), is(1));
         // and
         assertThat(character.getAttack(), is(87));
-        assertThat(character.getDefense(), is(21));
-        assertThat(character.getDamage(), is(5));
         assertThat(character.getDamageMultiplier(), is(5));
         assertThat(character.getTotalHealth(), is(120));
         // and
@@ -107,8 +103,6 @@ public class WandererEnduranceTest {
         assertThat(character.getAttributes().get(INTELLIGENCE), is(1));
         // and
         assertThat(character.getAttack(), is(92));
-        assertThat(character.getDefense(), is(22));
-        assertThat(character.getDamage(), is(5));
         assertThat(character.getDamageMultiplier(), is(7));
         assertThat(character.getTotalHealth(), is(130));
         // and
@@ -136,8 +130,6 @@ public class WandererEnduranceTest {
         assertThat(character.getAttributes().get(INTELLIGENCE), is(1));
         // and
         assertThat(character.getAttack(), is(92));
-        assertThat(character.getDefense(), is(23));
-        assertThat(character.getDamage(), is(6));
         assertThat(character.getDamageMultiplier(), is(13));
         assertThat(character.getTotalHealth(), is(150));
         // and
@@ -165,8 +157,6 @@ public class WandererEnduranceTest {
         assertThat(character.getAttributes().get(INTELLIGENCE), is(2));
         // and
         assertThat(character.getAttack(), is(92));
-        assertThat(character.getDefense(), is(23));
-        assertThat(character.getDamage(), is(6));
         assertThat(character.getDamageMultiplier(), is(13));
         assertThat(character.getTotalHealth(), is(150));
 
@@ -191,8 +181,6 @@ public class WandererEnduranceTest {
         assertThat(character.getAttributes().get(INTELLIGENCE), is(2));
         // and
         assertThat(character.getAttack(), is(94));
-        assertThat(character.getDefense(), is(23));
-        assertThat(character.getDamage(), is(6));
         assertThat(character.getDamageMultiplier(), is(16));
         assertThat(character.getTotalHealth(), is(160));
 
@@ -218,8 +206,6 @@ public class WandererEnduranceTest {
         assertThat(character.getAttributes().get(INTELLIGENCE), is(2));
         // and
         assertThat(character.getAttack(), is(99));
-        assertThat(character.getDefense(), is(24));
-        assertThat(character.getDamage(), is(6));
         assertThat(character.getDamageMultiplier(), is(18));
         assertThat(character.getTotalHealth(), is(170));
 
@@ -246,8 +232,6 @@ public class WandererEnduranceTest {
         assertThat(character.getAttributes().get(INTELLIGENCE), is(2));
         // and
         assertThat(character.getAttack(), is(104));
-        assertThat(character.getDefense(), is(25));
-        assertThat(character.getDamage(), is(6));
         assertThat(character.getDamageMultiplier(), is(22));
         assertThat(character.getTotalHealth(), is(170));
 
@@ -274,8 +258,6 @@ public class WandererEnduranceTest {
         assertThat(character.getAttributes().get(INTELLIGENCE), is(2));
         // and
         assertThat(character.getAttack(), is(109));
-        assertThat(character.getDefense(), is(26));
-        assertThat(character.getDamage(), is(6));
         assertThat(character.getDamageMultiplier(), is(24));
         assertThat(character.getTotalHealth(), is(180));
 
@@ -303,8 +285,6 @@ public class WandererEnduranceTest {
         assertThat(character.getAttributes().get(INTELLIGENCE), is(2));
         // and
         assertThat(character.getAttack(), is(111));
-        assertThat(character.getDefense(), is(27));
-        assertThat(character.getDamage(), is(6));
         assertThat(character.getDamageMultiplier(), is(27));
         assertThat(character.getTotalHealth(), is(200));
 
@@ -333,8 +313,6 @@ public class WandererEnduranceTest {
         assertThat(character.getAttributes().get(INTELLIGENCE), is(2));
         // and
         assertThat(character.getAttack(), is(114));
-        assertThat(character.getDefense(), is(27));
-        assertThat(character.getDamage(), is(7));
         assertThat(character.getDamageMultiplier(), is(32));
         assertThat(character.getTotalHealth(), is(210));
 
@@ -364,8 +342,6 @@ public class WandererEnduranceTest {
         assertThat(character.getAttributes().get(INTELLIGENCE), is(3));
         // and
         assertThat(character.getAttack(), is(116));
-        assertThat(character.getDefense(), is(28));
-        assertThat(character.getDamage(), is(7));
         assertThat(character.getDamageMultiplier(), is(35));
         assertThat(character.getTotalHealth(), is(220));
 
@@ -395,8 +371,6 @@ public class WandererEnduranceTest {
         assertThat(character.getAttributes().get(INTELLIGENCE), is(3));
         // and
         assertThat(character.getAttack(), is(118));
-        assertThat(character.getDefense(), is(29));
-        assertThat(character.getDamage(), is(7));
         assertThat(character.getDamageMultiplier(), is(38));
         assertThat(character.getTotalHealth(), is(240));
 
@@ -406,7 +380,7 @@ public class WandererEnduranceTest {
         characterService.combat();
         characterService.combat();
 
-        // expect --- occurred to be killed before this point!
+        // expect
         character = characterService.getCharacter();
         assertThat(character.getLevel(), is(13));
         assertThat(character.getAttributePoints(), is(5));
@@ -426,8 +400,6 @@ public class WandererEnduranceTest {
         assertThat(character.getAttributes().get(INTELLIGENCE), is(3));
         // and
         assertThat(character.getAttack(), is(121));
-        assertThat(character.getDefense(), is(29));
-        assertThat(character.getDamage(), is(7));
         assertThat(character.getDamageMultiplier(), is(41));
         assertThat(character.getTotalHealth(), is(260));
 
@@ -438,7 +410,7 @@ public class WandererEnduranceTest {
         characterService.combat();
         characterService.combat();
 
-        // expect --- occurred to be killed before this point!
+        // expect
         character = characterService.getCharacter();
         assertThat(character.getLevel(), is(14));
         assertThat(character.getAttributePoints(), is(5));
@@ -458,8 +430,6 @@ public class WandererEnduranceTest {
         assertThat(character.getAttributes().get(INTELLIGENCE), is(3));
         // and
         assertThat(character.getAttack(), is(123));
-        assertThat(character.getDefense(), is(30));
-        assertThat(character.getDamage(), is(7));
         assertThat(character.getDamageMultiplier(), is(46));
         assertThat(character.getTotalHealth(), is(270));
 
@@ -470,7 +440,7 @@ public class WandererEnduranceTest {
         characterService.combat();
         characterService.combat();
 
-        // expect --- can reach, but...
+        // expect
         character = characterService.getCharacter();
         assertThat(character.getLevel(), is(15));
         assertThat(character.getAttributePoints(), is(5));
@@ -488,8 +458,6 @@ public class WandererEnduranceTest {
         assertThat(character.getAttributes().get(INTELLIGENCE), is(3));
         // and
         assertThat(character.getAttack(), is(123));
-        assertThat(character.getDefense(), is(30));
-        assertThat(character.getDamage(), is(8));
         assertThat(character.getDamageMultiplier(), is(50));
         assertThat(character.getTotalHealth(), is(300));
 
@@ -502,7 +470,7 @@ public class WandererEnduranceTest {
         characterService.combat();
         characterService.combat();
 
-        // expect --- occurred to be reached somehow :)
+        // expect
         character = characterService.getCharacter();
         assertThat(character.getLevel(), is(16));
         assertThat(character.getAttributePoints(), is(5));
@@ -519,8 +487,6 @@ public class WandererEnduranceTest {
         assertThat(character.getAttributes().get(INTELLIGENCE), is(7));
         // and
         assertThat(character.getAttack(), is(123));
-        assertThat(character.getDefense(), is(30));
-        assertThat(character.getDamage(), is(8));
         assertThat(character.getDamageMultiplier(), is(50));
         assertThat(character.getTotalHealth(), is(300));
     }

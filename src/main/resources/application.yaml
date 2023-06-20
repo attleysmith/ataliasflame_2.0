@@ -1,3 +1,5 @@
 #logging:
 #  level:
-#    com.asgames.ataliasflame.domain.services.CombatService: debug
+#    com.asgames.ataliasflame.domain.services:
+#      CharacterInitializer: debug
+#      CombatService: debug

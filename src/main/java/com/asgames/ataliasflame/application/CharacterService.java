@@ -8,7 +8,6 @@ import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
 import com.asgames.ataliasflame.domain.services.*;
 import com.asgames.ataliasflame.infrastructure.repositories.CharacterRepository;
-import com.asgames.ataliasflame.infrastructure.repositories.MonsterRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,8 +25,6 @@ public class CharacterService {
     @Autowired
     private CharacterRepository characterRepository;
     @Autowired
-    private MonsterRepository monsterRepository;
-    @Autowired
     private CombatService combatService;
     @Autowired
     private ExperienceService experienceService;
@@ -35,6 +32,8 @@ public class CharacterService {
     private AttributeService attributeService;
     @Autowired
     private CasteService casteService;
+    @Autowired
+    private MonsterService monsterService;
 
     public Character createCharacter(CharacterInput characterInput) {
         Character character = characterMapper.toCharacter(characterInput);
@@ -61,7 +60,7 @@ public class CharacterService {
 
     public void combat() {
         Character character = characterRepository.getCharacter();
-        Monster monster = monsterRepository.getMonster().toBuilder().build(); // monster clone
+        Monster monster = monsterService.getRandomMonster();
 
         combatService.combat(List.of(character), List.of(monster));
         if (character.getActualHealth() > 0) {

@@ -2,12 +2,14 @@ package com.asgames.ataliasflame.domain.services;
 
 import com.asgames.ataliasflame.domain.model.entities.CasteDetails;
 import com.asgames.ataliasflame.domain.model.entities.Character;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import static com.asgames.ataliasflame.domain.MockConstants.*;
 import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
 
+@Slf4j
 @Service
 public class CharacterInitializer {
 
@@ -22,6 +24,8 @@ public class CharacterInitializer {
         setStartingLevel(character);
         setStartingCaste(character);
         setStartingAttributes(character);
+
+        log.debug("Character initialized: " + character);
         return character;
     }
 

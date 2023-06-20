@@ -2,11 +2,13 @@ package com.asgames.ataliasflame.domain.services;
 
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import static com.asgames.ataliasflame.domain.MockConstants.MAX_ATTRIBUTE_POINTS;
 
+@Slf4j
 @Service
 public class AttributeService {
 
@@ -19,13 +21,15 @@ public class AttributeService {
                     + points + "; Available: " + character.getAttributePoints());
         }
 
-        int result = character.getAttributes().get(attribute) + points;
-        if (result > MAX_ATTRIBUTE_POINTS) {
+        int oldValue = character.getAttributes().get(attribute);
+        int newValue = oldValue + points;
+        if (newValue > MAX_ATTRIBUTE_POINTS) {
             throw new IllegalArgumentException("The maximum of one attribute is " + MAX_ATTRIBUTE_POINTS + "!");
         }
 
-        character.getAttributes().put(attribute, result);
+        character.getAttributes().put(attribute, newValue);
         character.setAttributePoints(character.getAttributePoints() - points);
+        log.info(attribute.name() + ": " + oldValue + " >> " + newValue);
 
         return characterCalculationService.recalculateProperties(character);
     }

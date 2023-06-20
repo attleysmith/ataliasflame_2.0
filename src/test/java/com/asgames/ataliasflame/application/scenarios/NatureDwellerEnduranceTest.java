@@ -54,10 +54,9 @@ public class NatureDwellerEnduranceTest {
                 () -> characterService.upgradeCaste(HERMIT));
 
         // when
-        characterService.combat();
+        character = combatUntilNextLevel();
 
         // expect
-        character = characterService.getCharacter();
         assertThat(character.getLevel(), is(2));
         assertThat(character.getAttributePoints(), is(5));
 
@@ -82,10 +81,9 @@ public class NatureDwellerEnduranceTest {
                 () -> characterService.upgradeCaste(HERMIT));
 
         // when
-        characterService.combat();
+        character = combatUntilNextLevel();
 
         // expect
-        character = characterService.getCharacter();
         assertThat(character.getLevel(), is(3));
         assertThat(character.getAttributePoints(), is(5));
 
@@ -110,10 +108,9 @@ public class NatureDwellerEnduranceTest {
                 () -> characterService.upgradeCaste(HERMIT));
 
         // when
-        characterService.combat();
+        character = combatUntilNextLevel();
 
         // expect
-        character = characterService.getCharacter();
         assertThat(character.getLevel(), is(4));
         assertThat(character.getAttributePoints(), is(5));
 
@@ -156,11 +153,9 @@ public class NatureDwellerEnduranceTest {
         assertThat(character.getTotalHealth(), is(140));
 
         // when
-        characterService.combat();
-        characterService.combat();
+        character = combatUntilNextLevel();
 
         // expect
-        character = characterService.getCharacter();
         assertThat(character.getLevel(), is(5));
         assertThat(character.getAttributePoints(), is(5));
 
@@ -184,10 +179,9 @@ public class NatureDwellerEnduranceTest {
         assertThat(character.getTotalHealth(), is(150));
 
         // when
-        characterService.combat();
+        character = combatUntilNextLevel();
 
         // expect
-        character = characterService.getCharacter();
         assertThat(character.getLevel(), is(6));
         assertThat(character.getAttributePoints(), is(5));
 
@@ -211,11 +205,9 @@ public class NatureDwellerEnduranceTest {
         assertThat(character.getTotalHealth(), is(150));
 
         // when
-        characterService.combat();
-        characterService.combat();
+        character = combatUntilNextLevel();
 
         // expect
-        character = characterService.getCharacter();
         assertThat(character.getLevel(), is(7));
         assertThat(character.getAttributePoints(), is(5));
 
@@ -239,11 +231,9 @@ public class NatureDwellerEnduranceTest {
         assertThat(character.getTotalHealth(), is(160));
 
         // when
-        characterService.combat();
-        characterService.combat();
+        character = combatUntilNextLevel();
 
         // expect
-        character = characterService.getCharacter();
         assertThat(character.getLevel(), is(8));
         assertThat(character.getAttributePoints(), is(5));
 
@@ -267,11 +257,9 @@ public class NatureDwellerEnduranceTest {
         assertThat(character.getTotalHealth(), is(170));
 
         // when
-        characterService.combat();
-        characterService.combat();
+        character = combatUntilNextLevel();
 
         // expect
-        character = characterService.getCharacter();
         assertThat(character.getLevel(), is(9));
         assertThat(character.getAttributePoints(), is(5));
 
@@ -294,12 +282,9 @@ public class NatureDwellerEnduranceTest {
         assertThat(character.getTotalHealth(), is(190));
 
         // when
-        characterService.combat();
-        characterService.combat();
-        characterService.combat();
+        character = combatUntilNextLevel();
 
         // expect
-        character = characterService.getCharacter();
         assertThat(character.getLevel(), is(10));
         assertThat(character.getAttributePoints(), is(5));
 
@@ -322,12 +307,9 @@ public class NatureDwellerEnduranceTest {
         assertThat(character.getTotalHealth(), is(210));
 
         // when
-        characterService.combat();
-        characterService.combat();
-        characterService.combat();
+        character = combatUntilNextLevel();
 
         // expect
-        character = characterService.getCharacter();
         assertThat(character.getLevel(), is(11));
         assertThat(character.getAttributePoints(), is(5));
 
@@ -350,13 +332,9 @@ public class NatureDwellerEnduranceTest {
         assertThat(character.getTotalHealth(), is(230));
 
         // when
-        characterService.combat();
-        characterService.combat();
-        characterService.combat();
-        characterService.combat();
+        character = combatUntilNextLevel();
 
         // expect
-        character = characterService.getCharacter();
         assertThat(character.getLevel(), is(12));
         assertThat(character.getAttributePoints(), is(5));
 
@@ -379,13 +357,9 @@ public class NatureDwellerEnduranceTest {
         assertThat(character.getTotalHealth(), is(250));
 
         // when
-        characterService.combat();
-        characterService.combat();
-        characterService.combat();
-        characterService.combat();
+        character = combatUntilNextLevel();
 
         // expect
-        character = characterService.getCharacter();
         assertThat(character.getLevel(), is(13));
         assertThat(character.getAttributePoints(), is(5));
 
@@ -406,14 +380,9 @@ public class NatureDwellerEnduranceTest {
         assertThat(character.getTotalHealth(), is(250));
 
         // when
-        characterService.combat();
-        characterService.combat();
-        characterService.combat();
-        characterService.combat();
-        characterService.combat();
+        character = combatUntilNextLevel();
 
         // expect
-        character = characterService.getCharacter();
         assertThat(character.getLevel(), is(14));
         assertThat(character.getAttributePoints(), is(5));
 
@@ -431,5 +400,17 @@ public class NatureDwellerEnduranceTest {
         assertThat(character.getAttack(), is(118));
         assertThat(character.getDamageMultiplier(), is(30));
         assertThat(character.getTotalHealth(), is(250));
+    }
+
+    private Character combatUntilNextLevel() {
+        Character character = characterService.getCharacter();
+        int actualLevel = character.getLevel();
+
+        do {
+            characterService.combat();
+            character = characterService.getCharacter();
+        } while (character.getActualHealth() > 0 && character.getLevel() == actualLevel);
+
+        return character;
     }
 }

@@ -1,9 +1,6 @@
 package com.asgames.ataliasflame.domain;
 
-import com.asgames.ataliasflame.domain.model.entities.Booster;
-import com.asgames.ataliasflame.domain.model.entities.CasteDetails;
-import com.asgames.ataliasflame.domain.model.entities.Modifier;
-import com.asgames.ataliasflame.domain.model.entities.Weapon;
+import com.asgames.ataliasflame.domain.model.entities.*;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
 import com.asgames.ataliasflame.domain.services.SelectionValue;
 
@@ -450,6 +447,58 @@ public final class MockConstants {
             new SelectionValue<>(30, WEAPONS.get("DAGGER")),
             new SelectionValue<>(20, WEAPONS.get("SPEAR")),
             new SelectionValue<>(15, WEAPONS.get("SWORD"))
+    );
+
+    // Monsters
+    public static final Map<String, Monster> MONSTERS = Map.of(
+            "RAT", Monster.builder()
+                    .code("RAT")
+                    .attack(40)
+                    .defense(0)
+                    .damage(1)
+                    .totalHealth(10)
+                    .experience(10)
+                    .build(),
+            "BOAR", Monster.builder()
+                    .code("BOAR")
+                    .attack(60)
+                    .defense(5)
+                    .damage(2)
+                    .totalHealth(25)
+                    .experience(20)
+                    .build(),
+            "WOLF", Monster.builder()
+                    .code("WOLF")
+                    .attack(70)
+                    .defense(5)
+                    .damage(2)
+                    .totalHealth(25)
+                    .experience(30)
+                    .build(),
+            "BANDIT", Monster.builder()
+                    .code("BANDIT")
+                    .attack(75)
+                    .defense(5)
+                    .damage(2)
+                    .totalHealth(30)
+                    .experience(40)
+                    .build(),
+            "WEREWOLF", Monster.builder()
+                    .code("WEREWOLF")
+                    .attack(75)
+                    .defense(10)
+                    .damage(3)
+                    .totalHealth(40)
+                    .experience(50)
+                    .build()
+    );
+
+    public static final List<SelectionValue<Monster>> MONSTER_DROPS = List.of(
+            new SelectionValue<>(20, MONSTERS.get("RAT")),
+            new SelectionValue<>(15, MONSTERS.get("BOAR")),
+            new SelectionValue<>(25, MONSTERS.get("WOLF")),
+            new SelectionValue<>(35, MONSTERS.get("BANDIT")),
+            new SelectionValue<>(5, MONSTERS.get("WEREWOLF"))
     );
 
 }

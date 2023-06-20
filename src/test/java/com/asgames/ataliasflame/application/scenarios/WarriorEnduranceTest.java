@@ -55,10 +55,9 @@ public class WarriorEnduranceTest {
                 () -> characterService.upgradeCaste(FIGHTER));
 
         // when
-        characterService.combat();
+        character = combatUntilNextLevel();
 
         // expect
-        character = characterService.getCharacter();
         assertThat(character.getLevel(), is(2));
         assertThat(character.getAttributePoints(), is(5));
 
@@ -83,10 +82,9 @@ public class WarriorEnduranceTest {
                 () -> characterService.upgradeCaste(FIGHTER));
 
         // when
-        characterService.combat();
+        character = combatUntilNextLevel();
 
         // expect
-        character = characterService.getCharacter();
         assertThat(character.getLevel(), is(3));
         assertThat(character.getAttributePoints(), is(5));
 
@@ -111,10 +109,9 @@ public class WarriorEnduranceTest {
                 () -> characterService.upgradeCaste(FIGHTER));
 
         // when
-        characterService.combat();
+        character = combatUntilNextLevel();
 
         // expect
-        character = characterService.getCharacter();
         assertThat(character.getLevel(), is(4));
         assertThat(character.getAttributePoints(), is(5));
 
@@ -138,11 +135,9 @@ public class WarriorEnduranceTest {
                 () -> characterService.upgradeCaste(FIGHTER));
 
         // when
-        characterService.combat();
-        characterService.combat();
+        character = combatUntilNextLevel();
 
         // expect
-        character = characterService.getCharacter();
         assertThat(character.getLevel(), is(5));
         assertThat(character.getAttributePoints(), is(5));
 
@@ -186,10 +181,9 @@ public class WarriorEnduranceTest {
         assertThat(character.getTotalHealth(), is(160));
 
         // when
-        characterService.combat();
+        character = combatUntilNextLevel();
 
         // expect
-        character = characterService.getCharacter();
         assertThat(character.getLevel(), is(6));
         assertThat(character.getAttributePoints(), is(5));
 
@@ -211,11 +205,9 @@ public class WarriorEnduranceTest {
         assertThat(character.getTotalHealth(), is(170));
 
         // when
-        characterService.combat();
-        characterService.combat();
+        character = combatUntilNextLevel();
 
         // expect
-        character = characterService.getCharacter();
         assertThat(character.getLevel(), is(7));
         assertThat(character.getAttributePoints(), is(5));
 
@@ -237,11 +229,9 @@ public class WarriorEnduranceTest {
         assertThat(character.getTotalHealth(), is(170));
 
         // when
-        characterService.combat();
-        characterService.combat();
+        character = combatUntilNextLevel();
 
         // expect
-        character = characterService.getCharacter();
         assertThat(character.getLevel(), is(8));
         assertThat(character.getAttributePoints(), is(5));
 
@@ -263,11 +253,9 @@ public class WarriorEnduranceTest {
         assertThat(character.getTotalHealth(), is(180));
 
         // when
-        characterService.combat();
-        characterService.combat();
+        character = combatUntilNextLevel();
 
         // expect
-        character = characterService.getCharacter();
         assertThat(character.getLevel(), is(9));
         assertThat(character.getAttributePoints(), is(5));
 
@@ -290,12 +278,9 @@ public class WarriorEnduranceTest {
         assertThat(character.getTotalHealth(), is(200));
 
         // when
-        characterService.combat();
-        characterService.combat();
-        characterService.combat();
+        character = combatUntilNextLevel();
 
         // expect
-        character = characterService.getCharacter();
         assertThat(character.getLevel(), is(10));
         assertThat(character.getAttributePoints(), is(5));
 
@@ -318,12 +303,9 @@ public class WarriorEnduranceTest {
         assertThat(character.getTotalHealth(), is(210));
 
         // when
-        characterService.combat();
-        characterService.combat();
-        characterService.combat();
+        character = combatUntilNextLevel();
 
         // expect
-        character = characterService.getCharacter();
         assertThat(character.getLevel(), is(11));
         assertThat(character.getAttributePoints(), is(5));
 
@@ -347,13 +329,9 @@ public class WarriorEnduranceTest {
         assertThat(character.getTotalHealth(), is(220));
 
         // when
-        characterService.combat();
-        characterService.combat();
-        characterService.combat();
-        characterService.combat();
+        character = combatUntilNextLevel();
 
         // expect
-        character = characterService.getCharacter();
         assertThat(character.getLevel(), is(12));
         assertThat(character.getAttributePoints(), is(5));
 
@@ -376,13 +354,9 @@ public class WarriorEnduranceTest {
         assertThat(character.getTotalHealth(), is(240));
 
         // when
-        characterService.combat();
-        characterService.combat();
-        characterService.combat();
-        characterService.combat();
+        character = combatUntilNextLevel();
 
         // expect
-        character = characterService.getCharacter();
         assertThat(character.getLevel(), is(13));
         assertThat(character.getAttributePoints(), is(5));
 
@@ -405,14 +379,9 @@ public class WarriorEnduranceTest {
         assertThat(character.getTotalHealth(), is(260));
 
         // when
-        characterService.combat();
-        characterService.combat();
-        characterService.combat();
-        characterService.combat();
-        characterService.combat();
+        character = combatUntilNextLevel();
 
         // expect
-        character = characterService.getCharacter();
         assertThat(character.getLevel(), is(14));
         assertThat(character.getAttributePoints(), is(5));
 
@@ -435,14 +404,9 @@ public class WarriorEnduranceTest {
         assertThat(character.getTotalHealth(), is(270));
 
         // when
-        characterService.combat();
-        characterService.combat();
-        characterService.combat();
-        characterService.combat();
-        characterService.combat();
+        character = combatUntilNextLevel();
 
         // expect
-        character = characterService.getCharacter();
         assertThat(character.getLevel(), is(15));
         assertThat(character.getAttributePoints(), is(5));
 
@@ -465,16 +429,9 @@ public class WarriorEnduranceTest {
         assertThat(character.getTotalHealth(), is(280));
 
         // when
-        characterService.combat();
-        characterService.combat();
-        characterService.combat();
-        characterService.combat();
-        characterService.combat();
-        characterService.combat();
-        characterService.combat();
+        character = combatUntilNextLevel();
 
         // expect
-        character = characterService.getCharacter();
         assertThat(character.getLevel(), is(16));
         assertThat(character.getAttributePoints(), is(5));
 
@@ -495,16 +452,9 @@ public class WarriorEnduranceTest {
         assertThat(character.getTotalHealth(), is(300));
 
         // when
-        characterService.combat();
-        characterService.combat();
-        characterService.combat();
-        characterService.combat();
-        characterService.combat();
-        characterService.combat();
-        characterService.combat();
+        character = combatUntilNextLevel();
 
-        // expect --- improved weapons make miracles ;)
-        character = characterService.getCharacter();
+        // expect
         assertThat(character.getLevel(), is(17));
         assertThat(character.getAttributePoints(), is(5));
 
@@ -527,18 +477,9 @@ public class WarriorEnduranceTest {
         assertThat(character.getTotalHealth(), is(300));
 
         // when
-        characterService.combat();
-        characterService.combat();
-        characterService.combat();
-        characterService.combat();
-        characterService.combat();
-        characterService.combat();
-        characterService.combat();
-        characterService.combat();
-        characterService.combat();
+        character = combatUntilNextLevel();
 
         // expect
-        character = characterService.getCharacter();
         assertThat(character.getLevel(), is(18));
         assertThat(character.getAttributePoints(), is(5));
 
@@ -565,4 +506,17 @@ public class WarriorEnduranceTest {
 
         // and so on...
     }
+
+    private Character combatUntilNextLevel() {
+        Character character = characterService.getCharacter();
+        int actualLevel = character.getLevel();
+
+        do {
+            characterService.combat();
+            character = characterService.getCharacter();
+        } while (character.getActualHealth() > 0 && character.getLevel() == actualLevel);
+
+        return character;
+    }
+
 }

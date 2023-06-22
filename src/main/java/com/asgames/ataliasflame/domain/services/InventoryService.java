@@ -1,7 +1,7 @@
 package com.asgames.ataliasflame.domain.services;
 
 import com.asgames.ataliasflame.domain.model.entities.Character;
-import com.asgames.ataliasflame.domain.model.entities.Weapon;
+import com.asgames.ataliasflame.domain.model.valueobjects.Weapon;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

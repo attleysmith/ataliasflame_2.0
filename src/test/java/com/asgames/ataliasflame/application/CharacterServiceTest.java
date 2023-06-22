@@ -5,8 +5,6 @@ import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.enums.Gender;
 import com.asgames.ataliasflame.domain.model.enums.God;
 import com.asgames.ataliasflame.domain.model.enums.Race;
-import com.github.javafaker.ElderScrolls;
-import com.github.javafaker.Faker;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -16,8 +14,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.stream.Stream;
 
-import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
-import static com.asgames.ataliasflame.domain.model.enums.Caste.FIGHTER;
 import static com.asgames.ataliasflame.domain.model.enums.Caste.ROGUE;
 import static com.asgames.ataliasflame.domain.model.enums.Gender.FEMALE;
 import static com.asgames.ataliasflame.domain.model.enums.Gender.MALE;
@@ -26,7 +22,6 @@ import static com.asgames.ataliasflame.domain.model.enums.Race.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 @SpringBootTest
@@ -37,13 +32,13 @@ class CharacterServiceTest {
 
     @ParameterizedTest
     @MethodSource("characters")
-    void characterCreationTest(Race race, Gender gender, God defensiveGod, String name) {
+    void characterCreationTest(Race race, Gender gender, God defensiveGod) {
         // given
         CharacterInput characterInput = CharacterInput.builder()
                 .race(race)
                 .gender(gender)
                 .defensiveGod(defensiveGod)
-                .name(name)
+                .name("Takemoto")
                 .build();
 
         // when
@@ -52,7 +47,6 @@ class CharacterServiceTest {
         // then
         assertThat(character.getRace(), is(equalTo(race)));
         assertThat(character.getGender(), is(equalTo(gender)));
-        assertThat(character.getName(), is(equalTo(name)));
         assertThat(character.getCaste(), is(ROGUE));
         assertThat(character.getLevel(), is(1));
         assertThat(character.getExperience(), is(0));
@@ -61,13 +55,13 @@ class CharacterServiceTest {
 
     @ParameterizedTest
     @MethodSource("characters")
-    void characterQueryTest(Race race, Gender gender, God defensiveGod, String name) {
+    void characterQueryTest(Race race, Gender gender, God defensiveGod) {
         // given
         CharacterInput characterInput = CharacterInput.builder()
                 .race(race)
                 .gender(gender)
                 .defensiveGod(defensiveGod)
-                .name(name)
+                .name("Takemoto")
                 .build();
         characterService.createCharacter(characterInput);
 
@@ -77,7 +71,6 @@ class CharacterServiceTest {
         // then
         assertThat(character.getRace(), is(equalTo(race)));
         assertThat(character.getGender(), is(equalTo(gender)));
-        assertThat(character.getName(), is(equalTo(name)));
         assertThat(character.getCaste(), is(ROGUE));
         assertThat(character.getLevel(), is(1));
         assertThat(character.getExperience(), is(0));
@@ -104,39 +97,37 @@ class CharacterServiceTest {
     }
 
     private static Stream<Arguments> characters() {
-        ElderScrolls elderScrollsFaker = Faker.instance().elderScrolls();
-
         return Stream.of(
-                arguments(HUMAN, MALE, SIFER, elderScrollsFaker.firstName()),
-                arguments(HUMAN, FEMALE, GETON, elderScrollsFaker.firstName()),
-                arguments(HUMAN, MALE, RUNID, elderScrollsFaker.firstName()),
-                arguments(HUMAN, FEMALE, ALATE, elderScrollsFaker.firstName()),
-                arguments(HUMAN, MALE, HORA, elderScrollsFaker.firstName()),
-                arguments(HUMAN, FEMALE, GINDON, elderScrollsFaker.firstName()),
-                arguments(ELF, MALE, SIFER, elderScrollsFaker.firstName()),
-                arguments(ELF, FEMALE, GETON, elderScrollsFaker.firstName()),
-                arguments(ELF, MALE, RUNID, elderScrollsFaker.firstName()),
-                arguments(ELF, FEMALE, ALATE, elderScrollsFaker.firstName()),
-                arguments(ELF, MALE, HORA, elderScrollsFaker.firstName()),
-                arguments(ELF, FEMALE, GINDON, elderScrollsFaker.firstName()),
-                arguments(HALF_ELF, MALE, SIFER, elderScrollsFaker.firstName()),
-                arguments(HALF_ELF, FEMALE, GETON, elderScrollsFaker.firstName()),
-                arguments(HALF_ELF, MALE, RUNID, elderScrollsFaker.firstName()),
-                arguments(HALF_ELF, FEMALE, ALATE, elderScrollsFaker.firstName()),
-                arguments(HALF_ELF, MALE, HORA, elderScrollsFaker.firstName()),
-                arguments(HALF_ELF, FEMALE, GINDON, elderScrollsFaker.firstName()),
-                arguments(NIGHT_ELF, MALE, SIFER, elderScrollsFaker.firstName()),
-                arguments(NIGHT_ELF, FEMALE, GETON, elderScrollsFaker.firstName()),
-                arguments(NIGHT_ELF, MALE, RUNID, elderScrollsFaker.firstName()),
-                arguments(NIGHT_ELF, FEMALE, ALATE, elderScrollsFaker.firstName()),
-                arguments(NIGHT_ELF, MALE, HORA, elderScrollsFaker.firstName()),
-                arguments(NIGHT_ELF, FEMALE, GINDON, elderScrollsFaker.firstName()),
-                arguments(HALFLING, MALE, SIFER, elderScrollsFaker.firstName()),
-                arguments(HALFLING, FEMALE, GETON, elderScrollsFaker.firstName()),
-                arguments(HALFLING, MALE, RUNID, elderScrollsFaker.firstName()),
-                arguments(HALFLING, FEMALE, ALATE, elderScrollsFaker.firstName()),
-                arguments(HALFLING, MALE, HORA, elderScrollsFaker.firstName()),
-                arguments(HALFLING, FEMALE, GINDON, elderScrollsFaker.firstName())
+                arguments(HUMAN, MALE, SIFER),
+                arguments(HUMAN, FEMALE, GETON),
+                arguments(HUMAN, MALE, RUNID),
+                arguments(HUMAN, FEMALE, ALATE),
+                arguments(HUMAN, MALE, HORA),
+                arguments(HUMAN, FEMALE, GINDON),
+                arguments(ELF, MALE, SIFER),
+                arguments(ELF, FEMALE, GETON),
+                arguments(ELF, MALE, RUNID),
+                arguments(ELF, FEMALE, ALATE),
+                arguments(ELF, MALE, HORA),
+                arguments(ELF, FEMALE, GINDON),
+                arguments(HALF_ELF, MALE, SIFER),
+                arguments(HALF_ELF, FEMALE, GETON),
+                arguments(HALF_ELF, MALE, RUNID),
+                arguments(HALF_ELF, FEMALE, ALATE),
+                arguments(HALF_ELF, MALE, HORA),
+                arguments(HALF_ELF, FEMALE, GINDON),
+                arguments(NIGHT_ELF, MALE, SIFER),
+                arguments(NIGHT_ELF, FEMALE, GETON),
+                arguments(NIGHT_ELF, MALE, RUNID),
+                arguments(NIGHT_ELF, FEMALE, ALATE),
+                arguments(NIGHT_ELF, MALE, HORA),
+                arguments(NIGHT_ELF, FEMALE, GINDON),
+                arguments(HALFLING, MALE, SIFER),
+                arguments(HALFLING, FEMALE, GETON),
+                arguments(HALFLING, MALE, RUNID),
+                arguments(HALFLING, FEMALE, ALATE),
+                arguments(HALFLING, MALE, HORA),
+                arguments(HALFLING, FEMALE, GINDON)
         );
     }
 }

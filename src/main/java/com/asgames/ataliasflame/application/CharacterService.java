@@ -11,6 +11,7 @@ import com.asgames.ataliasflame.infrastructure.repositories.CharacterRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -35,6 +36,7 @@ public class CharacterService {
     @Autowired
     private MonsterService monsterService;
 
+    @Transactional
     public Character createCharacter(CharacterInput characterInput) {
         Character character = characterMapper.toCharacter(characterInput);
         character = characterInitializer.initialize(character);
@@ -42,22 +44,26 @@ public class CharacterService {
         return characterRepository.save(character);
     }
 
+    @Transactional(readOnly = true)
     public Character getCharacter() {
         return characterRepository.getCharacter();
     }
 
+    @Transactional
     public Character addAttributePoints(Attribute attribute, int points) {
         Character character = characterRepository.getCharacter();
         character = attributeService.addAttributePoints(character, attribute, points);
         return characterRepository.save(character);
     }
 
+    @Transactional
     public Character upgradeCaste(Caste newCaste) {
         Character character = characterRepository.getCharacter();
         character = casteService.upgradeCaste(character, newCaste);
         return characterRepository.save(character);
     }
 
+    @Transactional
     public void combat() {
         Character character = characterRepository.getCharacter();
         Monster monster = monsterService.getRandomMonster();

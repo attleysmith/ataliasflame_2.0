@@ -3,7 +3,6 @@ package com.asgames.ataliasflame.domain.services;
 import com.asgames.ataliasflame.application.CharacterService;
 import com.asgames.ataliasflame.application.model.CharacterInput;
 import com.asgames.ataliasflame.domain.model.entities.Character;
-import com.asgames.ataliasflame.infrastructure.repositories.CharacterRepository;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -26,8 +25,6 @@ class AttributeServiceTest {
     @Autowired
     private CharacterService characterService;
     @Autowired
-    private CharacterRepository characterRepository;
-    @Autowired
     private CharacterCalculationService characterCalculationService;
     @Autowired
     private AttributeService attributeService;
@@ -44,8 +41,7 @@ class AttributeServiceTest {
                 .defensiveGod(ALATE)
                 .name("Takemoto")
                 .build();
-        character = characterService.createCharacter(characterInput);
-        addDagger();
+        character = addDagger(characterService.createCharacter(characterInput));
 
         // and
         character.setAttributePoints(4);
@@ -134,13 +130,10 @@ class AttributeServiceTest {
         assertThat(character.getTotalHealth(), is(150));
     }
 
-    private void addDagger() {
-        Character character = characterRepository.getCharacter();
+    private Character addDagger(Character character) {
         character.setWeapon(WEAPONS.get("DAGGER"));
 
-        characterRepository.save(
-                characterCalculationService.recalculateProperties(character)
-        );
+        return characterCalculationService.recalculateProperties(character);
     }
 
 }

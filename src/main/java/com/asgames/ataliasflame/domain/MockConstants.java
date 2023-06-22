@@ -2,6 +2,7 @@ package com.asgames.ataliasflame.domain;
 
 import com.asgames.ataliasflame.domain.model.entities.*;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
+import com.asgames.ataliasflame.domain.model.valueobjects.Weapon;
 import com.asgames.ataliasflame.domain.services.SelectionValue;
 
 import java.util.List;

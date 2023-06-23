@@ -6,9 +6,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
-import static com.asgames.ataliasflame.domain.utils.DiceUtils.successX;
+import static com.asgames.ataliasflame.domain.utils.DiceUtils.*;
 import static java.lang.Math.min;
+import static java.util.Arrays.stream;
+import static java.util.stream.Collectors.toMap;
 
 @Slf4j
 @Service
@@ -30,9 +34,10 @@ public class CombatService {
 
         CombatContext combatContext = new CombatContext();
         while (combatant1.getActualHealth() > 0 && combatant2.getActualHealth() > 0) {
+            List<Combatant> combatOrder = getCombatOrder(combatant1, combatant2);
             combatContext.addRound(new Round(
-                    attack(combatant1, combatant2),
-                    attack(combatant2, combatant1)));
+                    attack(combatOrder.get(0), combatOrder.get(1)),
+                    attack(combatOrder.get(1), combatOrder.get(0))));
         }
         log.debug(combatContext.report());
     }
@@ -47,5 +52,23 @@ public class CombatService {
             }
         }
         return new AttackReport(attacker.getCode(), damage, defender.getActualHealth());
+    }
+
+    private List<Combatant> getCombatOrder(Combatant... combatants) {
+        return stream(combatants)
+                .collect(toMap(
+                        combatant -> combatant,
+                        combatant -> combatant.getInitiative() + roll10())
+                )
+                .entrySet().stream().sorted((initiative1, initiative2) -> {
+                    int naturalOrder = initiative1.getValue().compareTo(initiative2.getValue());
+                    if (naturalOrder == 0) {
+                        return diceDuel();
+                    } else {
+                        return naturalOrder;
+                    }
+                })
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
     }
 }

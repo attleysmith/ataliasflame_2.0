@@ -51,6 +51,8 @@ public class Character implements Combatant {
     private int totalHealth;
     @Column
     private int injury;
+    @Column
+    private int initiative;
 
     @Column
     private int level;
@@ -63,7 +65,8 @@ public class Character implements Combatant {
     @AttributeOverrides({
             @AttributeOverride(name = "code", column = @Column(name = "weaponCode")),
             @AttributeOverride(name = "damage", column = @Column(name = "weaponDamage")),
-            @AttributeOverride(name = "defense", column = @Column(name = "weaponDefense"))
+            @AttributeOverride(name = "defense", column = @Column(name = "weaponDefense")),
+            @AttributeOverride(name = "initiative", column = @Column(name = "weaponInitiative"))
     })
     private Weapon weapon;
 

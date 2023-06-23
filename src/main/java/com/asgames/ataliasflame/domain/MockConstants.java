@@ -419,26 +419,31 @@ public final class MockConstants {
                     .code("FIST")
                     .damage(1)
                     .defense(0)
+                    .initiative(1)
                     .build(),
             "STAFF", Weapon.builder()
                     .code("STAFF")
                     .damage(3)
                     .defense(10)
+                    .initiative(-5)
                     .build(),
             "DAGGER", Weapon.builder()
                     .code("DAGGER")
                     .damage(5)
                     .defense(1)
+                    .initiative(0)
                     .build(),
             "SPEAR", Weapon.builder()
                     .code("SPEAR")
                     .damage(8)
                     .defense(10)
+                    .initiative(-6)
                     .build(),
             "SWORD", Weapon.builder()
                     .code("SWORD")
                     .damage(10)
                     .defense(8)
+                    .initiative(-3)
                     .build()
     );
 
@@ -459,6 +464,7 @@ public final class MockConstants {
                     .damage(1)
                     .totalHealth(10)
                     .experience(10)
+                    .initiative(3)
                     .build(),
             "BOAR", Monster.builder()
                     .code("BOAR")
@@ -467,6 +473,7 @@ public final class MockConstants {
                     .damage(2)
                     .totalHealth(25)
                     .experience(20)
+                    .initiative(0)
                     .build(),
             "WOLF", Monster.builder()
                     .code("WOLF")
@@ -475,6 +482,7 @@ public final class MockConstants {
                     .damage(2)
                     .totalHealth(25)
                     .experience(30)
+                    .initiative(-3)
                     .build(),
             "BANDIT", Monster.builder()
                     .code("BANDIT")
@@ -483,6 +491,7 @@ public final class MockConstants {
                     .damage(2)
                     .totalHealth(30)
                     .experience(40)
+                    .initiative(-1)
                     .build(),
             "WEREWOLF", Monster.builder()
                     .code("WEREWOLF")
@@ -491,6 +500,7 @@ public final class MockConstants {
                     .damage(3)
                     .totalHealth(40)
                     .experience(50)
+                    .initiative(-3)
                     .build()
     );
 

@@ -14,6 +14,7 @@ public class Monster implements Combatant {
     private int damage;
     private int totalHealth;
     private int injury;
+    private int initiative;
 
     private int experience;
 }

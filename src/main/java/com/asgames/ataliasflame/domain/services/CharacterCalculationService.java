@@ -23,6 +23,7 @@ public class CharacterCalculationService {
         recalculateHealth(character);
 
         character.setDamage(calculatorService.calculate(character.getWeapon().getDamage(), character.getDamageMultiplier()));
+        character.setInitiative(character.getWeapon().getInitiative());
 
         return character;
     }

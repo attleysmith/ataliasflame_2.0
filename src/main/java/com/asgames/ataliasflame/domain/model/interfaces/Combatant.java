@@ -11,11 +11,11 @@ public interface Combatant {
 
     int getTotalHealth();
 
-    void setTotalHealth(int totalHealth);
-
     int getInjury();
 
     void setInjury(int injury);
+
+    int getInitiative();
 
     default int getActualHealth() {
         return getTotalHealth() - getInjury();

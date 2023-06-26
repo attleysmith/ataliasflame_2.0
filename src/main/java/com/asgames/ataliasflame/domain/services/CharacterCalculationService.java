@@ -22,7 +22,8 @@ public class CharacterCalculationService {
         recalculateDamage(character);
         recalculateHealth(character);
 
-        character.setDamage(calculatorService.calculate(character.getWeapon().getDamage(), character.getDamageMultiplier()));
+        character.setMinDamage(calculatorService.calculate(character.getWeapon().getMinDamage(), character.getDamageMultiplier()));
+        character.setMaxDamage(calculatorService.calculate(character.getWeapon().getMaxDamage(), character.getDamageMultiplier()));
         character.setInitiative(character.getWeapon().getInitiative());
 
         return character;

@@ -7,7 +7,9 @@ public interface Combatant {
 
     int getDefense();
 
-    int getDamage();
+    int getMinDamage();
+
+    int getMaxDamage();
 
     int getTotalHealth();
 

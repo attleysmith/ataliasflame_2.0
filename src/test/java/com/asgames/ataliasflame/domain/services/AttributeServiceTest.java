@@ -53,7 +53,8 @@ class AttributeServiceTest {
         assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttack(), is(82));
         assertThat(character.getDefense(), is(22));
-        assertThat(character.getDamage(), is(6));
+        assertThat(character.getMinDamage(), is(2));
+        assertThat(character.getMaxDamage(), is(7));
         assertThat(character.getDamageMultiplier(), is(11));
         assertThat(character.getTotalHealth(), is(110));
     }
@@ -71,7 +72,8 @@ class AttributeServiceTest {
         assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttack(), is(89));
         assertThat(character.getDefense(), is(23));
-        assertThat(character.getDamage(), is(6));
+        assertThat(character.getMinDamage(), is(2));
+        assertThat(character.getMaxDamage(), is(7));
         assertThat(character.getDamageMultiplier(), is(15));
         assertThat(character.getTotalHealth(), is(110));
     }
@@ -89,7 +91,8 @@ class AttributeServiceTest {
         assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttack(), is(89));
         assertThat(character.getDefense(), is(23));
-        assertThat(character.getDamage(), is(6));
+        assertThat(character.getMinDamage(), is(2));
+        assertThat(character.getMaxDamage(), is(7));
         assertThat(character.getDamageMultiplier(), is(15));
         assertThat(character.getTotalHealth(), is(150));
     }
@@ -107,7 +110,8 @@ class AttributeServiceTest {
         assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttack(), is(92));
         assertThat(character.getDefense(), is(24));
-        assertThat(character.getDamage(), is(6));
+        assertThat(character.getMinDamage(), is(2));
+        assertThat(character.getMaxDamage(), is(7));
         assertThat(character.getDamageMultiplier(), is(15));
         assertThat(character.getTotalHealth(), is(150));
     }
@@ -125,7 +129,8 @@ class AttributeServiceTest {
         assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttack(), is(92));
         assertThat(character.getDefense(), is(24));
-        assertThat(character.getDamage(), is(6));
+        assertThat(character.getMinDamage(), is(2));
+        assertThat(character.getMaxDamage(), is(7));
         assertThat(character.getDamageMultiplier(), is(15));
         assertThat(character.getTotalHealth(), is(150));
     }

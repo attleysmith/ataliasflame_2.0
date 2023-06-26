@@ -44,7 +44,9 @@ public class Character implements Combatant {
     @Column
     private int defense;
     @Column
-    private int damage;
+    private int minDamage;
+    @Column
+    private int maxDamage;
     @Column
     private int damageMultiplier;
     @Column
@@ -64,7 +66,8 @@ public class Character implements Combatant {
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name = "code", column = @Column(name = "weaponCode")),
-            @AttributeOverride(name = "damage", column = @Column(name = "weaponDamage")),
+            @AttributeOverride(name = "minDamage", column = @Column(name = "weaponMinDamage")),
+            @AttributeOverride(name = "maxDamage", column = @Column(name = "weaponMaxDamage")),
             @AttributeOverride(name = "defense", column = @Column(name = "weaponDefense")),
             @AttributeOverride(name = "initiative", column = @Column(name = "weaponInitiative"))
     })

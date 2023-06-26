@@ -41,7 +41,7 @@ class ArimaspiCalculationTest {
 
     @ParameterizedTest
     @MethodSource("rogueCalculations")
-    void rogueTest(God god, int attack, int defense, int damage, int damageMultiplier, int health) {
+    void rogueTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health) {
         CharacterInput characterInput = CharacterInput.builder()
                 .race(ARIMASPI)
                 .gender(MALE)
@@ -55,24 +55,25 @@ class ArimaspiCalculationTest {
         character = characterRepository.getCharacter();
         assertThat(character.getAttack(), is(equalTo(attack)));
         assertThat(character.getDefense(), is(equalTo(defense)));
-        assertThat(character.getDamage(), is(equalTo(damage)));
+        assertThat(character.getMinDamage(), is(equalTo(minDamage)));
+        assertThat(character.getMaxDamage(), is(equalTo(maxDamage)));
         assertThat(character.getDamageMultiplier(), is(equalTo(damageMultiplier)));
         assertThat(character.getTotalHealth(), is(equalTo(health)));
     }
 
     private static Stream<Arguments> rogueCalculations() {
         return Stream.of(
-                arguments(HORA, 82, 22, 5, 3, 110),
-                arguments(SIFER, 82, 22, 5, 3, 110),
-                arguments(GETON, 82, 22, 5, 3, 110),
-                arguments(RUNID, 82, 22, 5, 3, 110),
-                arguments(ALATE, 82, 22, 5, 3, 110)
+                arguments(HORA, 82, 22, 2, 6, 3, 110),
+                arguments(SIFER, 82, 22, 2, 6, 3, 110),
+                arguments(GETON, 82, 22, 2, 6, 3, 110),
+                arguments(RUNID, 82, 22, 2, 6, 3, 110),
+                arguments(ALATE, 82, 22, 2, 6, 3, 110)
         );
     }
 
     @ParameterizedTest
     @MethodSource("fighterCalculations")
-    void fighterTest(God god, int attack, int defense, int damage, int damageMultiplier, int health) {
+    void fighterTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health) {
         CharacterInput characterInput = CharacterInput.builder()
                 .race(ARIMASPI)
                 .gender(MALE)
@@ -86,24 +87,25 @@ class ArimaspiCalculationTest {
         character = characterRepository.getCharacter();
         assertThat(character.getAttack(), is(equalTo(attack)));
         assertThat(character.getDefense(), is(equalTo(defense)));
-        assertThat(character.getDamage(), is(equalTo(damage)));
+        assertThat(character.getMinDamage(), is(equalTo(minDamage)));
+        assertThat(character.getMaxDamage(), is(equalTo(maxDamage)));
         assertThat(character.getDamageMultiplier(), is(equalTo(damageMultiplier)));
         assertThat(character.getTotalHealth(), is(equalTo(health)));
     }
 
     private static Stream<Arguments> fighterCalculations() {
         return Stream.of(
-                arguments(HORA, 92, 24, 6, 15, 150),
-                arguments(SIFER, 92, 24, 6, 15, 150),
-                arguments(GETON, 92, 24, 6, 15, 150),
-                arguments(RUNID, 92, 24, 6, 15, 150),
-                arguments(ALATE, 92, 24, 6, 15, 150)
+                arguments(HORA, 92, 24, 2, 7, 15, 150),
+                arguments(SIFER, 92, 24, 2, 7, 15, 150),
+                arguments(GETON, 92, 24, 2, 7, 15, 150),
+                arguments(RUNID, 92, 24, 2, 7, 15, 150),
+                arguments(ALATE, 92, 24, 2, 7, 15, 150)
         );
     }
 
     @ParameterizedTest
     @MethodSource("paladinCalculations")
-    void paladinTest(God god, int attack, int defense, int damage, int damageMultiplier, int health) {
+    void paladinTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health) {
         CharacterInput characterInput = CharacterInput.builder()
                 .race(ARIMASPI)
                 .gender(MALE)
@@ -117,24 +119,25 @@ class ArimaspiCalculationTest {
         character = characterRepository.getCharacter();
         assertThat(character.getAttack(), is(equalTo(attack)));
         assertThat(character.getDefense(), is(equalTo(defense)));
-        assertThat(character.getDamage(), is(equalTo(damage)));
+        assertThat(character.getMinDamage(), is(equalTo(minDamage)));
+        assertThat(character.getMaxDamage(), is(equalTo(maxDamage)));
         assertThat(character.getDamageMultiplier(), is(equalTo(damageMultiplier)));
         assertThat(character.getTotalHealth(), is(equalTo(health)));
     }
 
     private static Stream<Arguments> paladinCalculations() {
         return Stream.of(
-                arguments(HORA, 130, 34, 8, 63, 310),
-                arguments(SIFER, 130, 34, 8, 63, 310),
-                arguments(GETON, 130, 34, 8, 65, 310),
-                arguments(RUNID, 130, 34, 8, 63, 310),
-                arguments(ALATE, 132, 34, 8, 64, 310)
+                arguments(HORA, 130, 34, 3, 10, 63, 310),
+                arguments(SIFER, 130, 34, 3, 10, 63, 310),
+                arguments(GETON, 130, 34, 3, 10, 65, 310),
+                arguments(RUNID, 130, 34, 3, 10, 63, 310),
+                arguments(ALATE, 132, 34, 3, 10, 64, 310)
         );
     }
 
     @ParameterizedTest
     @MethodSource("grandmasterCalculations")
-    void grandmasterTest(God god, int attack, int defense, int damage, int damageMultiplier, int health) {
+    void grandmasterTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health) {
         CharacterInput characterInput = CharacterInput.builder()
                 .race(ARIMASPI)
                 .gender(MALE)
@@ -148,24 +151,25 @@ class ArimaspiCalculationTest {
         character = characterRepository.getCharacter();
         assertThat(character.getAttack(), is(equalTo(attack)));
         assertThat(character.getDefense(), is(equalTo(defense)));
-        assertThat(character.getDamage(), is(equalTo(damage)));
+        assertThat(character.getMinDamage(), is(equalTo(minDamage)));
+        assertThat(character.getMaxDamage(), is(equalTo(maxDamage)));
         assertThat(character.getDamageMultiplier(), is(equalTo(damageMultiplier)));
         assertThat(character.getTotalHealth(), is(equalTo(health)));
     }
 
     private static Stream<Arguments> grandmasterCalculations() {
         return Stream.of(
-                arguments(HORA, 207, 54, 13, 159, 630),
-                arguments(SIFER, 207, 54, 13, 159, 630),
-                arguments(GETON, 207, 55, 13, 161, 630),
-                arguments(RUNID, 207, 54, 13, 159, 630),
-                arguments(ALATE, 209, 55, 13, 160, 630)
+                arguments(HORA, 207, 54, 5, 16, 159, 630),
+                arguments(SIFER, 207, 54, 5, 16, 159, 630),
+                arguments(GETON, 207, 55, 5, 16, 161, 630),
+                arguments(RUNID, 207, 54, 5, 16, 159, 630),
+                arguments(ALATE, 209, 55, 5, 16, 160, 630)
         );
     }
 
     @ParameterizedTest
     @MethodSource("titanCalculations")
-    void titanTest(God god, int attack, int defense, int damage, int damageMultiplier, int health) {
+    void titanTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health) {
         CharacterInput characterInput = CharacterInput.builder()
                 .race(ARIMASPI)
                 .gender(MALE)
@@ -179,18 +183,19 @@ class ArimaspiCalculationTest {
         character = characterRepository.getCharacter();
         assertThat(character.getAttack(), is(equalTo(attack)));
         assertThat(character.getDefense(), is(equalTo(defense)));
-        assertThat(character.getDamage(), is(equalTo(damage)));
+        assertThat(character.getMinDamage(), is(equalTo(minDamage)));
+        assertThat(character.getMaxDamage(), is(equalTo(maxDamage)));
         assertThat(character.getDamageMultiplier(), is(equalTo(damageMultiplier)));
         assertThat(character.getTotalHealth(), is(equalTo(health)));
     }
 
     private static Stream<Arguments> titanCalculations() {
         return Stream.of(
-                arguments(HORA, 332, 87, 21, 315, 1150),
-                arguments(SIFER, 332, 87, 21, 315, 1160),
-                arguments(GETON, 332, 88, 21, 321, 1150),
-                arguments(RUNID, 332, 87, 21, 315, 1150),
-                arguments(ALATE, 337, 88, 21, 318, 1150)
+                arguments(HORA, 332, 87, 8, 25, 315, 1150),
+                arguments(SIFER, 332, 87, 8, 25, 315, 1160),
+                arguments(GETON, 332, 88, 8, 25, 321, 1150),
+                arguments(RUNID, 332, 87, 8, 25, 315, 1150),
+                arguments(ALATE, 337, 88, 8, 25, 318, 1150)
         );
     }
 

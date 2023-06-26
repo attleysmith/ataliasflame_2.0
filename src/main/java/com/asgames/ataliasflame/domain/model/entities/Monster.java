@@ -11,7 +11,8 @@ public class Monster implements Combatant {
     private String code;
     private int attack;
     private int defense;
-    private int damage;
+    private int minDamage;
+    private int maxDamage;
     private int totalHealth;
     private int injury;
     private int initiative;

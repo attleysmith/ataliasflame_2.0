@@ -3,6 +3,7 @@ package com.asgames.ataliasflame.domain.services;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
 import com.asgames.ataliasflame.domain.services.CombatContext.Round;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +18,9 @@ import static java.util.stream.Collectors.toMap;
 @Slf4j
 @Service
 public class CombatService {
+
+    @Autowired
+    private CalculatorService calculatorService;
 
     public void combat(List<Combatant> team1, List<Combatant> team2) {
         if (team1.size() == 0 || team2.size() == 0) {
@@ -47,7 +51,7 @@ public class CombatService {
         if (attacker.getActualHealth() > 0) {
             int chance = attacker.getAttack() - defender.getDefense();
             if (successX(chance)) {
-                damage = attacker.getDamage();
+                damage = calculatorService.pointOut(attacker.getMinDamage(), attacker.getMaxDamage());
                 defender.setInjury(min(defender.getInjury() + damage, defender.getTotalHealth()));
             }
         }

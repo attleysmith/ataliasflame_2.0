@@ -16,7 +16,8 @@ public class Weapon {
     }
 
     private String code;
-    private int damage;
+    private int minDamage;
+    private int maxDamage;
     private int defense;
     private int initiative;
 }

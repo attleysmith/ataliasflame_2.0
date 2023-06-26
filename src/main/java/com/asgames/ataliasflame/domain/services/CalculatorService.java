@@ -18,6 +18,17 @@ public class CalculatorService {
         return max(0, round(base + (base * multiplier / 100f)));
     }
 
+    public int pointOut(int min, int max) {
+        if (min == max) {
+            return min;
+        }
+        if (min > max) {
+            throw new IllegalArgumentException("Minimum cannot be greater than maximum!");
+        }
+        int possibilities = max - min + 1;
+        return roll(possibilities) + min - 1;
+    }
+
     public <T> T choose(List<SelectionValue<T>> partitions) {
         int possibilities = partitions.stream()
                 .map(SelectionValue::getChance)

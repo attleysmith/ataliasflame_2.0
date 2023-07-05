@@ -39,7 +39,7 @@ class AttributeServiceTest {
                 .race(HUMAN)
                 .gender(MALE)
                 .defensiveGod(ALATE)
-                .name("Takemoto")
+                .name("Hugo")
                 .build();
         character = addDagger(characterService.createCharacter(characterInput));
 

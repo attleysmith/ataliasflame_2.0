@@ -4,17 +4,14 @@ import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.model.enums.God;
 import com.asgames.ataliasflame.domain.model.enums.Race;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import static com.asgames.ataliasflame.domain.MockConstants.*;
 import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
+import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.calculate;
 
 @Service
 public class CharacterCalculationService {
-
-    @Autowired
-    private CalculatorService calculatorService;
 
     public Character recalculateProperties(Character character) {
         recalculateAttack(character);
@@ -22,15 +19,15 @@ public class CharacterCalculationService {
         recalculateDamage(character);
         recalculateHealth(character);
 
-        character.setMinDamage(calculatorService.calculate(character.getWeapon().getMinDamage(), character.getDamageMultiplier()));
-        character.setMaxDamage(calculatorService.calculate(character.getWeapon().getMaxDamage(), character.getDamageMultiplier()));
+        character.setMinDamage(calculate(character.getWeapon().getMinDamage(), character.getDamageMultiplier()));
+        character.setMaxDamage(calculate(character.getWeapon().getMaxDamage(), character.getDamageMultiplier()));
         character.setInitiative(character.getWeapon().getInitiative());
 
         return character;
     }
 
     private void recalculateAttack(Character character) {
-        character.setAttack(calculatorService.calculate(BASE_ATTACK,
+        character.setAttack(calculate(BASE_ATTACK,
                 calculateAttackMultiplier(character, STRENGTH),
                 calculateAttackMultiplier(character, DEXTERITY),
                 calculateAttackMultiplier(character, CONSTITUTION),
@@ -39,7 +36,7 @@ public class CharacterCalculationService {
     }
 
     private void recalculateDefense(Character character) {
-        character.setDefense(calculatorService.calculate(actualDefense(character),
+        character.setDefense(calculate(actualDefense(character),
                 calculateDefenseMultiplier(character, STRENGTH),
                 calculateDefenseMultiplier(character, DEXTERITY),
                 calculateDefenseMultiplier(character, CONSTITUTION),
@@ -57,7 +54,7 @@ public class CharacterCalculationService {
     }
 
     private void recalculateHealth(Character character) {
-        character.setTotalHealth(calculatorService.calculate(BASE_HEALTH,
+        character.setTotalHealth(calculate(BASE_HEALTH,
                 calculateHealthMultiplier(character, STRENGTH),
                 calculateHealthMultiplier(character, DEXTERITY),
                 calculateHealthMultiplier(character, CONSTITUTION),
@@ -90,7 +87,7 @@ public class CharacterCalculationService {
     }
 
     private int calculateBoosterEffect(Attribute attribute, Integer baseValue, Race race, God god) {
-        return calculatorService.calculate(
+        return calculate(
                 baseValue,
                 BOOSTERS.get(race.name()).getEffects().get(attribute),
                 BOOSTERS.get(god.name()).getEffects().get(attribute));

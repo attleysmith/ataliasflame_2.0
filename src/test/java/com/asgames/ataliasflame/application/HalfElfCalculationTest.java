@@ -1,25 +1,15 @@
 package com.asgames.ataliasflame.application;
 
 import com.asgames.ataliasflame.application.model.CharacterInput;
-import com.asgames.ataliasflame.domain.model.entities.CasteDetails;
 import com.asgames.ataliasflame.domain.model.entities.Character;
-import com.asgames.ataliasflame.domain.model.enums.Attribute;
-import com.asgames.ataliasflame.domain.model.enums.Caste;
 import com.asgames.ataliasflame.domain.model.enums.God;
-import com.asgames.ataliasflame.domain.services.CharacterCalculationService;
-import com.asgames.ataliasflame.infrastructure.repositories.CharacterRepository;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.Map;
 import java.util.stream.Stream;
 
-import static com.asgames.ataliasflame.domain.MockConstants.CASTE_DETAILS;
-import static com.asgames.ataliasflame.domain.MockConstants.WEAPONS;
-import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
 import static com.asgames.ataliasflame.domain.model.enums.Caste.*;
 import static com.asgames.ataliasflame.domain.model.enums.Gender.MALE;
 import static com.asgames.ataliasflame.domain.model.enums.God.*;
@@ -30,29 +20,23 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 @SpringBootTest
-class HalfElfCalculationTest {
-
-    @Autowired
-    private CharacterService characterService;
-    @Autowired
-    private CharacterRepository characterRepository;
-    @Autowired
-    private CharacterCalculationService characterCalculationService;
+class HalfElfCalculationTest extends RaceCalculationTestBase {
 
     @ParameterizedTest
     @MethodSource("rogueCalculations")
     void rogueTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health) {
+        String characterName = "Luirlan";
         CharacterInput characterInput = CharacterInput.builder()
                 .race(HALF_ELF)
                 .gender(MALE)
                 .defensiveGod(god)
-                .name("Takemoto")
+                .name(characterName)
                 .build();
         Character character = characterService.createCharacter(characterInput);
         assertThat(character.getCaste(), is(ROGUE));
-        addDagger();
+        addDagger(characterName);
 
-        character = characterRepository.getCharacter();
+        character = characterService.getCharacter(characterName);
         assertThat(character.getAttack(), is(equalTo(attack)));
         assertThat(character.getDefense(), is(equalTo(defense)));
         assertThat(character.getMinDamage(), is(equalTo(minDamage)));
@@ -74,17 +58,18 @@ class HalfElfCalculationTest {
     @ParameterizedTest
     @MethodSource("fighterCalculations")
     void fighterTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health) {
+        String characterName = "Durothil";
         CharacterInput characterInput = CharacterInput.builder()
                 .race(HALF_ELF)
                 .gender(MALE)
                 .defensiveGod(god)
-                .name("Takemoto")
+                .name(characterName)
                 .build();
         Character character = characterService.createCharacter(characterInput);
-        upgradeCaste(character.getCaste(), FIGHTER);
-        addDagger();
+        upgradeCaste(characterName, character.getCaste(), FIGHTER);
+        addDagger(characterName);
 
-        character = characterRepository.getCharacter();
+        character = characterService.getCharacter(characterName);
         assertThat(character.getAttack(), is(equalTo(attack)));
         assertThat(character.getDefense(), is(equalTo(defense)));
         assertThat(character.getMinDamage(), is(equalTo(minDamage)));
@@ -106,17 +91,18 @@ class HalfElfCalculationTest {
     @ParameterizedTest
     @MethodSource("paladinCalculations")
     void paladinTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health) {
+        String characterName = "Ehlark";
         CharacterInput characterInput = CharacterInput.builder()
                 .race(HALF_ELF)
                 .gender(MALE)
                 .defensiveGod(god)
-                .name("Takemoto")
+                .name(characterName)
                 .build();
         Character character = characterService.createCharacter(characterInput);
-        upgradeCaste(character.getCaste(), PALADIN);
-        addDagger();
+        upgradeCaste(characterName, character.getCaste(), PALADIN);
+        addDagger(characterName);
 
-        character = characterRepository.getCharacter();
+        character = characterService.getCharacter(characterName);
         assertThat(character.getAttack(), is(equalTo(attack)));
         assertThat(character.getDefense(), is(equalTo(defense)));
         assertThat(character.getMinDamage(), is(equalTo(minDamage)));
@@ -138,17 +124,18 @@ class HalfElfCalculationTest {
     @ParameterizedTest
     @MethodSource("grandmasterCalculations")
     void grandmasterTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health) {
+        String characterName = "Aired";
         CharacterInput characterInput = CharacterInput.builder()
                 .race(HALF_ELF)
                 .gender(MALE)
                 .defensiveGod(god)
-                .name("Takemoto")
+                .name(characterName)
                 .build();
         Character character = characterService.createCharacter(characterInput);
-        upgradeCaste(character.getCaste(), GRANDMASTER);
-        addDagger();
+        upgradeCaste(characterName, character.getCaste(), GRANDMASTER);
+        addDagger(characterName);
 
-        character = characterRepository.getCharacter();
+        character = characterService.getCharacter(characterName);
         assertThat(character.getAttack(), is(equalTo(attack)));
         assertThat(character.getDefense(), is(equalTo(defense)));
         assertThat(character.getMinDamage(), is(equalTo(minDamage)));
@@ -170,17 +157,18 @@ class HalfElfCalculationTest {
     @ParameterizedTest
     @MethodSource("titanCalculations")
     void titanTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health) {
+        String characterName = "Tiarsus";
         CharacterInput characterInput = CharacterInput.builder()
                 .race(HALF_ELF)
                 .gender(MALE)
                 .defensiveGod(god)
-                .name("Takemoto")
+                .name(characterName)
                 .build();
         Character character = characterService.createCharacter(characterInput);
-        upgradeCaste(character.getCaste(), TITAN);
-        addDagger();
+        upgradeCaste(characterName, character.getCaste(), TITAN);
+        addDagger(characterName);
 
-        character = characterRepository.getCharacter();
+        character = characterService.getCharacter(characterName);
         assertThat(character.getAttack(), is(equalTo(attack)));
         assertThat(character.getDefense(), is(equalTo(defense)));
         assertThat(character.getMinDamage(), is(equalTo(minDamage)));
@@ -196,40 +184,6 @@ class HalfElfCalculationTest {
                 arguments(GETON, 336, 84, 8, 23, 286, 1050),
                 arguments(RUNID, 336, 83, 8, 23, 280, 1050),
                 arguments(ALATE, 341, 84, 8, 23, 283, 1050)
-        );
-    }
-
-    private void upgradeCaste(Caste actualCaste, Caste targetCaste) {
-        if (actualCaste.equals(targetCaste)) {
-            return;
-        }
-        Caste nextCaste = CASTE_DETAILS.get(actualCaste).getNextCastes().get(0);
-        CasteDetails nextCasteDetails = CASTE_DETAILS.get(nextCaste);
-        setAttributes(nextCasteDetails.getMinimumAttributes());
-
-        Character character = characterService.upgradeCaste(nextCaste);
-        upgradeCaste(character.getCaste(), targetCaste);
-    }
-
-    private void setAttributes(Map<Attribute, Integer> targetAttributes) {
-        Character character = characterRepository.getCharacter();
-        character.getAttributes().put(STRENGTH, targetAttributes.get(STRENGTH));
-        character.getAttributes().put(DEXTERITY, targetAttributes.get(DEXTERITY));
-        character.getAttributes().put(CONSTITUTION, targetAttributes.get(CONSTITUTION));
-        character.getAttributes().put(AGILITY, targetAttributes.get(AGILITY));
-        character.getAttributes().put(INTELLIGENCE, targetAttributes.get(INTELLIGENCE));
-
-        characterRepository.save(
-                characterCalculationService.recalculateProperties(character)
-        );
-    }
-
-    private void addDagger() {
-        Character character = characterRepository.getCharacter();
-        character.setWeapon(WEAPONS.get("DAGGER"));
-
-        characterRepository.save(
-                characterCalculationService.recalculateProperties(character)
         );
     }
 }

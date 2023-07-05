@@ -1,4 +1,4 @@
-package com.asgames.ataliasflame.domain.services;
+package com.asgames.ataliasflame.domain.utils;
 
 import lombok.Data;
 

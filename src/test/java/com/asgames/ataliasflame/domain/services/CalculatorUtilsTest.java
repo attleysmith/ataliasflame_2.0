@@ -1,5 +1,6 @@
 package com.asgames.ataliasflame.domain.services;
 
+import com.asgames.ataliasflame.domain.utils.CalculatorUtils;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -11,26 +12,24 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-class CalculatorServiceTest {
-
-    private final CalculatorService calculatorService = new CalculatorService();
+class CalculatorUtilsTest {
 
     @ParameterizedTest
     @ValueSource(ints = {0, 11, 50, 78})
     void emptyCalculationTest(int base) {
-        assertThat(calculatorService.calculate(base), is(base));
+        assertThat(CalculatorUtils.calculate(base), is(base));
     }
 
     @ParameterizedTest
     @MethodSource("singleCalculations")
     void singleMultiplierTest(int base, int multiplier, int result) {
-        assertThat(calculatorService.calculate(base, multiplier), is(result));
+        assertThat(CalculatorUtils.calculate(base, multiplier), is(result));
     }
 
     @ParameterizedTest
     @MethodSource("manyCalculations")
     void manyMultipliersTest(int base, int[] multiplier, int result) {
-        assertThat(calculatorService.calculate(base, multiplier), is(result));
+        assertThat(CalculatorUtils.calculate(base, multiplier), is(result));
     }
 
     private static Stream<Arguments> singleCalculations() {

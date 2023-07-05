@@ -34,11 +34,13 @@ class CharacterServiceTest {
     @MethodSource("characters")
     void characterCreationTest(Race race, Gender gender, God defensiveGod) {
         // given
+        String characterName = "Dain";
+        // and
         CharacterInput characterInput = CharacterInput.builder()
                 .race(race)
                 .gender(gender)
                 .defensiveGod(defensiveGod)
-                .name("Takemoto")
+                .name(characterName)
                 .build();
 
         // when
@@ -57,16 +59,18 @@ class CharacterServiceTest {
     @MethodSource("characters")
     void characterQueryTest(Race race, Gender gender, God defensiveGod) {
         // given
+        String characterName = "Walt";
+        // and
         CharacterInput characterInput = CharacterInput.builder()
                 .race(race)
                 .gender(gender)
                 .defensiveGod(defensiveGod)
-                .name("Takemoto")
+                .name(characterName)
                 .build();
         characterService.createCharacter(characterInput);
 
         // when
-        Character character = characterService.getCharacter();
+        Character character = characterService.getCharacter(characterName);
 
         // then
         assertThat(character.getRace(), is(equalTo(race)));
@@ -80,19 +84,21 @@ class CharacterServiceTest {
     @Test
     void deathMatchTest() {
         // given
+        String characterName = "Gwatkin";
+        // and
         CharacterInput characterInput = CharacterInput.builder()
                 .race(HUMAN)
                 .gender(MALE)
                 .defensiveGod(ALATE)
-                .name("Takemoto")
+                .name(characterName)
                 .build();
         characterService.createCharacter(characterInput);
 
         // expect
         Character character;
         do {
-            characterService.combat();
-            character = characterService.getCharacter();
+            characterService.combat(characterName);
+            character = characterService.getCharacter(characterName);
         } while (character.getActualHealth() > 0);
     }
 

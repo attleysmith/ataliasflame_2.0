@@ -6,7 +6,7 @@ import com.asgames.ataliasflame.domain.model.entities.Modifier;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
 import com.asgames.ataliasflame.domain.model.valueobjects.Weapon;
-import com.asgames.ataliasflame.domain.services.SelectionValue;
+import com.asgames.ataliasflame.domain.utils.SelectionValue;
 
 import java.util.List;
 import java.util.Map;

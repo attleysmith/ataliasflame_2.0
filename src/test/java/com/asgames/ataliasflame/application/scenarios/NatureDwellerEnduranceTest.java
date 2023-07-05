@@ -1,11 +1,9 @@
 package com.asgames.ataliasflame.application.scenarios;
 
-import com.asgames.ataliasflame.application.CharacterService;
 import com.asgames.ataliasflame.application.model.CharacterInput;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
@@ -19,10 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @Disabled("May be killed in action")
 @SpringBootTest
-public class NatureDwellerEnduranceTest {
-
-    @Autowired
-    private CharacterService characterService;
+public class NatureDwellerEnduranceTest extends EnduranceTestBase {
 
     @Test
     void enduranceTest() {
@@ -31,11 +26,11 @@ public class NatureDwellerEnduranceTest {
                 .race(HALFLING)
                 .gender(MALE)
                 .defensiveGod(SIFER)
-                .name("Takemoto")
+                .name(characterName)
                 .build();
         characterService.createCharacter(characterInput);
         // and
-        Character character = characterService.getCharacter();
+        Character character = characterService.getCharacter(characterName);
 
         // expect
         assertThat(character.getLevel(), is(1));
@@ -51,7 +46,7 @@ public class NatureDwellerEnduranceTest {
         assertThat(character.getTotalHealth(), is(110));
         // and
         assertThrows(IllegalArgumentException.class,
-                () -> characterService.upgradeCaste(HERMIT));
+                () -> upgradeCaste(HERMIT));
 
         // when
         character = combatUntilNextLevel();
@@ -61,9 +56,9 @@ public class NatureDwellerEnduranceTest {
         assertThat(character.getAttributePoints(), is(5));
 
         // then
-        characterService.addAttributePoints(DEXTERITY, 2);
-        characterService.addAttributePoints(CONSTITUTION, 1);
-        character = characterService.addAttributePoints(AGILITY, 2);
+        addAttributePoints(DEXTERITY, 2);
+        addAttributePoints(CONSTITUTION, 1);
+        character = addAttributePoints(AGILITY, 2);
 
         // expect
         assertThat(character.getAttributePoints(), is(0));
@@ -78,7 +73,7 @@ public class NatureDwellerEnduranceTest {
         assertThat(character.getTotalHealth(), is(120));
         // and
         assertThrows(IllegalArgumentException.class,
-                () -> characterService.upgradeCaste(HERMIT));
+                () -> upgradeCaste(HERMIT));
 
         // when
         character = combatUntilNextLevel();
@@ -88,9 +83,9 @@ public class NatureDwellerEnduranceTest {
         assertThat(character.getAttributePoints(), is(5));
 
         // then
-        characterService.addAttributePoints(STRENGTH, 2);
-        characterService.addAttributePoints(CONSTITUTION, 2);
-        character = characterService.addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(STRENGTH, 2);
+        addAttributePoints(CONSTITUTION, 2);
+        character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributePoints(), is(0));
@@ -105,7 +100,7 @@ public class NatureDwellerEnduranceTest {
         assertThat(character.getTotalHealth(), is(140));
         // and
         assertThrows(IllegalArgumentException.class,
-                () -> characterService.upgradeCaste(HERMIT));
+                () -> upgradeCaste(HERMIT));
 
         // when
         character = combatUntilNextLevel();
@@ -115,7 +110,7 @@ public class NatureDwellerEnduranceTest {
         assertThat(character.getAttributePoints(), is(5));
 
         // then
-        character = characterService.addAttributePoints(INTELLIGENCE, 2);
+        character = addAttributePoints(INTELLIGENCE, 2);
 
         // expect
         assertThat(character.getAttributePoints(), is(3));
@@ -130,15 +125,15 @@ public class NatureDwellerEnduranceTest {
         assertThat(character.getTotalHealth(), is(140));
 
         // then
-        character = characterService.upgradeCaste(HERMIT);
+        character = upgradeCaste(HERMIT);
 
         // expect
         assertThat(character.getCaste(), is(HERMIT));
 
         // then
-        characterService.addAttributePoints(STRENGTH, 1);
-        characterService.addAttributePoints(DEXTERITY, 1);
-        character = characterService.addAttributePoints(AGILITY, 1);
+        addAttributePoints(STRENGTH, 1);
+        addAttributePoints(DEXTERITY, 1);
+        character = addAttributePoints(AGILITY, 1);
 
         // expect
         assertThat(character.getAttributePoints(), is(0));
@@ -160,11 +155,11 @@ public class NatureDwellerEnduranceTest {
         assertThat(character.getAttributePoints(), is(5));
 
         // then
-        characterService.addAttributePoints(STRENGTH, 1);
-        characterService.addAttributePoints(DEXTERITY, 1);
-        characterService.addAttributePoints(CONSTITUTION, 1);
-        characterService.addAttributePoints(AGILITY, 1);
-        character = characterService.addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(STRENGTH, 1);
+        addAttributePoints(DEXTERITY, 1);
+        addAttributePoints(CONSTITUTION, 1);
+        addAttributePoints(AGILITY, 1);
+        character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributePoints(), is(0));
@@ -186,11 +181,11 @@ public class NatureDwellerEnduranceTest {
         assertThat(character.getAttributePoints(), is(5));
 
         // then
-        characterService.addAttributePoints(STRENGTH, 1);
-        characterService.addAttributePoints(DEXTERITY, 1);
-        characterService.addAttributePoints(CONSTITUTION, 1);
-        characterService.addAttributePoints(AGILITY, 1);
-        character = characterService.addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(STRENGTH, 1);
+        addAttributePoints(DEXTERITY, 1);
+        addAttributePoints(CONSTITUTION, 1);
+        addAttributePoints(AGILITY, 1);
+        character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributePoints(), is(0));
@@ -212,11 +207,11 @@ public class NatureDwellerEnduranceTest {
         assertThat(character.getAttributePoints(), is(5));
 
         // then
-        characterService.addAttributePoints(STRENGTH, 1);
-        characterService.addAttributePoints(DEXTERITY, 1);
-        characterService.addAttributePoints(CONSTITUTION, 1);
-        characterService.addAttributePoints(AGILITY, 1);
-        character = characterService.addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(STRENGTH, 1);
+        addAttributePoints(DEXTERITY, 1);
+        addAttributePoints(CONSTITUTION, 1);
+        addAttributePoints(AGILITY, 1);
+        character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributePoints(), is(0));
@@ -238,11 +233,11 @@ public class NatureDwellerEnduranceTest {
         assertThat(character.getAttributePoints(), is(5));
 
         // then
-        characterService.addAttributePoints(STRENGTH, 1);
-        characterService.addAttributePoints(DEXTERITY, 1);
-        characterService.addAttributePoints(CONSTITUTION, 1);
-        characterService.addAttributePoints(AGILITY, 1);
-        character = characterService.addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(STRENGTH, 1);
+        addAttributePoints(DEXTERITY, 1);
+        addAttributePoints(CONSTITUTION, 1);
+        addAttributePoints(AGILITY, 1);
+        character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributePoints(), is(0));
@@ -264,10 +259,10 @@ public class NatureDwellerEnduranceTest {
         assertThat(character.getAttributePoints(), is(5));
 
         // then
-        characterService.addAttributePoints(DEXTERITY, 1);
-        characterService.addAttributePoints(CONSTITUTION, 2);
-        characterService.addAttributePoints(AGILITY, 1);
-        character = characterService.addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(DEXTERITY, 1);
+        addAttributePoints(CONSTITUTION, 2);
+        addAttributePoints(AGILITY, 1);
+        character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributePoints(), is(0));
@@ -289,10 +284,10 @@ public class NatureDwellerEnduranceTest {
         assertThat(character.getAttributePoints(), is(5));
 
         // then
-        characterService.addAttributePoints(DEXTERITY, 1);
-        characterService.addAttributePoints(CONSTITUTION, 2);
-        characterService.addAttributePoints(AGILITY, 1);
-        character = characterService.addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(DEXTERITY, 1);
+        addAttributePoints(CONSTITUTION, 2);
+        addAttributePoints(AGILITY, 1);
+        character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributePoints(), is(0));
@@ -314,10 +309,10 @@ public class NatureDwellerEnduranceTest {
         assertThat(character.getAttributePoints(), is(5));
 
         // then
-        characterService.addAttributePoints(DEXTERITY, 1);
-        characterService.addAttributePoints(CONSTITUTION, 2);
-        characterService.addAttributePoints(AGILITY, 1);
-        character = characterService.addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(DEXTERITY, 1);
+        addAttributePoints(CONSTITUTION, 2);
+        addAttributePoints(AGILITY, 1);
+        character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributePoints(), is(0));
@@ -339,10 +334,10 @@ public class NatureDwellerEnduranceTest {
         assertThat(character.getAttributePoints(), is(5));
 
         // then
-        characterService.addAttributePoints(DEXTERITY, 1);
-        characterService.addAttributePoints(CONSTITUTION, 2);
-        characterService.addAttributePoints(AGILITY, 1);
-        character = characterService.addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(DEXTERITY, 1);
+        addAttributePoints(CONSTITUTION, 2);
+        addAttributePoints(AGILITY, 1);
+        character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributePoints(), is(0));
@@ -364,8 +359,8 @@ public class NatureDwellerEnduranceTest {
         assertThat(character.getAttributePoints(), is(5));
 
         // then
-        characterService.addAttributePoints(CONSTITUTION, 1);
-        character = characterService.addAttributePoints(INTELLIGENCE, 4);
+        addAttributePoints(CONSTITUTION, 1);
+        character = addAttributePoints(INTELLIGENCE, 4);
 
         // expect
         assertThat(character.getAttributePoints(), is(0));
@@ -387,7 +382,7 @@ public class NatureDwellerEnduranceTest {
         assertThat(character.getAttributePoints(), is(5));
 
         // then
-        character = characterService.addAttributePoints(INTELLIGENCE, 2);
+        character = addAttributePoints(INTELLIGENCE, 2);
 
         // expect
         assertThat(character.getAttributePoints(), is(3));
@@ -400,17 +395,5 @@ public class NatureDwellerEnduranceTest {
         assertThat(character.getAttack(), is(118));
         assertThat(character.getDamageMultiplier(), is(30));
         assertThat(character.getTotalHealth(), is(250));
-    }
-
-    private Character combatUntilNextLevel() {
-        Character character = characterService.getCharacter();
-        int actualLevel = character.getLevel();
-
-        do {
-            characterService.combat();
-            character = characterService.getCharacter();
-        } while (character.getActualHealth() > 0 && character.getLevel() == actualLevel);
-
-        return character;
     }
 }

@@ -8,6 +8,7 @@ import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
 import com.asgames.ataliasflame.domain.services.*;
 import com.asgames.ataliasflame.infrastructure.repositories.CharacterRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,27 +46,28 @@ public class CharacterService {
     }
 
     @Transactional(readOnly = true)
-    public Character getCharacter() {
-        return characterRepository.getCharacter();
+    public Character getCharacter(String characterName) {
+        return characterRepository.findById(characterName)
+                .orElseThrow(() -> new EntityNotFoundException("Character does not exist!"));
     }
 
     @Transactional
-    public Character addAttributePoints(Attribute attribute, int points) {
-        Character character = characterRepository.getCharacter();
+    public Character addAttributePoints(String characterName, Attribute attribute, int points) {
+        Character character = getCharacter(characterName);
         character = attributeService.addAttributePoints(character, attribute, points);
         return characterRepository.save(character);
     }
 
     @Transactional
-    public Character upgradeCaste(Caste newCaste) {
-        Character character = characterRepository.getCharacter();
+    public Character upgradeCaste(String characterName, Caste newCaste) {
+        Character character = getCharacter(characterName);
         character = casteService.upgradeCaste(character, newCaste);
         return characterRepository.save(character);
     }
 
     @Transactional
-    public void combat() {
-        Character character = characterRepository.getCharacter();
+    public void combat(String characterName) {
+        Character character = getCharacter(characterName);
         Monster monster = monsterService.getRandomMonster();
 
         combatService.combat(List.of(character), List.of(monster));

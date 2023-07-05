@@ -1,11 +1,9 @@
 package com.asgames.ataliasflame.application.scenarios;
 
-import com.asgames.ataliasflame.application.CharacterService;
 import com.asgames.ataliasflame.application.model.CharacterInput;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
@@ -19,10 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @Disabled("May be killed in action")
 @SpringBootTest
-public class WandererEnduranceTest {
-
-    @Autowired
-    private CharacterService characterService;
+public class WandererEnduranceTest extends EnduranceTestBase {
 
     @Test
     void enduranceTest() {
@@ -31,11 +26,11 @@ public class WandererEnduranceTest {
                 .race(HUMAN)
                 .gender(MALE)
                 .defensiveGod(GETON)
-                .name("Takemoto")
+                .name(characterName)
                 .build();
         characterService.createCharacter(characterInput);
         // and
-        Character character = characterService.getCharacter();
+        Character character = characterService.getCharacter(characterName);
 
         // expect
         assertThat(character.getLevel(), is(1));
@@ -51,7 +46,7 @@ public class WandererEnduranceTest {
         assertThat(character.getTotalHealth(), is(110));
         // and
         assertThrows(IllegalArgumentException.class,
-                () -> characterService.upgradeCaste(TRACKER));
+                () -> upgradeCaste(TRACKER));
 
         // when
         character = combatUntilNextLevel();
@@ -61,9 +56,9 @@ public class WandererEnduranceTest {
         assertThat(character.getAttributePoints(), is(5));
 
         // then
-        characterService.addAttributePoints(DEXTERITY, 2);
-        characterService.addAttributePoints(CONSTITUTION, 1);
-        character = characterService.addAttributePoints(AGILITY, 2);
+        addAttributePoints(DEXTERITY, 2);
+        addAttributePoints(CONSTITUTION, 1);
+        character = addAttributePoints(AGILITY, 2);
 
         // expect
         assertThat(character.getAttributePoints(), is(0));
@@ -78,7 +73,7 @@ public class WandererEnduranceTest {
         assertThat(character.getTotalHealth(), is(120));
         // and
         assertThrows(IllegalArgumentException.class,
-                () -> characterService.upgradeCaste(TRACKER));
+                () -> upgradeCaste(TRACKER));
 
         // when
         character = combatUntilNextLevel();
@@ -88,9 +83,9 @@ public class WandererEnduranceTest {
         assertThat(character.getAttributePoints(), is(5));
 
         // then
-        characterService.addAttributePoints(DEXTERITY, 2);
-        characterService.addAttributePoints(CONSTITUTION, 1);
-        character = characterService.addAttributePoints(AGILITY, 2);
+        addAttributePoints(DEXTERITY, 2);
+        addAttributePoints(CONSTITUTION, 1);
+        character = addAttributePoints(AGILITY, 2);
 
         // expect
         assertThat(character.getAttributePoints(), is(0));
@@ -105,7 +100,7 @@ public class WandererEnduranceTest {
         assertThat(character.getTotalHealth(), is(130));
         // and
         assertThrows(IllegalArgumentException.class,
-                () -> characterService.upgradeCaste(TRACKER));
+                () -> upgradeCaste(TRACKER));
 
         // when
         character = combatUntilNextLevel();
@@ -115,8 +110,8 @@ public class WandererEnduranceTest {
         assertThat(character.getAttributePoints(), is(5));
 
         // then
-        characterService.addAttributePoints(STRENGTH, 3);
-        character = characterService.addAttributePoints(CONSTITUTION, 2);
+        addAttributePoints(STRENGTH, 3);
+        character = addAttributePoints(CONSTITUTION, 2);
 
         // expect
         assertThat(character.getAttributePoints(), is(0));
@@ -131,7 +126,7 @@ public class WandererEnduranceTest {
         assertThat(character.getTotalHealth(), is(150));
         // and
         assertThrows(IllegalArgumentException.class,
-                () -> characterService.upgradeCaste(TRACKER));
+                () -> upgradeCaste(TRACKER));
 
         // when
         character = combatUntilNextLevel();
@@ -141,7 +136,7 @@ public class WandererEnduranceTest {
         assertThat(character.getAttributePoints(), is(5));
 
         // then
-        character = characterService.addAttributePoints(INTELLIGENCE, 1);
+        character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributePoints(), is(4));
@@ -156,16 +151,16 @@ public class WandererEnduranceTest {
         assertThat(character.getTotalHealth(), is(150));
 
         // then
-        character = characterService.upgradeCaste(TRACKER);
+        character = upgradeCaste(TRACKER);
 
         // expect
         assertThat(character.getCaste(), is(TRACKER));
 
         // then
-        characterService.addAttributePoints(STRENGTH, 1);
-        characterService.addAttributePoints(DEXTERITY, 1);
-        characterService.addAttributePoints(CONSTITUTION, 1);
-        character = characterService.addAttributePoints(AGILITY, 1);
+        addAttributePoints(STRENGTH, 1);
+        addAttributePoints(DEXTERITY, 1);
+        addAttributePoints(CONSTITUTION, 1);
+        character = addAttributePoints(AGILITY, 1);
 
         // expect
         assertThat(character.getAttributePoints(), is(0));
@@ -187,9 +182,9 @@ public class WandererEnduranceTest {
         assertThat(character.getAttributePoints(), is(5));
 
         // then
-        characterService.addAttributePoints(DEXTERITY, 2);
-        characterService.addAttributePoints(CONSTITUTION, 1);
-        character = characterService.addAttributePoints(AGILITY, 2);
+        addAttributePoints(DEXTERITY, 2);
+        addAttributePoints(CONSTITUTION, 1);
+        character = addAttributePoints(AGILITY, 2);
 
         // expect
         assertThat(character.getAttributePoints(), is(0));
@@ -211,9 +206,9 @@ public class WandererEnduranceTest {
         assertThat(character.getAttributePoints(), is(5));
 
         // then
-        characterService.addAttributePoints(STRENGTH, 1);
-        characterService.addAttributePoints(DEXTERITY, 2);
-        character = characterService.addAttributePoints(AGILITY, 2);
+        addAttributePoints(STRENGTH, 1);
+        addAttributePoints(DEXTERITY, 2);
+        character = addAttributePoints(AGILITY, 2);
 
         // expect
         assertThat(character.getAttributePoints(), is(0));
@@ -235,9 +230,9 @@ public class WandererEnduranceTest {
         assertThat(character.getAttributePoints(), is(5));
 
         // then
-        characterService.addAttributePoints(DEXTERITY, 2);
-        characterService.addAttributePoints(CONSTITUTION, 1);
-        character = characterService.addAttributePoints(AGILITY, 2);
+        addAttributePoints(DEXTERITY, 2);
+        addAttributePoints(CONSTITUTION, 1);
+        character = addAttributePoints(AGILITY, 2);
 
         // expect
         assertThat(character.getAttributePoints(), is(0));
@@ -259,10 +254,10 @@ public class WandererEnduranceTest {
         assertThat(character.getAttributePoints(), is(5));
 
         // then
-        characterService.addAttributePoints(STRENGTH, 1);
-        characterService.addAttributePoints(DEXTERITY, 1);
-        characterService.addAttributePoints(CONSTITUTION, 2);
-        character = characterService.addAttributePoints(AGILITY, 1);
+        addAttributePoints(STRENGTH, 1);
+        addAttributePoints(DEXTERITY, 1);
+        addAttributePoints(CONSTITUTION, 2);
+        character = addAttributePoints(AGILITY, 1);
 
         // expect
         assertThat(character.getAttributePoints(), is(0));
@@ -284,10 +279,10 @@ public class WandererEnduranceTest {
         assertThat(character.getAttributePoints(), is(5));
 
         // then
-        characterService.addAttributePoints(STRENGTH, 2);
-        characterService.addAttributePoints(DEXTERITY, 1);
-        characterService.addAttributePoints(CONSTITUTION, 1);
-        character = characterService.addAttributePoints(AGILITY, 1);
+        addAttributePoints(STRENGTH, 2);
+        addAttributePoints(DEXTERITY, 1);
+        addAttributePoints(CONSTITUTION, 1);
+        character = addAttributePoints(AGILITY, 1);
 
         // expect
         assertThat(character.getAttributePoints(), is(0));
@@ -309,11 +304,11 @@ public class WandererEnduranceTest {
         assertThat(character.getAttributePoints(), is(5));
 
         // then
-        characterService.addAttributePoints(STRENGTH, 1);
-        characterService.addAttributePoints(DEXTERITY, 1);
-        characterService.addAttributePoints(CONSTITUTION, 1);
-        characterService.addAttributePoints(AGILITY, 1);
-        character = characterService.addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(STRENGTH, 1);
+        addAttributePoints(DEXTERITY, 1);
+        addAttributePoints(CONSTITUTION, 1);
+        addAttributePoints(AGILITY, 1);
+        character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributePoints(), is(0));
@@ -335,10 +330,10 @@ public class WandererEnduranceTest {
         assertThat(character.getAttributePoints(), is(5));
 
         // then
-        characterService.addAttributePoints(STRENGTH, 1);
-        characterService.addAttributePoints(DEXTERITY, 1);
-        characterService.addAttributePoints(CONSTITUTION, 2);
-        character = characterService.addAttributePoints(AGILITY, 1);
+        addAttributePoints(STRENGTH, 1);
+        addAttributePoints(DEXTERITY, 1);
+        addAttributePoints(CONSTITUTION, 2);
+        character = addAttributePoints(AGILITY, 1);
 
         // expect
         assertThat(character.getAttributePoints(), is(0));
@@ -360,10 +355,10 @@ public class WandererEnduranceTest {
         assertThat(character.getAttributePoints(), is(5));
 
         // then
-        characterService.addAttributePoints(STRENGTH, 1);
-        characterService.addAttributePoints(DEXTERITY, 1);
-        characterService.addAttributePoints(CONSTITUTION, 2);
-        character = characterService.addAttributePoints(AGILITY, 1);
+        addAttributePoints(STRENGTH, 1);
+        addAttributePoints(DEXTERITY, 1);
+        addAttributePoints(CONSTITUTION, 2);
+        character = addAttributePoints(AGILITY, 1);
 
         // expect
         assertThat(character.getAttributePoints(), is(0));
@@ -385,10 +380,10 @@ public class WandererEnduranceTest {
         assertThat(character.getAttributePoints(), is(5));
 
         // then
-        characterService.addAttributePoints(STRENGTH, 2);
-        characterService.addAttributePoints(DEXTERITY, 1);
-        characterService.addAttributePoints(CONSTITUTION, 1);
-        character = characterService.addAttributePoints(AGILITY, 1);
+        addAttributePoints(STRENGTH, 2);
+        addAttributePoints(DEXTERITY, 1);
+        addAttributePoints(CONSTITUTION, 1);
+        character = addAttributePoints(AGILITY, 1);
 
         // expect
         assertThat(character.getAttributePoints(), is(0));
@@ -410,8 +405,8 @@ public class WandererEnduranceTest {
         assertThat(character.getAttributePoints(), is(5));
 
         // then
-        characterService.addAttributePoints(STRENGTH, 2);
-        character = characterService.addAttributePoints(CONSTITUTION, 3);
+        addAttributePoints(STRENGTH, 2);
+        character = addAttributePoints(CONSTITUTION, 3);
 
         // expect
         assertThat(character.getAttributePoints(), is(0));
@@ -433,7 +428,7 @@ public class WandererEnduranceTest {
         assertThat(character.getAttributePoints(), is(5));
 
         // then
-        character = characterService.addAttributePoints(INTELLIGENCE, 4);
+        character = addAttributePoints(INTELLIGENCE, 4);
 
         // expect
         assertThat(character.getAttributePoints(), is(1));
@@ -446,17 +441,5 @@ public class WandererEnduranceTest {
         assertThat(character.getAttack(), is(123));
         assertThat(character.getDamageMultiplier(), is(50));
         assertThat(character.getTotalHealth(), is(300));
-    }
-
-    private Character combatUntilNextLevel() {
-        Character character = characterService.getCharacter();
-        int actualLevel = character.getLevel();
-
-        do {
-            characterService.combat();
-            character = characterService.getCharacter();
-        } while (character.getActualHealth() > 0 && character.getLevel() == actualLevel);
-
-        return character;
     }
 }

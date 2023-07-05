@@ -1,6 +1,4 @@
-package com.asgames.ataliasflame.domain.services;
-
-import org.springframework.stereotype.Service;
+package com.asgames.ataliasflame.domain.utils;
 
 import java.util.List;
 
@@ -9,16 +7,19 @@ import static java.lang.Math.max;
 import static java.lang.Math.round;
 import static java.util.Arrays.stream;
 
-@Service
-public class CalculatorService {
+public final class CalculatorUtils {
 
-    public int calculate(int base, int... multipliers) {
+    private CalculatorUtils() {
+        // utility class
+    }
+
+    public static int calculate(int base, int... multipliers) {
         int multiplier = stream(multipliers).reduce(0, Integer::sum);
 
         return max(0, round(base + (base * multiplier / 100f)));
     }
 
-    public int pointOut(int min, int max) {
+    public static int pointOut(int min, int max) {
         if (min == max) {
             return min;
         }
@@ -29,7 +30,7 @@ public class CalculatorService {
         return roll(possibilities) + min - 1;
     }
 
-    public <T> T choose(List<SelectionValue<T>> partitions) {
+    public static <T> T choose(List<SelectionValue<T>> partitions) {
         int possibilities = partitions.stream()
                 .map(SelectionValue::getChance)
                 .reduce(0, Integer::sum);

@@ -35,6 +35,9 @@ public final class MockConstants {
     public static final int BASE_DEFENSE = 20;
     public static final int BASE_DAMAGE_MULTIPLIER = 0;
 
+    // Action settings
+    public static final int HEALING_EFFECT_OF_SLEEP = 20;
+
     // Attribute modifiers
     public static final Modifier STRENGTH_MODIFIER = Modifier.builder()
             .code(STRENGTH.name())

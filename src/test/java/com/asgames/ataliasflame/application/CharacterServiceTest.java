@@ -97,8 +97,7 @@ class CharacterServiceTest {
         // expect
         Character character;
         do {
-            characterService.combat(characterName);
-            character = characterService.getCharacter(characterName);
+            character = characterService.combat(characterName);
         } while (character.getActualHealth() > 0);
     }
 

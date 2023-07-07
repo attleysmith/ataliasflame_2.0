@@ -35,6 +35,8 @@ public class CharacterService {
     @Autowired
     private CasteService casteService;
     @Autowired
+    private HealingService healingService;
+    @Autowired
     private MonsterService monsterService;
 
     @Transactional
@@ -66,7 +68,14 @@ public class CharacterService {
     }
 
     @Transactional
-    public void combat(String characterName) {
+    public Character sleep(String characterName) {
+        Character character = getCharacter(characterName);
+        character = healingService.sleep(character);
+        return characterRepository.save(character);
+    }
+
+    @Transactional
+    public Character combat(String characterName) {
         Character character = getCharacter(characterName);
         Monster monster = monsterService.getRandomMonster();
 
@@ -80,6 +89,6 @@ public class CharacterService {
             log.info("Enemy's health: " + monster.getActualHealth());
         }
 
-        characterRepository.save(character);
+        return characterRepository.save(character);
     }
 }

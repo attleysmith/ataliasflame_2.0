@@ -13,10 +13,14 @@ public final class CalculatorUtils {
         // utility class
     }
 
+    public static int percent(int base, int multiplier) {
+        return round(base * multiplier / 100f);
+    }
+
     public static int calculate(int base, int... multipliers) {
         int multiplier = stream(multipliers).reduce(0, Integer::sum);
 
-        return max(0, round(base + (base * multiplier / 100f)));
+        return max(0, base + percent(base, multiplier));
     }
 
     public static int pointOut(int min, int max) {

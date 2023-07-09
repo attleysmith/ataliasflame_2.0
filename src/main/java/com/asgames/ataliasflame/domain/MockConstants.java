@@ -1,20 +1,19 @@
 package com.asgames.ataliasflame.domain;
 
-import com.asgames.ataliasflame.domain.model.entities.Booster;
-import com.asgames.ataliasflame.domain.model.entities.CasteDetails;
-import com.asgames.ataliasflame.domain.model.entities.Modifier;
-import com.asgames.ataliasflame.domain.model.entities.Monster;
+import com.asgames.ataliasflame.domain.model.entities.*;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
 import com.asgames.ataliasflame.domain.model.valueobjects.Weapon;
 import com.asgames.ataliasflame.domain.utils.SelectionValue;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
 import static com.asgames.ataliasflame.domain.model.enums.Caste.*;
 import static com.asgames.ataliasflame.domain.model.enums.CasteGroup.*;
 import static com.asgames.ataliasflame.domain.model.enums.God.*;
+import static com.asgames.ataliasflame.domain.model.enums.ItemType.FOOD;
 import static com.asgames.ataliasflame.domain.model.enums.Race.*;
 import static java.util.Collections.emptyList;
 
@@ -354,7 +353,7 @@ public final class MockConstants {
                     .build()
     );
 
-    public static final List<SelectionValue<Weapon>> STARTING_WEAPON_DROPS = List.of(
+    public static final List<SelectionValue<Weapon>> STARTING_WEAPON_SELECTOR = List.of(
             new SelectionValue<>(5, WEAPONS.get("FIST")),
             new SelectionValue<>(30, WEAPONS.get("STAFF")),
             new SelectionValue<>(30, WEAPONS.get("DAGGER")),
@@ -416,12 +415,66 @@ public final class MockConstants {
                     .build()
     );
 
-    public static final List<SelectionValue<Monster>> MONSTER_DROPS = List.of(
+    public static final List<SelectionValue<Monster>> MONSTER_SELECTOR = List.of(
             new SelectionValue<>(20, MONSTERS.get("RAT")),
             new SelectionValue<>(15, MONSTERS.get("BOAR")),
             new SelectionValue<>(25, MONSTERS.get("WOLF")),
             new SelectionValue<>(35, MONSTERS.get("BANDIT")),
             new SelectionValue<>(5, MONSTERS.get("WEREWOLF"))
+    );
+
+    public static final Map<String, List<SelectionValue<Optional<Item>>>> MONSTER_DROPS = Map.of(
+            "BOAR", List.of(
+                    new SelectionValue<>(10, Optional.empty()),
+                    new SelectionValue<>(90, Optional.of(Item.builder()
+                            .type(FOOD)
+                            .code("MEAT")
+                            .healingEffect(10)
+                            .build()))),
+            "BANDIT", List.of(
+                    new SelectionValue<>(25, Optional.empty()),
+                    new SelectionValue<>(20, Optional.of(Item.builder()
+                            .type(FOOD)
+                            .code("WATER")
+                            .healingEffect(3)
+                            .build())),
+                    new SelectionValue<>(15, Optional.of(Item.builder()
+                            .type(FOOD)
+                            .code("BREAD")
+                            .healingEffect(5)
+                            .build())),
+                    new SelectionValue<>(15, Optional.of(Item.builder()
+                            .type(FOOD)
+                            .code("FRUIT")
+                            .healingEffect(8)
+                            .build())),
+                    new SelectionValue<>(20, Optional.of(Item.builder()
+                            .type(FOOD)
+                            .code("MEAT")
+                            .healingEffect(10)
+                            .build())),
+                    new SelectionValue<>(5, Optional.of(Item.builder()
+                            .type(FOOD)
+                            .code("HEALING_HERB")
+                            .healingEffect(20)
+                            .build()))),
+            "WEREWOLF", List.of(
+                    new SelectionValue<>(50, Optional.empty()),
+                    new SelectionValue<>(25, Optional.of(Item.builder()
+                            .type(FOOD)
+                            .code("WATER")
+                            .healingEffect(3)
+                            .build())),
+                    new SelectionValue<>(20, Optional.of(Item.builder()
+                            .type(FOOD)
+                            .code("MEAT")
+                            .healingEffect(10)
+                            .build())),
+                    new SelectionValue<>(5, Optional.of(Item.builder()
+                            .type(FOOD)
+                            .code("HEALING_HERB")
+                            .healingEffect(20)
+                            .build())))
     );
 
 }

@@ -1,10 +1,12 @@
 package com.asgames.ataliasflame.domain.services;
 
 import com.asgames.ataliasflame.domain.model.entities.Character;
+import com.asgames.ataliasflame.domain.model.entities.Item;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import static com.asgames.ataliasflame.domain.MockConstants.HEALING_EFFECT_OF_SLEEP;
+import static com.asgames.ataliasflame.domain.model.enums.ItemType.FOOD;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.percent;
 import static java.lang.Math.max;
 
@@ -16,9 +18,16 @@ public class HealingService {
         return heal(character, HEALING_EFFECT_OF_SLEEP);
     }
 
+    public void eat(Character character, Item item) {
+        if (!item.getType().equals(FOOD)) {
+            throw new IllegalArgumentException("Only food can be eaten!");
+        }
+        heal(character, item.getHealingEffect());
+    }
+
     private Character heal(Character character, int healingEffect) {
         if (character.getInjury() == 0) {
-            log.info("Unnecessary healing!");
+            log.debug("Unnecessary healing!");
             return character;
         }
 

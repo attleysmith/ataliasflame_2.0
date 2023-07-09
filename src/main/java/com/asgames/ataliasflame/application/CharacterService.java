@@ -84,6 +84,7 @@ public class CharacterService {
             character = experienceService.gainExperience(character, monster.getExperience());
             log.info("You are the winner!");
             log.info("Remaining health: " + character.getActualHealth());
+            monsterService.looting(character, monster);
         } else {
             log.info("You are defeated!");
             log.info("Enemy's health: " + monster.getActualHealth());

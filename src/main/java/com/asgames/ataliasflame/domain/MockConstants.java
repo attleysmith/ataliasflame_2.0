@@ -14,6 +14,7 @@ import static com.asgames.ataliasflame.domain.model.enums.Caste.*;
 import static com.asgames.ataliasflame.domain.model.enums.CasteGroup.*;
 import static com.asgames.ataliasflame.domain.model.enums.God.*;
 import static com.asgames.ataliasflame.domain.model.enums.ItemType.FOOD;
+import static com.asgames.ataliasflame.domain.model.enums.ItemType.WEAPON;
 import static com.asgames.ataliasflame.domain.model.enums.Race.*;
 import static java.util.Collections.emptyList;
 
@@ -322,6 +323,7 @@ public final class MockConstants {
                     .maxDamage(2)
                     .defense(0)
                     .initiative(1)
+                    .popularity(0)
                     .build(),
             "STAFF", Weapon.builder()
                     .code("STAFF")
@@ -329,6 +331,7 @@ public final class MockConstants {
                     .maxDamage(5)
                     .defense(10)
                     .initiative(-5)
+                    .popularity(10)
                     .build(),
             "DAGGER", Weapon.builder()
                     .code("DAGGER")
@@ -336,6 +339,7 @@ public final class MockConstants {
                     .maxDamage(6)
                     .defense(1)
                     .initiative(0)
+                    .popularity(20)
                     .build(),
             "SPEAR", Weapon.builder()
                     .code("SPEAR")
@@ -343,6 +347,7 @@ public final class MockConstants {
                     .maxDamage(12)
                     .defense(10)
                     .initiative(-6)
+                    .popularity(30)
                     .build(),
             "SWORD", Weapon.builder()
                     .code("SWORD")
@@ -350,6 +355,7 @@ public final class MockConstants {
                     .maxDamage(18)
                     .defense(8)
                     .initiative(-3)
+                    .popularity(40)
                     .build()
     );
 
@@ -432,23 +438,23 @@ public final class MockConstants {
                             .healingEffect(10)
                             .build()))),
             "BANDIT", List.of(
-                    new SelectionValue<>(25, Optional.empty()),
-                    new SelectionValue<>(20, Optional.of(Item.builder()
+                    new SelectionValue<>(10, Optional.empty()),
+                    new SelectionValue<>(15, Optional.of(Item.builder()
                             .type(FOOD)
                             .code("WATER")
                             .healingEffect(3)
                             .build())),
-                    new SelectionValue<>(15, Optional.of(Item.builder()
+                    new SelectionValue<>(5, Optional.of(Item.builder()
                             .type(FOOD)
                             .code("BREAD")
                             .healingEffect(5)
                             .build())),
-                    new SelectionValue<>(15, Optional.of(Item.builder()
+                    new SelectionValue<>(5, Optional.of(Item.builder()
                             .type(FOOD)
                             .code("FRUIT")
                             .healingEffect(8)
                             .build())),
-                    new SelectionValue<>(20, Optional.of(Item.builder()
+                    new SelectionValue<>(10, Optional.of(Item.builder()
                             .type(FOOD)
                             .code("MEAT")
                             .healingEffect(10)
@@ -457,15 +463,31 @@ public final class MockConstants {
                             .type(FOOD)
                             .code("HEALING_HERB")
                             .healingEffect(20)
+                            .build())),
+                    new SelectionValue<>(5, Optional.of(Item.builder()
+                            .type(WEAPON)
+                            .code("STAFF")
+                            .build())),
+                    new SelectionValue<>(10, Optional.of(Item.builder()
+                            .type(WEAPON)
+                            .code("DAGGER")
+                            .build())),
+                    new SelectionValue<>(15, Optional.of(Item.builder()
+                            .type(WEAPON)
+                            .code("SPEAR")
+                            .build())),
+                    new SelectionValue<>(20, Optional.of(Item.builder()
+                            .type(WEAPON)
+                            .code("SWORD")
                             .build()))),
             "WEREWOLF", List.of(
                     new SelectionValue<>(50, Optional.empty()),
-                    new SelectionValue<>(25, Optional.of(Item.builder()
+                    new SelectionValue<>(15, Optional.of(Item.builder()
                             .type(FOOD)
                             .code("WATER")
                             .healingEffect(3)
                             .build())),
-                    new SelectionValue<>(20, Optional.of(Item.builder()
+                    new SelectionValue<>(15, Optional.of(Item.builder()
                             .type(FOOD)
                             .code("MEAT")
                             .healingEffect(10)
@@ -474,6 +496,14 @@ public final class MockConstants {
                             .type(FOOD)
                             .code("HEALING_HERB")
                             .healingEffect(20)
+                            .build())),
+                    new SelectionValue<>(10, Optional.of(Item.builder()
+                            .type(WEAPON)
+                            .code("DAGGER")
+                            .build())),
+                    new SelectionValue<>(5, Optional.of(Item.builder()
+                            .type(WEAPON)
+                            .code("SWORD")
                             .build())))
     );
 

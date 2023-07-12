@@ -69,7 +69,8 @@ public class Character implements Combatant {
             @AttributeOverride(name = "minDamage", column = @Column(name = "weaponMinDamage")),
             @AttributeOverride(name = "maxDamage", column = @Column(name = "weaponMaxDamage")),
             @AttributeOverride(name = "defense", column = @Column(name = "weaponDefense")),
-            @AttributeOverride(name = "initiative", column = @Column(name = "weaponInitiative"))
+            @AttributeOverride(name = "initiative", column = @Column(name = "weaponInitiative")),
+            @AttributeOverride(name = "popularity", column = @Column(name = "weaponPopularity"))
     })
     private Weapon weapon;
 

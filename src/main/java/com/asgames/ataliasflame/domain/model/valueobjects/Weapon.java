@@ -20,4 +20,5 @@ public class Weapon {
     private int maxDamage;
     private int defense;
     private int initiative;
+    private int popularity;
 }

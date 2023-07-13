@@ -9,17 +9,13 @@ import lombok.Data;
 @Builder
 @Data
 @AllArgsConstructor // Builder needs it
-public class Weapon {
+public class Shield {
 
     // JPA needs it
-    public Weapon() {
+    public Shield() {
     }
 
     private String code;
-    private int minDamage;
-    private int maxDamage;
     private int defense;
-    private int initiative;
     private int popularity;
-    private boolean oneHanded;
 }

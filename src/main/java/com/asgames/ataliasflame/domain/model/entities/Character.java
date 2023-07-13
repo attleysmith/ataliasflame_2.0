@@ -2,7 +2,10 @@ package com.asgames.ataliasflame.domain.model.entities;
 
 import com.asgames.ataliasflame.domain.model.enums.*;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
+import com.asgames.ataliasflame.domain.model.valueobjects.Armor;
+import com.asgames.ataliasflame.domain.model.valueobjects.Shield;
 import com.asgames.ataliasflame.domain.model.valueobjects.Weapon;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -70,9 +73,28 @@ public class Character implements Combatant {
             @AttributeOverride(name = "maxDamage", column = @Column(name = "weaponMaxDamage")),
             @AttributeOverride(name = "defense", column = @Column(name = "weaponDefense")),
             @AttributeOverride(name = "initiative", column = @Column(name = "weaponInitiative")),
-            @AttributeOverride(name = "popularity", column = @Column(name = "weaponPopularity"))
+            @AttributeOverride(name = "popularity", column = @Column(name = "weaponPopularity")),
+            @AttributeOverride(name = "oneHanded", column = @Column(name = "weaponOneHanded"))
     })
     private Weapon weapon;
+
+    @Nullable
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "code", column = @Column(name = "shieldCode")),
+            @AttributeOverride(name = "defense", column = @Column(name = "shieldDefense")),
+            @AttributeOverride(name = "popularity", column = @Column(name = "shieldPopularity"))
+    })
+    private Shield shield;
+
+    @Nullable
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "code", column = @Column(name = "armorCode")),
+            @AttributeOverride(name = "defense", column = @Column(name = "armorDefense")),
+            @AttributeOverride(name = "popularity", column = @Column(name = "armorPopularity"))
+    })
+    private Armor armor;
 
     @ElementCollection(fetch = EAGER)
     @CollectionTable(name = "CharacterAttributeMapping",

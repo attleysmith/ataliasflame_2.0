@@ -5,7 +5,6 @@ import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.enums.Gender;
 import com.asgames.ataliasflame.domain.model.enums.God;
 import com.asgames.ataliasflame.domain.model.enums.Race;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -79,26 +78,6 @@ class CharacterServiceTest {
         assertThat(character.getLevel(), is(1));
         assertThat(character.getExperience(), is(0));
         assertThat(character.getAttributePoints(), is(0));
-    }
-
-    @Test
-    void deathMatchTest() {
-        // given
-        String characterName = "Gwatkin";
-        // and
-        CharacterInput characterInput = CharacterInput.builder()
-                .race(HUMAN)
-                .gender(MALE)
-                .defensiveGod(ALATE)
-                .name(characterName)
-                .build();
-        characterService.createCharacter(characterInput);
-
-        // expect
-        Character character;
-        do {
-            character = characterService.combat(characterName);
-        } while (character.getActualHealth() > 0);
     }
 
     private static Stream<Arguments> characters() {

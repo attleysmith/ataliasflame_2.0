@@ -51,6 +51,8 @@ public abstract class RaceCalculationTestBase {
     protected void addDagger(String characterName) {
         Character character = characterService.getCharacter(characterName);
         character.setWeapon(WEAPONS.get("DAGGER"));
+        character.setShield(null);
+        character.setArmor(null);
 
         characterRepository.save(
                 characterCalculationService.recalculateProperties(character)

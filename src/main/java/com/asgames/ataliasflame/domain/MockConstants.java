@@ -2,6 +2,8 @@ package com.asgames.ataliasflame.domain;
 
 import com.asgames.ataliasflame.domain.model.entities.*;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
+import com.asgames.ataliasflame.domain.model.valueobjects.Armor;
+import com.asgames.ataliasflame.domain.model.valueobjects.Shield;
 import com.asgames.ataliasflame.domain.model.valueobjects.Weapon;
 import com.asgames.ataliasflame.domain.utils.SelectionValue;
 
@@ -13,8 +15,7 @@ import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
 import static com.asgames.ataliasflame.domain.model.enums.Caste.*;
 import static com.asgames.ataliasflame.domain.model.enums.CasteGroup.*;
 import static com.asgames.ataliasflame.domain.model.enums.God.*;
-import static com.asgames.ataliasflame.domain.model.enums.ItemType.FOOD;
-import static com.asgames.ataliasflame.domain.model.enums.ItemType.WEAPON;
+import static com.asgames.ataliasflame.domain.model.enums.ItemType.*;
 import static com.asgames.ataliasflame.domain.model.enums.Race.*;
 import static java.util.Collections.emptyList;
 
@@ -315,7 +316,7 @@ public final class MockConstants {
                     )).build()
     );
 
-    // Weapons
+    // Armory
     public static final Map<String, Weapon> WEAPONS = Map.of(
             "FIST", Weapon.builder()
                     .code("FIST")
@@ -324,14 +325,16 @@ public final class MockConstants {
                     .defense(0)
                     .initiative(1)
                     .popularity(0)
+                    .oneHanded(true)
                     .build(),
             "STAFF", Weapon.builder()
                     .code("STAFF")
                     .minDamage(1)
                     .maxDamage(5)
-                    .defense(10)
+                    .defense(5)
                     .initiative(-5)
                     .popularity(10)
+                    .oneHanded(false)
                     .build(),
             "DAGGER", Weapon.builder()
                     .code("DAGGER")
@@ -340,22 +343,81 @@ public final class MockConstants {
                     .defense(1)
                     .initiative(0)
                     .popularity(20)
+                    .oneHanded(true)
                     .build(),
             "SPEAR", Weapon.builder()
                     .code("SPEAR")
                     .minDamage(2)
                     .maxDamage(12)
-                    .defense(10)
+                    .defense(5)
                     .initiative(-6)
                     .popularity(30)
+                    .oneHanded(false)
                     .build(),
             "SWORD", Weapon.builder()
                     .code("SWORD")
                     .minDamage(2)
                     .maxDamage(18)
-                    .defense(8)
+                    .defense(3)
                     .initiative(-3)
                     .popularity(40)
+                    .oneHanded(true)
+                    .build()
+    );
+
+    public static final Map<String, Shield> SHIELDS = Map.of(
+            "BUCKLER", Shield.builder()
+                    .code("BUCKLER")
+                    .defense(5)
+                    .popularity(0)
+                    .build(),
+            "ROUND_SHIELD", Shield.builder()
+                    .code("ROUND_SHIELD")
+                    .defense(10)
+                    .popularity(10)
+                    .build(),
+            "KITE_SHIELD", Shield.builder()
+                    .code("KITE_SHIELD")
+                    .defense(15)
+                    .popularity(20)
+                    .build(),
+            "TOWER_SHIELD", Shield.builder()
+                    .code("TOWER_SHIELD")
+                    .defense(20)
+                    .popularity(30)
+                    .build()
+    );
+
+    public static final Map<String, Armor> ARMORS = Map.of(
+            "LINEN_ARMOR", Armor.builder()
+                    .code("LINEN_ARMOR")
+                    .defense(10)
+                    .popularity(10)
+                    .build(),
+            "LEATHER_ARMOR", Armor.builder()
+                    .code("LEATHER_ARMOR")
+                    .defense(15)
+                    .popularity(20)
+                    .build(),
+            "STUDDED_LEATHER_ARMOR", Armor.builder()
+                    .code("STUDDED_LEATHER_ARMOR")
+                    .defense(20)
+                    .popularity(30)
+                    .build(),
+            "CHAIN_MAIL", Armor.builder()
+                    .code("CHAIN_MAIL")
+                    .defense(25)
+                    .popularity(40)
+                    .build(),
+            "PLATE_MAIL", Armor.builder()
+                    .code("PLATE_MAIL")
+                    .defense(30)
+                    .popularity(50)
+                    .build(),
+            "FULL_PLATE_MAIL", Armor.builder()
+                    .code("FULL_PLATE_MAIL")
+                    .defense(40)
+                    .popularity(60)
                     .build()
     );
 
@@ -365,6 +427,24 @@ public final class MockConstants {
             new SelectionValue<>(30, WEAPONS.get("DAGGER")),
             new SelectionValue<>(20, WEAPONS.get("SPEAR")),
             new SelectionValue<>(15, WEAPONS.get("SWORD"))
+    );
+
+    public static final List<SelectionValue<Optional<Shield>>> STARTING_SHIELD_SELECTOR = List.of(
+            new SelectionValue<>(60, Optional.empty()),
+            new SelectionValue<>(10, Optional.of(SHIELDS.get("BUCKLER"))),
+            new SelectionValue<>(15, Optional.of(SHIELDS.get("ROUND_SHIELD"))),
+            new SelectionValue<>(10, Optional.of(SHIELDS.get("KITE_SHIELD"))),
+            new SelectionValue<>(5, Optional.of(SHIELDS.get("TOWER_SHIELD")))
+    );
+
+    public static final List<SelectionValue<Optional<Armor>>> STARTING_ARMOR_SELECTOR = List.of(
+            new SelectionValue<>(50, Optional.empty()),
+            new SelectionValue<>(15, Optional.of(ARMORS.get("LINEN_ARMOR"))),
+            new SelectionValue<>(10, Optional.of(ARMORS.get("LEATHER_ARMOR"))),
+            new SelectionValue<>(10, Optional.of(ARMORS.get("STUDDED_LEATHER_ARMOR"))),
+            new SelectionValue<>(5, Optional.of(ARMORS.get("CHAIN_MAIL"))),
+            new SelectionValue<>(5, Optional.of(ARMORS.get("PLATE_MAIL"))),
+            new SelectionValue<>(5, Optional.of(ARMORS.get("FULL_PLATE_MAIL")))
     );
 
     // Monsters
@@ -438,8 +518,8 @@ public final class MockConstants {
                             .healingEffect(10)
                             .build()))),
             "BANDIT", List.of(
-                    new SelectionValue<>(10, Optional.empty()),
-                    new SelectionValue<>(15, Optional.of(Item.builder()
+                    new SelectionValue<>(5, Optional.empty()),
+                    new SelectionValue<>(5, Optional.of(Item.builder()
                             .type(FOOD)
                             .code("WATER")
                             .healingEffect(3)
@@ -454,7 +534,7 @@ public final class MockConstants {
                             .code("FRUIT")
                             .healingEffect(8)
                             .build())),
-                    new SelectionValue<>(10, Optional.of(Item.builder()
+                    new SelectionValue<>(5, Optional.of(Item.builder()
                             .type(FOOD)
                             .code("MEAT")
                             .healingEffect(10)
@@ -468,17 +548,57 @@ public final class MockConstants {
                             .type(WEAPON)
                             .code("STAFF")
                             .build())),
-                    new SelectionValue<>(10, Optional.of(Item.builder()
+                    new SelectionValue<>(5, Optional.of(Item.builder()
                             .type(WEAPON)
                             .code("DAGGER")
                             .build())),
-                    new SelectionValue<>(15, Optional.of(Item.builder()
+                    new SelectionValue<>(5, Optional.of(Item.builder()
                             .type(WEAPON)
                             .code("SPEAR")
                             .build())),
-                    new SelectionValue<>(20, Optional.of(Item.builder()
+                    new SelectionValue<>(5, Optional.of(Item.builder()
                             .type(WEAPON)
                             .code("SWORD")
+                            .build())),
+                    new SelectionValue<>(5, Optional.of(Item.builder()
+                            .type(SHIELD)
+                            .code("BUCKLER")
+                            .build())),
+                    new SelectionValue<>(5, Optional.of(Item.builder()
+                            .type(SHIELD)
+                            .code("ROUND_SHIELD")
+                            .build())),
+                    new SelectionValue<>(5, Optional.of(Item.builder()
+                            .type(SHIELD)
+                            .code("KITE_SHIELD")
+                            .build())),
+                    new SelectionValue<>(5, Optional.of(Item.builder()
+                            .type(SHIELD)
+                            .code("TOWER_SHIELD")
+                            .build())),
+                    new SelectionValue<>(5, Optional.of(Item.builder()
+                            .type(ARMOR)
+                            .code("LINEN_ARMOR")
+                            .build())),
+                    new SelectionValue<>(5, Optional.of(Item.builder()
+                            .type(ARMOR)
+                            .code("LEATHER_ARMOR")
+                            .build())),
+                    new SelectionValue<>(5, Optional.of(Item.builder()
+                            .type(ARMOR)
+                            .code("STUDDED_LEATHER_ARMOR")
+                            .build())),
+                    new SelectionValue<>(5, Optional.of(Item.builder()
+                            .type(ARMOR)
+                            .code("CHAIN_MAIL")
+                            .build())),
+                    new SelectionValue<>(5, Optional.of(Item.builder()
+                            .type(ARMOR)
+                            .code("PLATE_MAIL")
+                            .build())),
+                    new SelectionValue<>(5, Optional.of(Item.builder()
+                            .type(ARMOR)
+                            .code("FULL_PLATE_MAIL")
                             .build()))),
             "WEREWOLF", List.of(
                     new SelectionValue<>(50, Optional.empty()),

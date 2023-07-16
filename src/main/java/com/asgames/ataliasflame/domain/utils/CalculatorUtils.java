@@ -5,7 +5,6 @@ import java.util.List;
 import static com.asgames.ataliasflame.domain.utils.DiceUtils.roll;
 import static java.lang.Math.max;
 import static java.lang.Math.round;
-import static java.util.Arrays.stream;
 
 public final class CalculatorUtils {
 
@@ -17,10 +16,14 @@ public final class CalculatorUtils {
         return round(base * multiplier / 100f);
     }
 
-    public static int calculate(int base, int... multipliers) {
-        int multiplier = stream(multipliers).reduce(0, Integer::sum);
-
+    public static int calculate(int base, int multiplier) {
         return max(0, base + percent(base, multiplier));
+    }
+
+    public static int calculate(int base, List<Integer> multipliers) {
+        int multiplier = multipliers.stream().reduce(0, Integer::sum);
+
+        return calculate(base, multiplier);
     }
 
     public static int pointOut(int min, int max) {

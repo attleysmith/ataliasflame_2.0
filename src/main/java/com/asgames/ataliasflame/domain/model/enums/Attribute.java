@@ -5,6 +5,9 @@ public enum Attribute {
     DEXTERITY,
     CONSTITUTION,
     AGILITY,
-    INTELLIGENCE
+    INTELLIGENCE,
+    LORE,
+    MENTAL_POWER,
+    SPIRITUAL_POWER
 
 }

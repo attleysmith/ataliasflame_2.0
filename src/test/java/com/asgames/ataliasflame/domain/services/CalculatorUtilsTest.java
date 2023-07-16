@@ -4,8 +4,8 @@ import com.asgames.ataliasflame.domain.utils.CalculatorUtils;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -15,12 +15,6 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 class CalculatorUtilsTest {
 
     @ParameterizedTest
-    @ValueSource(ints = {0, 11, 50, 78})
-    void emptyCalculationTest(int base) {
-        assertThat(CalculatorUtils.calculate(base), is(base));
-    }
-
-    @ParameterizedTest
     @MethodSource("singleCalculations")
     void singleMultiplierTest(int base, int multiplier, int result) {
         assertThat(CalculatorUtils.calculate(base, multiplier), is(result));
@@ -28,7 +22,7 @@ class CalculatorUtilsTest {
 
     @ParameterizedTest
     @MethodSource("manyCalculations")
-    void manyMultipliersTest(int base, int[] multiplier, int result) {
+    void manyMultipliersTest(int base, List<Integer> multiplier, int result) {
         assertThat(CalculatorUtils.calculate(base, multiplier), is(result));
     }
 
@@ -53,12 +47,12 @@ class CalculatorUtilsTest {
 
     private static Stream<Arguments> manyCalculations() {
         return Stream.of(
-                arguments(1, new int[]{10, 40}, 2),
-                arguments(1, new int[]{20, 100, 30}, 3),
-                arguments(5, new int[]{25, 25, 25, 25}, 10),
-                arguments(80, new int[]{25, 25, -50}, 80),
-                arguments(80, new int[]{-50, 53}, 82),
-                arguments(80, new int[]{20, -50}, 56)
+                arguments(1, List.of(10, 40), 2),
+                arguments(1, List.of(20, 100, 30), 3),
+                arguments(5, List.of(25, 25, 25, 25), 10),
+                arguments(80, List.of(25, 25, -50), 80),
+                arguments(80, List.of(-50, 53), 82),
+                arguments(80, List.of(20, -50), 56)
         );
     }
 }

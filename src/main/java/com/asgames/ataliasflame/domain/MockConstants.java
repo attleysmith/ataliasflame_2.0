@@ -80,12 +80,39 @@ public final class MockConstants {
             .healthMultiplier(0)
             .build();
 
+    public static final Modifier LORE_MODIFIER = Modifier.builder()
+            .code(LORE.name())
+            .attackMultiplier(0)
+            .defenseMultiplier(0)
+            .damageMultiplier(0)
+            .healthMultiplier(0)
+            .build();
+
+    public static final Modifier MENTAL_POWER_MODIFIER = Modifier.builder()
+            .code(MENTAL_POWER.name())
+            .attackMultiplier(0)
+            .defenseMultiplier(0)
+            .damageMultiplier(0)
+            .healthMultiplier(0)
+            .build();
+
+    public static final Modifier SPIRITUAL_POWER_MODIFIER = Modifier.builder()
+            .code(SPIRITUAL_POWER.name())
+            .attackMultiplier(0)
+            .defenseMultiplier(0)
+            .damageMultiplier(0)
+            .healthMultiplier(0)
+            .build();
+
     public static final Map<String, Modifier> MODIFIERS = Map.of(
             STRENGTH_MODIFIER.getCode(), STRENGTH_MODIFIER,
             DEXTERITY_MODIFIER.getCode(), DEXTERITY_MODIFIER,
             CONSTITUTION_MODIFIER.getCode(), CONSTITUTION_MODIFIER,
             AGILITY_MODIFIER.getCode(), AGILITY_MODIFIER,
-            INTELLIGENCE_MODIFIER.getCode(), INTELLIGENCE_MODIFIER
+            INTELLIGENCE_MODIFIER.getCode(), INTELLIGENCE_MODIFIER,
+            LORE_MODIFIER.getCode(), LORE_MODIFIER,
+            MENTAL_POWER_MODIFIER.getCode(), MENTAL_POWER_MODIFIER,
+            SPIRITUAL_POWER_MODIFIER.getCode(), SPIRITUAL_POWER_MODIFIER
     );
 
     // Divine boosters
@@ -96,7 +123,10 @@ public final class MockConstants {
                     DEXTERITY, 0,
                     CONSTITUTION, 0,
                     AGILITY, 0,
-                    INTELLIGENCE, 0
+                    INTELLIGENCE, 0,
+                    LORE, 5,
+                    MENTAL_POWER, 0,
+                    SPIRITUAL_POWER, 0
             ))
             .build();
 
@@ -107,7 +137,10 @@ public final class MockConstants {
                     DEXTERITY, 0,
                     CONSTITUTION, 1,
                     AGILITY, 0,
-                    INTELLIGENCE, 0
+                    INTELLIGENCE, 0,
+                    LORE, 0,
+                    MENTAL_POWER, 0,
+                    SPIRITUAL_POWER, 0
             ))
             .build();
 
@@ -118,7 +151,10 @@ public final class MockConstants {
                     DEXTERITY, 0,
                     CONSTITUTION, 0,
                     AGILITY, 0,
-                    INTELLIGENCE, 0
+                    INTELLIGENCE, 0,
+                    LORE, 0,
+                    MENTAL_POWER, 0,
+                    SPIRITUAL_POWER, 0
             ))
             .build();
 
@@ -129,7 +165,10 @@ public final class MockConstants {
                     DEXTERITY, 0,
                     CONSTITUTION, 0,
                     AGILITY, 0,
-                    INTELLIGENCE, 2
+                    INTELLIGENCE, 2,
+                    LORE, 0,
+                    MENTAL_POWER, 0,
+                    SPIRITUAL_POWER, 0
             ))
             .build();
 
@@ -140,7 +179,10 @@ public final class MockConstants {
                     DEXTERITY, 3,
                     CONSTITUTION, 0,
                     AGILITY, 0,
-                    INTELLIGENCE, 0
+                    INTELLIGENCE, 0,
+                    LORE, 0,
+                    MENTAL_POWER, 0,
+                    SPIRITUAL_POWER, 0
             ))
             .build();
 
@@ -151,7 +193,10 @@ public final class MockConstants {
                     DEXTERITY, 0,
                     CONSTITUTION, 0,
                     AGILITY, 0,
-                    INTELLIGENCE, 0
+                    INTELLIGENCE, 0,
+                    LORE, 0,
+                    MENTAL_POWER, 1,
+                    SPIRITUAL_POWER, 0
             ))
             .build();
 
@@ -162,7 +207,10 @@ public final class MockConstants {
                     DEXTERITY, 0,
                     CONSTITUTION, 0,
                     AGILITY, 0,
-                    INTELLIGENCE, 0
+                    INTELLIGENCE, 0,
+                    LORE, 0,
+                    MENTAL_POWER, 0,
+                    SPIRITUAL_POWER, 0
             ))
             .build();
 
@@ -173,7 +221,10 @@ public final class MockConstants {
                     DEXTERITY, 20,
                     CONSTITUTION, -10,
                     AGILITY, 0,
-                    INTELLIGENCE, 2
+                    INTELLIGENCE, 2,
+                    LORE, 0,
+                    MENTAL_POWER, 10,
+                    SPIRITUAL_POWER, 0
             ))
             .build();
 
@@ -184,7 +235,10 @@ public final class MockConstants {
                     DEXTERITY, 10,
                     CONSTITUTION, -5,
                     AGILITY, 0,
-                    INTELLIGENCE, 1
+                    INTELLIGENCE, 1,
+                    LORE, 0,
+                    MENTAL_POWER, 5,
+                    SPIRITUAL_POWER, 0
             ))
             .build();
 
@@ -195,7 +249,10 @@ public final class MockConstants {
                     DEXTERITY, 10,
                     CONSTITUTION, -1,
                     AGILITY, 0,
-                    INTELLIGENCE, 0
+                    INTELLIGENCE, 0,
+                    LORE, 0,
+                    MENTAL_POWER, -3,
+                    SPIRITUAL_POWER, 0
             ))
             .build();
 
@@ -206,7 +263,10 @@ public final class MockConstants {
                     DEXTERITY, 5,
                     CONSTITUTION, 5,
                     AGILITY, 5,
-                    INTELLIGENCE, -1
+                    INTELLIGENCE, -1,
+                    LORE, 0,
+                    MENTAL_POWER, -9,
+                    SPIRITUAL_POWER, 0
             ))
             .build();
 
@@ -217,7 +277,10 @@ public final class MockConstants {
                     DEXTERITY, 50,
                     CONSTITUTION, -10,
                     AGILITY, -5,
-                    INTELLIGENCE, 0
+                    INTELLIGENCE, 0,
+                    LORE, 0,
+                    MENTAL_POWER, 0,
+                    SPIRITUAL_POWER, 0
             ))
             .build();
 
@@ -246,7 +309,10 @@ public final class MockConstants {
                             DEXTERITY, 1,
                             CONSTITUTION, 1,
                             AGILITY, 1,
-                            INTELLIGENCE, 1
+                            INTELLIGENCE, 1,
+                            LORE, 0,
+                            MENTAL_POWER, 0,
+                            SPIRITUAL_POWER, 0
                     )).build(),
             FIGHTER, CasteDetails.builder()
                     .group(WARRIOR)
@@ -257,7 +323,10 @@ public final class MockConstants {
                             DEXTERITY, 5,
                             CONSTITUTION, 5,
                             AGILITY, 5,
-                            INTELLIGENCE, 2
+                            INTELLIGENCE, 2,
+                            LORE, 0,
+                            MENTAL_POWER, 0,
+                            SPIRITUAL_POWER, 0
                     )).build(),
             PALADIN, CasteDetails.builder()
                     .group(WARRIOR)
@@ -268,7 +337,10 @@ public final class MockConstants {
                             DEXTERITY, 20,
                             CONSTITUTION, 20,
                             AGILITY, 20,
-                            INTELLIGENCE, 7
+                            INTELLIGENCE, 7,
+                            LORE, 0,
+                            MENTAL_POWER, 0,
+                            SPIRITUAL_POWER, 0
                     )).build(),
             GRANDMASTER, CasteDetails.builder()
                     .group(WARRIOR)
@@ -279,7 +351,10 @@ public final class MockConstants {
                             DEXTERITY, 50,
                             CONSTITUTION, 50,
                             AGILITY, 50,
-                            INTELLIGENCE, 20
+                            INTELLIGENCE, 20,
+                            LORE, 0,
+                            MENTAL_POWER, 0,
+                            SPIRITUAL_POWER, 0
                     )).build(),
             TITAN, CasteDetails.builder()
                     .group(WARRIOR)
@@ -290,7 +365,10 @@ public final class MockConstants {
                             DEXTERITY, 100,
                             CONSTITUTION, 100,
                             AGILITY, 100,
-                            INTELLIGENCE, 40
+                            INTELLIGENCE, 40,
+                            LORE, 0,
+                            MENTAL_POWER, 0,
+                            SPIRITUAL_POWER, 0
                     )).build(),
             TRACKER, CasteDetails.builder()
                     .group(WANDERER)
@@ -301,7 +379,10 @@ public final class MockConstants {
                             DEXTERITY, 5,
                             CONSTITUTION, 5,
                             AGILITY, 5,
-                            INTELLIGENCE, 2
+                            INTELLIGENCE, 2,
+                            LORE, 1,
+                            MENTAL_POWER, 1,
+                            SPIRITUAL_POWER, 2
                     )).build(),
             HERMIT, CasteDetails.builder()
                     .group(NATURE_DWELLER)
@@ -312,7 +393,10 @@ public final class MockConstants {
                             DEXTERITY, 3,
                             CONSTITUTION, 4,
                             AGILITY, 3,
-                            INTELLIGENCE, 4
+                            INTELLIGENCE, 4,
+                            LORE, 4,
+                            MENTAL_POWER, 3,
+                            SPIRITUAL_POWER, 1
                     )).build()
     );
 

@@ -6,9 +6,12 @@ import com.asgames.ataliasflame.domain.model.enums.God;
 import com.asgames.ataliasflame.domain.model.enums.Race;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 import static com.asgames.ataliasflame.domain.MockConstants.*;
-import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.calculate;
+import static java.util.Arrays.stream;
+import static java.util.stream.Collectors.toList;
 
 @Service
 public class CharacterCalculationService {
@@ -27,39 +30,31 @@ public class CharacterCalculationService {
     }
 
     private void recalculateAttack(Character character) {
-        character.setAttack(calculate(BASE_ATTACK,
-                calculateAttackMultiplier(character, STRENGTH),
-                calculateAttackMultiplier(character, DEXTERITY),
-                calculateAttackMultiplier(character, CONSTITUTION),
-                calculateAttackMultiplier(character, AGILITY),
-                calculateAttackMultiplier(character, INTELLIGENCE)));
+        List<Integer> attackMultipliers = stream(Attribute.values())
+                .map(attribute -> calculateAttackMultiplier(character, attribute))
+                .collect(toList());
+        character.setAttack(calculate(BASE_ATTACK, attackMultipliers));
     }
 
     private void recalculateDefense(Character character) {
-        character.setDefense(calculate(actualDefense(character),
-                calculateDefenseMultiplier(character, STRENGTH),
-                calculateDefenseMultiplier(character, DEXTERITY),
-                calculateDefenseMultiplier(character, CONSTITUTION),
-                calculateDefenseMultiplier(character, AGILITY),
-                calculateDefenseMultiplier(character, INTELLIGENCE)));
+        List<Integer> defenseMultipliers = stream(Attribute.values())
+                .map(attribute -> calculateDefenseMultiplier(character, attribute))
+                .collect(toList());
+        character.setDefense(calculate(actualDefense(character), defenseMultipliers));
     }
 
     private void recalculateDamage(Character character) {
-        character.setDamageMultiplier(BASE_DAMAGE_MULTIPLIER
-                + calculateDamageMultiplier(character, STRENGTH)
-                + calculateDamageMultiplier(character, DEXTERITY)
-                + calculateDamageMultiplier(character, CONSTITUTION)
-                + calculateDamageMultiplier(character, AGILITY)
-                + calculateDamageMultiplier(character, INTELLIGENCE));
+        Integer damageMultiplier = stream(Attribute.values())
+                .map(attribute -> calculateDamageMultiplier(character, attribute))
+                .reduce(BASE_DAMAGE_MULTIPLIER, Integer::sum);
+        character.setDamageMultiplier(damageMultiplier);
     }
 
     private void recalculateHealth(Character character) {
-        character.setTotalHealth(calculate(BASE_HEALTH,
-                calculateHealthMultiplier(character, STRENGTH),
-                calculateHealthMultiplier(character, DEXTERITY),
-                calculateHealthMultiplier(character, CONSTITUTION),
-                calculateHealthMultiplier(character, AGILITY),
-                calculateHealthMultiplier(character, INTELLIGENCE)));
+        List<Integer> healthMultipliers = stream(Attribute.values())
+                .map(attribute -> calculateHealthMultiplier(character, attribute))
+                .collect(toList());
+        character.setTotalHealth(calculate(BASE_HEALTH, healthMultipliers));
     }
 
     private int calculateAttackMultiplier(Character character, Attribute attribute) {
@@ -87,10 +82,9 @@ public class CharacterCalculationService {
     }
 
     private int calculateBoosterEffect(Attribute attribute, Integer baseValue, Race race, God god) {
-        return calculate(
-                baseValue,
+        return calculate(baseValue, List.of(
                 BOOSTERS.get(race.name()).getEffects().get(attribute),
-                BOOSTERS.get(god.name()).getEffects().get(attribute));
+                BOOSTERS.get(god.name()).getEffects().get(attribute)));
     }
 
     private int actualDefense(Character character) {

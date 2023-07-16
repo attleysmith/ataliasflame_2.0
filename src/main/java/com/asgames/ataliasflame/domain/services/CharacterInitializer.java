@@ -2,12 +2,12 @@ package com.asgames.ataliasflame.domain.services;
 
 import com.asgames.ataliasflame.domain.model.entities.CasteDetails;
 import com.asgames.ataliasflame.domain.model.entities.Character;
+import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import static com.asgames.ataliasflame.domain.MockConstants.*;
-import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
 
 @Slf4j
 @Service
@@ -30,11 +30,9 @@ public class CharacterInitializer {
     }
 
     private void initializeAttributes(Character character) {
-        character.getAttributes().put(STRENGTH, 0);
-        character.getAttributes().put(DEXTERITY, 0);
-        character.getAttributes().put(CONSTITUTION, 0);
-        character.getAttributes().put(AGILITY, 0);
-        character.getAttributes().put(INTELLIGENCE, 0);
+        for (Attribute attribute : Attribute.values()) {
+            character.getAttributes().put(attribute, 0);
+        }
     }
 
     private void setStartingLevel(Character character) {
@@ -49,11 +47,9 @@ public class CharacterInitializer {
 
     private void setStartingAttributes(Character character) {
         CasteDetails casteDetails = CASTE_DETAILS.get(character.getCaste());
-        attributeService.addAttributePoints(character, STRENGTH, casteDetails.getMinimumAttributes().get(STRENGTH));
-        attributeService.addAttributePoints(character, DEXTERITY, casteDetails.getMinimumAttributes().get(DEXTERITY));
-        attributeService.addAttributePoints(character, CONSTITUTION, casteDetails.getMinimumAttributes().get(CONSTITUTION));
-        attributeService.addAttributePoints(character, AGILITY, casteDetails.getMinimumAttributes().get(AGILITY));
-        attributeService.addAttributePoints(character, INTELLIGENCE, casteDetails.getMinimumAttributes().get(INTELLIGENCE));
+        for (Attribute attribute : Attribute.values()) {
+            attributeService.addAttributePoints(character, attribute, casteDetails.getMinimumAttributes().get(attribute));
+        }
     }
 
     private void setStartingInventory(Character character) {

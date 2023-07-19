@@ -21,6 +21,7 @@ public class CharacterCalculationService {
         recalculateDefense(character);
         recalculateDamage(character);
         recalculateHealth(character);
+        recalculateMagic(character);
 
         character.setMinDamage(calculate(character.getWeapon().getMinDamage(), character.getDamageMultiplier()));
         character.setMaxDamage(calculate(character.getWeapon().getMaxDamage(), character.getDamageMultiplier()));
@@ -57,6 +58,13 @@ public class CharacterCalculationService {
         character.setTotalHealth(calculate(BASE_HEALTH, healthMultipliers));
     }
 
+    private void recalculateMagic(Character character) {
+        Integer magicPoint = stream(Attribute.values())
+                .map(attribute -> calculateMagicPoint(character, attribute))
+                .reduce(BASE_MAGIC_POINT, Integer::sum);
+        character.setTotalMagicPoint(magicPoint);
+    }
+
     private int calculateAttackMultiplier(Character character, Attribute attribute) {
         return MODIFIERS.get(attribute.name()).getAttackMultiplier()
                 * calculateAttribute(character, attribute);
@@ -74,6 +82,11 @@ public class CharacterCalculationService {
 
     private int calculateHealthMultiplier(Character character, Attribute attribute) {
         return MODIFIERS.get(attribute.name()).getHealthMultiplier()
+                * calculateAttribute(character, attribute);
+    }
+
+    private int calculateMagicPoint(Character character, Attribute attribute) {
+        return MODIFIERS.get(attribute.name()).getMagicPoint()
                 * calculateAttribute(character, attribute);
     }
 

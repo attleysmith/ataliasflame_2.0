@@ -13,7 +13,6 @@ import static com.asgames.ataliasflame.domain.model.enums.God.SIFER;
 import static com.asgames.ataliasflame.domain.model.enums.Race.HALFLING;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @Disabled("May be killed in action")
 @SpringBootTest
@@ -47,9 +46,7 @@ public class NatureDwellerEnduranceTest extends EnduranceTestBase {
         assertThat(character.getAttack(), is(84));
         assertThat(character.getDamageMultiplier(), is(4));
         assertThat(character.getTotalHealth(), is(110));
-        // and
-        assertThrows(IllegalArgumentException.class,
-                () -> upgradeCaste(HERMIT));
+        assertThat(character.getTotalMagicPoint(), is(5));
 
         // when
         character = combatUntilNextLevel();
@@ -79,9 +76,7 @@ public class NatureDwellerEnduranceTest extends EnduranceTestBase {
         assertThat(character.getAttack(), is(86));
         assertThat(character.getDamageMultiplier(), is(5));
         assertThat(character.getTotalHealth(), is(120));
-        // and
-        assertThrows(IllegalArgumentException.class,
-                () -> upgradeCaste(HERMIT));
+        assertThat(character.getTotalMagicPoint(), is(17));
 
         // when
         character = combatUntilNextLevel();
@@ -111,9 +106,7 @@ public class NatureDwellerEnduranceTest extends EnduranceTestBase {
         assertThat(character.getAttack(), is(86));
         assertThat(character.getDamageMultiplier(), is(5));
         assertThat(character.getTotalHealth(), is(130));
-        // and
-        assertThrows(IllegalArgumentException.class,
-                () -> upgradeCaste(HERMIT));
+        assertThat(character.getTotalMagicPoint(), is(34));
 
         // when
         character = combatUntilNextLevel();
@@ -143,9 +136,7 @@ public class NatureDwellerEnduranceTest extends EnduranceTestBase {
         assertThat(character.getAttack(), is(90));
         assertThat(character.getDamageMultiplier(), is(9));
         assertThat(character.getTotalHealth(), is(130));
-        // and
-        assertThrows(IllegalArgumentException.class,
-                () -> upgradeCaste(HERMIT));
+        assertThat(character.getTotalMagicPoint(), is(41));
 
         // when
         character = combatUntilNextLevel();
@@ -175,6 +166,7 @@ public class NatureDwellerEnduranceTest extends EnduranceTestBase {
         assertThat(character.getAttack(), is(90));
         assertThat(character.getDamageMultiplier(), is(9));
         assertThat(character.getTotalHealth(), is(140));
+        assertThat(character.getTotalMagicPoint(), is(59));
 
         // then
         character = upgradeCaste(HERMIT);
@@ -210,6 +202,7 @@ public class NatureDwellerEnduranceTest extends EnduranceTestBase {
         assertThat(character.getAttack(), is(93));
         assertThat(character.getDamageMultiplier(), is(12));
         assertThat(character.getTotalHealth(), is(150));
+        assertThat(character.getTotalMagicPoint(), is(61));
 
         // when
         character = combatUntilNextLevel();
@@ -239,6 +232,7 @@ public class NatureDwellerEnduranceTest extends EnduranceTestBase {
         assertThat(character.getAttack(), is(97));
         assertThat(character.getDamageMultiplier(), is(16));
         assertThat(character.getTotalHealth(), is(150));
+        assertThat(character.getTotalMagicPoint(), is(76));
 
         // when
         character = combatUntilNextLevel();
@@ -268,6 +262,7 @@ public class NatureDwellerEnduranceTest extends EnduranceTestBase {
         assertThat(character.getAttack(), is(99));
         assertThat(character.getDamageMultiplier(), is(17));
         assertThat(character.getTotalHealth(), is(150));
+        assertThat(character.getTotalMagicPoint(), is(81));
 
         // when
         character = combatUntilNextLevel();
@@ -297,6 +292,7 @@ public class NatureDwellerEnduranceTest extends EnduranceTestBase {
         assertThat(character.getAttack(), is(102));
         assertThat(character.getDamageMultiplier(), is(21));
         assertThat(character.getTotalHealth(), is(160));
+        assertThat(character.getTotalMagicPoint(), is(88));
 
         // when
         character = combatUntilNextLevel();
@@ -326,6 +322,7 @@ public class NatureDwellerEnduranceTest extends EnduranceTestBase {
         assertThat(character.getAttack(), is(105));
         assertThat(character.getDamageMultiplier(), is(22));
         assertThat(character.getTotalHealth(), is(170));
+        assertThat(character.getTotalMagicPoint(), is(95));
 
         // when
         character = combatUntilNextLevel();
@@ -355,6 +352,7 @@ public class NatureDwellerEnduranceTest extends EnduranceTestBase {
         assertThat(character.getAttack(), is(106));
         assertThat(character.getDamageMultiplier(), is(22));
         assertThat(character.getTotalHealth(), is(180));
+        assertThat(character.getTotalMagicPoint(), is(112));
 
         // when
         character = combatUntilNextLevel();
@@ -384,6 +382,7 @@ public class NatureDwellerEnduranceTest extends EnduranceTestBase {
         assertThat(character.getAttack(), is(106));
         assertThat(character.getDamageMultiplier(), is(22));
         assertThat(character.getTotalHealth(), is(190));
+        assertThat(character.getTotalMagicPoint(), is(130));
 
         // when
         character = combatUntilNextLevel();
@@ -413,6 +412,7 @@ public class NatureDwellerEnduranceTest extends EnduranceTestBase {
         assertThat(character.getAttack(), is(109));
         assertThat(character.getDamageMultiplier(), is(26));
         assertThat(character.getTotalHealth(), is(200));
+        assertThat(character.getTotalMagicPoint(), is(142));
 
         // when
         character = combatUntilNextLevel();
@@ -442,6 +442,7 @@ public class NatureDwellerEnduranceTest extends EnduranceTestBase {
         assertThat(character.getAttack(), is(110));
         assertThat(character.getDamageMultiplier(), is(26));
         assertThat(character.getTotalHealth(), is(210));
+        assertThat(character.getTotalMagicPoint(), is(159));
 
         // when
         character = combatUntilNextLevel();
@@ -471,6 +472,7 @@ public class NatureDwellerEnduranceTest extends EnduranceTestBase {
         assertThat(character.getAttack(), is(111));
         assertThat(character.getDamageMultiplier(), is(27));
         assertThat(character.getTotalHealth(), is(220));
+        assertThat(character.getTotalMagicPoint(), is(176));
 
         // when
         character = combatUntilNextLevel();
@@ -500,6 +502,7 @@ public class NatureDwellerEnduranceTest extends EnduranceTestBase {
         assertThat(character.getAttack(), is(112));
         assertThat(character.getDamageMultiplier(), is(27));
         assertThat(character.getTotalHealth(), is(230));
+        assertThat(character.getTotalMagicPoint(), is(193));
 
         // when
         character = combatUntilNextLevel();
@@ -529,6 +532,7 @@ public class NatureDwellerEnduranceTest extends EnduranceTestBase {
         assertThat(character.getAttack(), is(115));
         assertThat(character.getDamageMultiplier(), is(29));
         assertThat(character.getTotalHealth(), is(240));
+        assertThat(character.getTotalMagicPoint(), is(200));
 
         // when
         character = combatUntilNextLevel();
@@ -558,6 +562,7 @@ public class NatureDwellerEnduranceTest extends EnduranceTestBase {
         assertThat(character.getAttack(), is(118));
         assertThat(character.getDamageMultiplier(), is(30));
         assertThat(character.getTotalHealth(), is(250));
+        assertThat(character.getTotalMagicPoint(), is(207));
 
         // when
         character = combatUntilNextLevel();
@@ -585,6 +590,7 @@ public class NatureDwellerEnduranceTest extends EnduranceTestBase {
         assertThat(character.getAttack(), is(118));
         assertThat(character.getDamageMultiplier(), is(30));
         assertThat(character.getTotalHealth(), is(250));
+        assertThat(character.getTotalMagicPoint(), is(231));
 
         // when
         character = combatUntilNextLevel();
@@ -614,5 +620,6 @@ public class NatureDwellerEnduranceTest extends EnduranceTestBase {
         assertThat(character.getAttack(), is(118));
         assertThat(character.getDamageMultiplier(), is(30));
         assertThat(character.getTotalHealth(), is(250));
+        assertThat(character.getTotalMagicPoint(), is(249));
     }
 }

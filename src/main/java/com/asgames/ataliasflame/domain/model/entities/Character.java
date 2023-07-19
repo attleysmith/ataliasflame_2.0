@@ -57,6 +57,10 @@ public class Character implements Combatant {
     @Column
     private int injury;
     @Column
+    private int totalMagicPoint;
+    @Column
+    private int usedMagicPoint;
+    @Column
     private int initiative;
 
     @Column
@@ -113,5 +117,9 @@ public class Character implements Combatant {
             attributes = new HashMap<>();
         }
         return attributes;
+    }
+
+    public int getActualMagicPoint() {
+        return getTotalMagicPoint() - getUsedMagicPoint();
     }
 }

@@ -5,6 +5,8 @@
 #        CharacterInitializer: debug
 #        CombatService: debug
 
+booster.experience: false
+
 spring:
   datasource:
     url: jdbc:h2:file:/h2db/ataliasflame

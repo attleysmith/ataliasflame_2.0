@@ -35,6 +35,7 @@ public final class MockConstants {
     public static final int BASE_ATTACK = 80;
     public static final int BASE_DEFENSE = 20;
     public static final int BASE_DAMAGE_MULTIPLIER = 0;
+    public static final int BASE_MAGIC_POINT = 0;
 
     // Action settings
     public static final int HEALING_EFFECT_OF_SLEEP = 20;
@@ -46,6 +47,7 @@ public final class MockConstants {
             .defenseMultiplier(1)
             .damageMultiplier(2)
             .healthMultiplier(0)
+            .magicPoint(0)
             .build();
 
     public static final Modifier DEXTERITY_MODIFIER = Modifier.builder()
@@ -54,6 +56,7 @@ public final class MockConstants {
             .defenseMultiplier(1)
             .damageMultiplier(1)
             .healthMultiplier(0)
+            .magicPoint(0)
             .build();
 
     public static final Modifier CONSTITUTION_MODIFIER = Modifier.builder()
@@ -62,6 +65,7 @@ public final class MockConstants {
             .defenseMultiplier(0)
             .damageMultiplier(0)
             .healthMultiplier(10)
+            .magicPoint(0)
             .build();
 
     public static final Modifier AGILITY_MODIFIER = Modifier.builder()
@@ -70,6 +74,7 @@ public final class MockConstants {
             .defenseMultiplier(1)
             .damageMultiplier(0)
             .healthMultiplier(0)
+            .magicPoint(0)
             .build();
 
     public static final Modifier INTELLIGENCE_MODIFIER = Modifier.builder()
@@ -78,6 +83,7 @@ public final class MockConstants {
             .defenseMultiplier(0)
             .damageMultiplier(0)
             .healthMultiplier(0)
+            .magicPoint(5)
             .build();
 
     public static final Modifier LORE_MODIFIER = Modifier.builder()
@@ -86,6 +92,7 @@ public final class MockConstants {
             .defenseMultiplier(0)
             .damageMultiplier(0)
             .healthMultiplier(0)
+            .magicPoint(2)
             .build();
 
     public static final Modifier MENTAL_POWER_MODIFIER = Modifier.builder()
@@ -94,6 +101,7 @@ public final class MockConstants {
             .defenseMultiplier(0)
             .damageMultiplier(0)
             .healthMultiplier(0)
+            .magicPoint(10)
             .build();
 
     public static final Modifier SPIRITUAL_POWER_MODIFIER = Modifier.builder()
@@ -102,6 +110,7 @@ public final class MockConstants {
             .defenseMultiplier(0)
             .damageMultiplier(0)
             .healthMultiplier(0)
+            .magicPoint(1)
             .build();
 
     public static final Map<String, Modifier> MODIFIERS = Map.of(
@@ -324,9 +333,9 @@ public final class MockConstants {
                             CONSTITUTION, 5,
                             AGILITY, 5,
                             INTELLIGENCE, 2,
-                            LORE, 0,
-                            MENTAL_POWER, 0,
-                            SPIRITUAL_POWER, 0
+                            LORE, 1,
+                            MENTAL_POWER, 1,
+                            SPIRITUAL_POWER, 1
                     )).build(),
             PALADIN, CasteDetails.builder()
                     .group(WARRIOR)
@@ -338,9 +347,9 @@ public final class MockConstants {
                             CONSTITUTION, 20,
                             AGILITY, 20,
                             INTELLIGENCE, 7,
-                            LORE, 0,
-                            MENTAL_POWER, 0,
-                            SPIRITUAL_POWER, 0
+                            LORE, 6,
+                            MENTAL_POWER, 5,
+                            SPIRITUAL_POWER, 2
                     )).build(),
             GRANDMASTER, CasteDetails.builder()
                     .group(WARRIOR)
@@ -352,9 +361,9 @@ public final class MockConstants {
                             CONSTITUTION, 50,
                             AGILITY, 50,
                             INTELLIGENCE, 20,
-                            LORE, 0,
-                            MENTAL_POWER, 0,
-                            SPIRITUAL_POWER, 0
+                            LORE, 13,
+                            MENTAL_POWER, 12,
+                            SPIRITUAL_POWER, 5
                     )).build(),
             TITAN, CasteDetails.builder()
                     .group(WARRIOR)
@@ -366,9 +375,9 @@ public final class MockConstants {
                             CONSTITUTION, 100,
                             AGILITY, 100,
                             INTELLIGENCE, 40,
-                            LORE, 0,
-                            MENTAL_POWER, 0,
-                            SPIRITUAL_POWER, 0
+                            LORE, 25,
+                            MENTAL_POWER, 25,
+                            SPIRITUAL_POWER, 10
                     )).build(),
             TRACKER, CasteDetails.builder()
                     .group(WANDERER)

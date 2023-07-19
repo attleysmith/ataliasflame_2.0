@@ -12,4 +12,5 @@ public class Modifier {
     private int defenseMultiplier;
     private int damageMultiplier;
     private int healthMultiplier;
+    private int magicPoint;
 }

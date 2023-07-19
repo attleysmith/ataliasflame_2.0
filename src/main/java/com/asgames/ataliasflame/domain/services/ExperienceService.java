@@ -5,6 +5,7 @@ import com.asgames.ataliasflame.infrastructure.repositories.LevelRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -20,6 +21,9 @@ public class ExperienceService implements InitializingBean {
     @Autowired
     private LevelRepository levelRepository;
 
+    @Value("${booster.experience:false}")
+    private boolean experienceBooster;
+
     private final Map<Integer, Optional<Integer>> levels = new HashMap<>();
 
     @Override
@@ -30,8 +34,9 @@ public class ExperienceService implements InitializingBean {
     }
 
     public Character gainExperience(Character character, int experience) {
-        character.setExperience(character.getExperience() + experience);
-        log.info("Experience gained: " + experience);
+        int gainedExperience = (experienceBooster && character.getLevel() > 25) ? character.getLevel() * experience : experience;
+        character.setExperience(character.getExperience() + gainedExperience);
+        log.info("Experience gained: " + gainedExperience);
         log.info("Total experience: " + character.getExperience());
         return levelUp(character);
     }

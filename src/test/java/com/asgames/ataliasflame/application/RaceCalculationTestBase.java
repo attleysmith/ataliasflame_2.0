@@ -42,6 +42,9 @@ public abstract class RaceCalculationTestBase {
         character.getAttributes().put(CONSTITUTION, targetAttributes.get(CONSTITUTION));
         character.getAttributes().put(AGILITY, targetAttributes.get(AGILITY));
         character.getAttributes().put(INTELLIGENCE, targetAttributes.get(INTELLIGENCE));
+        character.getAttributes().put(LORE, targetAttributes.get(LORE));
+        character.getAttributes().put(MENTAL_POWER, targetAttributes.get(MENTAL_POWER));
+        character.getAttributes().put(SPIRITUAL_POWER, targetAttributes.get(SPIRITUAL_POWER));
 
         characterRepository.save(
                 characterCalculationService.recalculateProperties(character)

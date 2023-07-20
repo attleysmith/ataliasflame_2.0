@@ -29,6 +29,8 @@ public class CharacterService {
     @Autowired
     private CombatService combatService;
     @Autowired
+    private MagicService magicService;
+    @Autowired
     private ExperienceService experienceService;
     @Autowired
     private AttributeService attributeService;
@@ -70,7 +72,8 @@ public class CharacterService {
     @Transactional
     public Character sleep(String characterName) {
         Character character = getCharacter(characterName);
-        character = healingService.sleep(character);
+        healingService.sleep(character);
+        magicService.sleep(character);
         return characterRepository.save(character);
     }
 
@@ -79,6 +82,7 @@ public class CharacterService {
         Character character = getCharacter(characterName);
         Monster monster = monsterService.getRandomMonster();
 
+        magicService.castMagic(character, monster);
         combatService.combat(List.of(character), List.of(monster));
         if (character.getActualHealth() > 0) {
             character = experienceService.gainExperience(character, monster.getExperience());

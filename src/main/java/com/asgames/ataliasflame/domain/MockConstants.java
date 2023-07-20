@@ -39,6 +39,9 @@ public final class MockConstants {
 
     // Action settings
     public static final int HEALING_EFFECT_OF_SLEEP = 20;
+    public static final int MAGIC_RECOVERY_EFFECT_OF_SLEEP = 50;
+    public static final int FIREBALL_MAGIC_COST = 10;
+    public static final int FIREBALL_MAGIC_DAMAGE = 10;
 
     // Attribute modifiers
     public static final Modifier STRENGTH_MODIFIER = Modifier.builder()
@@ -312,7 +315,7 @@ public final class MockConstants {
             ROGUE, CasteDetails.builder()
                     .group(UNSPECIALIZED)
                     .caste(ROGUE)
-                    .nextCastes(List.of(FIGHTER, TRACKER, HERMIT))
+                    .nextCastes(List.of(FIGHTER, TRACKER, HERMIT, WIZARD))
                     .minimumAttributes(Map.of(
                             STRENGTH, 1,
                             DEXTERITY, 1,
@@ -322,6 +325,34 @@ public final class MockConstants {
                             LORE, 0,
                             MENTAL_POWER, 0,
                             SPIRITUAL_POWER, 0
+                    )).build(),
+            WIZARD, CasteDetails.builder()
+                    .group(SORCERER)
+                    .caste(WIZARD)
+                    .nextCastes(List.of(MAGE))
+                    .minimumAttributes(Map.of(
+                            STRENGTH, 2,
+                            DEXTERITY, 3,
+                            CONSTITUTION, 2,
+                            AGILITY, 3,
+                            INTELLIGENCE, 5,
+                            LORE, 5,
+                            MENTAL_POWER, 4,
+                            SPIRITUAL_POWER, 1
+                    )).build(),
+            MAGE, CasteDetails.builder()
+                    .group(SORCERER)
+                    .caste(MAGE)
+                    .nextCastes(emptyList())
+                    .minimumAttributes(Map.of(
+                            STRENGTH, 6,
+                            DEXTERITY, 12,
+                            CONSTITUTION, 7,
+                            AGILITY, 10,
+                            INTELLIGENCE, 20,
+                            LORE, 20,
+                            MENTAL_POWER, 20,
+                            SPIRITUAL_POWER, 5
                     )).build(),
             FIGHTER, CasteDetails.builder()
                     .group(WARRIOR)

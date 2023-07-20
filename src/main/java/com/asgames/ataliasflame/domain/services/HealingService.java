@@ -14,8 +14,8 @@ import static java.lang.Math.max;
 @Service
 public class HealingService {
 
-    public Character sleep(Character character) {
-        return heal(character, HEALING_EFFECT_OF_SLEEP);
+    public void sleep(Character character) {
+        heal(character, HEALING_EFFECT_OF_SLEEP);
     }
 
     public void eat(Character character, Item item) {
@@ -25,10 +25,10 @@ public class HealingService {
         heal(character, item.getHealingEffect());
     }
 
-    private Character heal(Character character, int healingEffect) {
+    private void heal(Character character, int healingEffect) {
         if (character.getInjury() == 0) {
             log.debug("Unnecessary healing!");
-            return character;
+            return;
         }
 
         int healingValue = percent(character.getTotalHealth(), healingEffect);
@@ -36,7 +36,5 @@ public class HealingService {
 
         character.setInjury(remainingInjury);
         log.info("Healing to " + character.getActualHealth() + "!");
-
-        return character;
     }
 }

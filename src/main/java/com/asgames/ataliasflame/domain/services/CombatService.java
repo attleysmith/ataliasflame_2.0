@@ -49,7 +49,7 @@ public class CombatService {
             int chance = attacker.getAttack() - defender.getDefense();
             if (successX(chance)) {
                 damage = pointOut(attacker.getMinDamage(), attacker.getMaxDamage());
-                defender.setInjury(min(defender.getInjury() + damage, defender.getTotalHealth()));
+                dealDamage(defender, damage);
             }
         }
         return new AttackReport(attacker.getCode(), damage, defender.getActualHealth());
@@ -71,5 +71,9 @@ public class CombatService {
                 })
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
+    }
+
+    public void dealDamage(Combatant combatant, int damage) {
+        combatant.setInjury(min(combatant.getInjury() + damage, combatant.getTotalHealth()));
     }
 }

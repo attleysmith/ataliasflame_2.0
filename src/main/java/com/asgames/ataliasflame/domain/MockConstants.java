@@ -2,6 +2,9 @@ package com.asgames.ataliasflame.domain;
 
 import com.asgames.ataliasflame.domain.model.entities.*;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
+import com.asgames.ataliasflame.domain.model.enums.Gender;
+import com.asgames.ataliasflame.domain.model.enums.God;
+import com.asgames.ataliasflame.domain.model.enums.Race;
 import com.asgames.ataliasflame.domain.model.valueobjects.Armor;
 import com.asgames.ataliasflame.domain.model.valueobjects.Shield;
 import com.asgames.ataliasflame.domain.model.valueobjects.Weapon;
@@ -14,6 +17,8 @@ import java.util.Optional;
 import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
 import static com.asgames.ataliasflame.domain.model.enums.Caste.*;
 import static com.asgames.ataliasflame.domain.model.enums.CasteGroup.*;
+import static com.asgames.ataliasflame.domain.model.enums.Gender.FEMALE;
+import static com.asgames.ataliasflame.domain.model.enums.Gender.MALE;
 import static com.asgames.ataliasflame.domain.model.enums.God.*;
 import static com.asgames.ataliasflame.domain.model.enums.ItemType.*;
 import static com.asgames.ataliasflame.domain.model.enums.Race.*;
@@ -127,7 +132,7 @@ public final class MockConstants {
             SPIRITUAL_POWER_MODIFIER.getCode(), SPIRITUAL_POWER_MODIFIER
     );
 
-    // Divine boosters
+    // Attribute boosters
     public static final Booster HORA_BOOSTER = Booster.builder()
             .code(HORA.name())
             .effects(Map.of(
@@ -311,8 +316,9 @@ public final class MockConstants {
             Map.entry(HALFLING_BOOSTER.getCode(), HALFLING_BOOSTER)
     );
 
-    public static final Map<Caste, CasteDetails> CASTE_DETAILS = Map.of(
-            ROGUE, CasteDetails.builder()
+    // Caste details
+    public static final Map<Caste, CasteDetails> CASTE_DETAILS = Map.ofEntries(
+            Map.entry(ROGUE, CasteDetails.builder()
                     .group(UNSPECIALIZED)
                     .caste(ROGUE)
                     .nextCastes(List.of(FIGHTER, TRACKER, HERMIT, WIZARD))
@@ -325,8 +331,8 @@ public final class MockConstants {
                             LORE, 0,
                             MENTAL_POWER, 0,
                             SPIRITUAL_POWER, 0
-                    )).build(),
-            WIZARD, CasteDetails.builder()
+                    )).build()),
+            Map.entry(WIZARD, CasteDetails.builder()
                     .group(SORCERER)
                     .caste(WIZARD)
                     .nextCastes(List.of(MAGE))
@@ -339,8 +345,8 @@ public final class MockConstants {
                             LORE, 5,
                             MENTAL_POWER, 4,
                             SPIRITUAL_POWER, 1
-                    )).build(),
-            MAGE, CasteDetails.builder()
+                    )).build()),
+            Map.entry(MAGE, CasteDetails.builder()
                     .group(SORCERER)
                     .caste(MAGE)
                     .nextCastes(emptyList())
@@ -353,8 +359,8 @@ public final class MockConstants {
                             LORE, 20,
                             MENTAL_POWER, 20,
                             SPIRITUAL_POWER, 5
-                    )).build(),
-            FIGHTER, CasteDetails.builder()
+                    )).build()),
+            Map.entry(FIGHTER, CasteDetails.builder()
                     .group(WARRIOR)
                     .caste(FIGHTER)
                     .nextCastes(List.of(PALADIN))
@@ -367,8 +373,8 @@ public final class MockConstants {
                             LORE, 1,
                             MENTAL_POWER, 1,
                             SPIRITUAL_POWER, 1
-                    )).build(),
-            PALADIN, CasteDetails.builder()
+                    )).build()),
+            Map.entry(PALADIN, CasteDetails.builder()
                     .group(WARRIOR)
                     .caste(PALADIN)
                     .nextCastes(List.of(GRANDMASTER))
@@ -381,8 +387,8 @@ public final class MockConstants {
                             LORE, 6,
                             MENTAL_POWER, 5,
                             SPIRITUAL_POWER, 2
-                    )).build(),
-            GRANDMASTER, CasteDetails.builder()
+                    )).build()),
+            Map.entry(GRANDMASTER, CasteDetails.builder()
                     .group(WARRIOR)
                     .caste(GRANDMASTER)
                     .nextCastes(List.of(TITAN))
@@ -395,8 +401,8 @@ public final class MockConstants {
                             LORE, 13,
                             MENTAL_POWER, 12,
                             SPIRITUAL_POWER, 5
-                    )).build(),
-            TITAN, CasteDetails.builder()
+                    )).build()),
+            Map.entry(TITAN, CasteDetails.builder()
                     .group(WARRIOR)
                     .caste(TITAN)
                     .nextCastes(emptyList())
@@ -409,8 +415,8 @@ public final class MockConstants {
                             LORE, 25,
                             MENTAL_POWER, 25,
                             SPIRITUAL_POWER, 10
-                    )).build(),
-            TRACKER, CasteDetails.builder()
+                    )).build()),
+            Map.entry(TRACKER, CasteDetails.builder()
                     .group(WANDERER)
                     .caste(TRACKER)
                     .nextCastes(emptyList())
@@ -423,11 +429,11 @@ public final class MockConstants {
                             LORE, 1,
                             MENTAL_POWER, 1,
                             SPIRITUAL_POWER, 2
-                    )).build(),
-            HERMIT, CasteDetails.builder()
+                    )).build()),
+            Map.entry(HERMIT, CasteDetails.builder()
                     .group(NATURE_DWELLER)
                     .caste(HERMIT)
-                    .nextCastes(emptyList())
+                    .nextCastes(List.of(DRUID))
                     .minimumAttributes(Map.of(
                             STRENGTH, 3,
                             DEXTERITY, 3,
@@ -437,7 +443,35 @@ public final class MockConstants {
                             LORE, 4,
                             MENTAL_POWER, 3,
                             SPIRITUAL_POWER, 1
-                    )).build()
+                    )).build()),
+            Map.entry(DRUID, CasteDetails.builder()
+                    .group(NATURE_DWELLER)
+                    .caste(DRUID)
+                    .nextCastes(List.of(ARCHDRUID))
+                    .minimumAttributes(Map.of(
+                            STRENGTH, 8,
+                            DEXTERITY, 12,
+                            CONSTITUTION, 17,
+                            AGILITY, 12,
+                            INTELLIGENCE, 18,
+                            LORE, 18,
+                            MENTAL_POWER, 12,
+                            SPIRITUAL_POWER, 3
+                    )).build()),
+            Map.entry(ARCHDRUID, CasteDetails.builder()
+                    .group(NATURE_DWELLER)
+                    .caste(ARCHDRUID)
+                    .nextCastes(emptyList())
+                    .minimumAttributes(Map.of(
+                            STRENGTH, 25,
+                            DEXTERITY, 25,
+                            CONSTITUTION, 45,
+                            AGILITY, 25,
+                            INTELLIGENCE, 40,
+                            LORE, 40,
+                            MENTAL_POWER, 40,
+                            SPIRITUAL_POWER, 10
+                    )).build())
     );
 
     // Armory
@@ -751,4 +785,49 @@ public final class MockConstants {
                             .build())))
     );
 
+    // Character constraints
+    public static final Map<Caste, List<Race>> CASTE_RACE_CONSTRAINT = Map.ofEntries(
+            Map.entry(ROGUE, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, ARIMASPI, HALFLING)),
+            Map.entry(WIZARD, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, HALFLING)),
+            Map.entry(MAGE, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, HALFLING)),
+            Map.entry(FIGHTER, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, ARIMASPI, HALFLING)),
+            Map.entry(PALADIN, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, ARIMASPI, HALFLING)),
+            Map.entry(GRANDMASTER, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, ARIMASPI, HALFLING)),
+            Map.entry(TITAN, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, ARIMASPI, HALFLING)),
+            Map.entry(TRACKER, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, ARIMASPI, HALFLING)),
+            Map.entry(HERMIT, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, ARIMASPI, HALFLING)),
+            Map.entry(DRUID, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, ARIMASPI, HALFLING)),
+            Map.entry(ARCHDRUID, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, ARIMASPI, HALFLING))
+    );
+
+    public static final Map<Caste, List<God>> CASTE_GOD_CONSTRAINT = Map.ofEntries(
+            Map.entry(ROGUE, List.of(HORA, SIFER, GETON, RUNID, ALATE, GINDON)),
+            Map.entry(WIZARD, List.of(HORA, SIFER, GETON, RUNID, GINDON)),
+            Map.entry(MAGE, List.of(HORA, SIFER, GETON, RUNID, GINDON)),
+            Map.entry(FIGHTER, List.of(HORA, SIFER, GETON, RUNID, ALATE, GINDON)),
+            Map.entry(PALADIN, List.of(HORA, SIFER, GETON, RUNID, ALATE, GINDON)),
+            Map.entry(GRANDMASTER, List.of(HORA, SIFER, GETON, RUNID, ALATE, GINDON)),
+            Map.entry(TITAN, List.of(HORA, SIFER, GETON, RUNID, ALATE, GINDON)),
+            Map.entry(TRACKER, List.of(HORA, SIFER, GETON, RUNID, ALATE, GINDON)),
+            Map.entry(HERMIT, List.of(HORA, SIFER, GETON, RUNID, ALATE, GINDON)),
+            Map.entry(DRUID, List.of(HORA, SIFER, GETON, RUNID, ALATE, GINDON)),
+            Map.entry(ARCHDRUID, List.of(HORA, SIFER, GETON, RUNID, ALATE, GINDON))
+    );
+
+    public static final Map<Race, List<Gender>> RACE_GENDER_CONSTRAINT = Map.of(
+            HUMAN, List.of(MALE, FEMALE),
+            ELF, List.of(MALE, FEMALE),
+            HALF_ELF, List.of(MALE, FEMALE),
+            NIGHT_ELF, List.of(MALE, FEMALE),
+            ARIMASPI, List.of(MALE, FEMALE),
+            HALFLING, List.of(MALE, FEMALE)
+    );
+    public static final Map<Race, List<God>> RACE_GOD_CONSTRAINT = Map.of(
+            HUMAN, List.of(HORA, SIFER, GETON, RUNID, ALATE, GINDON),
+            ELF, List.of(HORA, SIFER, GETON, RUNID, ALATE, GINDON),
+            HALF_ELF, List.of(HORA, SIFER, GETON, RUNID, ALATE, GINDON),
+            NIGHT_ELF, List.of(HORA, SIFER, GETON, RUNID, ALATE, GINDON),
+            ARIMASPI, List.of(HORA, SIFER, GETON, RUNID, ALATE, GINDON),
+            HALFLING, List.of(HORA, SIFER, GETON, RUNID, ALATE, GINDON)
+    );
 }

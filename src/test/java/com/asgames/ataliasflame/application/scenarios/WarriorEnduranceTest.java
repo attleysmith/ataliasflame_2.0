@@ -3026,5 +3026,4 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         // expect
         assertThat(character.getCaste(), is(TITAN));
     }
-
 }

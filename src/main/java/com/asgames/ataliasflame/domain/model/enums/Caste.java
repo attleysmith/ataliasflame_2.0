@@ -9,5 +9,7 @@ public enum Caste {
     GRANDMASTER,
     TITAN,
     TRACKER,
-    HERMIT
+    HERMIT,
+    DRUID,
+    ARCHDRUID
 }

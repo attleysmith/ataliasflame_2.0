@@ -7,19 +7,29 @@ import com.asgames.ataliasflame.domain.model.enums.Caste;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import static com.asgames.ataliasflame.domain.MockConstants.CASTE_DETAILS;
+import static com.asgames.ataliasflame.domain.MockConstants.*;
 
 @Slf4j
 @Service
 public class CasteService {
 
     public Character upgradeCaste(Character character, Caste newCaste) {
+        validateConstraints(character, newCaste);
         validateAvailability(character, newCaste);
         validateAttributes(character, newCaste);
 
         log.info("New caste: " + newCaste);
         character.setCaste(newCaste);
         return character;
+    }
+
+    private void validateConstraints(Character character, Caste newCaste) {
+        if (!CASTE_RACE_CONSTRAINT.get(newCaste).contains(character.getRace())) {
+            throw new IllegalArgumentException(character.getRace() + " cannot be " + newCaste);
+        }
+        if (!CASTE_GOD_CONSTRAINT.get(newCaste).contains(character.getDefensiveGod())) {
+            throw new IllegalArgumentException("Followers of " + character.getDefensiveGod() + " cannot be " + newCaste);
+        }
     }
 
     private void validateAvailability(Character character, Caste newCaste) {

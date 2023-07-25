@@ -25,8 +25,25 @@ public class CharacterInitializer {
         setStartingCaste(character);
         setStartingAttributes(character);
 
+        validateConstraints(character);
+
         log.debug("Character initialized: " + character);
         return character;
+    }
+
+    private void validateConstraints(Character character) {
+        if (!CASTE_RACE_CONSTRAINT.get(character.getCaste()).contains(character.getRace())) {
+            throw new IllegalArgumentException(character.getRace() + " cannot be " + character.getCaste());
+        }
+        if (!CASTE_GOD_CONSTRAINT.get(character.getCaste()).contains(character.getDefensiveGod())) {
+            throw new IllegalArgumentException("Followers of " + character.getDefensiveGod() + " cannot be " + character.getCaste());
+        }
+        if (!RACE_GENDER_CONSTRAINT.get(character.getRace()).contains(character.getGender())) {
+            throw new IllegalArgumentException(character.getRace() + " cannot be " + character.getGender());
+        }
+        if (!RACE_GOD_CONSTRAINT.get(character.getRace()).contains(character.getDefensiveGod())) {
+            throw new IllegalArgumentException(character.getRace() + " cannot be a follower of " + character.getDefensiveGod());
+        }
     }
 
     private void initializeAttributes(Character character) {

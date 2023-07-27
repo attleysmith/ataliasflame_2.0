@@ -5,6 +5,10 @@ public enum Race {
     ELF,
     HALF_ELF,
     NIGHT_ELF,
+    DWARF,
+    ORC,
+    MINOTAUR,
     ARIMASPI,
+    NYMPH,
     HALFLING
 }

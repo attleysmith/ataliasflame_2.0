@@ -273,6 +273,48 @@ public final class MockConstants {
             ))
             .build();
 
+    public static final Booster DWARF_BOOSTER = Booster.builder()
+            .code(DWARF.name())
+            .effects(Map.of(
+                    STRENGTH, 10,
+                    DEXTERITY, -10,
+                    CONSTITUTION, 20,
+                    AGILITY, -20,
+                    INTELLIGENCE, 0,
+                    LORE, 0,
+                    MENTAL_POWER, -15,
+                    SPIRITUAL_POWER, 0
+            ))
+            .build();
+
+    public static final Booster ORC_BOOSTER = Booster.builder()
+            .code(ORC.name())
+            .effects(Map.of(
+                    STRENGTH, 10,
+                    DEXTERITY, -5,
+                    CONSTITUTION, 20,
+                    AGILITY, 0,
+                    INTELLIGENCE, -2,
+                    LORE, 0,
+                    MENTAL_POWER, -20,
+                    SPIRITUAL_POWER, 0
+            ))
+            .build();
+
+    public static final Booster MINOTAUR_BOOSTER = Booster.builder()
+            .code(MINOTAUR.name())
+            .effects(Map.of(
+                    STRENGTH, 20,
+                    DEXTERITY, -10,
+                    CONSTITUTION, 20,
+                    AGILITY, -10,
+                    INTELLIGENCE, 0,
+                    LORE, 0,
+                    MENTAL_POWER, -20,
+                    SPIRITUAL_POWER, 0
+            ))
+            .build();
+
     public static final Booster ARIMASPI_BOOSTER = Booster.builder()
             .code(ARIMASPI.name())
             .effects(Map.of(
@@ -284,6 +326,20 @@ public final class MockConstants {
                     LORE, 0,
                     MENTAL_POWER, -9,
                     SPIRITUAL_POWER, 0
+            ))
+            .build();
+
+    public static final Booster NYMPH_BOOSTER = Booster.builder()
+            .code(NYMPH.name())
+            .effects(Map.of(
+                    STRENGTH, -10,
+                    DEXTERITY, 0,
+                    CONSTITUTION, -20,
+                    AGILITY, 0,
+                    INTELLIGENCE, 10,
+                    LORE, 5,
+                    MENTAL_POWER, 20,
+                    SPIRITUAL_POWER, -30
             ))
             .build();
 
@@ -312,7 +368,11 @@ public final class MockConstants {
             Map.entry(ELF_BOOSTER.getCode(), ELF_BOOSTER),
             Map.entry(HALF_ELF_BOOSTER.getCode(), HALF_ELF_BOOSTER),
             Map.entry(NIGHT_ELF_BOOSTER.getCode(), NIGHT_ELF_BOOSTER),
+            Map.entry(DWARF_BOOSTER.getCode(), DWARF_BOOSTER),
+            Map.entry(ORC_BOOSTER.getCode(), ORC_BOOSTER),
+            Map.entry(MINOTAUR_BOOSTER.getCode(), MINOTAUR_BOOSTER),
             Map.entry(ARIMASPI_BOOSTER.getCode(), ARIMASPI_BOOSTER),
+            Map.entry(NYMPH_BOOSTER.getCode(), NYMPH_BOOSTER),
             Map.entry(HALFLING_BOOSTER.getCode(), HALFLING_BOOSTER)
     );
 
@@ -787,17 +847,17 @@ public final class MockConstants {
 
     // Character constraints
     public static final Map<Caste, List<Race>> CASTE_RACE_CONSTRAINT = Map.ofEntries(
-            Map.entry(ROGUE, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, ARIMASPI, HALFLING)),
-            Map.entry(WIZARD, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, HALFLING)),
-            Map.entry(MAGE, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, HALFLING)),
-            Map.entry(FIGHTER, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, ARIMASPI, HALFLING)),
-            Map.entry(PALADIN, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, ARIMASPI, HALFLING)),
-            Map.entry(GRANDMASTER, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, ARIMASPI, HALFLING)),
-            Map.entry(TITAN, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, ARIMASPI, HALFLING)),
-            Map.entry(TRACKER, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, ARIMASPI, HALFLING)),
-            Map.entry(HERMIT, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, ARIMASPI, HALFLING)),
-            Map.entry(DRUID, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, ARIMASPI, HALFLING)),
-            Map.entry(ARCHDRUID, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, ARIMASPI, HALFLING))
+            Map.entry(ROGUE, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, DWARF, ORC, MINOTAUR, ARIMASPI, NYMPH, HALFLING)),
+            Map.entry(WIZARD, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, NYMPH, HALFLING)),
+            Map.entry(MAGE, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, NYMPH, HALFLING)),
+            Map.entry(FIGHTER, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, DWARF, ORC, MINOTAUR, ARIMASPI, HALFLING)),
+            Map.entry(PALADIN, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, DWARF, ORC, MINOTAUR, ARIMASPI, HALFLING)),
+            Map.entry(GRANDMASTER, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, DWARF, ORC, MINOTAUR, ARIMASPI, HALFLING)),
+            Map.entry(TITAN, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, DWARF, ORC, MINOTAUR, ARIMASPI, HALFLING)),
+            Map.entry(TRACKER, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, DWARF, ORC, MINOTAUR, ARIMASPI, HALFLING)),
+            Map.entry(HERMIT, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, DWARF, ORC, MINOTAUR, ARIMASPI, NYMPH, HALFLING)),
+            Map.entry(DRUID, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, DWARF, ORC, MINOTAUR, ARIMASPI, NYMPH, HALFLING)),
+            Map.entry(ARCHDRUID, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, DWARF, ORC, MINOTAUR, ARIMASPI, NYMPH, HALFLING))
     );
 
     public static final Map<Caste, List<God>> CASTE_GOD_CONSTRAINT = Map.ofEntries(
@@ -819,7 +879,11 @@ public final class MockConstants {
             ELF, List.of(MALE, FEMALE),
             HALF_ELF, List.of(MALE, FEMALE),
             NIGHT_ELF, List.of(MALE, FEMALE),
+            DWARF, List.of(MALE, FEMALE),
+            ORC, List.of(MALE, FEMALE),
+            MINOTAUR, List.of(MALE),
             ARIMASPI, List.of(MALE, FEMALE),
+            NYMPH, List.of(FEMALE),
             HALFLING, List.of(MALE, FEMALE)
     );
     public static final Map<Race, List<God>> RACE_GOD_CONSTRAINT = Map.of(
@@ -827,7 +891,11 @@ public final class MockConstants {
             ELF, List.of(HORA, SIFER, GETON, RUNID, ALATE, GINDON),
             HALF_ELF, List.of(HORA, SIFER, GETON, RUNID, ALATE, GINDON),
             NIGHT_ELF, List.of(HORA, SIFER, GETON, RUNID, ALATE, GINDON),
+            DWARF, List.of(SIFER, GETON, RUNID, ALATE, GINDON),
+            ORC, List.of(SIFER, GETON, ALATE, GINDON),
+            MINOTAUR, List.of(SIFER, GETON, RUNID, ALATE, GINDON),
             ARIMASPI, List.of(HORA, SIFER, GETON, RUNID, ALATE, GINDON),
+            NYMPH, List.of(HORA, SIFER, RUNID, GINDON),
             HALFLING, List.of(HORA, SIFER, GETON, RUNID, ALATE, GINDON)
     );
 }

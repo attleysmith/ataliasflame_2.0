@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 import static com.asgames.ataliasflame.domain.model.enums.Caste.*;
@@ -51,7 +52,8 @@ class NightElfCalculationTest extends RaceCalculationTestBase {
                 arguments(SIFER, 82, 22, 2, 6, 3, 110),
                 arguments(GETON, 82, 22, 2, 6, 3, 110),
                 arguments(RUNID, 82, 22, 2, 6, 3, 110),
-                arguments(ALATE, 82, 22, 2, 6, 3, 110)
+                arguments(ALATE, 82, 22, 2, 6, 3, 110),
+                arguments(GINDON, 82, 22, 2, 6, 3, 110)
         );
     }
 
@@ -65,11 +67,11 @@ class NightElfCalculationTest extends RaceCalculationTestBase {
                 .defensiveGod(god)
                 .name(characterName)
                 .build();
-        Character character = characterService.createCharacter(characterInput);
-        upgradeCaste(characterName, character.getCaste(), FIGHTER);
+        characterService.createCharacter(characterInput);
+        upgradeCaste(characterName, List.of(FIGHTER));
         addDagger(characterName);
 
-        character = characterService.getCharacter(characterName);
+        Character character = characterService.getCharacter(characterName);
         assertThat(character.getAttack(), is(equalTo(attack)));
         assertThat(character.getDefense(), is(equalTo(defense)));
         assertThat(character.getMinDamage(), is(equalTo(minDamage)));
@@ -84,7 +86,8 @@ class NightElfCalculationTest extends RaceCalculationTestBase {
                 arguments(SIFER, 94, 24, 2, 7, 16, 150),
                 arguments(GETON, 94, 24, 2, 7, 16, 150),
                 arguments(RUNID, 94, 24, 2, 7, 16, 150),
-                arguments(ALATE, 94, 24, 2, 7, 16, 150)
+                arguments(ALATE, 94, 24, 2, 7, 16, 150),
+                arguments(GINDON, 94, 24, 2, 7, 16, 150)
         );
     }
 
@@ -98,11 +101,11 @@ class NightElfCalculationTest extends RaceCalculationTestBase {
                 .defensiveGod(god)
                 .name(characterName)
                 .build();
-        Character character = characterService.createCharacter(characterInput);
-        upgradeCaste(characterName, character.getCaste(), PALADIN);
+        characterService.createCharacter(characterInput);
+        upgradeCaste(characterName, List.of(FIGHTER, PALADIN));
         addDagger(characterName);
 
-        character = characterService.getCharacter(characterName);
+        Character character = characterService.getCharacter(characterName);
         assertThat(character.getAttack(), is(equalTo(attack)));
         assertThat(character.getDefense(), is(equalTo(defense)));
         assertThat(character.getMinDamage(), is(equalTo(minDamage)));
@@ -117,7 +120,8 @@ class NightElfCalculationTest extends RaceCalculationTestBase {
                 arguments(SIFER, 131, 34, 3, 10, 62, 300),
                 arguments(GETON, 131, 34, 3, 10, 64, 300),
                 arguments(RUNID, 131, 34, 3, 10, 62, 300),
-                arguments(ALATE, 133, 34, 3, 10, 63, 300)
+                arguments(ALATE, 133, 34, 3, 10, 63, 300),
+                arguments(GINDON, 131, 34, 3, 10, 62, 300)
         );
     }
 
@@ -131,11 +135,11 @@ class NightElfCalculationTest extends RaceCalculationTestBase {
                 .defensiveGod(god)
                 .name(characterName)
                 .build();
-        Character character = characterService.createCharacter(characterInput);
-        upgradeCaste(characterName, character.getCaste(), GRANDMASTER);
+        characterService.createCharacter(characterInput);
+        upgradeCaste(characterName, List.of(FIGHTER, PALADIN, GRANDMASTER));
         addDagger(characterName);
 
-        character = characterService.getCharacter(characterName);
+        Character character = characterService.getCharacter(characterName);
         assertThat(character.getAttack(), is(equalTo(attack)));
         assertThat(character.getDefense(), is(equalTo(defense)));
         assertThat(character.getMinDamage(), is(equalTo(minDamage)));
@@ -150,7 +154,8 @@ class NightElfCalculationTest extends RaceCalculationTestBase {
                 arguments(SIFER, 208, 54, 5, 15, 155, 600),
                 arguments(GETON, 208, 54, 5, 16, 159, 600),
                 arguments(RUNID, 208, 54, 5, 15, 155, 600),
-                arguments(ALATE, 211, 54, 5, 15, 157, 600)
+                arguments(ALATE, 211, 54, 5, 15, 157, 600),
+                arguments(GINDON, 208, 54, 5, 15, 155, 600)
         );
     }
 
@@ -164,11 +169,11 @@ class NightElfCalculationTest extends RaceCalculationTestBase {
                 .defensiveGod(god)
                 .name(characterName)
                 .build();
-        Character character = characterService.createCharacter(characterInput);
-        upgradeCaste(characterName, character.getCaste(), TITAN);
+        characterService.createCharacter(characterInput);
+        upgradeCaste(characterName, List.of(FIGHTER, PALADIN, GRANDMASTER, TITAN));
         addDagger(characterName);
 
-        character = characterService.getCharacter(characterName);
+        Character character = characterService.getCharacter(characterName);
         assertThat(character.getAttack(), is(equalTo(attack)));
         assertThat(character.getDefense(), is(equalTo(defense)));
         assertThat(character.getMinDamage(), is(equalTo(minDamage)));
@@ -183,7 +188,8 @@ class NightElfCalculationTest extends RaceCalculationTestBase {
                 arguments(SIFER, 336, 86, 8, 25, 310, 1100),
                 arguments(GETON, 336, 87, 8, 25, 316, 1090),
                 arguments(RUNID, 336, 86, 8, 25, 310, 1090),
-                arguments(ALATE, 341, 87, 8, 25, 313, 1090)
+                arguments(ALATE, 341, 87, 8, 25, 313, 1090),
+                arguments(GINDON, 336, 86, 8, 25, 310, 1090)
         );
     }
 }

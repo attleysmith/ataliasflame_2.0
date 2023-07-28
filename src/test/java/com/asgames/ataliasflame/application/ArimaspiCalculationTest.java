@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 import static com.asgames.ataliasflame.domain.model.enums.Caste.*;
@@ -51,7 +52,8 @@ class ArimaspiCalculationTest extends RaceCalculationTestBase {
                 arguments(SIFER, 82, 22, 2, 6, 3, 110),
                 arguments(GETON, 82, 22, 2, 6, 3, 110),
                 arguments(RUNID, 82, 22, 2, 6, 3, 110),
-                arguments(ALATE, 82, 22, 2, 6, 3, 110)
+                arguments(ALATE, 82, 22, 2, 6, 3, 110),
+                arguments(GINDON, 82, 22, 2, 6, 3, 110)
         );
     }
 
@@ -65,11 +67,11 @@ class ArimaspiCalculationTest extends RaceCalculationTestBase {
                 .defensiveGod(god)
                 .name(characterName)
                 .build();
-        Character character = characterService.createCharacter(characterInput);
-        upgradeCaste(characterName, character.getCaste(), FIGHTER);
+        characterService.createCharacter(characterInput);
+        upgradeCaste(characterName, List.of(FIGHTER));
         addDagger(characterName);
 
-        character = characterService.getCharacter(characterName);
+        Character character = characterService.getCharacter(characterName);
         assertThat(character.getAttack(), is(equalTo(attack)));
         assertThat(character.getDefense(), is(equalTo(defense)));
         assertThat(character.getMinDamage(), is(equalTo(minDamage)));
@@ -84,7 +86,8 @@ class ArimaspiCalculationTest extends RaceCalculationTestBase {
                 arguments(SIFER, 92, 24, 2, 7, 15, 150),
                 arguments(GETON, 92, 24, 2, 7, 15, 150),
                 arguments(RUNID, 92, 24, 2, 7, 15, 150),
-                arguments(ALATE, 92, 24, 2, 7, 15, 150)
+                arguments(ALATE, 92, 24, 2, 7, 15, 150),
+                arguments(GINDON, 92, 24, 2, 7, 15, 150)
         );
     }
 
@@ -98,11 +101,11 @@ class ArimaspiCalculationTest extends RaceCalculationTestBase {
                 .defensiveGod(god)
                 .name(characterName)
                 .build();
-        Character character = characterService.createCharacter(characterInput);
-        upgradeCaste(characterName, character.getCaste(), PALADIN);
+        characterService.createCharacter(characterInput);
+        upgradeCaste(characterName, List.of(FIGHTER, PALADIN));
         addDagger(characterName);
 
-        character = characterService.getCharacter(characterName);
+        Character character = characterService.getCharacter(characterName);
         assertThat(character.getAttack(), is(equalTo(attack)));
         assertThat(character.getDefense(), is(equalTo(defense)));
         assertThat(character.getMinDamage(), is(equalTo(minDamage)));
@@ -117,7 +120,8 @@ class ArimaspiCalculationTest extends RaceCalculationTestBase {
                 arguments(SIFER, 130, 34, 3, 10, 63, 310),
                 arguments(GETON, 130, 34, 3, 10, 65, 310),
                 arguments(RUNID, 130, 34, 3, 10, 63, 310),
-                arguments(ALATE, 132, 34, 3, 10, 64, 310)
+                arguments(ALATE, 132, 34, 3, 10, 64, 310),
+                arguments(GINDON, 130, 34, 3, 10, 63, 310)
         );
     }
 
@@ -131,11 +135,11 @@ class ArimaspiCalculationTest extends RaceCalculationTestBase {
                 .defensiveGod(god)
                 .name(characterName)
                 .build();
-        Character character = characterService.createCharacter(characterInput);
-        upgradeCaste(characterName, character.getCaste(), GRANDMASTER);
+        characterService.createCharacter(characterInput);
+        upgradeCaste(characterName, List.of(FIGHTER, PALADIN, GRANDMASTER));
         addDagger(characterName);
 
-        character = characterService.getCharacter(characterName);
+        Character character = characterService.getCharacter(characterName);
         assertThat(character.getAttack(), is(equalTo(attack)));
         assertThat(character.getDefense(), is(equalTo(defense)));
         assertThat(character.getMinDamage(), is(equalTo(minDamage)));
@@ -150,7 +154,8 @@ class ArimaspiCalculationTest extends RaceCalculationTestBase {
                 arguments(SIFER, 207, 54, 5, 16, 159, 630),
                 arguments(GETON, 207, 55, 5, 16, 161, 630),
                 arguments(RUNID, 207, 54, 5, 16, 159, 630),
-                arguments(ALATE, 209, 55, 5, 16, 160, 630)
+                arguments(ALATE, 209, 55, 5, 16, 160, 630),
+                arguments(GINDON, 207, 54, 5, 16, 159, 630)
         );
     }
 
@@ -164,11 +169,11 @@ class ArimaspiCalculationTest extends RaceCalculationTestBase {
                 .defensiveGod(god)
                 .name(characterName)
                 .build();
-        Character character = characterService.createCharacter(characterInput);
-        upgradeCaste(characterName, character.getCaste(), TITAN);
+        characterService.createCharacter(characterInput);
+        upgradeCaste(characterName, List.of(FIGHTER, PALADIN, GRANDMASTER, TITAN));
         addDagger(characterName);
 
-        character = characterService.getCharacter(characterName);
+        Character character = characterService.getCharacter(characterName);
         assertThat(character.getAttack(), is(equalTo(attack)));
         assertThat(character.getDefense(), is(equalTo(defense)));
         assertThat(character.getMinDamage(), is(equalTo(minDamage)));
@@ -183,7 +188,8 @@ class ArimaspiCalculationTest extends RaceCalculationTestBase {
                 arguments(SIFER, 332, 87, 8, 25, 315, 1160),
                 arguments(GETON, 332, 88, 8, 25, 321, 1150),
                 arguments(RUNID, 332, 87, 8, 25, 315, 1150),
-                arguments(ALATE, 337, 88, 8, 25, 318, 1150)
+                arguments(ALATE, 337, 88, 8, 25, 318, 1150),
+                arguments(GINDON, 332, 87, 8, 25, 315, 1150)
         );
     }
 }

@@ -7,8 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
-import static com.asgames.ataliasflame.domain.model.enums.Caste.MAGE;
-import static com.asgames.ataliasflame.domain.model.enums.Caste.WIZARD;
+import static com.asgames.ataliasflame.domain.model.enums.Caste.*;
 import static com.asgames.ataliasflame.domain.model.enums.Gender.MALE;
 import static com.asgames.ataliasflame.domain.model.enums.God.HORA;
 import static com.asgames.ataliasflame.domain.model.enums.Race.ELF;
@@ -16,7 +15,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 @Disabled("May be killed in action")
-@SpringBootTest
+@SpringBootTest(properties = "booster.experience:true")
 public class SorcererEnduranceTest extends EnduranceTestBase {
 
     @Test
@@ -1528,5 +1527,1517 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(56));
         assertThat(character.getTotalHealth(), is(280));
         assertThat(character.getTotalMagicPoint(), is(926));
+
+        // then
+        character = upgradeCaste(WITCHMASTER);
+
+        // expect
+        assertThat(character.getCaste(), is(WITCHMASTER));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(51));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(STRENGTH, 1);
+        addAttributePoints(CONSTITUTION, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        character = addAttributePoints(MENTAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(19));
+        assertThat(character.getAttributes().get(DEXTERITY), is(25));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(21));
+        assertThat(character.getAttributes().get(AGILITY), is(22));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(51));
+        assertThat(character.getAttributes().get(LORE), is(51));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(51));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(15));
+        // and
+        assertThat(character.getAttack(), is(146));
+        assertThat(character.getDamageMultiplier(), is(56));
+        assertThat(character.getTotalHealth(), is(290));
+        assertThat(character.getTotalMagicPoint(), is(943));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(52));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(STRENGTH, 1);
+        addAttributePoints(AGILITY, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        character = addAttributePoints(MENTAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(20));
+        assertThat(character.getAttributes().get(DEXTERITY), is(25));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(21));
+        assertThat(character.getAttributes().get(AGILITY), is(23));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(52));
+        assertThat(character.getAttributes().get(LORE), is(52));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(52));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(15));
+        // and
+        assertThat(character.getAttack(), is(146));
+        assertThat(character.getDamageMultiplier(), is(58));
+        assertThat(character.getTotalHealth(), is(290));
+        assertThat(character.getTotalMagicPoint(), is(960));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(53));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(CONSTITUTION, 1);
+        addAttributePoints(AGILITY, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        character = addAttributePoints(MENTAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(20));
+        assertThat(character.getAttributes().get(DEXTERITY), is(25));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(22));
+        assertThat(character.getAttributes().get(AGILITY), is(24));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(53));
+        assertThat(character.getAttributes().get(LORE), is(53));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(53));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(15));
+        // and
+        assertThat(character.getAttack(), is(147));
+        assertThat(character.getDamageMultiplier(), is(58));
+        assertThat(character.getTotalHealth(), is(300));
+        assertThat(character.getTotalMagicPoint(), is(977));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(54));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(STRENGTH, 1);
+        addAttributePoints(AGILITY, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        character = addAttributePoints(MENTAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(21));
+        assertThat(character.getAttributes().get(DEXTERITY), is(25));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(22));
+        assertThat(character.getAttributes().get(AGILITY), is(25));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(54));
+        assertThat(character.getAttributes().get(LORE), is(54));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(54));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(15));
+        // and
+        assertThat(character.getAttack(), is(148));
+        assertThat(character.getDamageMultiplier(), is(60));
+        assertThat(character.getTotalHealth(), is(300));
+        assertThat(character.getTotalMagicPoint(), is(994));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(55));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(CONSTITUTION, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        addAttributePoints(MENTAL_POWER, 1);
+        character = addAttributePoints(SPIRITUAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(21));
+        assertThat(character.getAttributes().get(DEXTERITY), is(25));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(23));
+        assertThat(character.getAttributes().get(AGILITY), is(25));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(55));
+        assertThat(character.getAttributes().get(LORE), is(55));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(55));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(16));
+        // and
+        assertThat(character.getAttack(), is(148));
+        assertThat(character.getDamageMultiplier(), is(60));
+        assertThat(character.getTotalHealth(), is(310));
+        assertThat(character.getTotalMagicPoint(), is(1022));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(56));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(STRENGTH, 1);
+        addAttributePoints(DEXTERITY, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        character = addAttributePoints(MENTAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(22));
+        assertThat(character.getAttributes().get(DEXTERITY), is(26));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(23));
+        assertThat(character.getAttributes().get(AGILITY), is(25));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(56));
+        assertThat(character.getAttributes().get(LORE), is(56));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(56));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(16));
+        // and
+        assertThat(character.getAttack(), is(150));
+        assertThat(character.getDamageMultiplier(), is(61));
+        assertThat(character.getTotalHealth(), is(310));
+        assertThat(character.getTotalMagicPoint(), is(1039));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(57));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(CONSTITUTION, 1);
+        addAttributePoints(AGILITY, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        character = addAttributePoints(MENTAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(22));
+        assertThat(character.getAttributes().get(DEXTERITY), is(26));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(24));
+        assertThat(character.getAttributes().get(AGILITY), is(26));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(57));
+        assertThat(character.getAttributes().get(LORE), is(57));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(57));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(16));
+        // and
+        assertThat(character.getAttack(), is(150));
+        assertThat(character.getDamageMultiplier(), is(61));
+        assertThat(character.getTotalHealth(), is(320));
+        assertThat(character.getTotalMagicPoint(), is(1056));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(58));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(STRENGTH, 1);
+        addAttributePoints(DEXTERITY, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        character = addAttributePoints(MENTAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(23));
+        assertThat(character.getAttributes().get(DEXTERITY), is(27));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(24));
+        assertThat(character.getAttributes().get(AGILITY), is(26));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(58));
+        assertThat(character.getAttributes().get(LORE), is(58));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(58));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(16));
+        // and
+        assertThat(character.getAttack(), is(152));
+        assertThat(character.getDamageMultiplier(), is(64));
+        assertThat(character.getTotalHealth(), is(320));
+        assertThat(character.getTotalMagicPoint(), is(1073));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(59));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(CONSTITUTION, 1);
+        addAttributePoints(AGILITY, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        character = addAttributePoints(MENTAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(23));
+        assertThat(character.getAttributes().get(DEXTERITY), is(27));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(25));
+        assertThat(character.getAttributes().get(AGILITY), is(27));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(59));
+        assertThat(character.getAttributes().get(LORE), is(59));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(59));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(16));
+        // and
+        assertThat(character.getAttack(), is(153));
+        assertThat(character.getDamageMultiplier(), is(64));
+        assertThat(character.getTotalHealth(), is(330));
+        assertThat(character.getTotalMagicPoint(), is(1090));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(60));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(STRENGTH, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        addAttributePoints(MENTAL_POWER, 1);
+        character = addAttributePoints(SPIRITUAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(24));
+        assertThat(character.getAttributes().get(DEXTERITY), is(27));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(25));
+        assertThat(character.getAttributes().get(AGILITY), is(27));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(60));
+        assertThat(character.getAttributes().get(LORE), is(60));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(60));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(17));
+        // and
+        assertThat(character.getAttack(), is(153));
+        assertThat(character.getDamageMultiplier(), is(66));
+        assertThat(character.getTotalHealth(), is(330));
+        assertThat(character.getTotalMagicPoint(), is(1108));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(61));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(STRENGTH, 1);
+        addAttributePoints(CONSTITUTION, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        character = addAttributePoints(MENTAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(25));
+        assertThat(character.getAttributes().get(DEXTERITY), is(27));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(26));
+        assertThat(character.getAttributes().get(AGILITY), is(27));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(61));
+        assertThat(character.getAttributes().get(LORE), is(61));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(61));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(17));
+        // and
+        assertThat(character.getAttack(), is(153));
+        assertThat(character.getDamageMultiplier(), is(68));
+        assertThat(character.getTotalHealth(), is(330));
+        assertThat(character.getTotalMagicPoint(), is(1125));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(62));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(DEXTERITY, 1);
+        addAttributePoints(AGILITY, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        character = addAttributePoints(MENTAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(25));
+        assertThat(character.getAttributes().get(DEXTERITY), is(28));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(26));
+        assertThat(character.getAttributes().get(AGILITY), is(28));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(62));
+        assertThat(character.getAttributes().get(LORE), is(62));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(62));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(17));
+        // and
+        assertThat(character.getAttack(), is(157));
+        assertThat(character.getDamageMultiplier(), is(70));
+        assertThat(character.getTotalHealth(), is(330));
+        assertThat(character.getTotalMagicPoint(), is(1142));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(63));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(DEXTERITY, 1);
+        addAttributePoints(CONSTITUTION, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        character = addAttributePoints(MENTAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(25));
+        assertThat(character.getAttributes().get(DEXTERITY), is(29));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(27));
+        assertThat(character.getAttributes().get(AGILITY), is(28));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(63));
+        assertThat(character.getAttributes().get(LORE), is(63));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(63));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(17));
+        // and
+        assertThat(character.getAttack(), is(158));
+        assertThat(character.getDamageMultiplier(), is(71));
+        assertThat(character.getTotalHealth(), is(340));
+        assertThat(character.getTotalMagicPoint(), is(1159));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(64));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(STRENGTH, 1);
+        addAttributePoints(AGILITY, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        character = addAttributePoints(MENTAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(26));
+        assertThat(character.getAttributes().get(DEXTERITY), is(29));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(27));
+        assertThat(character.getAttributes().get(AGILITY), is(29));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(64));
+        assertThat(character.getAttributes().get(LORE), is(64));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(64));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(17));
+        // and
+        assertThat(character.getAttack(), is(159));
+        assertThat(character.getDamageMultiplier(), is(71));
+        assertThat(character.getTotalHealth(), is(340));
+        assertThat(character.getTotalMagicPoint(), is(1176));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(65));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(CONSTITUTION, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        addAttributePoints(MENTAL_POWER, 1);
+        character = addAttributePoints(SPIRITUAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(26));
+        assertThat(character.getAttributes().get(DEXTERITY), is(29));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(28));
+        assertThat(character.getAttributes().get(AGILITY), is(29));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(65));
+        assertThat(character.getAttributes().get(LORE), is(65));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(65));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(18));
+        // and
+        assertThat(character.getAttack(), is(159));
+        assertThat(character.getDamageMultiplier(), is(71));
+        assertThat(character.getTotalHealth(), is(350));
+        assertThat(character.getTotalMagicPoint(), is(1204));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(66));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(DEXTERITY, 1);
+        addAttributePoints(AGILITY, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        character = addAttributePoints(MENTAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(26));
+        assertThat(character.getAttributes().get(DEXTERITY), is(30));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(28));
+        assertThat(character.getAttributes().get(AGILITY), is(30));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(66));
+        assertThat(character.getAttributes().get(LORE), is(66));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(66));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(18));
+        // and
+        assertThat(character.getAttack(), is(162));
+        assertThat(character.getDamageMultiplier(), is(72));
+        assertThat(character.getTotalHealth(), is(350));
+        assertThat(character.getTotalMagicPoint(), is(1221));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(67));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(STRENGTH, 1);
+        addAttributePoints(CONSTITUTION, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        character = addAttributePoints(MENTAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(27));
+        assertThat(character.getAttributes().get(DEXTERITY), is(30));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(29));
+        assertThat(character.getAttributes().get(AGILITY), is(30));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(67));
+        assertThat(character.getAttributes().get(LORE), is(67));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(67));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(18));
+        // and
+        assertThat(character.getAttack(), is(162));
+        assertThat(character.getDamageMultiplier(), is(74));
+        assertThat(character.getTotalHealth(), is(360));
+        assertThat(character.getTotalMagicPoint(), is(1238));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(68));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(STRENGTH, 1);
+        addAttributePoints(DEXTERITY, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        character = addAttributePoints(MENTAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(28));
+        assertThat(character.getAttributes().get(DEXTERITY), is(31));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(29));
+        assertThat(character.getAttributes().get(AGILITY), is(30));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(68));
+        assertThat(character.getAttributes().get(LORE), is(68));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(68));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(18));
+        // and
+        assertThat(character.getAttack(), is(163));
+        assertThat(character.getDamageMultiplier(), is(77));
+        assertThat(character.getTotalHealth(), is(360));
+        assertThat(character.getTotalMagicPoint(), is(1255));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(69));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(CONSTITUTION, 1);
+        addAttributePoints(AGILITY, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        character = addAttributePoints(MENTAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(28));
+        assertThat(character.getAttributes().get(DEXTERITY), is(31));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(30));
+        assertThat(character.getAttributes().get(AGILITY), is(31));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(69));
+        assertThat(character.getAttributes().get(LORE), is(69));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(69));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(18));
+        // and
+        assertThat(character.getAttack(), is(164));
+        assertThat(character.getDamageMultiplier(), is(77));
+        assertThat(character.getTotalHealth(), is(370));
+        assertThat(character.getTotalMagicPoint(), is(1272));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(70));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(STRENGTH, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        addAttributePoints(MENTAL_POWER, 1);
+        character = addAttributePoints(SPIRITUAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(29));
+        assertThat(character.getAttributes().get(DEXTERITY), is(31));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(30));
+        assertThat(character.getAttributes().get(AGILITY), is(31));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(70));
+        assertThat(character.getAttributes().get(LORE), is(70));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(70));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(19));
+        // and
+        assertThat(character.getAttack(), is(164));
+        assertThat(character.getDamageMultiplier(), is(77));
+        assertThat(character.getTotalHealth(), is(370));
+        assertThat(character.getTotalMagicPoint(), is(1292));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(71));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(DEXTERITY, 1);
+        addAttributePoints(CONSTITUTION, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        character = addAttributePoints(MENTAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(29));
+        assertThat(character.getAttributes().get(DEXTERITY), is(32));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(31));
+        assertThat(character.getAttributes().get(AGILITY), is(31));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(71));
+        assertThat(character.getAttributes().get(LORE), is(71));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(71));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(19));
+        // and
+        assertThat(character.getAttack(), is(166));
+        assertThat(character.getDamageMultiplier(), is(78));
+        assertThat(character.getTotalHealth(), is(380));
+        assertThat(character.getTotalMagicPoint(), is(1309));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(72));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(STRENGTH, 1);
+        addAttributePoints(AGILITY, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        character = addAttributePoints(MENTAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(30));
+        assertThat(character.getAttributes().get(DEXTERITY), is(32));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(31));
+        assertThat(character.getAttributes().get(AGILITY), is(32));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(72));
+        assertThat(character.getAttributes().get(LORE), is(72));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(72));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(19));
+        // and
+        assertThat(character.getAttack(), is(166));
+        assertThat(character.getDamageMultiplier(), is(80));
+        assertThat(character.getTotalHealth(), is(380));
+        assertThat(character.getTotalMagicPoint(), is(1326));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(73));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(DEXTERITY, 1);
+        addAttributePoints(CONSTITUTION, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        character = addAttributePoints(MENTAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(30));
+        assertThat(character.getAttributes().get(DEXTERITY), is(33));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(32));
+        assertThat(character.getAttributes().get(AGILITY), is(32));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(73));
+        assertThat(character.getAttributes().get(LORE), is(73));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(73));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(19));
+        // and
+        assertThat(character.getAttack(), is(170));
+        assertThat(character.getDamageMultiplier(), is(82));
+        assertThat(character.getTotalHealth(), is(390));
+        assertThat(character.getTotalMagicPoint(), is(1343));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(74));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(STRENGTH, 1);
+        addAttributePoints(AGILITY, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        character = addAttributePoints(MENTAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(31));
+        assertThat(character.getAttributes().get(DEXTERITY), is(33));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(32));
+        assertThat(character.getAttributes().get(AGILITY), is(33));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(74));
+        assertThat(character.getAttributes().get(LORE), is(74));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(74));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(19));
+        // and
+        assertThat(character.getAttack(), is(170));
+        assertThat(character.getDamageMultiplier(), is(84));
+        assertThat(character.getTotalHealth(), is(390));
+        assertThat(character.getTotalMagicPoint(), is(1360));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(75));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(CONSTITUTION, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        addAttributePoints(MENTAL_POWER, 1);
+        character = addAttributePoints(SPIRITUAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(31));
+        assertThat(character.getAttributes().get(DEXTERITY), is(33));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(33));
+        assertThat(character.getAttributes().get(AGILITY), is(33));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(75));
+        assertThat(character.getAttributes().get(LORE), is(75));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(75));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(20));
+        // and
+        assertThat(character.getAttack(), is(170));
+        assertThat(character.getDamageMultiplier(), is(84));
+        assertThat(character.getTotalHealth(), is(400));
+        assertThat(character.getTotalMagicPoint(), is(1393));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(76));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(DEXTERITY, 1);
+        addAttributePoints(AGILITY, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        character = addAttributePoints(MENTAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(31));
+        assertThat(character.getAttributes().get(DEXTERITY), is(34));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(33));
+        assertThat(character.getAttributes().get(AGILITY), is(34));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(76));
+        assertThat(character.getAttributes().get(LORE), is(76));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(76));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(20));
+        // and
+        assertThat(character.getAttack(), is(173));
+        assertThat(character.getDamageMultiplier(), is(85));
+        assertThat(character.getTotalHealth(), is(400));
+        assertThat(character.getTotalMagicPoint(), is(1410));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(77));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(STRENGTH, 1);
+        addAttributePoints(CONSTITUTION, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        character = addAttributePoints(MENTAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(32));
+        assertThat(character.getAttributes().get(DEXTERITY), is(34));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(34));
+        assertThat(character.getAttributes().get(AGILITY), is(34));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(77));
+        assertThat(character.getAttributes().get(LORE), is(77));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(77));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(20));
+        // and
+        assertThat(character.getAttack(), is(173));
+        assertThat(character.getDamageMultiplier(), is(85));
+        assertThat(character.getTotalHealth(), is(410));
+        assertThat(character.getTotalMagicPoint(), is(1427));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(78));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(DEXTERITY, 1);
+        addAttributePoints(AGILITY, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        character = addAttributePoints(MENTAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(32));
+        assertThat(character.getAttributes().get(DEXTERITY), is(35));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(34));
+        assertThat(character.getAttributes().get(AGILITY), is(35));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(78));
+        assertThat(character.getAttributes().get(LORE), is(78));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(78));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(20));
+        // and
+        assertThat(character.getAttack(), is(175));
+        assertThat(character.getDamageMultiplier(), is(86));
+        assertThat(character.getTotalHealth(), is(410));
+        assertThat(character.getTotalMagicPoint(), is(1444));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(79));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(STRENGTH, 1);
+        addAttributePoints(CONSTITUTION, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        character = addAttributePoints(MENTAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(33));
+        assertThat(character.getAttributes().get(DEXTERITY), is(35));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(35));
+        assertThat(character.getAttributes().get(AGILITY), is(35));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(79));
+        assertThat(character.getAttributes().get(LORE), is(79));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(79));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(20));
+        // and
+        assertThat(character.getAttack(), is(175));
+        assertThat(character.getDamageMultiplier(), is(88));
+        assertThat(character.getTotalHealth(), is(420));
+        assertThat(character.getTotalMagicPoint(), is(1461));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(80));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(STRENGTH, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        addAttributePoints(MENTAL_POWER, 1);
+        character = addAttributePoints(SPIRITUAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(34));
+        assertThat(character.getAttributes().get(DEXTERITY), is(35));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(35));
+        assertThat(character.getAttributes().get(AGILITY), is(35));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(80));
+        assertThat(character.getAttributes().get(LORE), is(80));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(80));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(21));
+        // and
+        assertThat(character.getAttack(), is(175));
+        assertThat(character.getDamageMultiplier(), is(90));
+        assertThat(character.getTotalHealth(), is(420));
+        assertThat(character.getTotalMagicPoint(), is(1479));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(81));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(STRENGTH, 1);
+        addAttributePoints(CONSTITUTION, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        character = addAttributePoints(MENTAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(35));
+        assertThat(character.getAttributes().get(DEXTERITY), is(35));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(36));
+        assertThat(character.getAttributes().get(AGILITY), is(35));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(81));
+        assertThat(character.getAttributes().get(LORE), is(81));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(81));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(21));
+        // and
+        assertThat(character.getAttack(), is(175));
+        assertThat(character.getDamageMultiplier(), is(92));
+        assertThat(character.getTotalHealth(), is(420));
+        assertThat(character.getTotalMagicPoint(), is(1496));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(82));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(DEXTERITY, 1);
+        addAttributePoints(AGILITY, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        character = addAttributePoints(MENTAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(35));
+        assertThat(character.getAttributes().get(DEXTERITY), is(36));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(36));
+        assertThat(character.getAttributes().get(AGILITY), is(36));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(82));
+        assertThat(character.getAttributes().get(LORE), is(82));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(82));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(21));
+        // and
+        assertThat(character.getAttack(), is(178));
+        assertThat(character.getDamageMultiplier(), is(93));
+        assertThat(character.getTotalHealth(), is(420));
+        assertThat(character.getTotalMagicPoint(), is(1513));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(83));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(DEXTERITY, 1);
+        addAttributePoints(CONSTITUTION, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        character = addAttributePoints(MENTAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(35));
+        assertThat(character.getAttributes().get(DEXTERITY), is(37));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(37));
+        assertThat(character.getAttributes().get(AGILITY), is(36));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(83));
+        assertThat(character.getAttributes().get(LORE), is(83));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(83));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(21));
+        // and
+        assertThat(character.getAttack(), is(179));
+        assertThat(character.getDamageMultiplier(), is(94));
+        assertThat(character.getTotalHealth(), is(430));
+        assertThat(character.getTotalMagicPoint(), is(1530));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(84));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(STRENGTH, 1);
+        addAttributePoints(AGILITY, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        character = addAttributePoints(MENTAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(36));
+        assertThat(character.getAttributes().get(DEXTERITY), is(37));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(37));
+        assertThat(character.getAttributes().get(AGILITY), is(37));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(84));
+        assertThat(character.getAttributes().get(LORE), is(84));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(84));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(21));
+        // and
+        assertThat(character.getAttack(), is(180));
+        assertThat(character.getDamageMultiplier(), is(94));
+        assertThat(character.getTotalHealth(), is(430));
+        assertThat(character.getTotalMagicPoint(), is(1547));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(85));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(CONSTITUTION, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        addAttributePoints(MENTAL_POWER, 1);
+        character = addAttributePoints(SPIRITUAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(36));
+        assertThat(character.getAttributes().get(DEXTERITY), is(37));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(38));
+        assertThat(character.getAttributes().get(AGILITY), is(37));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(85));
+        assertThat(character.getAttributes().get(LORE), is(85));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(85));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(22));
+        // and
+        assertThat(character.getAttack(), is(180));
+        assertThat(character.getDamageMultiplier(), is(94));
+        assertThat(character.getTotalHealth(), is(440));
+        assertThat(character.getTotalMagicPoint(), is(1575));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(86));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(DEXTERITY, 1);
+        addAttributePoints(AGILITY, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        character = addAttributePoints(MENTAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(36));
+        assertThat(character.getAttributes().get(DEXTERITY), is(38));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(38));
+        assertThat(character.getAttributes().get(AGILITY), is(38));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(86));
+        assertThat(character.getAttributes().get(LORE), is(86));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(86));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(22));
+        // and
+        assertThat(character.getAttack(), is(184));
+        assertThat(character.getDamageMultiplier(), is(96));
+        assertThat(character.getTotalHealth(), is(440));
+        assertThat(character.getTotalMagicPoint(), is(1592));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(87));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(DEXTERITY, 1);
+        addAttributePoints(CONSTITUTION, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        character = addAttributePoints(MENTAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(36));
+        assertThat(character.getAttributes().get(DEXTERITY), is(39));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(39));
+        assertThat(character.getAttributes().get(AGILITY), is(38));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(87));
+        assertThat(character.getAttributes().get(LORE), is(87));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(87));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(22));
+        // and
+        assertThat(character.getAttack(), is(186));
+        assertThat(character.getDamageMultiplier(), is(97));
+        assertThat(character.getTotalHealth(), is(450));
+        assertThat(character.getTotalMagicPoint(), is(1609));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(88));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(STRENGTH, 1);
+        addAttributePoints(AGILITY, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        character = addAttributePoints(MENTAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(37));
+        assertThat(character.getAttributes().get(DEXTERITY), is(39));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(39));
+        assertThat(character.getAttributes().get(AGILITY), is(39));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(88));
+        assertThat(character.getAttributes().get(LORE), is(88));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(88));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(22));
+        // and
+        assertThat(character.getAttack(), is(186));
+        assertThat(character.getDamageMultiplier(), is(99));
+        assertThat(character.getTotalHealth(), is(450));
+        assertThat(character.getTotalMagicPoint(), is(1626));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(89));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(DEXTERITY, 1);
+        addAttributePoints(CONSTITUTION, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        character = addAttributePoints(MENTAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(37));
+        assertThat(character.getAttributes().get(DEXTERITY), is(40));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(40));
+        assertThat(character.getAttributes().get(AGILITY), is(39));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(89));
+        assertThat(character.getAttributes().get(LORE), is(89));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(89));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(22));
+        // and
+        assertThat(character.getAttack(), is(188));
+        assertThat(character.getDamageMultiplier(), is(100));
+        assertThat(character.getTotalHealth(), is(460));
+        assertThat(character.getTotalMagicPoint(), is(1643));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(90));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(AGILITY, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        addAttributePoints(MENTAL_POWER, 1);
+        character = addAttributePoints(SPIRITUAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(37));
+        assertThat(character.getAttributes().get(DEXTERITY), is(40));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(40));
+        assertThat(character.getAttributes().get(AGILITY), is(40));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(90));
+        assertThat(character.getAttributes().get(LORE), is(90));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(90));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(23));
+        // and
+        assertThat(character.getAttack(), is(189));
+        assertThat(character.getDamageMultiplier(), is(100));
+        assertThat(character.getTotalHealth(), is(460));
+        assertThat(character.getTotalMagicPoint(), is(1663));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(91));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(STRENGTH, 1);
+        addAttributePoints(CONSTITUTION, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        character = addAttributePoints(MENTAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(38));
+        assertThat(character.getAttributes().get(DEXTERITY), is(40));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(41));
+        assertThat(character.getAttributes().get(AGILITY), is(40));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(91));
+        assertThat(character.getAttributes().get(LORE), is(91));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(91));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(23));
+        // and
+        assertThat(character.getAttack(), is(189));
+        assertThat(character.getDamageMultiplier(), is(102));
+        assertThat(character.getTotalHealth(), is(470));
+        assertThat(character.getTotalMagicPoint(), is(1680));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(92));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(STRENGTH, 1);
+        addAttributePoints(DEXTERITY, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        character = addAttributePoints(MENTAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(39));
+        assertThat(character.getAttributes().get(DEXTERITY), is(41));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(41));
+        assertThat(character.getAttributes().get(AGILITY), is(40));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(92));
+        assertThat(character.getAttributes().get(LORE), is(92));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(92));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(23));
+        // and
+        assertThat(character.getAttack(), is(190));
+        assertThat(character.getDamageMultiplier(), is(103));
+        assertThat(character.getTotalHealth(), is(470));
+        assertThat(character.getTotalMagicPoint(), is(1697));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(93));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(CONSTITUTION, 1);
+        addAttributePoints(AGILITY, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        character = addAttributePoints(MENTAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(39));
+        assertThat(character.getAttributes().get(DEXTERITY), is(41));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(42));
+        assertThat(character.getAttributes().get(AGILITY), is(41));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(93));
+        assertThat(character.getAttributes().get(LORE), is(93));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(93));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(23));
+        // and
+        assertThat(character.getAttack(), is(191));
+        assertThat(character.getDamageMultiplier(), is(103));
+        assertThat(character.getTotalHealth(), is(480));
+        assertThat(character.getTotalMagicPoint(), is(1714));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(94));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(STRENGTH, 1);
+        addAttributePoints(DEXTERITY, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        character = addAttributePoints(MENTAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(40));
+        assertThat(character.getAttributes().get(DEXTERITY), is(42));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(42));
+        assertThat(character.getAttributes().get(AGILITY), is(41));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(94));
+        assertThat(character.getAttributes().get(LORE), is(94));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(94));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(23));
+        // and
+        assertThat(character.getAttack(), is(193));
+        assertThat(character.getDamageMultiplier(), is(106));
+        assertThat(character.getTotalHealth(), is(480));
+        assertThat(character.getTotalMagicPoint(), is(1731));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(95));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(CONSTITUTION, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        addAttributePoints(MENTAL_POWER, 1);
+        character = addAttributePoints(SPIRITUAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(40));
+        assertThat(character.getAttributes().get(DEXTERITY), is(42));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(43));
+        assertThat(character.getAttributes().get(AGILITY), is(41));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(95));
+        assertThat(character.getAttributes().get(LORE), is(95));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(95));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(24));
+        // and
+        assertThat(character.getAttack(), is(193));
+        assertThat(character.getDamageMultiplier(), is(106));
+        assertThat(character.getTotalHealth(), is(490));
+        assertThat(character.getTotalMagicPoint(), is(1759));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(96));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(DEXTERITY, 1);
+        addAttributePoints(AGILITY, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        character = addAttributePoints(MENTAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(40));
+        assertThat(character.getAttributes().get(DEXTERITY), is(43));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(43));
+        assertThat(character.getAttributes().get(AGILITY), is(42));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(96));
+        assertThat(character.getAttributes().get(LORE), is(96));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(96));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(24));
+        // and
+        assertThat(character.getAttack(), is(197));
+        assertThat(character.getDamageMultiplier(), is(108));
+        assertThat(character.getTotalHealth(), is(490));
+        assertThat(character.getTotalMagicPoint(), is(1776));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(97));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(CONSTITUTION, 1);
+        addAttributePoints(AGILITY, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        character = addAttributePoints(MENTAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(40));
+        assertThat(character.getAttributes().get(DEXTERITY), is(43));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(44));
+        assertThat(character.getAttributes().get(AGILITY), is(43));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(97));
+        assertThat(character.getAttributes().get(LORE), is(97));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(97));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(24));
+        // and
+        assertThat(character.getAttack(), is(198));
+        assertThat(character.getDamageMultiplier(), is(108));
+        assertThat(character.getTotalHealth(), is(500));
+        assertThat(character.getTotalMagicPoint(), is(1793));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(98));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(DEXTERITY, 1);
+        addAttributePoints(AGILITY, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        character = addAttributePoints(MENTAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(40));
+        assertThat(character.getAttributes().get(DEXTERITY), is(44));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(44));
+        assertThat(character.getAttributes().get(AGILITY), is(44));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(98));
+        assertThat(character.getAttributes().get(LORE), is(98));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(98));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(24));
+        // and
+        assertThat(character.getAttack(), is(200));
+        assertThat(character.getDamageMultiplier(), is(109));
+        assertThat(character.getTotalHealth(), is(500));
+        assertThat(character.getTotalMagicPoint(), is(1810));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(99));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(DEXTERITY, 1);
+        addAttributePoints(CONSTITUTION, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        character = addAttributePoints(MENTAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(40));
+        assertThat(character.getAttributes().get(DEXTERITY), is(45));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(45));
+        assertThat(character.getAttributes().get(AGILITY), is(44));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(99));
+        assertThat(character.getAttributes().get(LORE), is(99));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(99));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(24));
+        // and
+        assertThat(character.getAttack(), is(202));
+        assertThat(character.getDamageMultiplier(), is(110));
+        assertThat(character.getTotalHealth(), is(510));
+        assertThat(character.getTotalMagicPoint(), is(1827));
+
+        // when
+        character = combatUntilNextLevel();
+
+        // expect
+        assertThat(character.getLevel(), is(100));
+        assertThat(character.getAttributePoints(), is(5));
+
+        // then
+        addAttributePoints(AGILITY, 1);
+        addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(LORE, 1);
+        addAttributePoints(MENTAL_POWER, 1);
+        character = addAttributePoints(SPIRITUAL_POWER, 1);
+
+        // expect
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttributes().get(STRENGTH), is(40));
+        assertThat(character.getAttributes().get(DEXTERITY), is(45));
+        assertThat(character.getAttributes().get(CONSTITUTION), is(45));
+        assertThat(character.getAttributes().get(AGILITY), is(45));
+        assertThat(character.getAttributes().get(INTELLIGENCE), is(100));
+        assertThat(character.getAttributes().get(LORE), is(100));
+        assertThat(character.getAttributes().get(MENTAL_POWER), is(100));
+        assertThat(character.getAttributes().get(SPIRITUAL_POWER), is(25));
+        // and
+        assertThat(character.getAttack(), is(202));
+        assertThat(character.getDamageMultiplier(), is(110));
+        assertThat(character.getTotalHealth(), is(510));
+        assertThat(character.getTotalMagicPoint(), is(1845));
+
+        // then
+        character = upgradeCaste(AVATAR);
+
+        // expect
+        assertThat(character.getCaste(), is(AVATAR));
     }
 }

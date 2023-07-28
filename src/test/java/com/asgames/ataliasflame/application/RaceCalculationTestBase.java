@@ -8,6 +8,8 @@ import com.asgames.ataliasflame.domain.services.CharacterCalculationService;
 import com.asgames.ataliasflame.infrastructure.repositories.CharacterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import static com.asgames.ataliasflame.domain.MockConstants.CASTE_DETAILS;
@@ -23,16 +25,17 @@ public abstract class RaceCalculationTestBase {
     @Autowired
     protected CharacterCalculationService characterCalculationService;
 
-    protected void upgradeCaste(String characterName, Caste actualCaste, Caste targetCaste) {
-        if (actualCaste.equals(targetCaste)) {
+    protected void upgradeCaste(String characterName, List<Caste> upgradePath) {
+        if (upgradePath.size() == 0) {
             return;
         }
-        Caste nextCaste = CASTE_DETAILS.get(actualCaste).getNextCastes().get(0);
-        CasteDetails nextCasteDetails = CASTE_DETAILS.get(nextCaste);
-        setAttributes(characterName, nextCasteDetails.getMinimumAttributes());
 
-        Character character = characterService.upgradeCaste(characterName, nextCaste);
-        upgradeCaste(characterName, character.getCaste(), targetCaste);
+        ArrayList<Caste> pathForward = new ArrayList<>(upgradePath);
+        Caste nextCaste = pathForward.remove(0);
+        setAttributes(characterName, CASTE_DETAILS.get(nextCaste).getMinimumAttributes());
+
+        characterService.upgradeCaste(characterName, nextCaste);
+        upgradeCaste(characterName, pathForward);
     }
 
     private void setAttributes(String characterName, Map<Attribute, Integer> targetAttributes) {

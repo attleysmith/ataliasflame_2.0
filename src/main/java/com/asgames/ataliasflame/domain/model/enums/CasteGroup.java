@@ -5,5 +5,6 @@ public enum CasteGroup {
     SORCERER,
     WARRIOR,
     WANDERER,
-    NATURE_DWELLER
+    NATURE_DWELLER,
+    CLERIC
 }

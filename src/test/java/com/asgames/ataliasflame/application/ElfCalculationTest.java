@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 import static com.asgames.ataliasflame.domain.model.enums.Caste.*;
@@ -51,7 +52,8 @@ class ElfCalculationTest extends RaceCalculationTestBase {
                 arguments(SIFER, 82, 22, 2, 6, 3, 110),
                 arguments(GETON, 82, 22, 2, 6, 3, 110),
                 arguments(RUNID, 82, 22, 2, 6, 3, 110),
-                arguments(ALATE, 82, 22, 2, 6, 3, 110)
+                arguments(ALATE, 82, 22, 2, 6, 3, 110),
+                arguments(GINDON, 82, 22, 2, 6, 3, 110)
         );
     }
 
@@ -65,11 +67,11 @@ class ElfCalculationTest extends RaceCalculationTestBase {
                 .defensiveGod(god)
                 .name(characterName)
                 .build();
-        Character character = characterService.createCharacter(characterInput);
-        upgradeCaste(characterName, character.getCaste(), FIGHTER);
+        characterService.createCharacter(characterInput);
+        upgradeCaste(characterName, List.of(FIGHTER));
         addDagger(characterName);
 
-        character = characterService.getCharacter(characterName);
+        Character character = characterService.getCharacter(characterName);
         assertThat(character.getAttack(), is(equalTo(attack)));
         assertThat(character.getDefense(), is(equalTo(defense)));
         assertThat(character.getMinDamage(), is(equalTo(minDamage)));
@@ -84,7 +86,8 @@ class ElfCalculationTest extends RaceCalculationTestBase {
                 arguments(SIFER, 94, 24, 2, 7, 14, 150),
                 arguments(GETON, 94, 24, 2, 7, 14, 150),
                 arguments(RUNID, 94, 24, 2, 7, 14, 150),
-                arguments(ALATE, 94, 24, 2, 7, 14, 150)
+                arguments(ALATE, 94, 24, 2, 7, 14, 150),
+                arguments(GINDON, 94, 24, 2, 7, 14, 150)
         );
     }
 
@@ -98,11 +101,11 @@ class ElfCalculationTest extends RaceCalculationTestBase {
                 .defensiveGod(god)
                 .name(characterName)
                 .build();
-        Character character = characterService.createCharacter(characterInput);
-        upgradeCaste(characterName, character.getCaste(), PALADIN);
+        characterService.createCharacter(characterInput);
+        upgradeCaste(characterName, List.of(FIGHTER, PALADIN));
         addDagger(characterName);
 
-        character = characterService.getCharacter(characterName);
+        Character character = characterService.getCharacter(characterName);
         assertThat(character.getAttack(), is(equalTo(attack)));
         assertThat(character.getDefense(), is(equalTo(defense)));
         assertThat(character.getMinDamage(), is(equalTo(minDamage)));
@@ -117,7 +120,8 @@ class ElfCalculationTest extends RaceCalculationTestBase {
                 arguments(SIFER, 134, 33, 3, 9, 52, 280),
                 arguments(GETON, 134, 33, 3, 9, 54, 280),
                 arguments(RUNID, 134, 33, 3, 9, 52, 280),
-                arguments(ALATE, 136, 33, 3, 9, 53, 280)
+                arguments(ALATE, 136, 33, 3, 9, 53, 280),
+                arguments(GINDON, 134, 33, 3, 9, 52, 280)
         );
     }
 
@@ -131,11 +135,11 @@ class ElfCalculationTest extends RaceCalculationTestBase {
                 .defensiveGod(god)
                 .name(characterName)
                 .build();
-        Character character = characterService.createCharacter(characterInput);
-        upgradeCaste(characterName, character.getCaste(), GRANDMASTER);
+        characterService.createCharacter(characterInput);
+        upgradeCaste(characterName, List.of(FIGHTER, PALADIN, GRANDMASTER));
         addDagger(characterName);
 
-        character = characterService.getCharacter(characterName);
+        Character character = characterService.getCharacter(characterName);
         assertThat(character.getAttack(), is(equalTo(attack)));
         assertThat(character.getDefense(), is(equalTo(defense)));
         assertThat(character.getMinDamage(), is(equalTo(minDamage)));
@@ -150,7 +154,8 @@ class ElfCalculationTest extends RaceCalculationTestBase {
                 arguments(SIFER, 216, 51, 5, 14, 130, 560),
                 arguments(GETON, 216, 52, 5, 14, 134, 550),
                 arguments(RUNID, 216, 51, 5, 14, 130, 550),
-                arguments(ALATE, 219, 52, 5, 14, 132, 550)
+                arguments(ALATE, 219, 52, 5, 14, 132, 550),
+                arguments(GINDON, 216, 51, 5, 14, 130, 550)
         );
     }
 
@@ -164,11 +169,11 @@ class ElfCalculationTest extends RaceCalculationTestBase {
                 .defensiveGod(god)
                 .name(characterName)
                 .build();
-        Character character = characterService.createCharacter(characterInput);
-        upgradeCaste(characterName, character.getCaste(), TITAN);
+        characterService.createCharacter(characterInput);
+        upgradeCaste(characterName, List.of(FIGHTER, PALADIN, GRANDMASTER, TITAN));
         addDagger(characterName);
 
-        character = characterService.getCharacter(characterName);
+        Character character = characterService.getCharacter(characterName);
         assertThat(character.getAttack(), is(equalTo(attack)));
         assertThat(character.getDefense(), is(equalTo(defense)));
         assertThat(character.getMinDamage(), is(equalTo(minDamage)));
@@ -183,7 +188,8 @@ class ElfCalculationTest extends RaceCalculationTestBase {
                 arguments(SIFER, 352, 82, 7, 22, 260, 1010),
                 arguments(GETON, 352, 83, 7, 22, 266, 1000),
                 arguments(RUNID, 352, 82, 7, 22, 260, 1000),
-                arguments(ALATE, 357, 83, 7, 22, 263, 1000)
+                arguments(ALATE, 357, 83, 7, 22, 263, 1000),
+                arguments(GINDON, 352, 82, 7, 22, 260, 1000)
         );
     }
 }

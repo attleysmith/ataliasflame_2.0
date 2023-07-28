@@ -4,6 +4,8 @@ public enum Caste {
     ROGUE,
     WIZARD,
     MAGE,
+    WITCHMASTER,
+    AVATAR,
     FIGHTER,
     PALADIN,
     GRANDMASTER,
@@ -11,5 +13,6 @@ public enum Caste {
     TRACKER,
     HERMIT,
     DRUID,
-    ARCHDRUID
+    ARCHDRUID,
+    MONK
 }

@@ -20,9 +20,9 @@ public class CharacterInitializer {
 
     public Character initialize(Character character) {
         initializeAttributes(character);
+        setStartingCaste(character);
         setStartingInventory(character);
         setStartingLevel(character);
-        setStartingCaste(character);
         setStartingAttributes(character);
 
         validateConstraints(character);
@@ -32,16 +32,16 @@ public class CharacterInitializer {
     }
 
     private void validateConstraints(Character character) {
-        if (!CASTE_RACE_CONSTRAINT.get(character.getCaste()).contains(character.getRace())) {
+        if (CASTE_RACE_PROHIBITION.get(character.getCaste()).contains(character.getRace())) {
             throw new IllegalArgumentException(character.getRace() + " cannot be " + character.getCaste());
         }
-        if (!CASTE_GOD_CONSTRAINT.get(character.getCaste()).contains(character.getDefensiveGod())) {
+        if (CASTE_GOD_PROHIBITION.get(character.getCaste()).contains(character.getDefensiveGod())) {
             throw new IllegalArgumentException("Followers of " + character.getDefensiveGod() + " cannot be " + character.getCaste());
         }
-        if (!RACE_GENDER_CONSTRAINT.get(character.getRace()).contains(character.getGender())) {
+        if (RACE_GENDER_PROHIBITION.get(character.getRace()).contains(character.getGender())) {
             throw new IllegalArgumentException(character.getRace() + " cannot be " + character.getGender());
         }
-        if (!RACE_GOD_CONSTRAINT.get(character.getRace()).contains(character.getDefensiveGod())) {
+        if (RACE_GOD_PROHIBITION.get(character.getRace()).contains(character.getDefensiveGod())) {
             throw new IllegalArgumentException(character.getRace() + " cannot be a follower of " + character.getDefensiveGod());
         }
     }

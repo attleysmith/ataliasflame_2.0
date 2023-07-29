@@ -7,10 +7,10 @@ import lombok.Data;
 @Data
 public class Modifier {
 
-    private String code;
     private int attackMultiplier;
     private int defenseMultiplier;
     private int damageMultiplier;
     private int healthMultiplier;
     private int magicPoint;
+
 }

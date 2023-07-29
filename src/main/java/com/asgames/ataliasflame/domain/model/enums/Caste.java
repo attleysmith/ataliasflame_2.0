@@ -14,5 +14,6 @@ public enum Caste {
     HERMIT,
     DRUID,
     ARCHDRUID,
+    ATALIAS_PRIEST,
     MONK
 }

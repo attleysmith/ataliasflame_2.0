@@ -6,5 +6,6 @@ public enum God {
     GETON,
     RUNID,
     ALATE,
-    GINDON
+    GINDON,
+    ATALIA
 }

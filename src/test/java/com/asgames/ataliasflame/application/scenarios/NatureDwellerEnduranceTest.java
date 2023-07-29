@@ -3033,5 +3033,16 @@ public class NatureDwellerEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(139));
         assertThat(character.getTotalHealth(), is(740));
         assertThat(character.getTotalMagicPoint(), is(1505));
+
+        // then
+        character = upgradeCaste(ATALIAS_PRIEST);
+
+        // expect
+        assertThat(character.getCaste(), is(ATALIAS_PRIEST));
+        // and
+        assertThat(character.getAttack(), is(240));
+        assertThat(character.getDamageMultiplier(), is(139));
+        assertThat(character.getTotalHealth(), is(740));
+        assertThat(character.getTotalMagicPoint(), is(1508));
     }
 }

@@ -5,6 +5,7 @@ import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import static com.asgames.ataliasflame.domain.MockConstants.*;
@@ -13,6 +14,9 @@ import static com.asgames.ataliasflame.domain.MockConstants.*;
 @Service
 public class CasteService {
 
+    @Autowired
+    private CharacterCalculationService characterCalculationService;
+
     public Character upgradeCaste(Character character, Caste newCaste) {
         validateConstraints(character, newCaste);
         validateAvailability(character, newCaste);
@@ -20,14 +24,14 @@ public class CasteService {
 
         log.info("New caste: " + newCaste);
         character.setCaste(newCaste);
-        return character;
+        return characterCalculationService.recalculateProperties(character);
     }
 
     private void validateConstraints(Character character, Caste newCaste) {
-        if (!CASTE_RACE_CONSTRAINT.get(newCaste).contains(character.getRace())) {
+        if (CASTE_RACE_PROHIBITION.get(newCaste).contains(character.getRace())) {
             throw new IllegalArgumentException(character.getRace() + " cannot be " + newCaste);
         }
-        if (!CASTE_GOD_CONSTRAINT.get(newCaste).contains(character.getDefensiveGod())) {
+        if (CASTE_GOD_PROHIBITION.get(newCaste).contains(character.getDefensiveGod())) {
             throw new IllegalArgumentException("Followers of " + character.getDefensiveGod() + " cannot be " + newCaste);
         }
     }

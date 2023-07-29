@@ -10,7 +10,6 @@ import java.util.Map;
 @Data
 public class Booster {
 
-    private String code;
     private Map<Attribute, Integer> effects;
 
 }

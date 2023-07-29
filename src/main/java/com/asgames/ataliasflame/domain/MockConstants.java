@@ -50,7 +50,6 @@ public final class MockConstants {
 
     // Attribute modifiers
     public static final Modifier STRENGTH_MODIFIER = Modifier.builder()
-            .code(STRENGTH.name())
             .attackMultiplier(0)
             .defenseMultiplier(1)
             .damageMultiplier(2)
@@ -59,7 +58,6 @@ public final class MockConstants {
             .build();
 
     public static final Modifier DEXTERITY_MODIFIER = Modifier.builder()
-            .code(DEXTERITY.name())
             .attackMultiplier(2)
             .defenseMultiplier(1)
             .damageMultiplier(1)
@@ -68,7 +66,6 @@ public final class MockConstants {
             .build();
 
     public static final Modifier CONSTITUTION_MODIFIER = Modifier.builder()
-            .code(CONSTITUTION.name())
             .attackMultiplier(0)
             .defenseMultiplier(0)
             .damageMultiplier(0)
@@ -77,7 +74,6 @@ public final class MockConstants {
             .build();
 
     public static final Modifier AGILITY_MODIFIER = Modifier.builder()
-            .code(AGILITY.name())
             .attackMultiplier(1)
             .defenseMultiplier(1)
             .damageMultiplier(0)
@@ -86,7 +82,6 @@ public final class MockConstants {
             .build();
 
     public static final Modifier INTELLIGENCE_MODIFIER = Modifier.builder()
-            .code(INTELLIGENCE.name())
             .attackMultiplier(0)
             .defenseMultiplier(0)
             .damageMultiplier(0)
@@ -95,7 +90,6 @@ public final class MockConstants {
             .build();
 
     public static final Modifier LORE_MODIFIER = Modifier.builder()
-            .code(LORE.name())
             .attackMultiplier(0)
             .defenseMultiplier(0)
             .damageMultiplier(0)
@@ -104,7 +98,6 @@ public final class MockConstants {
             .build();
 
     public static final Modifier MENTAL_POWER_MODIFIER = Modifier.builder()
-            .code(MENTAL_POWER.name())
             .attackMultiplier(0)
             .defenseMultiplier(0)
             .damageMultiplier(0)
@@ -113,7 +106,6 @@ public final class MockConstants {
             .build();
 
     public static final Modifier SPIRITUAL_POWER_MODIFIER = Modifier.builder()
-            .code(SPIRITUAL_POWER.name())
             .attackMultiplier(0)
             .defenseMultiplier(0)
             .damageMultiplier(0)
@@ -122,19 +114,18 @@ public final class MockConstants {
             .build();
 
     public static final Map<String, Modifier> MODIFIERS = Map.of(
-            STRENGTH_MODIFIER.getCode(), STRENGTH_MODIFIER,
-            DEXTERITY_MODIFIER.getCode(), DEXTERITY_MODIFIER,
-            CONSTITUTION_MODIFIER.getCode(), CONSTITUTION_MODIFIER,
-            AGILITY_MODIFIER.getCode(), AGILITY_MODIFIER,
-            INTELLIGENCE_MODIFIER.getCode(), INTELLIGENCE_MODIFIER,
-            LORE_MODIFIER.getCode(), LORE_MODIFIER,
-            MENTAL_POWER_MODIFIER.getCode(), MENTAL_POWER_MODIFIER,
-            SPIRITUAL_POWER_MODIFIER.getCode(), SPIRITUAL_POWER_MODIFIER
+            STRENGTH.name(), STRENGTH_MODIFIER,
+            DEXTERITY.name(), DEXTERITY_MODIFIER,
+            CONSTITUTION.name(), CONSTITUTION_MODIFIER,
+            AGILITY.name(), AGILITY_MODIFIER,
+            INTELLIGENCE.name(), INTELLIGENCE_MODIFIER,
+            LORE.name(), LORE_MODIFIER,
+            MENTAL_POWER.name(), MENTAL_POWER_MODIFIER,
+            SPIRITUAL_POWER.name(), SPIRITUAL_POWER_MODIFIER
     );
 
     // Attribute boosters
     public static final Booster HORA_BOOSTER = Booster.builder()
-            .code(HORA.name())
             .effects(Map.of(
                     STRENGTH, 0,
                     DEXTERITY, 0,
@@ -148,7 +139,6 @@ public final class MockConstants {
             .build();
 
     public static final Booster SIFER_BOOSTER = Booster.builder()
-            .code(SIFER.name())
             .effects(Map.of(
                     STRENGTH, 0,
                     DEXTERITY, 0,
@@ -162,7 +152,6 @@ public final class MockConstants {
             .build();
 
     public static final Booster GETON_BOOSTER = Booster.builder()
-            .code(GETON.name())
             .effects(Map.of(
                     STRENGTH, 3,
                     DEXTERITY, 0,
@@ -176,7 +165,6 @@ public final class MockConstants {
             .build();
 
     public static final Booster RUNID_BOOSTER = Booster.builder()
-            .code(RUNID.name())
             .effects(Map.of(
                     STRENGTH, 0,
                     DEXTERITY, 0,
@@ -190,7 +178,6 @@ public final class MockConstants {
             .build();
 
     public static final Booster ALATE_BOOSTER = Booster.builder()
-            .code(ALATE.name())
             .effects(Map.of(
                     STRENGTH, 0,
                     DEXTERITY, 3,
@@ -204,7 +191,6 @@ public final class MockConstants {
             .build();
 
     public static final Booster GINDON_BOOSTER = Booster.builder()
-            .code(GINDON.name())
             .effects(Map.of(
                     STRENGTH, 0,
                     DEXTERITY, 0,
@@ -217,8 +203,20 @@ public final class MockConstants {
             ))
             .build();
 
+    public static final Booster ATALIA_BOOSTER = Booster.builder()
+            .effects(Map.of(
+                    STRENGTH, 0,
+                    DEXTERITY, 0,
+                    CONSTITUTION, 0,
+                    AGILITY, 5,
+                    INTELLIGENCE, 0,
+                    LORE, 0,
+                    MENTAL_POWER, 0,
+                    SPIRITUAL_POWER, 10
+            ))
+            .build();
+
     public static final Booster HUMAN_BOOSTER = Booster.builder()
-            .code(HUMAN.name())
             .effects(Map.of(
                     STRENGTH, 0,
                     DEXTERITY, 0,
@@ -232,7 +230,6 @@ public final class MockConstants {
             .build();
 
     public static final Booster ELF_BOOSTER = Booster.builder()
-            .code(ELF.name())
             .effects(Map.of(
                     STRENGTH, -30,
                     DEXTERITY, 20,
@@ -246,7 +243,6 @@ public final class MockConstants {
             .build();
 
     public static final Booster HALF_ELF_BOOSTER = Booster.builder()
-            .code(HALF_ELF.name())
             .effects(Map.of(
                     STRENGTH, -15,
                     DEXTERITY, 10,
@@ -260,7 +256,6 @@ public final class MockConstants {
             .build();
 
     public static final Booster NIGHT_ELF_BOOSTER = Booster.builder()
-            .code(NIGHT_ELF.name())
             .effects(Map.of(
                     STRENGTH, 0,
                     DEXTERITY, 10,
@@ -274,7 +269,6 @@ public final class MockConstants {
             .build();
 
     public static final Booster DWARF_BOOSTER = Booster.builder()
-            .code(DWARF.name())
             .effects(Map.of(
                     STRENGTH, 10,
                     DEXTERITY, -10,
@@ -288,7 +282,6 @@ public final class MockConstants {
             .build();
 
     public static final Booster ORC_BOOSTER = Booster.builder()
-            .code(ORC.name())
             .effects(Map.of(
                     STRENGTH, 10,
                     DEXTERITY, -5,
@@ -302,7 +295,6 @@ public final class MockConstants {
             .build();
 
     public static final Booster MINOTAUR_BOOSTER = Booster.builder()
-            .code(MINOTAUR.name())
             .effects(Map.of(
                     STRENGTH, 20,
                     DEXTERITY, -10,
@@ -316,7 +308,6 @@ public final class MockConstants {
             .build();
 
     public static final Booster ARIMASPI_BOOSTER = Booster.builder()
-            .code(ARIMASPI.name())
             .effects(Map.of(
                     STRENGTH, 5,
                     DEXTERITY, 5,
@@ -330,7 +321,6 @@ public final class MockConstants {
             .build();
 
     public static final Booster NYMPH_BOOSTER = Booster.builder()
-            .code(NYMPH.name())
             .effects(Map.of(
                     STRENGTH, -10,
                     DEXTERITY, 0,
@@ -344,7 +334,6 @@ public final class MockConstants {
             .build();
 
     public static final Booster HALFLING_BOOSTER = Booster.builder()
-            .code(HALFLING.name())
             .effects(Map.of(
                     STRENGTH, -30,
                     DEXTERITY, 50,
@@ -358,22 +347,23 @@ public final class MockConstants {
             .build();
 
     public static final Map<String, Booster> BOOSTERS = Map.ofEntries(
-            Map.entry(HORA_BOOSTER.getCode(), HORA_BOOSTER),
-            Map.entry(SIFER_BOOSTER.getCode(), SIFER_BOOSTER),
-            Map.entry(GETON_BOOSTER.getCode(), GETON_BOOSTER),
-            Map.entry(RUNID_BOOSTER.getCode(), RUNID_BOOSTER),
-            Map.entry(ALATE_BOOSTER.getCode(), ALATE_BOOSTER),
-            Map.entry(GINDON_BOOSTER.getCode(), GINDON_BOOSTER),
-            Map.entry(HUMAN_BOOSTER.getCode(), HUMAN_BOOSTER),
-            Map.entry(ELF_BOOSTER.getCode(), ELF_BOOSTER),
-            Map.entry(HALF_ELF_BOOSTER.getCode(), HALF_ELF_BOOSTER),
-            Map.entry(NIGHT_ELF_BOOSTER.getCode(), NIGHT_ELF_BOOSTER),
-            Map.entry(DWARF_BOOSTER.getCode(), DWARF_BOOSTER),
-            Map.entry(ORC_BOOSTER.getCode(), ORC_BOOSTER),
-            Map.entry(MINOTAUR_BOOSTER.getCode(), MINOTAUR_BOOSTER),
-            Map.entry(ARIMASPI_BOOSTER.getCode(), ARIMASPI_BOOSTER),
-            Map.entry(NYMPH_BOOSTER.getCode(), NYMPH_BOOSTER),
-            Map.entry(HALFLING_BOOSTER.getCode(), HALFLING_BOOSTER)
+            Map.entry(HORA.name(), HORA_BOOSTER),
+            Map.entry(SIFER.name(), SIFER_BOOSTER),
+            Map.entry(GETON.name(), GETON_BOOSTER),
+            Map.entry(RUNID.name(), RUNID_BOOSTER),
+            Map.entry(ALATE.name(), ALATE_BOOSTER),
+            Map.entry(GINDON.name(), GINDON_BOOSTER),
+            Map.entry(ATALIA.name(), ATALIA_BOOSTER),
+            Map.entry(HUMAN.name(), HUMAN_BOOSTER),
+            Map.entry(ELF.name(), ELF_BOOSTER),
+            Map.entry(HALF_ELF.name(), HALF_ELF_BOOSTER),
+            Map.entry(NIGHT_ELF.name(), NIGHT_ELF_BOOSTER),
+            Map.entry(DWARF.name(), DWARF_BOOSTER),
+            Map.entry(ORC.name(), ORC_BOOSTER),
+            Map.entry(MINOTAUR.name(), MINOTAUR_BOOSTER),
+            Map.entry(ARIMASPI.name(), ARIMASPI_BOOSTER),
+            Map.entry(NYMPH.name(), NYMPH_BOOSTER),
+            Map.entry(HALFLING.name(), HALFLING_BOOSTER)
     );
 
     // Caste details
@@ -549,7 +539,7 @@ public final class MockConstants {
             Map.entry(ARCHDRUID, CasteDetails.builder()
                     .group(NATURE_DWELLER)
                     .caste(ARCHDRUID)
-                    .nextCastes(emptyList())
+                    .nextCastes(List.of(ATALIAS_PRIEST))
                     .minimumAttributes(Map.of(
                             STRENGTH, 25,
                             DEXTERITY, 25,
@@ -559,6 +549,20 @@ public final class MockConstants {
                             LORE, 40,
                             MENTAL_POWER, 40,
                             SPIRITUAL_POWER, 10
+                    )).build()),
+            Map.entry(ATALIAS_PRIEST, CasteDetails.builder()
+                    .group(NATURE_DWELLER)
+                    .caste(ATALIAS_PRIEST)
+                    .nextCastes(emptyList())
+                    .minimumAttributes(Map.of(
+                            STRENGTH, 45,
+                            DEXTERITY, 50,
+                            CONSTITUTION, 70,
+                            AGILITY, 50,
+                            INTELLIGENCE, 80,
+                            LORE, 90,
+                            MENTAL_POWER, 90,
+                            SPIRITUAL_POWER, 25
                     )).build()),
             Map.entry(MONK, CasteDetails.builder()
                     .group(CLERIC)
@@ -888,62 +892,64 @@ public final class MockConstants {
     );
 
     // Character constraints
-    public static final Map<Caste, List<Race>> CASTE_RACE_CONSTRAINT = Map.ofEntries(
-            Map.entry(ROGUE, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, DWARF, ORC, MINOTAUR, ARIMASPI, NYMPH, HALFLING)),
-            Map.entry(WIZARD, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, NYMPH, HALFLING)),
-            Map.entry(MAGE, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, NYMPH, HALFLING)),
-            Map.entry(WITCHMASTER, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, NYMPH, HALFLING)),
-            Map.entry(AVATAR, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, NYMPH, HALFLING)),
-            Map.entry(FIGHTER, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, DWARF, ORC, MINOTAUR, ARIMASPI, HALFLING)),
-            Map.entry(PALADIN, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, DWARF, ORC, MINOTAUR, ARIMASPI, HALFLING)),
-            Map.entry(GRANDMASTER, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, DWARF, ORC, MINOTAUR, ARIMASPI, HALFLING)),
-            Map.entry(TITAN, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, DWARF, ORC, MINOTAUR, ARIMASPI, HALFLING)),
-            Map.entry(TRACKER, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, DWARF, ORC, MINOTAUR, ARIMASPI, HALFLING)),
-            Map.entry(HERMIT, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, DWARF, ORC, MINOTAUR, ARIMASPI, NYMPH, HALFLING)),
-            Map.entry(DRUID, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, DWARF, ORC, MINOTAUR, ARIMASPI, NYMPH, HALFLING)),
-            Map.entry(ARCHDRUID, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, DWARF, ORC, MINOTAUR, ARIMASPI, NYMPH, HALFLING)),
-            Map.entry(MONK, List.of(HUMAN, ELF, HALF_ELF, NIGHT_ELF, DWARF, ORC, ARIMASPI, NYMPH, HALFLING))
+    public static final Map<Caste, List<Race>> CASTE_RACE_PROHIBITION = Map.ofEntries(
+            Map.entry(ROGUE, emptyList()),
+            Map.entry(WIZARD, List.of(DWARF, ORC, MINOTAUR, ARIMASPI)),
+            Map.entry(MAGE, List.of(DWARF, ORC, MINOTAUR, ARIMASPI)),
+            Map.entry(WITCHMASTER, List.of(DWARF, ORC, MINOTAUR, ARIMASPI)),
+            Map.entry(AVATAR, List.of(DWARF, ORC, MINOTAUR, ARIMASPI)),
+            Map.entry(FIGHTER, List.of(NYMPH)),
+            Map.entry(PALADIN, List.of(NYMPH)),
+            Map.entry(GRANDMASTER, List.of(NYMPH)),
+            Map.entry(TITAN, List.of(NYMPH)),
+            Map.entry(TRACKER, List.of(NYMPH)),
+            Map.entry(HERMIT, emptyList()),
+            Map.entry(DRUID, emptyList()),
+            Map.entry(ARCHDRUID, emptyList()),
+            Map.entry(ATALIAS_PRIEST, emptyList()),
+            Map.entry(MONK, List.of(MINOTAUR))
     );
 
-    public static final Map<Caste, List<God>> CASTE_GOD_CONSTRAINT = Map.ofEntries(
-            Map.entry(ROGUE, List.of(HORA, SIFER, GETON, RUNID, ALATE, GINDON)),
-            Map.entry(WIZARD, List.of(HORA, SIFER, GETON, RUNID, GINDON)),
-            Map.entry(MAGE, List.of(HORA, SIFER, GETON, RUNID, GINDON)),
-            Map.entry(WITCHMASTER, List.of(HORA, SIFER, GETON, RUNID, GINDON)),
-            Map.entry(AVATAR, List.of(HORA, SIFER, GETON, RUNID, GINDON)),
-            Map.entry(FIGHTER, List.of(HORA, SIFER, GETON, RUNID, ALATE, GINDON)),
-            Map.entry(PALADIN, List.of(HORA, SIFER, GETON, RUNID, ALATE, GINDON)),
-            Map.entry(GRANDMASTER, List.of(HORA, SIFER, GETON, RUNID, ALATE, GINDON)),
-            Map.entry(TITAN, List.of(HORA, SIFER, GETON, RUNID, ALATE, GINDON)),
-            Map.entry(TRACKER, List.of(HORA, SIFER, GETON, RUNID, ALATE, GINDON)),
-            Map.entry(HERMIT, List.of(HORA, SIFER, GETON, RUNID, ALATE, GINDON)),
-            Map.entry(DRUID, List.of(HORA, SIFER, GETON, RUNID, ALATE, GINDON)),
-            Map.entry(ARCHDRUID, List.of(HORA, SIFER, GETON, RUNID, ALATE, GINDON)),
-            Map.entry(MONK, List.of(HORA, SIFER, GETON, RUNID, ALATE, GINDON))
+    public static final Map<Caste, List<God>> CASTE_GOD_PROHIBITION = Map.ofEntries(
+            Map.entry(ROGUE, emptyList()),
+            Map.entry(WIZARD, List.of(ALATE)),
+            Map.entry(MAGE, List.of(ALATE)),
+            Map.entry(WITCHMASTER, List.of(ALATE)),
+            Map.entry(AVATAR, List.of(ALATE)),
+            Map.entry(FIGHTER, emptyList()),
+            Map.entry(PALADIN, emptyList()),
+            Map.entry(GRANDMASTER, emptyList()),
+            Map.entry(TITAN, emptyList()),
+            Map.entry(TRACKER, emptyList()),
+            Map.entry(HERMIT, emptyList()),
+            Map.entry(DRUID, emptyList()),
+            Map.entry(ARCHDRUID, emptyList()),
+            Map.entry(ATALIAS_PRIEST, emptyList()),
+            Map.entry(MONK, emptyList())
     );
 
-    public static final Map<Race, List<Gender>> RACE_GENDER_CONSTRAINT = Map.of(
-            HUMAN, List.of(MALE, FEMALE),
-            ELF, List.of(MALE, FEMALE),
-            HALF_ELF, List.of(MALE, FEMALE),
-            NIGHT_ELF, List.of(MALE, FEMALE),
-            DWARF, List.of(MALE, FEMALE),
-            ORC, List.of(MALE, FEMALE),
-            MINOTAUR, List.of(MALE),
-            ARIMASPI, List.of(MALE, FEMALE),
-            NYMPH, List.of(FEMALE),
-            HALFLING, List.of(MALE, FEMALE)
+    public static final Map<Race, List<Gender>> RACE_GENDER_PROHIBITION = Map.of(
+            HUMAN, emptyList(),
+            ELF, emptyList(),
+            HALF_ELF, emptyList(),
+            NIGHT_ELF, emptyList(),
+            DWARF, emptyList(),
+            ORC, emptyList(),
+            MINOTAUR, List.of(FEMALE),
+            ARIMASPI, emptyList(),
+            NYMPH, List.of(MALE),
+            HALFLING, emptyList()
     );
-    public static final Map<Race, List<God>> RACE_GOD_CONSTRAINT = Map.of(
-            HUMAN, List.of(HORA, SIFER, GETON, RUNID, ALATE, GINDON),
-            ELF, List.of(HORA, SIFER, GETON, RUNID, ALATE, GINDON),
-            HALF_ELF, List.of(HORA, SIFER, GETON, RUNID, ALATE, GINDON),
-            NIGHT_ELF, List.of(HORA, SIFER, GETON, RUNID, ALATE, GINDON),
-            DWARF, List.of(SIFER, GETON, RUNID, ALATE, GINDON),
-            ORC, List.of(SIFER, GETON, ALATE, GINDON),
-            MINOTAUR, List.of(SIFER, GETON, RUNID, ALATE, GINDON),
-            ARIMASPI, List.of(HORA, SIFER, GETON, RUNID, ALATE, GINDON),
-            NYMPH, List.of(HORA, SIFER, RUNID, GINDON),
-            HALFLING, List.of(HORA, SIFER, GETON, RUNID, ALATE, GINDON)
+    public static final Map<Race, List<God>> RACE_GOD_PROHIBITION = Map.of(
+            HUMAN, emptyList(),
+            ELF, emptyList(),
+            HALF_ELF, emptyList(),
+            NIGHT_ELF, emptyList(),
+            DWARF, List.of(HORA),
+            ORC, List.of(HORA, RUNID),
+            MINOTAUR, List.of(HORA),
+            ARIMASPI, emptyList(),
+            NYMPH, List.of(GETON, ALATE),
+            HALFLING, emptyList()
     );
 }

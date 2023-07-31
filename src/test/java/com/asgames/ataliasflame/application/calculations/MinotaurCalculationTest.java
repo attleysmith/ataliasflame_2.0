@@ -1,4 +1,4 @@
-package com.asgames.ataliasflame.application;
+package com.asgames.ataliasflame.application.calculations;
 
 import com.asgames.ataliasflame.application.model.CharacterInput;
 import com.asgames.ataliasflame.domain.model.entities.Character;
@@ -14,21 +14,21 @@ import java.util.stream.Stream;
 import static com.asgames.ataliasflame.domain.model.enums.Caste.*;
 import static com.asgames.ataliasflame.domain.model.enums.Gender.MALE;
 import static com.asgames.ataliasflame.domain.model.enums.God.*;
-import static com.asgames.ataliasflame.domain.model.enums.Race.DWARF;
+import static com.asgames.ataliasflame.domain.model.enums.Race.MINOTAUR;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 @SpringBootTest
-class DwarfCalculationTest extends RaceCalculationTestBase {
+class MinotaurCalculationTest extends RaceCalculationTestBase {
 
     @ParameterizedTest
     @MethodSource("rogueCalculations")
     void rogueTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health) {
-        String characterName = "Thangrar";
+        String characterName = "Sirzeus";
         CharacterInput characterInput = CharacterInput.builder()
-                .race(DWARF)
+                .race(MINOTAUR)
                 .gender(MALE)
                 .defensiveGod(god)
                 .name(characterName)
@@ -59,9 +59,9 @@ class DwarfCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("fighterCalculations")
     void fighterTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health) {
-        String characterName = "Forbik";
+        String characterName = "Grudir";
         CharacterInput characterInput = CharacterInput.builder()
-                .race(DWARF)
+                .race(MINOTAUR)
                 .gender(MALE)
                 .defensiveGod(god)
                 .name(characterName)
@@ -81,20 +81,20 @@ class DwarfCalculationTest extends RaceCalculationTestBase {
 
     private static Stream<Arguments> fighterCalculations() {
         return Stream.of(
-                arguments(SIFER, 91, 24, 2, 7, 17, 160),
-                arguments(GETON, 91, 24, 2, 7, 17, 160),
-                arguments(RUNID, 91, 24, 2, 7, 17, 160),
-                arguments(ALATE, 91, 24, 2, 7, 17, 160),
-                arguments(GINDON, 91, 24, 2, 7, 17, 160)
+                arguments(SIFER, 92, 24, 2, 7, 17, 160),
+                arguments(GETON, 92, 24, 2, 7, 17, 160),
+                arguments(RUNID, 92, 24, 2, 7, 17, 160),
+                arguments(ALATE, 92, 24, 2, 7, 17, 160),
+                arguments(GINDON, 92, 24, 2, 7, 17, 160)
         );
     }
 
     @ParameterizedTest
     @MethodSource("paladinCalculations")
     void paladinTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health) {
-        String characterName = "Anmum";
+        String characterName = "Rahdnur";
         CharacterInput characterInput = CharacterInput.builder()
-                .race(DWARF)
+                .race(MINOTAUR)
                 .gender(MALE)
                 .defensiveGod(god)
                 .name(characterName)
@@ -114,20 +114,20 @@ class DwarfCalculationTest extends RaceCalculationTestBase {
 
     private static Stream<Arguments> paladinCalculations() {
         return Stream.of(
-                arguments(SIFER, 122, 33, 3, 10, 62, 340),
-                arguments(GETON, 122, 33, 3, 10, 64, 340),
-                arguments(RUNID, 122, 33, 3, 10, 62, 340),
-                arguments(ALATE, 123, 33, 3, 10, 63, 340),
-                arguments(GINDON, 122, 33, 3, 10, 62, 340)
+                arguments(SIFER, 123, 34, 3, 10, 66, 340),
+                arguments(GETON, 123, 34, 3, 10, 68, 340),
+                arguments(RUNID, 123, 34, 3, 10, 66, 340),
+                arguments(ALATE, 125, 34, 3, 10, 67, 340),
+                arguments(GINDON, 123, 34, 3, 10, 66, 340)
         );
     }
 
     @ParameterizedTest
     @MethodSource("grandmasterCalculations")
     void grandmasterTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health) {
-        String characterName = "Gronmomi";
+        String characterName = "Gararius";
         CharacterInput characterInput = CharacterInput.builder()
-                .race(DWARF)
+                .race(MINOTAUR)
                 .gender(MALE)
                 .defensiveGod(god)
                 .name(characterName)
@@ -147,20 +147,20 @@ class DwarfCalculationTest extends RaceCalculationTestBase {
 
     private static Stream<Arguments> grandmasterCalculations() {
         return Stream.of(
-                arguments(SIFER, 184, 50, 5, 15, 155, 710),
-                arguments(GETON, 184, 51, 5, 16, 159, 700),
-                arguments(RUNID, 184, 50, 5, 15, 155, 700),
-                arguments(ALATE, 187, 51, 5, 15, 157, 700),
-                arguments(GINDON, 184, 50, 5, 15, 155, 700)
+                arguments(SIFER, 188, 53, 5, 16, 165, 710),
+                arguments(GETON, 188, 53, 5, 16, 169, 700),
+                arguments(RUNID, 188, 53, 5, 16, 165, 700),
+                arguments(ALATE, 191, 53, 5, 16, 167, 700),
+                arguments(GINDON, 188, 53, 5, 16, 165, 700)
         );
     }
 
     @ParameterizedTest
     @MethodSource("titanCalculations")
     void titanTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health) {
-        String characterName = "Kirronlim";
+        String characterName = "Nohrmud";
         CharacterInput characterInput = CharacterInput.builder()
-                .race(DWARF)
+                .race(MINOTAUR)
                 .gender(MALE)
                 .defensiveGod(god)
                 .name(characterName)
@@ -180,11 +180,11 @@ class DwarfCalculationTest extends RaceCalculationTestBase {
 
     private static Stream<Arguments> titanCalculations() {
         return Stream.of(
-                arguments(SIFER, 288, 80, 8, 25, 310, 1310),
-                arguments(GETON, 288, 80, 8, 25, 316, 1300),
-                arguments(RUNID, 288, 80, 8, 25, 310, 1300),
-                arguments(ALATE, 293, 80, 8, 25, 313, 1300),
-                arguments(GINDON, 288, 80, 8, 25, 310, 1300)
+                arguments(SIFER, 296, 84, 9, 26, 330, 1310),
+                arguments(GETON, 296, 85, 9, 26, 336, 1300),
+                arguments(RUNID, 296, 84, 9, 26, 330, 1300),
+                arguments(ALATE, 301, 85, 9, 26, 333, 1300),
+                arguments(GINDON, 296, 84, 9, 26, 330, 1300)
         );
     }
 }

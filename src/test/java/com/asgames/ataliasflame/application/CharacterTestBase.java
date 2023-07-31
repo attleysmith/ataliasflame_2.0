@@ -1,6 +1,5 @@
 package com.asgames.ataliasflame.application;
 
-import com.asgames.ataliasflame.domain.model.entities.CasteDetails;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
@@ -13,10 +12,9 @@ import java.util.List;
 import java.util.Map;
 
 import static com.asgames.ataliasflame.domain.MockConstants.CASTE_DETAILS;
-import static com.asgames.ataliasflame.domain.MockConstants.WEAPONS;
 import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
 
-public abstract class RaceCalculationTestBase {
+public abstract class CharacterTestBase {
 
     @Autowired
     protected CharacterService characterService;
@@ -48,17 +46,6 @@ public abstract class RaceCalculationTestBase {
         character.getAttributes().put(LORE, targetAttributes.get(LORE));
         character.getAttributes().put(MENTAL_POWER, targetAttributes.get(MENTAL_POWER));
         character.getAttributes().put(SPIRITUAL_POWER, targetAttributes.get(SPIRITUAL_POWER));
-
-        characterRepository.save(
-                characterCalculationService.recalculateProperties(character)
-        );
-    }
-
-    protected void addDagger(String characterName) {
-        Character character = characterService.getCharacter(characterName);
-        character.setWeapon(WEAPONS.get("DAGGER"));
-        character.setShield(null);
-        character.setArmor(null);
 
         characterRepository.save(
                 characterCalculationService.recalculateProperties(character)

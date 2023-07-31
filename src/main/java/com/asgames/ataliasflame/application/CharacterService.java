@@ -3,11 +3,13 @@ package com.asgames.ataliasflame.application;
 import com.asgames.ataliasflame.application.mappers.CharacterMapper;
 import com.asgames.ataliasflame.application.model.CharacterInput;
 import com.asgames.ataliasflame.domain.model.entities.Character;
+import com.asgames.ataliasflame.domain.model.entities.DefensiveGodConversionLog;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
 import com.asgames.ataliasflame.domain.services.*;
 import com.asgames.ataliasflame.infrastructure.repositories.CharacterRepository;
+import com.asgames.ataliasflame.infrastructure.repositories.DefensiveGodConversionLogRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +42,10 @@ public class CharacterService {
     private HealingService healingService;
     @Autowired
     private MonsterService monsterService;
+    @Autowired
+    private DefensiveGodConversionService defensiveGodConversionService;
+    @Autowired
+    private DefensiveGodConversionLogRepository defensiveGodConversionLogRepository;
 
     @Transactional
     public Character createCharacter(CharacterInput characterInput) {
@@ -93,6 +99,32 @@ public class CharacterService {
             log.info("You are defeated!");
             log.info("Enemy's health: " + monster.getActualHealth());
         }
+
+        return characterRepository.save(character);
+    }
+
+    @Transactional
+    public String getDefensiveGodConversionCode(String characterName) {
+        Character character = getCharacter(characterName);
+        String conversionCode = defensiveGodConversionService.getConversionCode(character);
+
+        DefensiveGodConversionLog conversionLog = defensiveGodConversionLogRepository.save(DefensiveGodConversionLog.builder()
+                .conversionCode(conversionCode)
+                .cleric(character)
+                .god(character.getDefensiveGod())
+                .build());
+
+        return conversionLog.getConversionCode();
+    }
+
+    @Transactional
+    public Character convertDefensiveGod(String characterName, String conversionCode) {
+        Character character = getCharacter(characterName);
+        DefensiveGodConversionLog conversionLog = defensiveGodConversionLogRepository.findById(conversionCode)
+                .orElseThrow(() -> new EntityNotFoundException("Missing conversion code!"));
+
+        conversionLog = defensiveGodConversionService.convert(character, conversionLog);
+        defensiveGodConversionLogRepository.save(conversionLog);
 
         return characterRepository.save(character);
     }

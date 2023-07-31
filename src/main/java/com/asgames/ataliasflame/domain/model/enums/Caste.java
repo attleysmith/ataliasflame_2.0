@@ -15,5 +15,8 @@ public enum Caste {
     DRUID,
     ARCHDRUID,
     ATALIAS_PRIEST,
-    MONK
+    MONK,
+    PRIEST,
+    HIERARCH,
+    ARCHANGEL
 }

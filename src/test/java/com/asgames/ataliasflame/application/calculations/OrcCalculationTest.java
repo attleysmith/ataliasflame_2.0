@@ -1,4 +1,4 @@
-package com.asgames.ataliasflame.application;
+package com.asgames.ataliasflame.application.calculations;
 
 import com.asgames.ataliasflame.application.model.CharacterInput;
 import com.asgames.ataliasflame.domain.model.entities.Character;

@@ -567,7 +567,7 @@ public final class MockConstants {
             Map.entry(MONK, CasteDetails.builder()
                     .group(CLERIC)
                     .caste(MONK)
-                    .nextCastes(emptyList())
+                    .nextCastes(List.of(PRIEST))
                     .minimumAttributes(Map.of(
                             STRENGTH, 3,
                             DEXTERITY, 3,
@@ -577,6 +577,48 @@ public final class MockConstants {
                             LORE, 5,
                             MENTAL_POWER, 4,
                             SPIRITUAL_POWER, 1
+                    )).build()),
+            Map.entry(PRIEST, CasteDetails.builder()
+                    .group(CLERIC)
+                    .caste(PRIEST)
+                    .nextCastes(List.of(HIERARCH))
+                    .minimumAttributes(Map.of(
+                            STRENGTH, 8,
+                            DEXTERITY, 12,
+                            CONSTITUTION, 12,
+                            AGILITY, 12,
+                            INTELLIGENCE, 16,
+                            LORE, 20,
+                            MENTAL_POWER, 18,
+                            SPIRITUAL_POWER, 2
+                    )).build()),
+            Map.entry(HIERARCH, CasteDetails.builder()
+                    .group(CLERIC)
+                    .caste(HIERARCH)
+                    .nextCastes(List.of(ARCHANGEL))
+                    .minimumAttributes(Map.of(
+                            STRENGTH, 25,
+                            DEXTERITY, 27,
+                            CONSTITUTION, 26,
+                            AGILITY, 27,
+                            INTELLIGENCE, 45,
+                            LORE, 50,
+                            MENTAL_POWER, 45,
+                            SPIRITUAL_POWER, 5
+                    )).build()),
+            Map.entry(ARCHANGEL, CasteDetails.builder()
+                    .group(CLERIC)
+                    .caste(ARCHANGEL)
+                    .nextCastes(emptyList())
+                    .minimumAttributes(Map.of(
+                            STRENGTH, 50,
+                            DEXTERITY, 55,
+                            CONSTITUTION, 60,
+                            AGILITY, 50,
+                            INTELLIGENCE, 70,
+                            LORE, 100,
+                            MENTAL_POWER, 90,
+                            SPIRITUAL_POWER, 25
                     )).build())
     );
 
@@ -907,7 +949,10 @@ public final class MockConstants {
             Map.entry(DRUID, emptyList()),
             Map.entry(ARCHDRUID, emptyList()),
             Map.entry(ATALIAS_PRIEST, emptyList()),
-            Map.entry(MONK, List.of(MINOTAUR))
+            Map.entry(MONK, List.of(MINOTAUR)),
+            Map.entry(PRIEST, List.of(MINOTAUR)),
+            Map.entry(HIERARCH, List.of(MINOTAUR)),
+            Map.entry(ARCHANGEL, List.of(MINOTAUR))
     );
 
     public static final Map<Caste, List<God>> CASTE_GOD_PROHIBITION = Map.ofEntries(
@@ -925,7 +970,10 @@ public final class MockConstants {
             Map.entry(DRUID, emptyList()),
             Map.entry(ARCHDRUID, emptyList()),
             Map.entry(ATALIAS_PRIEST, emptyList()),
-            Map.entry(MONK, emptyList())
+            Map.entry(MONK, emptyList()),
+            Map.entry(PRIEST, emptyList()),
+            Map.entry(HIERARCH, emptyList()),
+            Map.entry(ARCHANGEL, emptyList())
     );
 
     public static final Map<Race, List<Gender>> RACE_GENDER_PROHIBITION = Map.of(

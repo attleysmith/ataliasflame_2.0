@@ -1,4 +1,4 @@
-package com.asgames.ataliasflame.application;
+package com.asgames.ataliasflame.application.calculations;
 
 import com.asgames.ataliasflame.application.model.CharacterInput;
 import com.asgames.ataliasflame.domain.model.entities.Character;
@@ -14,21 +14,21 @@ import java.util.stream.Stream;
 import static com.asgames.ataliasflame.domain.model.enums.Caste.*;
 import static com.asgames.ataliasflame.domain.model.enums.Gender.MALE;
 import static com.asgames.ataliasflame.domain.model.enums.God.*;
-import static com.asgames.ataliasflame.domain.model.enums.Race.NIGHT_ELF;
+import static com.asgames.ataliasflame.domain.model.enums.Race.ARIMASPI;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 @SpringBootTest
-class NightElfCalculationTest extends RaceCalculationTestBase {
+class ArimaspiCalculationTest extends RaceCalculationTestBase {
 
     @ParameterizedTest
     @MethodSource("rogueCalculations")
     void rogueTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health) {
-        String characterName = "Bhumarth";
+        String characterName = "Throlf";
         CharacterInput characterInput = CharacterInput.builder()
-                .race(NIGHT_ELF)
+                .race(ARIMASPI)
                 .gender(MALE)
                 .defensiveGod(god)
                 .name(characterName)
@@ -60,9 +60,9 @@ class NightElfCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("fighterCalculations")
     void fighterTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health) {
-        String characterName = "Mebnina";
+        String characterName = "Iblur";
         CharacterInput characterInput = CharacterInput.builder()
-                .race(NIGHT_ELF)
+                .race(ARIMASPI)
                 .gender(MALE)
                 .defensiveGod(god)
                 .name(characterName)
@@ -82,21 +82,21 @@ class NightElfCalculationTest extends RaceCalculationTestBase {
 
     private static Stream<Arguments> fighterCalculations() {
         return Stream.of(
-                arguments(HORA, 94, 24, 2, 7, 16, 150),
-                arguments(SIFER, 94, 24, 2, 7, 16, 150),
-                arguments(GETON, 94, 24, 2, 7, 16, 150),
-                arguments(RUNID, 94, 24, 2, 7, 16, 150),
-                arguments(ALATE, 94, 24, 2, 7, 16, 150),
-                arguments(GINDON, 94, 24, 2, 7, 16, 150)
+                arguments(HORA, 92, 24, 2, 7, 15, 150),
+                arguments(SIFER, 92, 24, 2, 7, 15, 150),
+                arguments(GETON, 92, 24, 2, 7, 15, 150),
+                arguments(RUNID, 92, 24, 2, 7, 15, 150),
+                arguments(ALATE, 92, 24, 2, 7, 15, 150),
+                arguments(GINDON, 92, 24, 2, 7, 15, 150)
         );
     }
 
     @ParameterizedTest
     @MethodSource("paladinCalculations")
     void paladinTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health) {
-        String characterName = "Rhikrod";
+        String characterName = "Baunweg";
         CharacterInput characterInput = CharacterInput.builder()
-                .race(NIGHT_ELF)
+                .race(ARIMASPI)
                 .gender(MALE)
                 .defensiveGod(god)
                 .name(characterName)
@@ -116,21 +116,21 @@ class NightElfCalculationTest extends RaceCalculationTestBase {
 
     private static Stream<Arguments> paladinCalculations() {
         return Stream.of(
-                arguments(HORA, 131, 34, 3, 10, 62, 300),
-                arguments(SIFER, 131, 34, 3, 10, 62, 300),
-                arguments(GETON, 131, 34, 3, 10, 64, 300),
-                arguments(RUNID, 131, 34, 3, 10, 62, 300),
-                arguments(ALATE, 133, 34, 3, 10, 63, 300),
-                arguments(GINDON, 131, 34, 3, 10, 62, 300)
+                arguments(HORA, 130, 34, 3, 10, 63, 310),
+                arguments(SIFER, 130, 34, 3, 10, 63, 310),
+                arguments(GETON, 130, 34, 3, 10, 65, 310),
+                arguments(RUNID, 130, 34, 3, 10, 63, 310),
+                arguments(ALATE, 132, 34, 3, 10, 64, 310),
+                arguments(GINDON, 130, 34, 3, 10, 63, 310)
         );
     }
 
     @ParameterizedTest
     @MethodSource("grandmasterCalculations")
     void grandmasterTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health) {
-        String characterName = "Rhurvud";
+        String characterName = "Khalumm";
         CharacterInput characterInput = CharacterInput.builder()
-                .race(NIGHT_ELF)
+                .race(ARIMASPI)
                 .gender(MALE)
                 .defensiveGod(god)
                 .name(characterName)
@@ -150,21 +150,21 @@ class NightElfCalculationTest extends RaceCalculationTestBase {
 
     private static Stream<Arguments> grandmasterCalculations() {
         return Stream.of(
-                arguments(HORA, 208, 54, 5, 15, 155, 600),
-                arguments(SIFER, 208, 54, 5, 15, 155, 600),
-                arguments(GETON, 208, 54, 5, 16, 159, 600),
-                arguments(RUNID, 208, 54, 5, 15, 155, 600),
-                arguments(ALATE, 211, 54, 5, 15, 157, 600),
-                arguments(GINDON, 208, 54, 5, 15, 155, 600)
+                arguments(HORA, 207, 54, 5, 16, 159, 630),
+                arguments(SIFER, 207, 54, 5, 16, 159, 630),
+                arguments(GETON, 207, 55, 5, 16, 161, 630),
+                arguments(RUNID, 207, 54, 5, 16, 159, 630),
+                arguments(ALATE, 209, 55, 5, 16, 160, 630),
+                arguments(GINDON, 207, 54, 5, 16, 159, 630)
         );
     }
 
     @ParameterizedTest
     @MethodSource("titanCalculations")
     void titanTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health) {
-        String characterName = "Conuth";
+        String characterName = "Olk";
         CharacterInput characterInput = CharacterInput.builder()
-                .race(NIGHT_ELF)
+                .race(ARIMASPI)
                 .gender(MALE)
                 .defensiveGod(god)
                 .name(characterName)
@@ -184,12 +184,12 @@ class NightElfCalculationTest extends RaceCalculationTestBase {
 
     private static Stream<Arguments> titanCalculations() {
         return Stream.of(
-                arguments(HORA, 336, 86, 8, 25, 310, 1090),
-                arguments(SIFER, 336, 86, 8, 25, 310, 1100),
-                arguments(GETON, 336, 87, 8, 25, 316, 1090),
-                arguments(RUNID, 336, 86, 8, 25, 310, 1090),
-                arguments(ALATE, 341, 87, 8, 25, 313, 1090),
-                arguments(GINDON, 336, 86, 8, 25, 310, 1090)
+                arguments(HORA, 332, 87, 8, 25, 315, 1150),
+                arguments(SIFER, 332, 87, 8, 25, 315, 1160),
+                arguments(GETON, 332, 88, 8, 25, 321, 1150),
+                arguments(RUNID, 332, 87, 8, 25, 315, 1150),
+                arguments(ALATE, 337, 88, 8, 25, 318, 1150),
+                arguments(GINDON, 332, 87, 8, 25, 315, 1150)
         );
     }
 }

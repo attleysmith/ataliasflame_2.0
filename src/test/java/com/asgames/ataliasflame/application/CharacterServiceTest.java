@@ -5,29 +5,27 @@ import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.enums.Gender;
 import com.asgames.ataliasflame.domain.model.enums.God;
 import com.asgames.ataliasflame.domain.model.enums.Race;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
 import java.util.stream.Stream;
 
-import static com.asgames.ataliasflame.domain.model.enums.Caste.ROGUE;
+import static com.asgames.ataliasflame.domain.model.enums.Caste.*;
 import static com.asgames.ataliasflame.domain.model.enums.Gender.FEMALE;
 import static com.asgames.ataliasflame.domain.model.enums.Gender.MALE;
 import static com.asgames.ataliasflame.domain.model.enums.God.*;
 import static com.asgames.ataliasflame.domain.model.enums.Race.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 @SpringBootTest
-class CharacterServiceTest {
-
-    @Autowired
-    private CharacterService characterService;
+class CharacterServiceTest extends CharacterTestBase {
 
     @ParameterizedTest
     @MethodSource("characters")
@@ -78,6 +76,48 @@ class CharacterServiceTest {
         assertThat(character.getLevel(), is(1));
         assertThat(character.getExperience(), is(0));
         assertThat(character.getAttributePoints(), is(0));
+    }
+
+    @Test
+    void defensiveGodConversionTest() {
+        // given
+        String clericName = "Guag";
+        String fighterName = "Janadiane";
+        // and
+        CharacterInput clericInput = CharacterInput.builder()
+                .race(ORC)
+                .gender(MALE)
+                .defensiveGod(GETON)
+                .name(clericName)
+                .build();
+        characterService.createCharacter(clericInput);
+        upgradeCaste(clericName, List.of(MONK, PRIEST));
+        // and
+        CharacterInput fighterInput = CharacterInput.builder()
+                .race(HALF_ELF)
+                .gender(FEMALE)
+                .defensiveGod(GINDON)
+                .name(fighterName)
+                .build();
+        characterService.createCharacter(fighterInput);
+        upgradeCaste(fighterName, List.of(FIGHTER));
+
+        // then
+        Character cleric = characterService.getCharacter(clericName);
+        Character fighter = characterService.getCharacter(fighterName);
+        assertThat(cleric.getDefensiveGod(), is(not(equalTo(fighter.getDefensiveGod()))));
+
+        // when
+        String conversionCode = characterService.getDefensiveGodConversionCode(clericName);
+        fighter = characterService.convertDefensiveGod(fighterName, conversionCode);
+
+        // expect
+        assertThat(cleric.getDefensiveGod(), is(equalTo(fighter.getDefensiveGod())));
+        assertThat(fighter.getDefensiveGod(), is(GETON));
+
+        // and
+        assertThrows(IllegalArgumentException.class,
+                () -> characterService.convertDefensiveGod(fighterName, conversionCode));
     }
 
     private static Stream<Arguments> characters() {

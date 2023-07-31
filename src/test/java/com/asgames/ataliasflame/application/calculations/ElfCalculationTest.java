@@ -1,4 +1,4 @@
-package com.asgames.ataliasflame.application;
+package com.asgames.ataliasflame.application.calculations;
 
 import com.asgames.ataliasflame.application.model.CharacterInput;
 import com.asgames.ataliasflame.domain.model.entities.Character;
@@ -12,24 +12,24 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static com.asgames.ataliasflame.domain.model.enums.Caste.*;
-import static com.asgames.ataliasflame.domain.model.enums.Gender.FEMALE;
+import static com.asgames.ataliasflame.domain.model.enums.Gender.MALE;
 import static com.asgames.ataliasflame.domain.model.enums.God.*;
-import static com.asgames.ataliasflame.domain.model.enums.Race.NYMPH;
+import static com.asgames.ataliasflame.domain.model.enums.Race.ELF;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 @SpringBootTest
-class NymphCalculationTest extends RaceCalculationTestBase {
+class ElfCalculationTest extends RaceCalculationTestBase {
 
     @ParameterizedTest
     @MethodSource("rogueCalculations")
     void rogueTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health) {
-        String characterName = "Castalia";
+        String characterName = "Illithor";
         CharacterInput characterInput = CharacterInput.builder()
-                .race(NYMPH)
-                .gender(FEMALE)
+                .race(ELF)
+                .gender(MALE)
                 .defensiveGod(god)
                 .name(characterName)
                 .build();
@@ -50,23 +50,25 @@ class NymphCalculationTest extends RaceCalculationTestBase {
         return Stream.of(
                 arguments(HORA, 82, 22, 2, 6, 3, 110),
                 arguments(SIFER, 82, 22, 2, 6, 3, 110),
+                arguments(GETON, 82, 22, 2, 6, 3, 110),
                 arguments(RUNID, 82, 22, 2, 6, 3, 110),
+                arguments(ALATE, 82, 22, 2, 6, 3, 110),
                 arguments(GINDON, 82, 22, 2, 6, 3, 110)
         );
     }
 
     @ParameterizedTest
-    @MethodSource("wizardCalculations")
-    void wizardTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health) {
-        String characterName = "Kahliste";
+    @MethodSource("fighterCalculations")
+    void fighterTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health) {
+        String characterName = "Vamir";
         CharacterInput characterInput = CharacterInput.builder()
-                .race(NYMPH)
-                .gender(FEMALE)
+                .race(ELF)
+                .gender(MALE)
                 .defensiveGod(god)
                 .name(characterName)
                 .build();
         characterService.createCharacter(characterInput);
-        upgradeCaste(characterName, List.of(WIZARD));
+        upgradeCaste(characterName, List.of(FIGHTER));
         addDagger(characterName);
 
         Character character = characterService.getCharacter(characterName);
@@ -78,27 +80,29 @@ class NymphCalculationTest extends RaceCalculationTestBase {
         assertThat(character.getTotalHealth(), is(equalTo(health)));
     }
 
-    private static Stream<Arguments> wizardCalculations() {
+    private static Stream<Arguments> fighterCalculations() {
         return Stream.of(
-                arguments(HORA, 87, 23, 2, 6, 7, 120),
-                arguments(SIFER, 87, 23, 2, 6, 7, 120),
-                arguments(RUNID, 87, 23, 2, 6, 7, 120),
-                arguments(GINDON, 87, 23, 2, 6, 7, 120)
+                arguments(HORA, 94, 24, 2, 7, 14, 150),
+                arguments(SIFER, 94, 24, 2, 7, 14, 150),
+                arguments(GETON, 94, 24, 2, 7, 14, 150),
+                arguments(RUNID, 94, 24, 2, 7, 14, 150),
+                arguments(ALATE, 94, 24, 2, 7, 14, 150),
+                arguments(GINDON, 94, 24, 2, 7, 14, 150)
         );
     }
 
     @ParameterizedTest
-    @MethodSource("mageCalculations")
-    void mageTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health) {
-        String characterName = "Sylphise";
+    @MethodSource("paladinCalculations")
+    void paladinTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health) {
+        String characterName = "Althidon";
         CharacterInput characterInput = CharacterInput.builder()
-                .race(NYMPH)
-                .gender(FEMALE)
+                .race(ELF)
+                .gender(MALE)
                 .defensiveGod(god)
                 .name(characterName)
                 .build();
         characterService.createCharacter(characterInput);
-        upgradeCaste(characterName, List.of(WIZARD, MAGE));
+        upgradeCaste(characterName, List.of(FIGHTER, PALADIN));
         addDagger(characterName);
 
         Character character = characterService.getCharacter(characterName);
@@ -110,27 +114,29 @@ class NymphCalculationTest extends RaceCalculationTestBase {
         assertThat(character.getTotalHealth(), is(equalTo(health)));
     }
 
-    private static Stream<Arguments> mageCalculations() {
+    private static Stream<Arguments> paladinCalculations() {
         return Stream.of(
-                arguments(HORA, 107, 27, 2, 7, 22, 160),
-                arguments(SIFER, 107, 27, 2, 7, 22, 160),
-                arguments(RUNID, 107, 27, 2, 7, 22, 160),
-                arguments(GINDON, 107, 27, 2, 7, 22, 160)
+                arguments(HORA, 134, 33, 3, 9, 52, 280),
+                arguments(SIFER, 134, 33, 3, 9, 52, 280),
+                arguments(GETON, 134, 33, 3, 9, 54, 280),
+                arguments(RUNID, 134, 33, 3, 9, 52, 280),
+                arguments(ALATE, 136, 33, 3, 9, 53, 280),
+                arguments(GINDON, 134, 33, 3, 9, 52, 280)
         );
     }
 
     @ParameterizedTest
-    @MethodSource("witchmasterCalculations")
-    void witchmasterTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health) {
-        String characterName = "Melita";
+    @MethodSource("grandmasterCalculations")
+    void grandmasterTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health) {
+        String characterName = "Arbelladon";
         CharacterInput characterInput = CharacterInput.builder()
-                .race(NYMPH)
-                .gender(FEMALE)
+                .race(ELF)
+                .gender(MALE)
                 .defensiveGod(god)
                 .name(characterName)
                 .build();
         characterService.createCharacter(characterInput);
-        upgradeCaste(characterName, List.of(WIZARD, MAGE, WITCHMASTER));
+        upgradeCaste(characterName, List.of(FIGHTER, PALADIN, GRANDMASTER));
         addDagger(characterName);
 
         Character character = characterService.getCharacter(characterName);
@@ -142,27 +148,29 @@ class NymphCalculationTest extends RaceCalculationTestBase {
         assertThat(character.getTotalHealth(), is(equalTo(health)));
     }
 
-    private static Stream<Arguments> witchmasterCalculations() {
+    private static Stream<Arguments> grandmasterCalculations() {
         return Stream.of(
-                arguments(HORA, 138, 34, 3, 9, 57, 260),
-                arguments(SIFER, 138, 34, 3, 9, 57, 260),
-                arguments(RUNID, 138, 34, 3, 9, 57, 260),
-                arguments(GINDON, 138, 34, 3, 9, 57, 260)
+                arguments(HORA, 216, 51, 5, 14, 130, 550),
+                arguments(SIFER, 216, 51, 5, 14, 130, 560),
+                arguments(GETON, 216, 52, 5, 14, 134, 550),
+                arguments(RUNID, 216, 51, 5, 14, 130, 550),
+                arguments(ALATE, 219, 52, 5, 14, 132, 550),
+                arguments(GINDON, 216, 51, 5, 14, 130, 550)
         );
     }
 
     @ParameterizedTest
-    @MethodSource("avatarCalculations")
-    void avatarTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health) {
-        String characterName = "Gatalea";
+    @MethodSource("titanCalculations")
+    void titanTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health) {
+        String characterName = "Morthil";
         CharacterInput characterInput = CharacterInput.builder()
-                .race(NYMPH)
-                .gender(FEMALE)
+                .race(ELF)
+                .gender(MALE)
                 .defensiveGod(god)
                 .name(characterName)
                 .build();
         characterService.createCharacter(characterInput);
-        upgradeCaste(characterName, List.of(WIZARD, MAGE, WITCHMASTER, AVATAR));
+        upgradeCaste(characterName, List.of(FIGHTER, PALADIN, GRANDMASTER, TITAN));
         addDagger(characterName);
 
         Character character = characterService.getCharacter(characterName);
@@ -174,12 +182,14 @@ class NymphCalculationTest extends RaceCalculationTestBase {
         assertThat(character.getTotalHealth(), is(equalTo(health)));
     }
 
-    private static Stream<Arguments> avatarCalculations() {
+    private static Stream<Arguments> titanCalculations() {
         return Stream.of(
-                arguments(HORA, 188, 47, 4, 13, 117, 460),
-                arguments(SIFER, 188, 47, 4, 13, 117, 460),
-                arguments(RUNID, 188, 47, 4, 13, 117, 460),
-                arguments(GINDON, 188, 47, 4, 13, 117, 460)
+                arguments(HORA, 352, 82, 7, 22, 260, 1000),
+                arguments(SIFER, 352, 82, 7, 22, 260, 1010),
+                arguments(GETON, 352, 83, 7, 22, 266, 1000),
+                arguments(RUNID, 352, 82, 7, 22, 260, 1000),
+                arguments(ALATE, 357, 83, 7, 22, 263, 1000),
+                arguments(GINDON, 352, 82, 7, 22, 260, 1000)
         );
     }
 }

@@ -41,7 +41,7 @@ class CharacterServiceTest extends CharacterTestBase {
                 .build();
 
         // when
-        Character character = characterService.createCharacter(characterInput);
+        Character character = characterMaintenanceService.createCharacter(characterInput);
 
         // then
         assertThat(character.getRace(), is(equalTo(race)));
@@ -64,10 +64,10 @@ class CharacterServiceTest extends CharacterTestBase {
                 .defensiveGod(defensiveGod)
                 .name(characterName)
                 .build();
-        characterService.createCharacter(characterInput);
+        characterMaintenanceService.createCharacter(characterInput);
 
         // when
-        Character character = characterService.getCharacter(characterName);
+        Character character = characterMaintenanceService.getCharacter(characterName);
 
         // then
         assertThat(character.getRace(), is(equalTo(race)));
@@ -90,7 +90,7 @@ class CharacterServiceTest extends CharacterTestBase {
                 .defensiveGod(GETON)
                 .name(clericName)
                 .build();
-        characterService.createCharacter(clericInput);
+        characterMaintenanceService.createCharacter(clericInput);
         upgradeCaste(clericName, List.of(MONK, PRIEST));
         // and
         CharacterInput fighterInput = CharacterInput.builder()
@@ -99,25 +99,31 @@ class CharacterServiceTest extends CharacterTestBase {
                 .defensiveGod(GINDON)
                 .name(fighterName)
                 .build();
-        characterService.createCharacter(fighterInput);
-        upgradeCaste(fighterName, List.of(FIGHTER));
+        characterMaintenanceService.createCharacter(fighterInput);
+        upgradeCaste(fighterName, List.of(FIGHTER, PALADIN, GRANDMASTER, TITAN));
 
         // then
-        Character cleric = characterService.getCharacter(clericName);
-        Character fighter = characterService.getCharacter(fighterName);
+        Character cleric = characterMaintenanceService.getCharacter(clericName);
+        Character fighter = characterMaintenanceService.getCharacter(fighterName);
         assertThat(cleric.getDefensiveGod(), is(not(equalTo(fighter.getDefensiveGod()))));
+        // and
+        assertThat(fighter.getDamageMultiplier(), is(280));
+        assertThat(fighter.getTotalMagicPoint(), is(530));
 
         // when
-        String conversionCode = characterService.getDefensiveGodConversionCode(clericName);
-        fighter = characterService.convertDefensiveGod(fighterName, conversionCode);
+        String conversionCode = characterAdventureService.getDefensiveGodConversionCode(clericName);
+        fighter = characterMaintenanceService.convertDefensiveGod(fighterName, conversionCode);
 
         // expect
         assertThat(cleric.getDefensiveGod(), is(equalTo(fighter.getDefensiveGod())));
         assertThat(fighter.getDefensiveGod(), is(GETON));
+        // and
+        assertThat(fighter.getDamageMultiplier(), is(286));
+        assertThat(fighter.getTotalMagicPoint(), is(520));
 
         // and
         assertThrows(IllegalArgumentException.class,
-                () -> characterService.convertDefensiveGod(fighterName, conversionCode));
+                () -> characterMaintenanceService.convertDefensiveGod(fighterName, conversionCode));
     }
 
     private static Stream<Arguments> characters() {

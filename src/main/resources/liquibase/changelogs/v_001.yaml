@@ -1,5 +1,5 @@
 databaseChangeLog:
   - include:
-      file: liquibase/changelogs/v_001/schema.sql
+      file: liquibase/changelogs/v_001/initial_schema.yaml
   - include:
       file: liquibase/changelogs/v_001/insert_levels.yaml

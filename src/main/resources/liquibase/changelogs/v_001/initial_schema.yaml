@@ -1,0 +1,211 @@
+databaseChangeLog:
+- changeSet:
+    id: 1690880602920-1
+    author: Mikló Attila (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: CharacterPK
+            name: name
+            type: VARCHAR(255)
+        - column:
+            name: armorCode
+            type: VARCHAR(255)
+        - column:
+            name: armorDefense
+            type: INT
+        - column:
+            name: armorPopularity
+            type: INT
+        - column:
+            name: attack
+            type: INT
+        - column:
+            name: attributePoints
+            type: INT
+        - column:
+            name: caste
+            type: VARCHAR(255)
+        - column:
+            name: damageMultiplier
+            type: INT
+        - column:
+            name: defense
+            type: INT
+        - column:
+            name: defensiveGod
+            type: VARCHAR(255)
+        - column:
+            name: experience
+            type: INT
+        - column:
+            name: gender
+            type: VARCHAR(255)
+        - column:
+            name: initiative
+            type: INT
+        - column:
+            name: injury
+            type: INT
+        - column:
+            name: level
+            type: INT
+        - column:
+            name: maxDamage
+            type: INT
+        - column:
+            name: minDamage
+            type: INT
+        - column:
+            name: race
+            type: VARCHAR(255)
+        - column:
+            name: shieldCode
+            type: VARCHAR(255)
+        - column:
+            name: shieldDefense
+            type: INT
+        - column:
+            name: shieldPopularity
+            type: INT
+        - column:
+            name: totalHealth
+            type: INT
+        - column:
+            name: totalMagicPoint
+            type: INT
+        - column:
+            name: usedMagicPoint
+            type: INT
+        - column:
+            name: weaponCode
+            type: VARCHAR(255)
+        - column:
+            name: weaponDefense
+            type: INT
+        - column:
+            name: weaponInitiative
+            type: INT
+        - column:
+            name: weaponMaxDamage
+            type: INT
+        - column:
+            name: weaponMinDamage
+            type: INT
+        - column:
+            name: weaponOneHanded
+            type: BOOLEAN
+        - column:
+            name: weaponPopularity
+            type: INT
+        tableName: Character
+- changeSet:
+    id: 1690880602920-2
+    author: Mikló Attila (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: CharacterAttributeMappingPK
+            name: characterName
+            type: VARCHAR(255)
+        - column:
+            name: attributeValue
+            type: INT
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: CharacterAttributeMappingPK
+            name: attributeCode
+            type: SMALLINT
+        tableName: CharacterAttributeMapping
+- changeSet:
+    id: 1690880602920-3
+    author: Mikló Attila (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: DefensiveGodConversionLogPK
+            name: conversionCode
+            type: VARCHAR(255)
+        - column:
+            name: god
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: clericId
+            type: VARCHAR(255)
+        - column:
+            name: convertedCharacterId
+            type: VARCHAR(255)
+        tableName: DefensiveGodConversionLog
+- changeSet:
+    id: 1690880602920-4
+    author: Mikló Attila (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: LevelPK
+            name: id
+            type: INT
+        - column:
+            name: nextLevelExperience
+            type: INT
+        tableName: Level
+- changeSet:
+    id: 1690880602920-5
+    author: Mikló Attila (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: convertedCharacterId
+        baseTableName: DefensiveGodConversionLog
+        constraintName: FK4ghitrutnsh4lkuu8lgfa9mw5
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: name
+        referencedTableName: Character
+        validate: true
+- changeSet:
+    id: 1690880602920-6
+    author: Mikló Attila (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: clericId
+        baseTableName: DefensiveGodConversionLog
+        constraintName: FKjl4jttf09da0qmp5fbb2p6d33
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: name
+        referencedTableName: Character
+        validate: true
+- changeSet:
+    id: 1690880602920-7
+    author: Mikló Attila (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: characterName
+        baseTableName: CharacterAttributeMapping
+        constraintName: FKoku9g6ildsvidkspic34t08j1
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: name
+        referencedTableName: Character
+        validate: true
+

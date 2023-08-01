@@ -17,7 +17,9 @@ import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
 public abstract class CharacterTestBase {
 
     @Autowired
-    protected CharacterService characterService;
+    protected CharacterAdventureService characterAdventureService;
+    @Autowired
+    protected CharacterMaintenanceService characterMaintenanceService;
     @Autowired
     protected CharacterRepository characterRepository;
     @Autowired
@@ -32,12 +34,12 @@ public abstract class CharacterTestBase {
         Caste nextCaste = pathForward.remove(0);
         setAttributes(characterName, CASTE_DETAILS.get(nextCaste).getMinimumAttributes());
 
-        characterService.upgradeCaste(characterName, nextCaste);
+        characterMaintenanceService.upgradeCaste(characterName, nextCaste);
         upgradeCaste(characterName, pathForward);
     }
 
     private void setAttributes(String characterName, Map<Attribute, Integer> targetAttributes) {
-        Character character = characterService.getCharacter(characterName);
+        Character character = characterMaintenanceService.getCharacter(characterName);
         character.getAttributes().put(STRENGTH, targetAttributes.get(STRENGTH));
         character.getAttributes().put(DEXTERITY, targetAttributes.get(DEXTERITY));
         character.getAttributes().put(CONSTITUTION, targetAttributes.get(CONSTITUTION));

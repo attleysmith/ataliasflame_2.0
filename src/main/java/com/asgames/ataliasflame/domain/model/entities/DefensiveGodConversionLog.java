@@ -19,6 +19,7 @@ public class DefensiveGodConversionLog {
     }
 
     @Id
+    @Column(name = "conversionCode")
     private String conversionCode;
     @ManyToOne(optional = false)
     @JoinColumn(name = "clericId", nullable = false, updatable = false)
@@ -26,7 +27,7 @@ public class DefensiveGodConversionLog {
     @ManyToOne()
     @JoinColumn(name = "convertedCharacterId")
     private Character convertedCharacter;
-    @Column
+    @Column(name = "god")
     @Enumerated(STRING)
     private God god;
 }

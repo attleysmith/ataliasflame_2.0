@@ -28,46 +28,47 @@ public class Character implements Combatant {
     }
 
     @Id
+    @Column(name = "name")
     private String name;
-    @Column
+    @Column(name = "gender")
     @Enumerated(STRING)
     private Gender gender;
-    @Column
+    @Column(name = "race")
     @Enumerated(STRING)
     private Race race;
-    @Column
+    @Column(name = "caste")
     @Enumerated(STRING)
     private Caste caste;
-    @Column
+    @Column(name = "defensiveGod")
     @Enumerated(STRING)
     private God defensiveGod;
 
-    @Column
+    @Column(name = "attack")
     private int attack;
-    @Column
+    @Column(name = "defense")
     private int defense;
-    @Column
+    @Column(name = "minDamage")
     private int minDamage;
-    @Column
+    @Column(name = "maxDamage")
     private int maxDamage;
-    @Column
+    @Column(name = "damageMultiplier")
     private int damageMultiplier;
-    @Column
+    @Column(name = "totalHealth")
     private int totalHealth;
-    @Column
+    @Column(name = "injury")
     private int injury;
-    @Column
+    @Column(name = "totalMagicPoint")
     private int totalMagicPoint;
-    @Column
+    @Column(name = "usedMagicPoint")
     private int usedMagicPoint;
-    @Column
+    @Column(name = "initiative")
     private int initiative;
 
-    @Column
+    @Column(name = "level")
     private int level;
-    @Column
+    @Column(name = "experience")
     private int experience;
-    @Column
+    @Column(name = "attributePoints")
     private int attributePoints;
 
     @Embedded

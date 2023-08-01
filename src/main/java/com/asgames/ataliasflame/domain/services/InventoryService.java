@@ -16,6 +16,7 @@ import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.choose;
 @Slf4j
 @Service
 public class InventoryService {
+
     @Autowired
     private CharacterCalculationService characterCalculationService;
     @Autowired

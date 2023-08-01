@@ -3,6 +3,7 @@ package com.asgames.ataliasflame.domain.services;
 import com.asgames.ataliasflame.domain.model.entities.CasteDetails;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.DefensiveGodConversionLog;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -13,6 +14,9 @@ import static com.asgames.ataliasflame.domain.model.enums.CasteGroup.CLERIC;
 
 @Service
 public class DefensiveGodConversionService {
+
+    @Autowired
+    private CharacterCalculationService characterCalculationService;
 
     public String getConversionCode(Character character) {
         CasteDetails casteDetails = CASTE_DETAILS.get(character.getCaste());
@@ -27,6 +31,7 @@ public class DefensiveGodConversionService {
             throw new IllegalArgumentException("Conversion code is already used!");
         }
         character.setDefensiveGod(conversionLog.getGod());
+        characterCalculationService.recalculateProperties(character);
         conversionLog.setConvertedCharacter(character);
 
         return conversionLog;

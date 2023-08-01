@@ -27,9 +27,9 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
                 .defensiveGod(ALATE)
                 .name(characterName)
                 .build();
-        characterService.createCharacter(characterInput);
+        characterMaintenanceService.createCharacter(characterInput);
         // and
-        Character character = characterService.getCharacter(characterName);
+        Character character = characterMaintenanceService.getCharacter(characterName);
 
         // expect
         assertThat(character.getLevel(), is(1));

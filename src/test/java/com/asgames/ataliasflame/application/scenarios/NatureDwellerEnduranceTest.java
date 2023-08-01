@@ -27,9 +27,9 @@ public class NatureDwellerEnduranceTest extends EnduranceTestBase {
                 .defensiveGod(SIFER)
                 .name(characterName)
                 .build();
-        characterService.createCharacter(characterInput);
+        characterMaintenanceService.createCharacter(characterInput);
         // and
-        Character character = characterService.getCharacter(characterName);
+        Character character = characterMaintenanceService.getCharacter(characterName);
 
         // expect
         assertThat(character.getLevel(), is(1));

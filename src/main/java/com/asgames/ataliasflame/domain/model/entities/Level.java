@@ -14,8 +14,9 @@ public class Level {
     }
 
     @Id
+    @Column(name = "id")
     private Integer id;
-    @Column
+    @Column(name = "nextLevelExperience")
     private Integer nextLevelExperience;
 
 }

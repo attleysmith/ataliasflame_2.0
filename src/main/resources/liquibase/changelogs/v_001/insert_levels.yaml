@@ -10,7 +10,7 @@ databaseChangeLog:
                   name: id
                   value: 1
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 50
             tableName: level
         - insert:
@@ -19,7 +19,7 @@ databaseChangeLog:
                   name: id
                   value: 2
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 100
             tableName: level
         - insert:
@@ -28,7 +28,7 @@ databaseChangeLog:
                   name: id
                   value: 3
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 150
             tableName: level
         - insert:
@@ -37,7 +37,7 @@ databaseChangeLog:
                   name: id
                   value: 4
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 225
             tableName: level
         - insert:
@@ -46,7 +46,7 @@ databaseChangeLog:
                   name: id
                   value: 5
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 300
             tableName: level
         - insert:
@@ -55,7 +55,7 @@ databaseChangeLog:
                   name: id
                   value: 6
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 400
             tableName: level
         - insert:
@@ -64,7 +64,7 @@ databaseChangeLog:
                   name: id
                   value: 7
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 500
             tableName: level
         - insert:
@@ -73,7 +73,7 @@ databaseChangeLog:
                   name: id
                   value: 8
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 600
             tableName: level
         - insert:
@@ -82,7 +82,7 @@ databaseChangeLog:
                   name: id
                   value: 9
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 750
             tableName: level
         - insert:
@@ -91,7 +91,7 @@ databaseChangeLog:
                   name: id
                   value: 10
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 900
             tableName: level
         - insert:
@@ -100,7 +100,7 @@ databaseChangeLog:
                   name: id
                   value: 11
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 1100
             tableName: level
         - insert:
@@ -109,7 +109,7 @@ databaseChangeLog:
                   name: id
                   value: 12
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 1300
             tableName: level
         - insert:
@@ -118,7 +118,7 @@ databaseChangeLog:
                   name: id
                   value: 13
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 1550
             tableName: level
         - insert:
@@ -127,7 +127,7 @@ databaseChangeLog:
                   name: id
                   value: 14
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 1800
             tableName: level
         - insert:
@@ -136,7 +136,7 @@ databaseChangeLog:
                   name: id
                   value: 15
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 2150
             tableName: level
         - insert:
@@ -145,7 +145,7 @@ databaseChangeLog:
                   name: id
                   value: 16
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 2500
             tableName: level
         - insert:
@@ -154,7 +154,7 @@ databaseChangeLog:
                   name: id
                   value: 17
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 2950
             tableName: level
         - insert:
@@ -163,7 +163,7 @@ databaseChangeLog:
                   name: id
                   value: 18
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 3450
             tableName: level
         - insert:
@@ -172,7 +172,7 @@ databaseChangeLog:
                   name: id
                   value: 19
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 4000
             tableName: level
         - insert:
@@ -181,7 +181,7 @@ databaseChangeLog:
                   name: id
                   value: 20
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 4650
             tableName: level
         - insert:
@@ -190,7 +190,7 @@ databaseChangeLog:
                   name: id
                   value: 21
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 5400
             tableName: level
         - insert:
@@ -199,7 +199,7 @@ databaseChangeLog:
                   name: id
                   value: 22
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 6250
             tableName: level
         - insert:
@@ -208,7 +208,7 @@ databaseChangeLog:
                   name: id
                   value: 23
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 7250
             tableName: level
         - insert:
@@ -217,7 +217,7 @@ databaseChangeLog:
                   name: id
                   value: 24
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 8400
             tableName: level
         - insert:
@@ -226,7 +226,7 @@ databaseChangeLog:
                   name: id
                   value: 25
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 9700
             tableName: level
         - insert:
@@ -235,7 +235,7 @@ databaseChangeLog:
                   name: id
                   value: 26
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 11200
             tableName: level
         - insert:
@@ -244,7 +244,7 @@ databaseChangeLog:
                   name: id
                   value: 27
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 13000
             tableName: level
         - insert:
@@ -253,7 +253,7 @@ databaseChangeLog:
                   name: id
                   value: 28
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 15000
             tableName: level
         - insert:
@@ -262,7 +262,7 @@ databaseChangeLog:
                   name: id
                   value: 29
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 17250
             tableName: level
         - insert:
@@ -271,7 +271,7 @@ databaseChangeLog:
                   name: id
                   value: 30
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 20000
             tableName: level
         - insert:
@@ -280,7 +280,7 @@ databaseChangeLog:
                   name: id
                   value: 31
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 23000
             tableName: level
         - insert:
@@ -289,7 +289,7 @@ databaseChangeLog:
                   name: id
                   value: 32
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 26500
             tableName: level
         - insert:
@@ -298,7 +298,7 @@ databaseChangeLog:
                   name: id
                   value: 33
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 30500
             tableName: level
         - insert:
@@ -307,7 +307,7 @@ databaseChangeLog:
                   name: id
                   value: 34
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 35000
             tableName: level
         - insert:
@@ -316,7 +316,7 @@ databaseChangeLog:
                   name: id
                   value: 35
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 40500
             tableName: level
         - insert:
@@ -325,7 +325,7 @@ databaseChangeLog:
                   name: id
                   value: 36
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 46500
             tableName: level
         - insert:
@@ -334,7 +334,7 @@ databaseChangeLog:
                   name: id
                   value: 37
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 53500
             tableName: level
         - insert:
@@ -343,7 +343,7 @@ databaseChangeLog:
                   name: id
                   value: 38
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 61500
             tableName: level
         - insert:
@@ -352,7 +352,7 @@ databaseChangeLog:
                   name: id
                   value: 39
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 71000
             tableName: level
         - insert:
@@ -361,7 +361,7 @@ databaseChangeLog:
                   name: id
                   value: 40
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 81500
             tableName: level
         - insert:
@@ -370,7 +370,7 @@ databaseChangeLog:
                   name: id
                   value: 41
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 94000
             tableName: level
         - insert:
@@ -379,7 +379,7 @@ databaseChangeLog:
                   name: id
                   value: 42
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 108000
             tableName: level
         - insert:
@@ -388,7 +388,7 @@ databaseChangeLog:
                   name: id
                   value: 43
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 125000
             tableName: level
         - insert:
@@ -397,7 +397,7 @@ databaseChangeLog:
                   name: id
                   value: 44
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 143000
             tableName: level
         - insert:
@@ -406,7 +406,7 @@ databaseChangeLog:
                   name: id
                   value: 45
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 165000
             tableName: level
         - insert:
@@ -415,7 +415,7 @@ databaseChangeLog:
                   name: id
                   value: 46
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 190000
             tableName: level
         - insert:
@@ -424,7 +424,7 @@ databaseChangeLog:
                   name: id
                   value: 47
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 218000
             tableName: level
         - insert:
@@ -433,7 +433,7 @@ databaseChangeLog:
                   name: id
                   value: 48
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 250000
             tableName: level
         - insert:
@@ -442,7 +442,7 @@ databaseChangeLog:
                   name: id
                   value: 49
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 290000
             tableName: level
         - insert:
@@ -451,7 +451,7 @@ databaseChangeLog:
                   name: id
                   value: 50
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 330000
             tableName: level
         - insert:
@@ -460,7 +460,7 @@ databaseChangeLog:
                   name: id
                   value: 51
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 380000
             tableName: level
         - insert:
@@ -469,7 +469,7 @@ databaseChangeLog:
                   name: id
                   value: 52
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 440000
             tableName: level
         - insert:
@@ -478,7 +478,7 @@ databaseChangeLog:
                   name: id
                   value: 53
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 505000
             tableName: level
         - insert:
@@ -487,7 +487,7 @@ databaseChangeLog:
                   name: id
                   value: 54
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 580000
             tableName: level
         - insert:
@@ -496,7 +496,7 @@ databaseChangeLog:
                   name: id
                   value: 55
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 670000
             tableName: level
         - insert:
@@ -505,7 +505,7 @@ databaseChangeLog:
                   name: id
                   value: 56
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 770000
             tableName: level
         - insert:
@@ -514,7 +514,7 @@ databaseChangeLog:
                   name: id
                   value: 57
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 880000
             tableName: level
         - insert:
@@ -523,7 +523,7 @@ databaseChangeLog:
                   name: id
                   value: 58
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 1015000
             tableName: level
         - insert:
@@ -532,7 +532,7 @@ databaseChangeLog:
                   name: id
                   value: 59
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 1160000
             tableName: level
         - insert:
@@ -541,7 +541,7 @@ databaseChangeLog:
                   name: id
                   value: 60
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 1340000
             tableName: level
         - insert:
@@ -550,7 +550,7 @@ databaseChangeLog:
                   name: id
                   value: 61
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 1550000
             tableName: level
         - insert:
@@ -559,7 +559,7 @@ databaseChangeLog:
                   name: id
                   value: 62
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 1770000
             tableName: level
         - insert:
@@ -568,7 +568,7 @@ databaseChangeLog:
                   name: id
                   value: 63
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 2050000
             tableName: level
         - insert:
@@ -577,7 +577,7 @@ databaseChangeLog:
                   name: id
                   value: 64
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 2350000
             tableName: level
         - insert:
@@ -586,7 +586,7 @@ databaseChangeLog:
                   name: id
                   value: 65
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 2700000
             tableName: level
         - insert:
@@ -595,7 +595,7 @@ databaseChangeLog:
                   name: id
                   value: 66
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 3100000
             tableName: level
         - insert:
@@ -604,7 +604,7 @@ databaseChangeLog:
                   name: id
                   value: 67
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 3600000
             tableName: level
         - insert:
@@ -613,7 +613,7 @@ databaseChangeLog:
                   name: id
                   value: 68
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 4100000
             tableName: level
         - insert:
@@ -622,7 +622,7 @@ databaseChangeLog:
                   name: id
                   value: 69
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 4750000
             tableName: level
         - insert:
@@ -631,7 +631,7 @@ databaseChangeLog:
                   name: id
                   value: 70
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 5500000
             tableName: level
         - insert:
@@ -640,7 +640,7 @@ databaseChangeLog:
                   name: id
                   value: 71
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 6250000
             tableName: level
         - insert:
@@ -649,7 +649,7 @@ databaseChangeLog:
                   name: id
                   value: 72
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 7200000
             tableName: level
         - insert:
@@ -658,7 +658,7 @@ databaseChangeLog:
                   name: id
                   value: 73
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 8250000
             tableName: level
         - insert:
@@ -667,7 +667,7 @@ databaseChangeLog:
                   name: id
                   value: 74
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 9500000
             tableName: level
         - insert:
@@ -676,7 +676,7 @@ databaseChangeLog:
                   name: id
                   value: 75
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 11000000
             tableName: level
         - insert:
@@ -685,7 +685,7 @@ databaseChangeLog:
                   name: id
                   value: 76
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 12500000
             tableName: level
         - insert:
@@ -694,7 +694,7 @@ databaseChangeLog:
                   name: id
                   value: 77
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 14500000
             tableName: level
         - insert:
@@ -703,7 +703,7 @@ databaseChangeLog:
                   name: id
                   value: 78
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 16500000
             tableName: level
         - insert:
@@ -712,7 +712,7 @@ databaseChangeLog:
                   name: id
                   value: 79
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 19000000
             tableName: level
         - insert:
@@ -721,7 +721,7 @@ databaseChangeLog:
                   name: id
                   value: 80
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 22000000
             tableName: level
         - insert:
@@ -730,7 +730,7 @@ databaseChangeLog:
                   name: id
                   value: 81
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 25000000
             tableName: level
         - insert:
@@ -739,7 +739,7 @@ databaseChangeLog:
                   name: id
                   value: 82
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 29000000
             tableName: level
         - insert:
@@ -748,7 +748,7 @@ databaseChangeLog:
                   name: id
                   value: 83
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 33000000
             tableName: level
         - insert:
@@ -757,7 +757,7 @@ databaseChangeLog:
                   name: id
                   value: 84
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 38000000
             tableName: level
         - insert:
@@ -766,7 +766,7 @@ databaseChangeLog:
                   name: id
                   value: 85
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 44000000
             tableName: level
         - insert:
@@ -775,7 +775,7 @@ databaseChangeLog:
                   name: id
                   value: 86
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 51000000
             tableName: level
         - insert:
@@ -784,7 +784,7 @@ databaseChangeLog:
                   name: id
                   value: 87
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 58000000
             tableName: level
         - insert:
@@ -793,7 +793,7 @@ databaseChangeLog:
                   name: id
                   value: 88
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 67000000
             tableName: level
         - insert:
@@ -802,7 +802,7 @@ databaseChangeLog:
                   name: id
                   value: 89
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 77000000
             tableName: level
         - insert:
@@ -811,7 +811,7 @@ databaseChangeLog:
                   name: id
                   value: 90
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 89000000
             tableName: level
         - insert:
@@ -820,7 +820,7 @@ databaseChangeLog:
                   name: id
                   value: 91
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 102000000
             tableName: level
         - insert:
@@ -829,7 +829,7 @@ databaseChangeLog:
                   name: id
                   value: 92
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 118000000
             tableName: level
         - insert:
@@ -838,7 +838,7 @@ databaseChangeLog:
                   name: id
                   value: 93
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 135000000
             tableName: level
         - insert:
@@ -847,7 +847,7 @@ databaseChangeLog:
                   name: id
                   value: 94
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 155000000
             tableName: level
         - insert:
@@ -856,7 +856,7 @@ databaseChangeLog:
                   name: id
                   value: 95
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 178000000
             tableName: level
         - insert:
@@ -865,7 +865,7 @@ databaseChangeLog:
                   name: id
                   value: 96
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 205000000
             tableName: level
         - insert:
@@ -874,7 +874,7 @@ databaseChangeLog:
                   name: id
                   value: 97
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 235000000
             tableName: level
         - insert:
@@ -883,7 +883,7 @@ databaseChangeLog:
                   name: id
                   value: 98
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 270000000
             tableName: level
         - insert:
@@ -892,7 +892,7 @@ databaseChangeLog:
                   name: id
                   value: 99
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: 310000000
             tableName: level
         - insert:
@@ -901,6 +901,6 @@ databaseChangeLog:
                   name: id
                   value: 100
               - column:
-                  name: next_level_experience
+                  name: nextLevelExperience
                   value: null
             tableName: level

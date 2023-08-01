@@ -1,6 +1,6 @@
 package com.asgames.ataliasflame.domain.services;
 
-import com.asgames.ataliasflame.application.CharacterService;
+import com.asgames.ataliasflame.application.CharacterMaintenanceService;
 import com.asgames.ataliasflame.application.model.CharacterInput;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import org.junit.jupiter.api.MethodOrderer;
@@ -23,7 +23,7 @@ import static org.hamcrest.Matchers.is;
 class AttributeServiceTest {
 
     @Autowired
-    private CharacterService characterService;
+    private CharacterMaintenanceService characterMaintenanceService;
     @Autowired
     private CharacterCalculationService characterCalculationService;
     @Autowired
@@ -41,7 +41,7 @@ class AttributeServiceTest {
                 .defensiveGod(ALATE)
                 .name("Hugo")
                 .build();
-        character = addDagger(characterService.createCharacter(characterInput));
+        character = addDagger(characterMaintenanceService.createCharacter(characterInput));
 
         // and
         character.setAttributePoints(4);

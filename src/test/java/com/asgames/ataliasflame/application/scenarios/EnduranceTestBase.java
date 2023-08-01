@@ -1,6 +1,7 @@
 package com.asgames.ataliasflame.application.scenarios;
 
-import com.asgames.ataliasflame.application.CharacterService;
+import com.asgames.ataliasflame.application.CharacterMaintenanceService;
+import com.asgames.ataliasflame.application.CharacterAdventureService;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
@@ -14,7 +15,9 @@ public abstract class EnduranceTestBase {
     private static final int TOLERATED_INJURY = 40;
 
     @Autowired
-    protected CharacterService characterService;
+    protected CharacterAdventureService characterAdventureService;
+    @Autowired
+    protected CharacterMaintenanceService characterMaintenanceService;
 
     protected static String characterName;
 
@@ -24,19 +27,19 @@ public abstract class EnduranceTestBase {
     }
 
     protected Character addAttributePoints(Attribute attribute, int points) {
-        return characterService.addAttributePoints(characterName, attribute, points);
+        return characterMaintenanceService.addAttributePoints(characterName, attribute, points);
     }
 
     protected Character upgradeCaste(Caste newCaste) {
-        return characterService.upgradeCaste(characterName, newCaste);
+        return characterMaintenanceService.upgradeCaste(characterName, newCaste);
     }
 
     protected Character combatUntilNextLevel() {
-        Character character = characterService.getCharacter(characterName);
+        Character character = characterMaintenanceService.getCharacter(characterName);
         int actualLevel = character.getLevel();
 
         do {
-            character = characterService.combat(characterName);
+            character = characterAdventureService.combat(characterName);
             character = healing(character);
         } while (character.getActualHealth() > 0 && character.getLevel() == actualLevel);
 
@@ -48,6 +51,6 @@ public abstract class EnduranceTestBase {
         if (character.getInjury() <= toleratedInjury) {
             return character;
         }
-        return characterService.sleep(characterName);
+        return characterAdventureService.sleep(characterName);
     }
 }

@@ -1,0 +1,14 @@
+changeLogFile: liquibase/changelogs.yaml
+driver: org.h2.Driver
+url: jdbc:h2:mem:testdb
+#url: jdbc:h2:file:/h2db/ataliasflame
+username: user
+password: pw
+referenceUrl: hibernate:spring:com.asgames.ataliasflame.domain.model.entities?dialect=org.hibernate.dialect.H2Dialect
+#referenceUrl: jdbc:h2:file:/h2db/ataliasflame
+#referenceDriver: org.h2.Driver
+#referenceUsername: user
+#referencePassword: pw
+
+diffChangeLogFile: target/liquibase-diffChangeLog.yaml
+outputChangeLogFile: target/liquibase-outputChangeLog.yaml

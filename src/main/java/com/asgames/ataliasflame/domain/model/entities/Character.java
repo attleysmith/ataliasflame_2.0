@@ -3,6 +3,7 @@ package com.asgames.ataliasflame.domain.model.entities;
 import com.asgames.ataliasflame.domain.model.enums.*;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
 import com.asgames.ataliasflame.domain.model.valueobjects.Armor;
+import com.asgames.ataliasflame.domain.model.valueobjects.Energy;
 import com.asgames.ataliasflame.domain.model.valueobjects.Shield;
 import com.asgames.ataliasflame.domain.model.valueobjects.Weapon;
 import jakarta.annotation.Nullable;
@@ -53,14 +54,6 @@ public class Character implements Combatant {
     private int maxDamage;
     @Column(name = "damageMultiplier")
     private int damageMultiplier;
-    @Column(name = "totalHealth")
-    private int totalHealth;
-    @Column(name = "injury")
-    private int injury;
-    @Column(name = "totalMagicPoint")
-    private int totalMagicPoint;
-    @Column(name = "usedMagicPoint")
-    private int usedMagicPoint;
     @Column(name = "initiative")
     private int initiative;
 
@@ -70,6 +63,20 @@ public class Character implements Combatant {
     private int experience;
     @Column(name = "attributePoints")
     private int attributePoints;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "totalEnergy", column = @Column(name = "totalHealth")),
+            @AttributeOverride(name = "usedEnergy", column = @Column(name = "injury"))
+    })
+    private Energy health;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "totalEnergy", column = @Column(name = "totalMagicPoint")),
+            @AttributeOverride(name = "usedEnergy", column = @Column(name = "usedMagicPoint"))
+    })
+    private Energy magic;
 
     @Embedded
     @AttributeOverrides({
@@ -113,14 +120,24 @@ public class Character implements Combatant {
         return name;
     }
 
+    public Energy getHealth() {
+        if (health == null) {
+            health = new Energy();
+        }
+        return health;
+    }
+
+    public Energy getMagic() {
+        if (magic == null) {
+            magic = new Energy();
+        }
+        return magic;
+    }
+
     public Map<Attribute, Integer> getAttributes() {
         if (attributes == null) {
             attributes = new HashMap<>();
         }
         return attributes;
-    }
-
-    public int getActualMagicPoint() {
-        return getTotalMagicPoint() - getUsedMagicPoint();
     }
 }

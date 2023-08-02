@@ -56,7 +56,7 @@ class AttributeServiceTest {
         assertThat(character.getMinDamage(), is(2));
         assertThat(character.getMaxDamage(), is(7));
         assertThat(character.getDamageMultiplier(), is(11));
-        assertThat(character.getTotalHealth(), is(110));
+        assertThat(character.getHealth().totalValue(), is(110));
     }
 
     @Test
@@ -75,7 +75,7 @@ class AttributeServiceTest {
         assertThat(character.getMinDamage(), is(2));
         assertThat(character.getMaxDamage(), is(7));
         assertThat(character.getDamageMultiplier(), is(15));
-        assertThat(character.getTotalHealth(), is(110));
+        assertThat(character.getHealth().totalValue(), is(110));
     }
 
     @Test
@@ -94,7 +94,7 @@ class AttributeServiceTest {
         assertThat(character.getMinDamage(), is(2));
         assertThat(character.getMaxDamage(), is(7));
         assertThat(character.getDamageMultiplier(), is(15));
-        assertThat(character.getTotalHealth(), is(150));
+        assertThat(character.getHealth().totalValue(), is(150));
     }
 
     @Test
@@ -113,7 +113,7 @@ class AttributeServiceTest {
         assertThat(character.getMinDamage(), is(2));
         assertThat(character.getMaxDamage(), is(7));
         assertThat(character.getDamageMultiplier(), is(15));
-        assertThat(character.getTotalHealth(), is(150));
+        assertThat(character.getHealth().totalValue(), is(150));
     }
 
     @Test
@@ -132,7 +132,7 @@ class AttributeServiceTest {
         assertThat(character.getMinDamage(), is(2));
         assertThat(character.getMaxDamage(), is(7));
         assertThat(character.getDamageMultiplier(), is(15));
-        assertThat(character.getTotalHealth(), is(150));
+        assertThat(character.getHealth().totalValue(), is(150));
     }
 
     private Character addDagger(Character character) {

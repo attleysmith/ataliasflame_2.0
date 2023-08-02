@@ -6,6 +6,7 @@ import com.asgames.ataliasflame.domain.model.enums.Gender;
 import com.asgames.ataliasflame.domain.model.enums.God;
 import com.asgames.ataliasflame.domain.model.enums.Race;
 import com.asgames.ataliasflame.domain.model.valueobjects.Armor;
+import com.asgames.ataliasflame.domain.model.valueobjects.Energy;
 import com.asgames.ataliasflame.domain.model.valueobjects.Shield;
 import com.asgames.ataliasflame.domain.model.valueobjects.Weapon;
 import com.asgames.ataliasflame.domain.utils.SelectionValue;
@@ -761,7 +762,7 @@ public final class MockConstants {
                     .defense(0)
                     .minDamage(1)
                     .maxDamage(1)
-                    .totalHealth(10)
+                    .health(Energy.withTotal(10))
                     .experience(10)
                     .initiative(3)
                     .build(),
@@ -771,7 +772,7 @@ public final class MockConstants {
                     .defense(5)
                     .minDamage(1)
                     .maxDamage(2)
-                    .totalHealth(25)
+                    .health(Energy.withTotal(25))
                     .experience(20)
                     .initiative(0)
                     .build(),
@@ -781,7 +782,7 @@ public final class MockConstants {
                     .defense(5)
                     .minDamage(1)
                     .maxDamage(3)
-                    .totalHealth(25)
+                    .health(Energy.withTotal(25))
                     .experience(30)
                     .initiative(-3)
                     .build(),
@@ -791,7 +792,7 @@ public final class MockConstants {
                     .defense(5)
                     .minDamage(1)
                     .maxDamage(4)
-                    .totalHealth(30)
+                    .health(Energy.withTotal(30))
                     .experience(40)
                     .initiative(-1)
                     .build(),
@@ -801,7 +802,7 @@ public final class MockConstants {
                     .defense(10)
                     .minDamage(1)
                     .maxDamage(5)
-                    .totalHealth(40)
+                    .health(Energy.withTotal(40))
                     .experience(50)
                     .initiative(-3)
                     .build()

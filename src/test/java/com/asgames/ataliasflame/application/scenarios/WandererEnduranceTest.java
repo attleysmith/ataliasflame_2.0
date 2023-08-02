@@ -45,8 +45,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(82));
         assertThat(character.getDamageMultiplier(), is(3));
-        assertThat(character.getTotalHealth(), is(110));
-        assertThat(character.getTotalMagicPoint(), is(5));
+        assertThat(character.getHealth().totalValue(), is(110));
+        assertThat(character.getMagic().totalValue(), is(5));
 
         // when
         character = combatUntilNextLevel();
@@ -73,8 +73,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(87));
         assertThat(character.getDamageMultiplier(), is(5));
-        assertThat(character.getTotalHealth(), is(120));
-        assertThat(character.getTotalMagicPoint(), is(5));
+        assertThat(character.getHealth().totalValue(), is(120));
+        assertThat(character.getMagic().totalValue(), is(5));
 
         // when
         character = combatUntilNextLevel();
@@ -101,8 +101,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(92));
         assertThat(character.getDamageMultiplier(), is(7));
-        assertThat(character.getTotalHealth(), is(130));
-        assertThat(character.getTotalMagicPoint(), is(5));
+        assertThat(character.getHealth().totalValue(), is(130));
+        assertThat(character.getMagic().totalValue(), is(5));
 
         // when
         character = combatUntilNextLevel();
@@ -128,8 +128,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(92));
         assertThat(character.getDamageMultiplier(), is(13));
-        assertThat(character.getTotalHealth(), is(150));
-        assertThat(character.getTotalMagicPoint(), is(5));
+        assertThat(character.getHealth().totalValue(), is(150));
+        assertThat(character.getMagic().totalValue(), is(5));
 
         // when
         character = combatUntilNextLevel();
@@ -157,8 +157,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(92));
         assertThat(character.getDamageMultiplier(), is(13));
-        assertThat(character.getTotalHealth(), is(150));
-        assertThat(character.getTotalMagicPoint(), is(24));
+        assertThat(character.getHealth().totalValue(), is(150));
+        assertThat(character.getMagic().totalValue(), is(24));
 
         // then
         character = upgradeCaste(TRACKER);
@@ -193,8 +193,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(94));
         assertThat(character.getDamageMultiplier(), is(16));
-        assertThat(character.getTotalHealth(), is(160));
-        assertThat(character.getTotalMagicPoint(), is(26));
+        assertThat(character.getHealth().totalValue(), is(160));
+        assertThat(character.getMagic().totalValue(), is(26));
 
         // when
         character = combatUntilNextLevel();
@@ -223,8 +223,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(97));
         assertThat(character.getDamageMultiplier(), is(17));
-        assertThat(character.getTotalHealth(), is(170));
-        assertThat(character.getTotalMagicPoint(), is(29));
+        assertThat(character.getHealth().totalValue(), is(170));
+        assertThat(character.getMagic().totalValue(), is(29));
 
         // when
         character = combatUntilNextLevel();
@@ -253,8 +253,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(99));
         assertThat(character.getDamageMultiplier(), is(20));
-        assertThat(character.getTotalHealth(), is(180));
-        assertThat(character.getTotalMagicPoint(), is(30));
+        assertThat(character.getHealth().totalValue(), is(180));
+        assertThat(character.getMagic().totalValue(), is(30));
 
         // when
         character = combatUntilNextLevel();
@@ -283,8 +283,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(102));
         assertThat(character.getDamageMultiplier(), is(21));
-        assertThat(character.getTotalHealth(), is(190));
-        assertThat(character.getTotalMagicPoint(), is(36));
+        assertThat(character.getHealth().totalValue(), is(190));
+        assertThat(character.getMagic().totalValue(), is(36));
 
         // when
         character = combatUntilNextLevel();
@@ -313,8 +313,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(104));
         assertThat(character.getDamageMultiplier(), is(24));
-        assertThat(character.getTotalHealth(), is(200));
-        assertThat(character.getTotalMagicPoint(), is(37));
+        assertThat(character.getHealth().totalValue(), is(200));
+        assertThat(character.getMagic().totalValue(), is(37));
 
         // when
         character = combatUntilNextLevel();
@@ -343,8 +343,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(106));
         assertThat(character.getDamageMultiplier(), is(27));
-        assertThat(character.getTotalHealth(), is(210));
-        assertThat(character.getTotalMagicPoint(), is(39));
+        assertThat(character.getHealth().totalValue(), is(210));
+        assertThat(character.getMagic().totalValue(), is(39));
 
         // when
         character = combatUntilNextLevel();
@@ -373,8 +373,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(109));
         assertThat(character.getDamageMultiplier(), is(28));
-        assertThat(character.getTotalHealth(), is(220));
-        assertThat(character.getTotalMagicPoint(), is(45));
+        assertThat(character.getHealth().totalValue(), is(220));
+        assertThat(character.getMagic().totalValue(), is(45));
 
         // when
         character = combatUntilNextLevel();
@@ -403,8 +403,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(111));
         assertThat(character.getDamageMultiplier(), is(31));
-        assertThat(character.getTotalHealth(), is(230));
-        assertThat(character.getTotalMagicPoint(), is(46));
+        assertThat(character.getHealth().totalValue(), is(230));
+        assertThat(character.getMagic().totalValue(), is(46));
 
         // when
         character = combatUntilNextLevel();
@@ -433,8 +433,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(114));
         assertThat(character.getDamageMultiplier(), is(34));
-        assertThat(character.getTotalHealth(), is(240));
-        assertThat(character.getTotalMagicPoint(), is(48));
+        assertThat(character.getHealth().totalValue(), is(240));
+        assertThat(character.getMagic().totalValue(), is(48));
 
         // when
         character = combatUntilNextLevel();
@@ -463,8 +463,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(116));
         assertThat(character.getDamageMultiplier(), is(37));
-        assertThat(character.getTotalHealth(), is(250));
-        assertThat(character.getTotalMagicPoint(), is(53));
+        assertThat(character.getHealth().totalValue(), is(250));
+        assertThat(character.getMagic().totalValue(), is(53));
 
         // when
         character = combatUntilNextLevel();
@@ -493,8 +493,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(118));
         assertThat(character.getDamageMultiplier(), is(40));
-        assertThat(character.getTotalHealth(), is(260));
-        assertThat(character.getTotalMagicPoint(), is(54));
+        assertThat(character.getHealth().totalValue(), is(260));
+        assertThat(character.getMagic().totalValue(), is(54));
 
         // when
         character = combatUntilNextLevel();
@@ -523,8 +523,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(121));
         assertThat(character.getDamageMultiplier(), is(43));
-        assertThat(character.getTotalHealth(), is(270));
-        assertThat(character.getTotalMagicPoint(), is(55));
+        assertThat(character.getHealth().totalValue(), is(270));
+        assertThat(character.getMagic().totalValue(), is(55));
 
         // when
         character = combatUntilNextLevel();
@@ -553,8 +553,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(122));
         assertThat(character.getDamageMultiplier(), is(46));
-        assertThat(character.getTotalHealth(), is(280));
-        assertThat(character.getTotalMagicPoint(), is(58));
+        assertThat(character.getHealth().totalValue(), is(280));
+        assertThat(character.getMagic().totalValue(), is(58));
 
         // when
         character = combatUntilNextLevel();
@@ -583,8 +583,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(123));
         assertThat(character.getDamageMultiplier(), is(48));
-        assertThat(character.getTotalHealth(), is(290));
-        assertThat(character.getTotalMagicPoint(), is(64));
+        assertThat(character.getHealth().totalValue(), is(290));
+        assertThat(character.getMagic().totalValue(), is(64));
 
         // when
         character = combatUntilNextLevel();
@@ -613,8 +613,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(123));
         assertThat(character.getDamageMultiplier(), is(50));
-        assertThat(character.getTotalHealth(), is(300));
-        assertThat(character.getTotalMagicPoint(), is(81));
+        assertThat(character.getHealth().totalValue(), is(300));
+        assertThat(character.getMagic().totalValue(), is(81));
 
         // TODO: upgrade caste
 
@@ -645,8 +645,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(126));
         assertThat(character.getDamageMultiplier(), is(55));
-        assertThat(character.getTotalHealth(), is(310));
-        assertThat(character.getTotalMagicPoint(), is(91));
+        assertThat(character.getHealth().totalValue(), is(310));
+        assertThat(character.getMagic().totalValue(), is(91));
 
         // when
         character = combatUntilNextLevel();
@@ -675,8 +675,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(128));
         assertThat(character.getDamageMultiplier(), is(58));
-        assertThat(character.getTotalHealth(), is(320));
-        assertThat(character.getTotalMagicPoint(), is(101));
+        assertThat(character.getHealth().totalValue(), is(320));
+        assertThat(character.getMagic().totalValue(), is(101));
 
         // when
         character = combatUntilNextLevel();
@@ -705,8 +705,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(130));
         assertThat(character.getDamageMultiplier(), is(59));
-        assertThat(character.getTotalHealth(), is(330));
-        assertThat(character.getTotalMagicPoint(), is(112));
+        assertThat(character.getHealth().totalValue(), is(330));
+        assertThat(character.getMagic().totalValue(), is(112));
 
         // when
         character = combatUntilNextLevel();
@@ -735,8 +735,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(133));
         assertThat(character.getDamageMultiplier(), is(62));
-        assertThat(character.getTotalHealth(), is(340));
-        assertThat(character.getTotalMagicPoint(), is(113));
+        assertThat(character.getHealth().totalValue(), is(340));
+        assertThat(character.getMagic().totalValue(), is(113));
 
         // when
         character = combatUntilNextLevel();
@@ -765,8 +765,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(134));
         assertThat(character.getDamageMultiplier(), is(64));
-        assertThat(character.getTotalHealth(), is(340));
-        assertThat(character.getTotalMagicPoint(), is(121));
+        assertThat(character.getHealth().totalValue(), is(340));
+        assertThat(character.getMagic().totalValue(), is(121));
 
         // when
         character = combatUntilNextLevel();
@@ -795,8 +795,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(136));
         assertThat(character.getDamageMultiplier(), is(65));
-        assertThat(character.getTotalHealth(), is(350));
-        assertThat(character.getTotalMagicPoint(), is(127));
+        assertThat(character.getHealth().totalValue(), is(350));
+        assertThat(character.getMagic().totalValue(), is(127));
 
         // when
         character = combatUntilNextLevel();
@@ -825,8 +825,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(138));
         assertThat(character.getDamageMultiplier(), is(68));
-        assertThat(character.getTotalHealth(), is(360));
-        assertThat(character.getTotalMagicPoint(), is(128));
+        assertThat(character.getHealth().totalValue(), is(360));
+        assertThat(character.getMagic().totalValue(), is(128));
 
         // when
         character = combatUntilNextLevel();
@@ -855,8 +855,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(141));
         assertThat(character.getDamageMultiplier(), is(71));
-        assertThat(character.getTotalHealth(), is(370));
-        assertThat(character.getTotalMagicPoint(), is(129));
+        assertThat(character.getHealth().totalValue(), is(370));
+        assertThat(character.getMagic().totalValue(), is(129));
 
         // when
         character = combatUntilNextLevel();
@@ -885,8 +885,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(143));
         assertThat(character.getDamageMultiplier(), is(72));
-        assertThat(character.getTotalHealth(), is(380));
-        assertThat(character.getTotalMagicPoint(), is(132));
+        assertThat(character.getHealth().totalValue(), is(380));
+        assertThat(character.getMagic().totalValue(), is(132));
 
         // when
         character = combatUntilNextLevel();
@@ -915,8 +915,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(144));
         assertThat(character.getDamageMultiplier(), is(74));
-        assertThat(character.getTotalHealth(), is(380));
-        assertThat(character.getTotalMagicPoint(), is(140));
+        assertThat(character.getHealth().totalValue(), is(380));
+        assertThat(character.getMagic().totalValue(), is(140));
 
         // when
         character = combatUntilNextLevel();
@@ -945,8 +945,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(146));
         assertThat(character.getDamageMultiplier(), is(77));
-        assertThat(character.getTotalHealth(), is(390));
-        assertThat(character.getTotalMagicPoint(), is(141));
+        assertThat(character.getHealth().totalValue(), is(390));
+        assertThat(character.getMagic().totalValue(), is(141));
 
         // when
         character = combatUntilNextLevel();
@@ -975,8 +975,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(149));
         assertThat(character.getDamageMultiplier(), is(78));
-        assertThat(character.getTotalHealth(), is(400));
-        assertThat(character.getTotalMagicPoint(), is(147));
+        assertThat(character.getHealth().totalValue(), is(400));
+        assertThat(character.getMagic().totalValue(), is(147));
 
         // when
         character = combatUntilNextLevel();
@@ -1005,8 +1005,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(151));
         assertThat(character.getDamageMultiplier(), is(81));
-        assertThat(character.getTotalHealth(), is(410));
-        assertThat(character.getTotalMagicPoint(), is(148));
+        assertThat(character.getHealth().totalValue(), is(410));
+        assertThat(character.getMagic().totalValue(), is(148));
 
         // when
         character = combatUntilNextLevel();
@@ -1035,8 +1035,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(154));
         assertThat(character.getDamageMultiplier(), is(84));
-        assertThat(character.getTotalHealth(), is(420));
-        assertThat(character.getTotalMagicPoint(), is(149));
+        assertThat(character.getHealth().totalValue(), is(420));
+        assertThat(character.getMagic().totalValue(), is(149));
 
         // when
         character = combatUntilNextLevel();
@@ -1064,8 +1064,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(154));
         assertThat(character.getDamageMultiplier(), is(84));
-        assertThat(character.getTotalHealth(), is(420));
-        assertThat(character.getTotalMagicPoint(), is(162));
+        assertThat(character.getHealth().totalValue(), is(420));
+        assertThat(character.getMagic().totalValue(), is(162));
 
         // when
         character = combatUntilNextLevel();
@@ -1094,8 +1094,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(157));
         assertThat(character.getDamageMultiplier(), is(87));
-        assertThat(character.getTotalHealth(), is(430));
-        assertThat(character.getTotalMagicPoint(), is(163));
+        assertThat(character.getHealth().totalValue(), is(430));
+        assertThat(character.getMagic().totalValue(), is(163));
 
         // when
         character = combatUntilNextLevel();
@@ -1124,8 +1124,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(159));
         assertThat(character.getDamageMultiplier(), is(90));
-        assertThat(character.getTotalHealth(), is(440));
-        assertThat(character.getTotalMagicPoint(), is(164));
+        assertThat(character.getHealth().totalValue(), is(440));
+        assertThat(character.getMagic().totalValue(), is(164));
 
         // when
         character = combatUntilNextLevel();
@@ -1154,8 +1154,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(162));
         assertThat(character.getDamageMultiplier(), is(91));
-        assertThat(character.getTotalHealth(), is(450));
-        assertThat(character.getTotalMagicPoint(), is(167));
+        assertThat(character.getHealth().totalValue(), is(450));
+        assertThat(character.getMagic().totalValue(), is(167));
 
         // when
         character = combatUntilNextLevel();
@@ -1184,8 +1184,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(164));
         assertThat(character.getDamageMultiplier(), is(94));
-        assertThat(character.getTotalHealth(), is(460));
-        assertThat(character.getTotalMagicPoint(), is(168));
+        assertThat(character.getHealth().totalValue(), is(460));
+        assertThat(character.getMagic().totalValue(), is(168));
 
         // when
         character = combatUntilNextLevel();
@@ -1214,8 +1214,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(165));
         assertThat(character.getDamageMultiplier(), is(96));
-        assertThat(character.getTotalHealth(), is(460));
-        assertThat(character.getTotalMagicPoint(), is(176));
+        assertThat(character.getHealth().totalValue(), is(460));
+        assertThat(character.getMagic().totalValue(), is(176));
 
         // when
         character = combatUntilNextLevel();
@@ -1244,8 +1244,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(167));
         assertThat(character.getDamageMultiplier(), is(97));
-        assertThat(character.getTotalHealth(), is(470));
-        assertThat(character.getTotalMagicPoint(), is(182));
+        assertThat(character.getHealth().totalValue(), is(470));
+        assertThat(character.getMagic().totalValue(), is(182));
 
         // when
         character = combatUntilNextLevel();
@@ -1274,8 +1274,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(170));
         assertThat(character.getDamageMultiplier(), is(100));
-        assertThat(character.getTotalHealth(), is(480));
-        assertThat(character.getTotalMagicPoint(), is(183));
+        assertThat(character.getHealth().totalValue(), is(480));
+        assertThat(character.getMagic().totalValue(), is(183));
 
         // when
         character = combatUntilNextLevel();
@@ -1304,8 +1304,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(172));
         assertThat(character.getDamageMultiplier(), is(103));
-        assertThat(character.getTotalHealth(), is(490));
-        assertThat(character.getTotalMagicPoint(), is(184));
+        assertThat(character.getHealth().totalValue(), is(490));
+        assertThat(character.getMagic().totalValue(), is(184));
 
         // when
         character = combatUntilNextLevel();
@@ -1334,8 +1334,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(174));
         assertThat(character.getDamageMultiplier(), is(104));
-        assertThat(character.getTotalHealth(), is(500));
-        assertThat(character.getTotalMagicPoint(), is(187));
+        assertThat(character.getHealth().totalValue(), is(500));
+        assertThat(character.getMagic().totalValue(), is(187));
 
         // when
         character = combatUntilNextLevel();
@@ -1364,8 +1364,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(175));
         assertThat(character.getDamageMultiplier(), is(106));
-        assertThat(character.getTotalHealth(), is(500));
-        assertThat(character.getTotalMagicPoint(), is(195));
+        assertThat(character.getHealth().totalValue(), is(500));
+        assertThat(character.getMagic().totalValue(), is(195));
 
         // when
         character = combatUntilNextLevel();
@@ -1394,8 +1394,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(178));
         assertThat(character.getDamageMultiplier(), is(109));
-        assertThat(character.getTotalHealth(), is(510));
-        assertThat(character.getTotalMagicPoint(), is(196));
+        assertThat(character.getHealth().totalValue(), is(510));
+        assertThat(character.getMagic().totalValue(), is(196));
 
         // when
         character = combatUntilNextLevel();
@@ -1424,8 +1424,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(180));
         assertThat(character.getDamageMultiplier(), is(110));
-        assertThat(character.getTotalHealth(), is(520));
-        assertThat(character.getTotalMagicPoint(), is(202));
+        assertThat(character.getHealth().totalValue(), is(520));
+        assertThat(character.getMagic().totalValue(), is(202));
 
         // when
         character = combatUntilNextLevel();
@@ -1454,8 +1454,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(182));
         assertThat(character.getDamageMultiplier(), is(113));
-        assertThat(character.getTotalHealth(), is(530));
-        assertThat(character.getTotalMagicPoint(), is(208));
+        assertThat(character.getHealth().totalValue(), is(530));
+        assertThat(character.getMagic().totalValue(), is(208));
 
         // when
         character = combatUntilNextLevel();
@@ -1484,8 +1484,8 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(183));
         assertThat(character.getDamageMultiplier(), is(114));
-        assertThat(character.getTotalHealth(), is(540));
-        assertThat(character.getTotalMagicPoint(), is(216));
+        assertThat(character.getHealth().totalValue(), is(540));
+        assertThat(character.getMagic().totalValue(), is(216));
 
         // when
         character = combatUntilNextLevel();
@@ -1513,7 +1513,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(183));
         assertThat(character.getDamageMultiplier(), is(114));
-        assertThat(character.getTotalHealth(), is(550));
-        assertThat(character.getTotalMagicPoint(), is(226));
+        assertThat(character.getHealth().totalValue(), is(550));
+        assertThat(character.getMagic().totalValue(), is(226));
     }
 }

@@ -58,14 +58,15 @@ public class CharacterCalculationService {
         List<Integer> healthMultipliers = stream(Attribute.values())
                 .map(attribute -> PropertyCalculator.of(character, attribute).getHealthMultiplier())
                 .collect(toList());
-        character.setTotalHealth(calculate(BASE_HEALTH, healthMultipliers));
+        int healthValue = calculate(BASE_HEALTH, healthMultipliers);
+        character.getHealth().set(healthValue);
     }
 
     private void recalculateMagic(Character character) {
         Integer magicPoint = stream(Attribute.values())
                 .map(attribute -> PropertyCalculator.of(character, attribute).getMagicPoint())
                 .reduce(BASE_MAGIC_POINT, Integer::sum);
-        character.setTotalMagicPoint(magicPoint);
+        character.getMagic().set(magicPoint);
     }
 
     private int actualDefense(Character character) {

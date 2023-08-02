@@ -108,7 +108,7 @@ class CharacterServiceTest extends CharacterTestBase {
         assertThat(cleric.getDefensiveGod(), is(not(equalTo(fighter.getDefensiveGod()))));
         // and
         assertThat(fighter.getDamageMultiplier(), is(280));
-        assertThat(fighter.getTotalMagicPoint(), is(530));
+        assertThat(fighter.getMagic().totalValue(), is(530));
 
         // when
         String conversionCode = characterAdventureService.getDefensiveGodConversionCode(clericName);
@@ -119,7 +119,7 @@ class CharacterServiceTest extends CharacterTestBase {
         assertThat(fighter.getDefensiveGod(), is(GETON));
         // and
         assertThat(fighter.getDamageMultiplier(), is(286));
-        assertThat(fighter.getTotalMagicPoint(), is(520));
+        assertThat(fighter.getMagic().totalValue(), is(520));
 
         // and
         assertThrows(IllegalArgumentException.class,

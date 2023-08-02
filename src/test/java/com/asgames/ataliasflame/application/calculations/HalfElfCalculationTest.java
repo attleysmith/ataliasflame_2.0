@@ -25,7 +25,7 @@ class HalfElfCalculationTest extends RaceCalculationTestBase {
 
     @ParameterizedTest
     @MethodSource("rogueCalculations")
-    void rogueTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health) {
+    void rogueTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
         String characterName = "Luirlan";
         CharacterInput characterInput = CharacterInput.builder()
                 .race(HALF_ELF)
@@ -43,23 +43,24 @@ class HalfElfCalculationTest extends RaceCalculationTestBase {
         assertThat(character.getMinDamage(), is(equalTo(minDamage)));
         assertThat(character.getMaxDamage(), is(equalTo(maxDamage)));
         assertThat(character.getDamageMultiplier(), is(equalTo(damageMultiplier)));
-        assertThat(character.getTotalHealth(), is(equalTo(health)));
+        assertThat(character.getHealth().totalValue(), is(equalTo(health)));
+        assertThat(character.getMagic().totalValue(), is(equalTo(magic)));
     }
 
     private static Stream<Arguments> rogueCalculations() {
         return Stream.of(
-                arguments(HORA, 82, 22, 2, 6, 3, 110),
-                arguments(SIFER, 82, 22, 2, 6, 3, 110),
-                arguments(GETON, 82, 22, 2, 6, 3, 110),
-                arguments(RUNID, 82, 22, 2, 6, 3, 110),
-                arguments(ALATE, 82, 22, 2, 6, 3, 110),
-                arguments(GINDON, 82, 22, 2, 6, 3, 110)
+                arguments(HORA, 82, 22, 2, 6, 3, 110, 5),
+                arguments(SIFER, 82, 22, 2, 6, 3, 110, 5),
+                arguments(GETON, 82, 22, 2, 6, 3, 110, 5),
+                arguments(RUNID, 82, 22, 2, 6, 3, 110, 5),
+                arguments(ALATE, 82, 22, 2, 6, 3, 110, 5),
+                arguments(GINDON, 82, 22, 2, 6, 3, 110, 5)
         );
     }
 
     @ParameterizedTest
     @MethodSource("fighterCalculations")
-    void fighterTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health) {
+    void fighterTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
         String characterName = "Durothil";
         CharacterInput characterInput = CharacterInput.builder()
                 .race(HALF_ELF)
@@ -77,23 +78,24 @@ class HalfElfCalculationTest extends RaceCalculationTestBase {
         assertThat(character.getMinDamage(), is(equalTo(minDamage)));
         assertThat(character.getMaxDamage(), is(equalTo(maxDamage)));
         assertThat(character.getDamageMultiplier(), is(equalTo(damageMultiplier)));
-        assertThat(character.getTotalHealth(), is(equalTo(health)));
+        assertThat(character.getHealth().totalValue(), is(equalTo(health)));
+        assertThat(character.getMagic().totalValue(), is(equalTo(magic)));
     }
 
     private static Stream<Arguments> fighterCalculations() {
         return Stream.of(
-                arguments(HORA, 94, 24, 2, 7, 14, 150),
-                arguments(SIFER, 94, 24, 2, 7, 14, 150),
-                arguments(GETON, 94, 24, 2, 7, 14, 150),
-                arguments(RUNID, 94, 24, 2, 7, 14, 150),
-                arguments(ALATE, 94, 24, 2, 7, 14, 150),
-                arguments(GINDON, 94, 24, 2, 7, 14, 150)
+                arguments(HORA, 94, 24, 2, 7, 14, 150, 23),
+                arguments(SIFER, 94, 24, 2, 7, 14, 150, 23),
+                arguments(GETON, 94, 24, 2, 7, 14, 150, 23),
+                arguments(RUNID, 94, 24, 2, 7, 14, 150, 23),
+                arguments(ALATE, 94, 24, 2, 7, 14, 150, 23),
+                arguments(GINDON, 94, 24, 2, 7, 14, 150, 23)
         );
     }
 
     @ParameterizedTest
     @MethodSource("paladinCalculations")
-    void paladinTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health) {
+    void paladinTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
         String characterName = "Ehlark";
         CharacterInput characterInput = CharacterInput.builder()
                 .race(HALF_ELF)
@@ -111,23 +113,24 @@ class HalfElfCalculationTest extends RaceCalculationTestBase {
         assertThat(character.getMinDamage(), is(equalTo(minDamage)));
         assertThat(character.getMaxDamage(), is(equalTo(maxDamage)));
         assertThat(character.getDamageMultiplier(), is(equalTo(damageMultiplier)));
-        assertThat(character.getTotalHealth(), is(equalTo(health)));
+        assertThat(character.getHealth().totalValue(), is(equalTo(health)));
+        assertThat(character.getMagic().totalValue(), is(equalTo(magic)));
     }
 
     private static Stream<Arguments> paladinCalculations() {
         return Stream.of(
-                arguments(HORA, 131, 33, 3, 9, 56, 290),
-                arguments(SIFER, 131, 33, 3, 9, 56, 290),
-                arguments(GETON, 131, 34, 3, 9, 58, 290),
-                arguments(RUNID, 131, 33, 3, 9, 56, 290),
-                arguments(ALATE, 133, 34, 3, 9, 57, 290),
-                arguments(GINDON, 131, 33, 3, 9, 56, 290)
+                arguments(HORA, 131, 33, 3, 9, 56, 290, 99),
+                arguments(SIFER, 131, 33, 3, 9, 56, 290, 99),
+                arguments(GETON, 131, 34, 3, 9, 58, 290, 99),
+                arguments(RUNID, 131, 33, 3, 9, 56, 290, 99),
+                arguments(ALATE, 133, 34, 3, 9, 57, 290, 99),
+                arguments(GINDON, 131, 33, 3, 9, 56, 290, 99)
         );
     }
 
     @ParameterizedTest
     @MethodSource("grandmasterCalculations")
-    void grandmasterTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health) {
+    void grandmasterTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
         String characterName = "Aired";
         CharacterInput characterInput = CharacterInput.builder()
                 .race(HALF_ELF)
@@ -145,23 +148,24 @@ class HalfElfCalculationTest extends RaceCalculationTestBase {
         assertThat(character.getMinDamage(), is(equalTo(minDamage)));
         assertThat(character.getMaxDamage(), is(equalTo(maxDamage)));
         assertThat(character.getDamageMultiplier(), is(equalTo(damageMultiplier)));
-        assertThat(character.getTotalHealth(), is(equalTo(health)));
+        assertThat(character.getHealth().totalValue(), is(equalTo(health)));
+        assertThat(character.getMagic().totalValue(), is(equalTo(magic)));
     }
 
     private static Stream<Arguments> grandmasterCalculations() {
         return Stream.of(
-                arguments(HORA, 208, 52, 5, 14, 141, 580),
-                arguments(SIFER, 208, 52, 5, 14, 141, 580),
-                arguments(GETON, 208, 52, 5, 15, 143, 580),
-                arguments(RUNID, 208, 52, 5, 14, 141, 580),
-                arguments(ALATE, 211, 53, 5, 15, 143, 580),
-                arguments(GINDON, 208, 52, 5, 14, 141, 580)
+                arguments(HORA, 208, 52, 5, 14, 141, 580, 263),
+                arguments(SIFER, 208, 52, 5, 14, 141, 580, 261),
+                arguments(GETON, 208, 52, 5, 15, 143, 580, 261),
+                arguments(RUNID, 208, 52, 5, 14, 141, 580, 266),
+                arguments(ALATE, 211, 53, 5, 15, 143, 580, 261),
+                arguments(GINDON, 208, 52, 5, 14, 141, 580, 261)
         );
     }
 
     @ParameterizedTest
     @MethodSource("titanCalculations")
-    void titanTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health) {
+    void titanTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
         String characterName = "Tiarsus";
         CharacterInput characterInput = CharacterInput.builder()
                 .race(HALF_ELF)
@@ -179,17 +183,18 @@ class HalfElfCalculationTest extends RaceCalculationTestBase {
         assertThat(character.getMinDamage(), is(equalTo(minDamage)));
         assertThat(character.getMaxDamage(), is(equalTo(maxDamage)));
         assertThat(character.getDamageMultiplier(), is(equalTo(damageMultiplier)));
-        assertThat(character.getTotalHealth(), is(equalTo(health)));
+        assertThat(character.getHealth().totalValue(), is(equalTo(health)));
+        assertThat(character.getMagic().totalValue(), is(equalTo(magic)));
     }
 
     private static Stream<Arguments> titanCalculations() {
         return Stream.of(
-                arguments(HORA, 336, 83, 8, 23, 280, 1050),
-                arguments(SIFER, 336, 83, 8, 23, 280, 1060),
-                arguments(GETON, 336, 84, 8, 23, 286, 1050),
-                arguments(RUNID, 336, 83, 8, 23, 280, 1050),
-                arguments(ALATE, 341, 84, 8, 23, 283, 1050),
-                arguments(GINDON, 336, 83, 8, 23, 280, 1050)
+                arguments(HORA, 336, 83, 8, 23, 280, 1050, 522),
+                arguments(SIFER, 336, 83, 8, 23, 280, 1060, 520),
+                arguments(GETON, 336, 84, 8, 23, 286, 1050, 520),
+                arguments(RUNID, 336, 83, 8, 23, 280, 1050, 525),
+                arguments(ALATE, 341, 84, 8, 23, 283, 1050, 520),
+                arguments(GINDON, 336, 83, 8, 23, 280, 1050, 530)
         );
     }
 }

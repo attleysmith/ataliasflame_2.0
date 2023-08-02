@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.pointOut;
 import static com.asgames.ataliasflame.domain.utils.DiceUtils.*;
-import static java.lang.Math.min;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.toMap;
 
@@ -34,7 +33,7 @@ public class CombatService {
         log.debug(combatant2.toString());
 
         CombatContext combatContext = new CombatContext();
-        while (combatant1.getActualHealth() > 0 && combatant2.getActualHealth() > 0) {
+        while (combatant1.getHealth().hasOne() && combatant2.getHealth().hasOne()) {
             List<Combatant> combatOrder = getCombatOrder(combatant1, combatant2);
             combatContext.addRound(new Round(
                     attack(combatOrder.get(0), combatOrder.get(1)),
@@ -45,14 +44,14 @@ public class CombatService {
 
     private AttackReport attack(Combatant attacker, Combatant defender) {
         int damage = 0;
-        if (attacker.getActualHealth() > 0) {
+        if (attacker.getHealth().hasOne()) {
             int chance = attacker.getAttack() - defender.getDefense();
             if (successX(chance)) {
                 damage = pointOut(attacker.getMinDamage(), attacker.getMaxDamage());
-                dealDamage(defender, damage);
+                defender.getHealth().damage(damage);
             }
         }
-        return new AttackReport(attacker.getCode(), damage, defender.getActualHealth());
+        return new AttackReport(attacker.getCode(), damage, defender.getHealth().actualValue());
     }
 
     private List<Combatant> getCombatOrder(Combatant... combatants) {
@@ -71,9 +70,5 @@ public class CombatService {
                 })
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
-    }
-
-    public void dealDamage(Combatant combatant, int damage) {
-        combatant.setInjury(min(combatant.getInjury() + damage, combatant.getTotalHealth()));
     }
 }

@@ -1,6 +1,7 @@
 package com.asgames.ataliasflame.domain.model.entities;
 
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
+import com.asgames.ataliasflame.domain.model.valueobjects.Energy;
 import lombok.Builder;
 import lombok.Data;
 
@@ -13,8 +14,7 @@ public class Monster implements Combatant {
     private int defense;
     private int minDamage;
     private int maxDamage;
-    private int totalHealth;
-    private int injury;
+    private Energy health;
     private int initiative;
 
     private int experience;

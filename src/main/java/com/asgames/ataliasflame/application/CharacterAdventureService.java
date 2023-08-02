@@ -52,14 +52,14 @@ public class CharacterAdventureService {
 
         magicService.castMagic(character, monster);
         combatService.combat(List.of(character), List.of(monster));
-        if (character.getActualHealth() > 0) {
+        if (character.getHealth().hasOne()) {
             character = experienceService.gainExperience(character, monster.getExperience());
             log.info("You are the winner!");
-            log.info("Remaining health: " + character.getActualHealth());
+            log.info("Remaining health: " + character.getHealth().actualValue());
             monsterService.looting(character, monster);
         } else {
             log.info("You are defeated!");
-            log.info("Enemy's health: " + monster.getActualHealth());
+            log.info("Enemy's health: " + monster.getHealth().actualValue());
         }
 
         return characterRepository.save(character);

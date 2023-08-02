@@ -1,14 +1,12 @@
 package com.asgames.ataliasflame.application.scenarios;
 
-import com.asgames.ataliasflame.application.CharacterMaintenanceService;
 import com.asgames.ataliasflame.application.CharacterAdventureService;
+import com.asgames.ataliasflame.application.CharacterMaintenanceService;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
 import org.junit.jupiter.api.BeforeAll;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.percent;
 
 public abstract class EnduranceTestBase {
 
@@ -41,14 +39,13 @@ public abstract class EnduranceTestBase {
         do {
             character = characterAdventureService.combat(characterName);
             character = healing(character);
-        } while (character.getActualHealth() > 0 && character.getLevel() == actualLevel);
+        } while (character.getHealth().hasOne() && character.getLevel() == actualLevel);
 
         return character;
     }
 
     private Character healing(Character character) {
-        int toleratedInjury = percent(character.getTotalHealth(), TOLERATED_INJURY);
-        if (character.getInjury() <= toleratedInjury) {
+        if (character.getHealth().tolerate(TOLERATED_INJURY)) {
             return character;
         }
         return characterAdventureService.sleep(characterName);

@@ -1,5 +1,7 @@
 package com.asgames.ataliasflame.domain.model.interfaces;
 
+import com.asgames.ataliasflame.domain.model.valueobjects.Energy;
+
 public interface Combatant {
     String getCode();
 
@@ -11,15 +13,7 @@ public interface Combatant {
 
     int getMaxDamage();
 
-    int getTotalHealth();
-
-    int getInjury();
-
-    void setInjury(int injury);
+    Energy getHealth();
 
     int getInitiative();
-
-    default int getActualHealth() {
-        return getTotalHealth() - getInjury();
-    }
 }

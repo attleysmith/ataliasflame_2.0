@@ -4,11 +4,14 @@ import com.asgames.ataliasflame.domain.model.entities.CasteDetails;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
+import com.asgames.ataliasflame.domain.model.valueobjects.SoulChip;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import static com.asgames.ataliasflame.domain.MockConstants.*;
+import static com.asgames.ataliasflame.domain.model.enums.CasteGroup.WANDERER;
+import static com.asgames.ataliasflame.domain.utils.DiceUtils.roll100;
 
 @Slf4j
 @Service
@@ -21,6 +24,8 @@ public class CasteService {
         validateConstraints(character, newCaste);
         validateAvailability(character, newCaste);
         validateAttributes(character, newCaste);
+
+        ripOutSoulChip(character);
 
         log.info("New caste: " + newCaste);
         character.setCaste(newCaste);
@@ -54,6 +59,25 @@ public class CasteService {
         int requiredValue = newCasteDetails.getMinimumAttributes().get(attribute);
         if (actualValue < requiredValue) {
             throw new IllegalArgumentException(attribute + " is lower than required (" + requiredValue + ")! Actual: " + actualValue);
+        }
+    }
+
+    private void ripOutSoulChip(Character character) {
+        CasteDetails casteDetails = CASTE_DETAILS.get(character.getCaste());
+        if (casteDetails.getGroup().equals(WANDERER)) {
+            int percent = roll100();
+
+            System.out.println("Ripping out a soul chip! " + percent + " percent");
+
+            character.getHealth().trauma(percent);
+            character.getSoulChips().add(SoulChip.builder()
+                    .upgradedCaste(character.getCaste())
+                    .percent(percent)
+                    .build());
+
+            if (character.getHealth().isEmpty()) {
+                throw new IllegalStateException("You died of trauma!");
+            }
         }
     }
 

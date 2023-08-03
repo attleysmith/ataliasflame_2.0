@@ -77,6 +77,11 @@ public class Energy {
         usedEnergy = usedEnergy + cost;
     }
 
+    public void trauma(int traumaEffect) {
+        int traumaValue = percent(totalEnergy, traumaEffect);
+        damage(traumaValue);
+    }
+
     public void damage(int damage) {
         usedEnergy = min(totalEnergy, usedEnergy + damage);
     }

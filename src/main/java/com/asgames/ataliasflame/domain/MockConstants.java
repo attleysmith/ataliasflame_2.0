@@ -498,7 +498,7 @@ public final class MockConstants {
             Map.entry(TRACKER, CasteDetails.builder()
                     .group(WANDERER)
                     .caste(TRACKER)
-                    .nextCastes(emptyList())
+                    .nextCastes(List.of(RANGER))
                     .minimumAttributes(Map.of(
                             STRENGTH, 4,
                             DEXTERITY, 5,
@@ -508,6 +508,48 @@ public final class MockConstants {
                             LORE, 1,
                             MENTAL_POWER, 1,
                             SPIRITUAL_POWER, 2
+                    )).build()),
+            Map.entry(RANGER, CasteDetails.builder()
+                    .group(WANDERER)
+                    .caste(RANGER)
+                    .nextCastes(List.of(PILGRIM))
+                    .minimumAttributes(Map.of(
+                            STRENGTH, 16,
+                            DEXTERITY, 18,
+                            CONSTITUTION, 20,
+                            AGILITY, 18,
+                            INTELLIGENCE, 7,
+                            LORE, 7,
+                            MENTAL_POWER, 2,
+                            SPIRITUAL_POWER, 12
+                    )).build()),
+            Map.entry(PILGRIM, CasteDetails.builder()
+                    .group(WANDERER)
+                    .caste(PILGRIM)
+                    .nextCastes(List.of(FREE_SOUL))
+                    .minimumAttributes(Map.of(
+                            STRENGTH, 35,
+                            DEXTERITY, 42,
+                            CONSTITUTION, 45,
+                            AGILITY, 45,
+                            INTELLIGENCE, 20,
+                            LORE, 18,
+                            MENTAL_POWER, 5,
+                            SPIRITUAL_POWER, 40
+                    )).build()),
+            Map.entry(FREE_SOUL, CasteDetails.builder()
+                    .group(WANDERER)
+                    .caste(FREE_SOUL)
+                    .nextCastes(emptyList())
+                    .minimumAttributes(Map.of(
+                            STRENGTH, 75,
+                            DEXTERITY, 80,
+                            CONSTITUTION, 85,
+                            AGILITY, 85,
+                            INTELLIGENCE, 40,
+                            LORE, 25,
+                            MENTAL_POWER, 10,
+                            SPIRITUAL_POWER, 100
                     )).build()),
             Map.entry(HERMIT, CasteDetails.builder()
                     .group(NATURE_DWELLER)
@@ -946,6 +988,9 @@ public final class MockConstants {
             Map.entry(GRANDMASTER, List.of(NYMPH)),
             Map.entry(TITAN, List.of(NYMPH)),
             Map.entry(TRACKER, List.of(NYMPH)),
+            Map.entry(RANGER, List.of(NYMPH)),
+            Map.entry(PILGRIM, List.of(NYMPH)),
+            Map.entry(FREE_SOUL, List.of(NYMPH)),
             Map.entry(HERMIT, emptyList()),
             Map.entry(DRUID, emptyList()),
             Map.entry(ARCHDRUID, emptyList()),
@@ -967,6 +1012,9 @@ public final class MockConstants {
             Map.entry(GRANDMASTER, emptyList()),
             Map.entry(TITAN, emptyList()),
             Map.entry(TRACKER, emptyList()),
+            Map.entry(RANGER, emptyList()),
+            Map.entry(PILGRIM, emptyList()),
+            Map.entry(FREE_SOUL, emptyList()),
             Map.entry(HERMIT, emptyList()),
             Map.entry(DRUID, emptyList()),
             Map.entry(ARCHDRUID, emptyList()),

@@ -57,6 +57,7 @@ class AttributeServiceTest {
         assertThat(character.getMaxDamage(), is(7));
         assertThat(character.getDamageMultiplier(), is(11));
         assertThat(character.getHealth().totalValue(), is(110));
+        assertThat(character.getMagic().totalValue(), is(5));
     }
 
     @Test
@@ -76,6 +77,7 @@ class AttributeServiceTest {
         assertThat(character.getMaxDamage(), is(7));
         assertThat(character.getDamageMultiplier(), is(15));
         assertThat(character.getHealth().totalValue(), is(110));
+        assertThat(character.getMagic().totalValue(), is(5));
     }
 
     @Test
@@ -95,6 +97,7 @@ class AttributeServiceTest {
         assertThat(character.getMaxDamage(), is(7));
         assertThat(character.getDamageMultiplier(), is(15));
         assertThat(character.getHealth().totalValue(), is(150));
+        assertThat(character.getMagic().totalValue(), is(5));
     }
 
     @Test
@@ -114,6 +117,7 @@ class AttributeServiceTest {
         assertThat(character.getMaxDamage(), is(7));
         assertThat(character.getDamageMultiplier(), is(15));
         assertThat(character.getHealth().totalValue(), is(150));
+        assertThat(character.getMagic().totalValue(), is(5));
     }
 
     @Test
@@ -133,6 +137,67 @@ class AttributeServiceTest {
         assertThat(character.getMaxDamage(), is(7));
         assertThat(character.getDamageMultiplier(), is(15));
         assertThat(character.getHealth().totalValue(), is(150));
+        assertThat(character.getMagic().totalValue(), is(10));
+    }
+
+    @Test
+    @Order(6)
+    void addLoreTest() {
+        // given
+        character.setAttributePoints(1);
+
+        // when
+        attributeService.addAttributePoints(character, LORE, 1);
+
+        // then
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttack(), is(92));
+        assertThat(character.getDefense(), is(24));
+        assertThat(character.getMinDamage(), is(2));
+        assertThat(character.getMaxDamage(), is(7));
+        assertThat(character.getDamageMultiplier(), is(15));
+        assertThat(character.getHealth().totalValue(), is(150));
+        assertThat(character.getMagic().totalValue(), is(12));
+    }
+
+    @Test
+    @Order(7)
+    void addMentalPowerTest() {
+        // given
+        character.setAttributePoints(1);
+
+        // when
+        attributeService.addAttributePoints(character, MENTAL_POWER, 1);
+
+        // then
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttack(), is(92));
+        assertThat(character.getDefense(), is(24));
+        assertThat(character.getMinDamage(), is(2));
+        assertThat(character.getMaxDamage(), is(7));
+        assertThat(character.getDamageMultiplier(), is(15));
+        assertThat(character.getHealth().totalValue(), is(150));
+        assertThat(character.getMagic().totalValue(), is(22));
+    }
+
+    @Test
+    @Order(8)
+    void addSpiritualPowerTest() {
+        // given
+        character.setAttributePoints(1);
+
+        // when
+        attributeService.addAttributePoints(character, SPIRITUAL_POWER, 1);
+
+        // then
+        assertThat(character.getAttributePoints(), is(0));
+        assertThat(character.getAttack(), is(92));
+        assertThat(character.getDefense(), is(24));
+        assertThat(character.getMinDamage(), is(2));
+        assertThat(character.getMaxDamage(), is(7));
+        assertThat(character.getDamageMultiplier(), is(15));
+        assertThat(character.getHealth().totalValue(), is(150));
+        assertThat(character.getMagic().totalValue(), is(23));
     }
 
     private Character addDagger(Character character) {

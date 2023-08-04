@@ -1,6 +1,6 @@
 package com.asgames.ataliasflame.domain.services;
 
-import com.asgames.ataliasflame.domain.model.entities.CasteDetails;
+import com.asgames.ataliasflame.domain.model.structures.CasteDetails;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import lombok.extern.slf4j.Slf4j;

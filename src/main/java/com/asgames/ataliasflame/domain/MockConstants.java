@@ -1,10 +1,10 @@
 package com.asgames.ataliasflame.domain;
 
-import com.asgames.ataliasflame.domain.model.entities.*;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
 import com.asgames.ataliasflame.domain.model.enums.Gender;
 import com.asgames.ataliasflame.domain.model.enums.God;
 import com.asgames.ataliasflame.domain.model.enums.Race;
+import com.asgames.ataliasflame.domain.model.structures.*;
 import com.asgames.ataliasflame.domain.model.valueobjects.Armor;
 import com.asgames.ataliasflame.domain.model.valueobjects.Energy;
 import com.asgames.ataliasflame.domain.model.valueobjects.Shield;
@@ -1049,4 +1049,22 @@ public final class MockConstants {
             NYMPH, List.of(GETON, ALATE),
             HALFLING, emptyList()
     );
+
+    // Soul chips
+    public static final Map<Integer, String> SOUL_CHIP_NAMES = Map.of(
+            0, "Shark",
+            1, "Monkey",
+            2, "Hawk"
+    );
+
+    public static final int SOUL_CHIP_ATTACK_BASE = 50;
+    public static final int SOUL_CHIP_ATTACK_BONUS = 100;
+    public static final int SOUL_CHIP_DEFENSE_BASE = 0;
+    public static final int SOUL_CHIP_DEFENSE_BONUS = 50;
+    public static final int SOUL_CHIP_MIN_DAMAGE_BASE = 1;
+    public static final int SOUL_CHIP_MIN_DAMAGE_BONUS = 1;
+    public static final int SOUL_CHIP_MAX_DAMAGE_BASE = 5;
+    public static final int SOUL_CHIP_MAX_DAMAGE_BONUS = 10;
+    public static final int SOUL_CHIP_INITIATIVE = -1;
+
 }

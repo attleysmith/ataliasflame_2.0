@@ -6,6 +6,7 @@ import lombok.Data;
 public class AttackReport {
 
     private final String attackerCode;
+    private final String defenderCode;
     private final int dealtDamage;
     private final int remainingHealth;
 }

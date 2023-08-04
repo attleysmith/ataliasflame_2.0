@@ -2,15 +2,22 @@ package com.asgames.ataliasflame.domain.model.entities;
 
 import com.asgames.ataliasflame.domain.model.enums.*;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
-import com.asgames.ataliasflame.domain.model.valueobjects.*;
+import com.asgames.ataliasflame.domain.model.valueobjects.Armor;
+import com.asgames.ataliasflame.domain.model.valueobjects.Energy;
+import com.asgames.ataliasflame.domain.model.valueobjects.Shield;
+import com.asgames.ataliasflame.domain.model.valueobjects.Weapon;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
+import static jakarta.persistence.CascadeType.ALL;
 import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.FetchType.EAGER;
 
@@ -112,13 +119,7 @@ public class Character implements Combatant {
     @Column(name = "attributeValue")
     private Map<Attribute, Integer> attributes;
 
-    @ElementCollection(fetch = EAGER)
-    @CollectionTable(name = "CharacterSoulChipMapping",
-            joinColumns = {@JoinColumn(name = "characterName")})
-    @AttributeOverrides({
-            @AttributeOverride(name = "upgradedCaste", column = @Column(name = "upgradedCaste")),
-            @AttributeOverride(name = "percent", column = @Column(name = "soulChipPercent"))
-    })
+    @OneToMany(mappedBy = "owner", cascade = ALL, fetch = EAGER)
     private Set<SoulChip> soulChips = new HashSet<>();
 
     @Override

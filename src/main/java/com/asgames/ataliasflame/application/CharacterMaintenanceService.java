@@ -54,6 +54,11 @@ public class CharacterMaintenanceService {
     }
 
     @Transactional
+    public void removeCharacter(String characterName) {
+        characterRepository.deleteById(characterName);
+    }
+
+    @Transactional
     public Character addAttributePoints(String characterName, Attribute attribute, int points) {
         Character character = getCharacter(characterName);
         character = attributeService.addAttributePoints(character, attribute, points);

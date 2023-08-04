@@ -2,7 +2,8 @@ package com.asgames.ataliasflame.application;
 
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.DefensiveGodConversionLog;
-import com.asgames.ataliasflame.domain.model.entities.Monster;
+import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
+import com.asgames.ataliasflame.domain.model.structures.Monster;
 import com.asgames.ataliasflame.domain.services.*;
 import com.asgames.ataliasflame.infrastructure.repositories.CharacterRepository;
 import com.asgames.ataliasflame.infrastructure.repositories.DefensiveGodConversionLogRepository;
@@ -11,7 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @Slf4j
 @Service
@@ -51,7 +55,14 @@ public class CharacterAdventureService {
         Monster monster = monsterService.getRandomMonster();
 
         magicService.castMagic(character, monster);
-        combatService.combat(List.of(character), List.of(monster));
+
+        List<Combatant> characterTeam = new ArrayList<>();
+        characterTeam.add(character);
+        characterTeam.addAll(character.getSoulChips().stream().peek(soulChip ->
+                soulChip.getHealth().recover(100)).collect(toList()));
+
+        combatService.combat(characterTeam, List.of(monster));
+
         if (character.getHealth().hasOne()) {
             character = experienceService.gainExperience(character, monster.getExperience());
             log.info("You are the winner!");

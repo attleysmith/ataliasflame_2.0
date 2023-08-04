@@ -1,4 +1,4 @@
-package com.asgames.ataliasflame.domain.model.entities;
+package com.asgames.ataliasflame.domain.model.structures;
 
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
@@ -13,9 +13,9 @@ import java.util.Map;
 @Data
 public class CasteDetails {
 
-    private CasteGroup group;
-    private Caste caste;
-    private Map<Attribute, Integer> minimumAttributes;
-    private List<Caste> nextCastes;
+    private final CasteGroup group;
+    private final Caste caste;
+    private final Map<Attribute, Integer> minimumAttributes;
+    private final List<Caste> nextCastes;
 
 }

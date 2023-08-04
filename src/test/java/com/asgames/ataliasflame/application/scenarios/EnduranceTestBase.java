@@ -5,7 +5,8 @@ import com.asgames.ataliasflame.application.CharacterMaintenanceService;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class EnduranceTestBase {
@@ -19,9 +20,14 @@ public abstract class EnduranceTestBase {
 
     protected static String characterName;
 
-    @BeforeAll
-    static void beforeAll() {
+    @BeforeEach
+    void setUp() {
         characterName = "Takemoto";
+    }
+
+    @AfterEach
+    void tearDown() {
+        characterMaintenanceService.removeCharacter(characterName);
     }
 
     protected Character addAttributePoints(Attribute attribute, int points) {

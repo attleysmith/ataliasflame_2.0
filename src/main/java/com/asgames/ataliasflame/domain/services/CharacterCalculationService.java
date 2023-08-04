@@ -1,7 +1,7 @@
 package com.asgames.ataliasflame.domain.services;
 
 import com.asgames.ataliasflame.domain.model.entities.Character;
-import com.asgames.ataliasflame.domain.model.entities.Modifier;
+import com.asgames.ataliasflame.domain.model.structures.Modifier;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.utils.CalculatorUtils;
 import org.springframework.stereotype.Service;

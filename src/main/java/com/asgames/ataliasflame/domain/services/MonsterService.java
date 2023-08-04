@@ -1,8 +1,8 @@
 package com.asgames.ataliasflame.domain.services;
 
 import com.asgames.ataliasflame.domain.model.entities.Character;
-import com.asgames.ataliasflame.domain.model.entities.Item;
-import com.asgames.ataliasflame.domain.model.entities.Monster;
+import com.asgames.ataliasflame.domain.model.structures.Item;
+import com.asgames.ataliasflame.domain.model.structures.Monster;
 import com.asgames.ataliasflame.domain.utils.SelectionValue;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +24,10 @@ public class MonsterService {
 
     public Monster getRandomMonster() {
         Monster monster = choose(MONSTER_SELECTOR);
-        log.info("Enemy appeared: " + monster.getCode());
+        monster.getHealth().recover(100);
 
-        return monster.toBuilder().build(); // monster clone
+        log.info("Enemy appeared: " + monster.getCode());
+        return monster;
     }
 
     public void looting(Character character, Monster monster) {

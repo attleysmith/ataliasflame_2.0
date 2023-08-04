@@ -10,7 +10,7 @@ import static java.lang.System.lineSeparator;
 @Data
 public class CombatContext {
 
-    private List<Round> rounds = new ArrayList<>();
+    private final List<Round> rounds = new ArrayList<>();
 
     public void addRound(Round round) {
         rounds.add(round);
@@ -18,8 +18,7 @@ public class CombatContext {
 
     @Data
     public static class Round {
-        private final AttackReport attackReport1;
-        private final AttackReport attackReport2;
+        private final List<AttackReport> attackReports;
     }
 
     public String report() {
@@ -27,13 +26,14 @@ public class CombatContext {
 
         for (int i = 0; i < rounds.size(); i++) {
             sb.append(i + 1).append(". round:").append(lineSeparator());
-            Round round = rounds.get(i);
-            sb.append("initial attack (").append(round.attackReport1.getAttackerCode()).append("):").append(lineSeparator());
-            sb.append("- damage: ").append(round.attackReport1.getDealtDamage()).append(lineSeparator());
-            sb.append("- enemy's health: ").append(round.attackReport1.getRemainingHealth()).append(lineSeparator());
-            sb.append("reply attack (").append(round.attackReport2.getAttackerCode()).append("):").append(lineSeparator());
-            sb.append("- damage: ").append(round.attackReport2.getDealtDamage()).append(lineSeparator());
-            sb.append("- enemy's health: ").append(round.attackReport2.getRemainingHealth()).append(lineSeparator());
+            List<AttackReport> attacks = rounds.get(i).attackReports;
+            for (int j = 0; j < attacks.size(); j++) {
+                sb.append("  ").append(j + 1).append(". attack:").append(lineSeparator());
+                sb.append("  ").append(attacks.get(j).getAttackerCode()).append(" deals ");
+                sb.append("  ").append(attacks.get(j).getDealtDamage()).append(" damage to ");
+                sb.append("  ").append(attacks.get(j).getDefenderCode()).append(lineSeparator());
+                sb.append("  ").append("Remaining health: ").append(attacks.get(j).getRemainingHealth()).append(lineSeparator());
+            }
         }
 
         return sb.toString();

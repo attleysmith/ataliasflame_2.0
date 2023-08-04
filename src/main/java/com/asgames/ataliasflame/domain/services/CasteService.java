@@ -1,10 +1,9 @@
 package com.asgames.ataliasflame.domain.services;
 
-import com.asgames.ataliasflame.domain.model.entities.CasteDetails;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
-import com.asgames.ataliasflame.domain.model.valueobjects.SoulChip;
+import com.asgames.ataliasflame.domain.model.structures.CasteDetails;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -67,13 +66,10 @@ public class CasteService {
         if (casteDetails.getGroup().equals(WANDERER)) {
             int percent = roll100();
 
-            System.out.println("Ripping out a soul chip! " + percent + " percent");
+            log.info("Ripping out a soul chip! " + percent + " percent");
 
             character.getHealth().trauma(percent);
-            character.getSoulChips().add(SoulChip.builder()
-                    .upgradedCaste(character.getCaste())
-                    .percent(percent)
-                    .build());
+            character.getSoulChips().add(SoulChipFactory.getSoulChip(character, percent));
 
             if (character.getHealth().isEmpty()) {
                 throw new IllegalStateException("You died of trauma!");

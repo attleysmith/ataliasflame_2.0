@@ -1,17 +1,19 @@
 package com.asgames.ataliasflame.domain.services;
 
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
+import com.asgames.ataliasflame.domain.model.structures.TeamMember;
 import com.asgames.ataliasflame.domain.services.CombatContext.Round;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.pointOut;
 import static com.asgames.ataliasflame.domain.utils.DiceUtils.*;
-import static java.util.Arrays.stream;
+import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 
 @Slf4j
@@ -23,23 +25,48 @@ public class CombatService {
             log.warn("Combat without an enemy.");
             return;
         }
-        if (team1.size() > 1 || team2.size() > 1) {
-            throw new UnsupportedOperationException("Only 1 vs 1 combat is available!");
-        }
 
-        Combatant combatant1 = team1.get(0);
-        Combatant combatant2 = team2.get(0);
-        log.debug(combatant1.toString());
-        log.debug(combatant2.toString());
+        teamCombat(
+                team1.stream().map(combatant -> TeamMember.builder()
+                        .team(1)
+                        .combatant(combatant)
+                        .build()).collect(toList()),
+                team2.stream().map(combatant -> TeamMember.builder()
+                        .team(2)
+                        .combatant(combatant)
+                        .build()).collect(toList()));
+    }
 
+    private void teamCombat(List<TeamMember> team1, List<TeamMember> team2) {
+        List<TeamMember> remainingTeam1 = new ArrayList<>(team1);
+        List<TeamMember> remainingTeam2 = new ArrayList<>(team2);
         CombatContext combatContext = new CombatContext();
-        while (combatant1.getHealth().hasOne() && combatant2.getHealth().hasOne()) {
-            List<Combatant> combatOrder = getCombatOrder(combatant1, combatant2);
-            combatContext.addRound(new Round(
-                    attack(combatOrder.get(0), combatOrder.get(1)),
-                    attack(combatOrder.get(1), combatOrder.get(0))));
+        while (remainingTeam1.size() > 0 && remainingTeam2.size() > 0) {
+            List<TeamMember> combatOrder = getCombatOrder(remainingTeam1, remainingTeam2);
+
+            List<AttackReport> attackReports = new ArrayList<>();
+            for (TeamMember attacker : combatOrder) {
+                List<TeamMember> defenders = attacker.getTeam() == 1 ? remainingTeam2 : remainingTeam1;
+                attackReports.add(attackTeam(attacker, defenders));
+            }
+            combatContext.addRound(new Round(attackReports));
         }
         log.debug(combatContext.report());
+    }
+
+    private AttackReport attackTeam(TeamMember attacker, List<TeamMember> defenders) {
+        if (attacker.getCombatant().getHealth().isEmpty() || defenders.size() == 0) {
+            return new AttackReport(attacker.getCombatant().getCode(), "N/A", 0, 0);
+        }
+        int defenderPointer = roll(defenders.size()) - 1;
+
+        TeamMember defender = defenders.get(defenderPointer);
+        AttackReport attackReport = attack(attacker.getCombatant(), defender.getCombatant());
+
+        if (defender.getCombatant().getHealth().isEmpty()) {
+            defenders.remove(defenderPointer);
+        }
+        return attackReport;
     }
 
     private AttackReport attack(Combatant attacker, Combatant defender) {
@@ -51,15 +78,16 @@ public class CombatService {
                 defender.getHealth().damage(damage);
             }
         }
-        return new AttackReport(attacker.getCode(), damage, defender.getHealth().actualValue());
+        return new AttackReport(attacker.getCode(), defender.getCode(), damage, defender.getHealth().actualValue());
     }
 
-    private List<Combatant> getCombatOrder(Combatant... combatants) {
-        return stream(combatants)
+    private List<TeamMember> getCombatOrder(List<TeamMember> team1, List<TeamMember> team2) {
+        return Stream
+                .concat(team1.stream(), team2.stream())
                 .collect(toMap(
-                        combatant -> combatant,
-                        combatant -> combatant.getInitiative() + roll10())
-                )
+                        teamMember -> teamMember,
+                        teamMember -> teamMember.getCombatant().getInitiative() + roll10()
+                ))
                 .entrySet().stream().sorted((initiative1, initiative2) -> {
                     int naturalOrder = initiative1.getValue().compareTo(initiative2.getValue());
                     if (naturalOrder == 0) {
@@ -69,6 +97,6 @@ public class CombatService {
                     }
                 })
                 .map(Map.Entry::getKey)
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 }

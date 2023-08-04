@@ -1,4 +1,4 @@
-package com.asgames.ataliasflame.domain.model.entities;
+package com.asgames.ataliasflame.domain.model.structures;
 
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import lombok.Builder;
@@ -10,6 +10,6 @@ import java.util.Map;
 @Data
 public class Booster {
 
-    private Map<Attribute, Integer> effects;
+    private final Map<Attribute, Integer> effects;
 
 }

@@ -1,7 +1,7 @@
 package com.asgames.ataliasflame.domain.services;
 
 import com.asgames.ataliasflame.domain.model.entities.Character;
-import com.asgames.ataliasflame.domain.model.entities.Item;
+import com.asgames.ataliasflame.domain.model.structures.Item;
 import com.asgames.ataliasflame.domain.model.valueobjects.Armor;
 import com.asgames.ataliasflame.domain.model.valueobjects.Shield;
 import com.asgames.ataliasflame.domain.model.valueobjects.Weapon;

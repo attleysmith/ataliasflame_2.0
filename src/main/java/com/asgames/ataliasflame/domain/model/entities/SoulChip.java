@@ -2,7 +2,7 @@ package com.asgames.ataliasflame.domain.model.entities;
 
 import com.asgames.ataliasflame.domain.model.enums.Caste;
 import com.asgames.ataliasflame.domain.model.interfaces.Companion;
-import com.asgames.ataliasflame.domain.model.valueobjects.Energy;
+import com.asgames.ataliasflame.domain.model.vos.Energy;
 import jakarta.persistence.*;
 import lombok.*;
 

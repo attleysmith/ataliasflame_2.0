@@ -1,4 +1,4 @@
-package com.asgames.ataliasflame.domain.model.structures;
+package com.asgames.ataliasflame.domain.model.dtos;
 
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
 import lombok.Builder;
@@ -10,4 +10,12 @@ public class TeamMember {
 
     private final Combatant combatant;
     private final int team;
+
+    public String getCode() {
+        return combatant.getCode();
+    }
+
+    public boolean isDead() {
+        return combatant.isDead();
+    }
 }

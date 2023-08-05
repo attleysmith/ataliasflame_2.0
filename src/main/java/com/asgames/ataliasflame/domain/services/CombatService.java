@@ -1,7 +1,7 @@
 package com.asgames.ataliasflame.domain.services;
 
+import com.asgames.ataliasflame.domain.model.dtos.TeamMember;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
-import com.asgames.ataliasflame.domain.model.structures.TeamMember;
 import com.asgames.ataliasflame.domain.services.CombatContext.Round;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,18 +20,22 @@ import static java.util.stream.Collectors.toMap;
 @Service
 public class CombatService {
 
-    public void combat(List<Combatant> team1, List<Combatant> team2) {
-        if (team1.size() == 0 || team2.size() == 0) {
+    public void combat(List<? extends Combatant> team1, List<? extends Combatant> team2) {
+        if (team1.isEmpty() || team2.isEmpty()) {
             log.warn("Combat without an enemy.");
             return;
         }
 
         teamCombat(
-                team1.stream().map(combatant -> TeamMember.builder()
+                team1.stream()
+                        .filter(Combatant::isAlive)
+                        .map(combatant -> TeamMember.builder()
                         .team(1)
                         .combatant(combatant)
                         .build()).collect(toList()),
-                team2.stream().map(combatant -> TeamMember.builder()
+                team2.stream()
+                        .filter(Combatant::isAlive)
+                        .map(combatant -> TeamMember.builder()
                         .team(2)
                         .combatant(combatant)
                         .build()).collect(toList()));
@@ -46,7 +50,15 @@ public class CombatService {
 
             List<AttackReport> attackReports = new ArrayList<>();
             for (TeamMember attacker : combatOrder) {
+                if (attacker.isDead()) {
+                    log.debug("Skipping attack. " + attacker.getCode() + " is already dead.");
+                    continue;
+                }
                 List<TeamMember> defenders = attacker.getTeam() == 1 ? remainingTeam2 : remainingTeam1;
+                if (defenders.isEmpty()) {
+                    log.debug("Stop fighting. One of the teams is eliminated.");
+                    break;
+                }
                 attackReports.add(attackTeam(attacker, defenders));
             }
             combatContext.addRound(new Round(attackReports));
@@ -55,15 +67,15 @@ public class CombatService {
     }
 
     private AttackReport attackTeam(TeamMember attacker, List<TeamMember> defenders) {
-        if (attacker.getCombatant().getHealth().isEmpty() || defenders.size() == 0) {
-            return new AttackReport(attacker.getCombatant().getCode(), "N/A", 0, 0);
+        if (attacker.isDead() || defenders.isEmpty()) {
+            throw new IllegalArgumentException("Attacker is dead or combat should be ended with one of the teams eliminated!");
         }
         int defenderPointer = roll(defenders.size()) - 1;
 
         TeamMember defender = defenders.get(defenderPointer);
         AttackReport attackReport = attack(attacker.getCombatant(), defender.getCombatant());
 
-        if (defender.getCombatant().getHealth().isEmpty()) {
+        if (defender.isDead()) {
             defenders.remove(defenderPointer);
         }
         return attackReport;
@@ -71,7 +83,7 @@ public class CombatService {
 
     private AttackReport attack(Combatant attacker, Combatant defender) {
         int damage = 0;
-        if (attacker.getHealth().hasOne()) {
+        if (attacker.isAlive()) {
             int chance = attacker.getAttack() - defender.getDefense();
             if (successX(chance)) {
                 damage = pointOut(attacker.getMinDamage(), attacker.getMaxDamage());

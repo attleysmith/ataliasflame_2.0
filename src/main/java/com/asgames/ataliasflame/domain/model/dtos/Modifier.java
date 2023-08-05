@@ -1,4 +1,4 @@
-package com.asgames.ataliasflame.domain.model.structures;
+package com.asgames.ataliasflame.domain.model.dtos;
 
 import lombok.Builder;
 import lombok.Data;

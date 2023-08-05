@@ -26,7 +26,7 @@ public abstract class CharacterTestBase {
     protected CharacterCalculationService characterCalculationService;
 
     protected void upgradeCaste(String characterName, List<Caste> upgradePath) {
-        if (upgradePath.size() == 0) {
+        if (upgradePath.isEmpty()) {
             return;
         }
 

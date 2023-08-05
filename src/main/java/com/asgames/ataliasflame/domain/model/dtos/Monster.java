@@ -1,7 +1,7 @@
-package com.asgames.ataliasflame.domain.model.structures;
+package com.asgames.ataliasflame.domain.model.dtos;
 
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
-import com.asgames.ataliasflame.domain.model.valueobjects.Energy;
+import com.asgames.ataliasflame.domain.model.vos.Energy;
 import lombok.Builder;
 import lombok.Data;
 

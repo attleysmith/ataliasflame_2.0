@@ -1,10 +1,11 @@
 package com.asgames.ataliasflame.application.scenarios;
 
 import com.asgames.ataliasflame.application.model.CharacterInput;
-import com.asgames.ataliasflame.domain.model.entities.Character;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.Map;
 
 import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
 import static com.asgames.ataliasflame.domain.model.enums.Caste.*;
@@ -12,7 +13,7 @@ import static com.asgames.ataliasflame.domain.model.enums.Gender.MALE;
 import static com.asgames.ataliasflame.domain.model.enums.God.ALATE;
 import static com.asgames.ataliasflame.domain.model.enums.Race.NIGHT_ELF;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
 @Disabled("May be killed in action")
 @SpringBootTest(properties = "booster.experience:true")
@@ -29,8 +30,33 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
                 .build();
         characterMaintenanceService.createCharacter(characterInput);
         // and
-        Character character = characterMaintenanceService.getCharacter(characterName);
+        character = characterMaintenanceService.getCharacter(characterName);
 
+        // expect
+        level1Upgrade();
+
+        do {
+            // given
+            int startingLevel = character.getLevel();
+
+            // when
+            character = combatUntilNextLevel();
+
+            // expect
+            assertThat(character.getLevel(), is(greaterThan(startingLevel)));
+
+            // when
+            for (int upgradeLevel = startingLevel + 1; upgradeLevel <= character.getLevel(); upgradeLevel++) {
+                UPGRADES.get(upgradeLevel).run();
+            }
+
+            // expect
+            assertThat(character.getAttributePoints(), is(0));
+
+        } while (character.isAlive() && character.getLevel() < 100);
+    }
+
+    private void level1Upgrade() {
         // expect
         assertThat(character.getLevel(), is(1));
         assertThat(character.getAttributePoints(), is(0));
@@ -47,13 +73,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(3));
         assertThat(character.getHealth().totalValue(), is(110));
         assertThat(character.getMagic().totalValue(), is(5));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(2));
-        assertThat(character.getAttributePoints(), is(5));
+    public void level2Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(DEXTERITY, 2);
@@ -61,7 +84,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(AGILITY, 2);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(1));
         assertThat(character.getAttributes().get(DEXTERITY), is(3));
         assertThat(character.getAttributes().get(CONSTITUTION), is(2));
@@ -75,13 +97,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(5));
         assertThat(character.getHealth().totalValue(), is(120));
         assertThat(character.getMagic().totalValue(), is(5));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(3));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level3Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(DEXTERITY, 2);
@@ -89,7 +108,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(AGILITY, 2);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(1));
         assertThat(character.getAttributes().get(DEXTERITY), is(5));
         assertThat(character.getAttributes().get(CONSTITUTION), is(3));
@@ -103,20 +121,16 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(8));
         assertThat(character.getHealth().totalValue(), is(130));
         assertThat(character.getMagic().totalValue(), is(5));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(4));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level4Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 3);
         character = addAttributePoints(CONSTITUTION, 2);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(4));
         assertThat(character.getAttributes().get(DEXTERITY), is(5));
         assertThat(character.getAttributes().get(CONSTITUTION), is(5));
@@ -130,13 +144,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(14));
         assertThat(character.getHealth().totalValue(), is(150));
         assertThat(character.getMagic().totalValue(), is(5));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(5));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level5Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -146,7 +157,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(5));
         assertThat(character.getAttributes().get(DEXTERITY), is(5));
         assertThat(character.getAttributes().get(CONSTITUTION), is(5));
@@ -166,13 +176,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
 
         // expect
         assertThat(character.getCaste(), is(FIGHTER));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(6));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level6Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -181,7 +188,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(AGILITY, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(6));
         assertThat(character.getAttributes().get(DEXTERITY), is(6));
         assertThat(character.getAttributes().get(CONSTITUTION), is(7));
@@ -195,13 +201,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(19));
         assertThat(character.getHealth().totalValue(), is(170));
         assertThat(character.getMagic().totalValue(), is(23));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(7));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level7Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(DEXTERITY, 2);
@@ -209,7 +212,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(LORE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(6));
         assertThat(character.getAttributes().get(DEXTERITY), is(8));
         assertThat(character.getAttributes().get(CONSTITUTION), is(7));
@@ -223,13 +225,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(21));
         assertThat(character.getHealth().totalValue(), is(170));
         assertThat(character.getMagic().totalValue(), is(25));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(8));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level8Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(DEXTERITY, 2);
@@ -237,7 +236,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(MENTAL_POWER, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(6));
         assertThat(character.getAttributes().get(DEXTERITY), is(10));
         assertThat(character.getAttributes().get(CONSTITUTION), is(7));
@@ -251,13 +249,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(23));
         assertThat(character.getHealth().totalValue(), is(170));
         assertThat(character.getMagic().totalValue(), is(35));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(9));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level9Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -267,7 +262,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(7));
         assertThat(character.getAttributes().get(DEXTERITY), is(11));
         assertThat(character.getAttributes().get(CONSTITUTION), is(8));
@@ -281,13 +275,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(26));
         assertThat(character.getHealth().totalValue(), is(180));
         assertThat(character.getMagic().totalValue(), is(40));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(10));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level10Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 2);
@@ -296,7 +287,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(AGILITY, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(9));
         assertThat(character.getAttributes().get(DEXTERITY), is(12));
         assertThat(character.getAttributes().get(CONSTITUTION), is(9));
@@ -310,13 +300,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(32));
         assertThat(character.getHealth().totalValue(), is(190));
         assertThat(character.getMagic().totalValue(), is(40));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(11));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level11Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -326,7 +313,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(LORE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(10));
         assertThat(character.getAttributes().get(DEXTERITY), is(13));
         assertThat(character.getAttributes().get(CONSTITUTION), is(10));
@@ -340,13 +326,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(35));
         assertThat(character.getHealth().totalValue(), is(200));
         assertThat(character.getMagic().totalValue(), is(42));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(12));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level12Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -355,7 +338,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(AGILITY, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(11));
         assertThat(character.getAttributes().get(DEXTERITY), is(14));
         assertThat(character.getAttributes().get(CONSTITUTION), is(12));
@@ -369,13 +351,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(38));
         assertThat(character.getHealth().totalValue(), is(220));
         assertThat(character.getMagic().totalValue(), is(42));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(13));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level13Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -385,7 +364,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(12));
         assertThat(character.getAttributes().get(DEXTERITY), is(15));
         assertThat(character.getAttributes().get(CONSTITUTION), is(13));
@@ -399,13 +377,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(41));
         assertThat(character.getHealth().totalValue(), is(230));
         assertThat(character.getMagic().totalValue(), is(47));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(14));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level14Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 2);
@@ -414,7 +389,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(AGILITY, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(14));
         assertThat(character.getAttributes().get(DEXTERITY), is(16));
         assertThat(character.getAttributes().get(CONSTITUTION), is(14));
@@ -428,13 +402,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(46));
         assertThat(character.getHealth().totalValue(), is(240));
         assertThat(character.getMagic().totalValue(), is(47));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(15));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level15Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -444,7 +415,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(LORE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(15));
         assertThat(character.getAttributes().get(DEXTERITY), is(17));
         assertThat(character.getAttributes().get(CONSTITUTION), is(15));
@@ -458,13 +428,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(49));
         assertThat(character.getHealth().totalValue(), is(250));
         assertThat(character.getMagic().totalValue(), is(49));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(16));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level16Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -473,7 +440,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(AGILITY, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(16));
         assertThat(character.getAttributes().get(DEXTERITY), is(18));
         assertThat(character.getAttributes().get(CONSTITUTION), is(17));
@@ -487,13 +453,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(52));
         assertThat(character.getHealth().totalValue(), is(270));
         assertThat(character.getMagic().totalValue(), is(49));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(17));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level17Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -503,7 +466,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(MENTAL_POWER, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(17));
         assertThat(character.getAttributes().get(DEXTERITY), is(19));
         assertThat(character.getAttributes().get(CONSTITUTION), is(18));
@@ -517,13 +479,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(55));
         assertThat(character.getHealth().totalValue(), is(280));
         assertThat(character.getMagic().totalValue(), is(59));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(18));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level18Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -533,7 +492,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(18));
         assertThat(character.getAttributes().get(DEXTERITY), is(20));
         assertThat(character.getAttributes().get(CONSTITUTION), is(19));
@@ -547,13 +505,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(59));
         assertThat(character.getHealth().totalValue(), is(290));
         assertThat(character.getMagic().totalValue(), is(64));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(19));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level19Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -563,7 +518,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(MENTAL_POWER, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(19));
         assertThat(character.getAttributes().get(DEXTERITY), is(20));
         assertThat(character.getAttributes().get(CONSTITUTION), is(20));
@@ -577,13 +531,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(61));
         assertThat(character.getHealth().totalValue(), is(300));
         assertThat(character.getMagic().totalValue(), is(81));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(20));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level20Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -593,7 +544,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(20));
         assertThat(character.getAttributes().get(DEXTERITY), is(20));
         assertThat(character.getAttributes().get(CONSTITUTION), is(20));
@@ -613,13 +563,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
 
         // expect
         assertThat(character.getCaste(), is(PALADIN));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(21));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level21Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -629,7 +576,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(21));
         assertThat(character.getAttributes().get(DEXTERITY), is(21));
         assertThat(character.getAttributes().get(CONSTITUTION), is(21));
@@ -643,13 +589,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(66));
         assertThat(character.getHealth().totalValue(), is(310));
         assertThat(character.getMagic().totalValue(), is(104));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(22));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level22Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -659,7 +602,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(MENTAL_POWER, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(22));
         assertThat(character.getAttributes().get(DEXTERITY), is(22));
         assertThat(character.getAttributes().get(CONSTITUTION), is(22));
@@ -673,13 +615,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(69));
         assertThat(character.getHealth().totalValue(), is(320));
         assertThat(character.getMagic().totalValue(), is(114));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(23));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level23Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -689,7 +628,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(23));
         assertThat(character.getAttributes().get(DEXTERITY), is(23));
         assertThat(character.getAttributes().get(CONSTITUTION), is(23));
@@ -703,13 +641,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(72));
         assertThat(character.getHealth().totalValue(), is(330));
         assertThat(character.getMagic().totalValue(), is(119));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(24));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level24Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -719,7 +654,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(LORE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(24));
         assertThat(character.getAttributes().get(DEXTERITY), is(24));
         assertThat(character.getAttributes().get(CONSTITUTION), is(24));
@@ -733,13 +667,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(75));
         assertThat(character.getHealth().totalValue(), is(340));
         assertThat(character.getMagic().totalValue(), is(121));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(25));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level25Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -749,7 +680,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(25));
         assertThat(character.getAttributes().get(DEXTERITY), is(25));
         assertThat(character.getAttributes().get(CONSTITUTION), is(25));
@@ -763,13 +693,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(78));
         assertThat(character.getHealth().totalValue(), is(350));
         assertThat(character.getMagic().totalValue(), is(126));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(26));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level26Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -779,7 +706,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(MENTAL_POWER, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(26));
         assertThat(character.getAttributes().get(DEXTERITY), is(26));
         assertThat(character.getAttributes().get(CONSTITUTION), is(26));
@@ -793,13 +719,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(81));
         assertThat(character.getHealth().totalValue(), is(360));
         assertThat(character.getMagic().totalValue(), is(136));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(27));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level27Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -809,7 +732,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(27));
         assertThat(character.getAttributes().get(DEXTERITY), is(27));
         assertThat(character.getAttributes().get(CONSTITUTION), is(27));
@@ -823,13 +745,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(85));
         assertThat(character.getHealth().totalValue(), is(370));
         assertThat(character.getMagic().totalValue(), is(141));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(28));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level28Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -839,7 +758,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(28));
         assertThat(character.getAttributes().get(DEXTERITY), is(28));
         assertThat(character.getAttributes().get(CONSTITUTION), is(28));
@@ -853,13 +771,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(88));
         assertThat(character.getHealth().totalValue(), is(380));
         assertThat(character.getMagic().totalValue(), is(142));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(29));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level29Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -869,7 +784,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(LORE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(29));
         assertThat(character.getAttributes().get(DEXTERITY), is(29));
         assertThat(character.getAttributes().get(CONSTITUTION), is(29));
@@ -883,13 +797,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(91));
         assertThat(character.getHealth().totalValue(), is(390));
         assertThat(character.getMagic().totalValue(), is(144));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(30));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level30Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -899,7 +810,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(30));
         assertThat(character.getAttributes().get(DEXTERITY), is(30));
         assertThat(character.getAttributes().get(CONSTITUTION), is(30));
@@ -913,13 +823,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(94));
         assertThat(character.getHealth().totalValue(), is(400));
         assertThat(character.getMagic().totalValue(), is(149));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(31));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level31Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -929,7 +836,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(MENTAL_POWER, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(31));
         assertThat(character.getAttributes().get(DEXTERITY), is(31));
         assertThat(character.getAttributes().get(CONSTITUTION), is(31));
@@ -943,13 +849,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(97));
         assertThat(character.getHealth().totalValue(), is(410));
         assertThat(character.getMagic().totalValue(), is(159));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(32));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level32Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -959,7 +862,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(32));
         assertThat(character.getAttributes().get(DEXTERITY), is(32));
         assertThat(character.getAttributes().get(CONSTITUTION), is(32));
@@ -973,13 +875,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(100));
         assertThat(character.getHealth().totalValue(), is(420));
         assertThat(character.getMagic().totalValue(), is(164));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(33));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level33Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -989,7 +888,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(LORE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(33));
         assertThat(character.getAttributes().get(DEXTERITY), is(33));
         assertThat(character.getAttributes().get(CONSTITUTION), is(33));
@@ -1003,13 +901,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(103));
         assertThat(character.getHealth().totalValue(), is(430));
         assertThat(character.getMagic().totalValue(), is(166));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(34));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level34Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -1019,7 +914,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(34));
         assertThat(character.getAttributes().get(DEXTERITY), is(34));
         assertThat(character.getAttributes().get(CONSTITUTION), is(34));
@@ -1033,13 +927,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(106));
         assertThat(character.getHealth().totalValue(), is(440));
         assertThat(character.getMagic().totalValue(), is(171));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(35));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level35Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -1049,7 +940,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(MENTAL_POWER, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(35));
         assertThat(character.getAttributes().get(DEXTERITY), is(35));
         assertThat(character.getAttributes().get(CONSTITUTION), is(35));
@@ -1063,13 +953,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(110));
         assertThat(character.getHealth().totalValue(), is(450));
         assertThat(character.getMagic().totalValue(), is(181));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(36));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level36Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -1079,7 +966,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(36));
         assertThat(character.getAttributes().get(DEXTERITY), is(36));
         assertThat(character.getAttributes().get(CONSTITUTION), is(36));
@@ -1093,13 +979,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(113));
         assertThat(character.getHealth().totalValue(), is(460));
         assertThat(character.getMagic().totalValue(), is(186));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(37));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level37Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -1109,7 +992,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(LORE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(37));
         assertThat(character.getAttributes().get(DEXTERITY), is(37));
         assertThat(character.getAttributes().get(CONSTITUTION), is(37));
@@ -1123,13 +1005,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(116));
         assertThat(character.getHealth().totalValue(), is(470));
         assertThat(character.getMagic().totalValue(), is(188));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(38));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level38Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -1139,7 +1018,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(MENTAL_POWER, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(38));
         assertThat(character.getAttributes().get(DEXTERITY), is(38));
         assertThat(character.getAttributes().get(CONSTITUTION), is(38));
@@ -1153,13 +1031,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(119));
         assertThat(character.getHealth().totalValue(), is(480));
         assertThat(character.getMagic().totalValue(), is(198));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(39));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level39Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -1169,7 +1044,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(39));
         assertThat(character.getAttributes().get(DEXTERITY), is(39));
         assertThat(character.getAttributes().get(CONSTITUTION), is(39));
@@ -1183,13 +1057,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(122));
         assertThat(character.getHealth().totalValue(), is(490));
         assertThat(character.getMagic().totalValue(), is(203));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(40));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level40Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -1199,7 +1070,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(40));
         assertThat(character.getAttributes().get(DEXTERITY), is(40));
         assertThat(character.getAttributes().get(CONSTITUTION), is(40));
@@ -1213,13 +1083,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(125));
         assertThat(character.getHealth().totalValue(), is(500));
         assertThat(character.getMagic().totalValue(), is(204));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(41));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level41Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -1229,7 +1096,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(41));
         assertThat(character.getAttributes().get(DEXTERITY), is(41));
         assertThat(character.getAttributes().get(CONSTITUTION), is(41));
@@ -1243,13 +1109,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(128));
         assertThat(character.getHealth().totalValue(), is(510));
         assertThat(character.getMagic().totalValue(), is(209));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(42));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level42Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -1259,7 +1122,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(LORE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(42));
         assertThat(character.getAttributes().get(DEXTERITY), is(42));
         assertThat(character.getAttributes().get(CONSTITUTION), is(42));
@@ -1273,13 +1135,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(131));
         assertThat(character.getHealth().totalValue(), is(520));
         assertThat(character.getMagic().totalValue(), is(211));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(43));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level43Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -1289,7 +1148,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(43));
         assertThat(character.getAttributes().get(DEXTERITY), is(43));
         assertThat(character.getAttributes().get(CONSTITUTION), is(43));
@@ -1303,13 +1161,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(135));
         assertThat(character.getHealth().totalValue(), is(530));
         assertThat(character.getMagic().totalValue(), is(216));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(44));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level44Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -1319,7 +1174,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(MENTAL_POWER, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(44));
         assertThat(character.getAttributes().get(DEXTERITY), is(44));
         assertThat(character.getAttributes().get(CONSTITUTION), is(44));
@@ -1333,13 +1187,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(138));
         assertThat(character.getHealth().totalValue(), is(540));
         assertThat(character.getMagic().totalValue(), is(226));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(45));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level45Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -1349,7 +1200,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(45));
         assertThat(character.getAttributes().get(DEXTERITY), is(45));
         assertThat(character.getAttributes().get(CONSTITUTION), is(45));
@@ -1363,13 +1213,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(141));
         assertThat(character.getHealth().totalValue(), is(550));
         assertThat(character.getMagic().totalValue(), is(231));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(46));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level46Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -1379,7 +1226,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(LORE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(46));
         assertThat(character.getAttributes().get(DEXTERITY), is(46));
         assertThat(character.getAttributes().get(CONSTITUTION), is(46));
@@ -1393,13 +1239,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(144));
         assertThat(character.getHealth().totalValue(), is(560));
         assertThat(character.getMagic().totalValue(), is(233));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(47));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level47Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -1409,7 +1252,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(MENTAL_POWER, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(47));
         assertThat(character.getAttributes().get(DEXTERITY), is(47));
         assertThat(character.getAttributes().get(CONSTITUTION), is(47));
@@ -1423,13 +1265,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(147));
         assertThat(character.getHealth().totalValue(), is(570));
         assertThat(character.getMagic().totalValue(), is(243));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(48));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level48Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -1439,7 +1278,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(48));
         assertThat(character.getAttributes().get(DEXTERITY), is(48));
         assertThat(character.getAttributes().get(CONSTITUTION), is(48));
@@ -1453,13 +1291,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(150));
         assertThat(character.getHealth().totalValue(), is(580));
         assertThat(character.getMagic().totalValue(), is(248));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(49));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level49Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -1469,7 +1304,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(LORE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(49));
         assertThat(character.getAttributes().get(DEXTERITY), is(49));
         assertThat(character.getAttributes().get(CONSTITUTION), is(49));
@@ -1483,13 +1317,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(153));
         assertThat(character.getHealth().totalValue(), is(590));
         assertThat(character.getMagic().totalValue(), is(250));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(50));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level50Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -1499,7 +1330,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(50));
         assertThat(character.getAttributes().get(DEXTERITY), is(50));
         assertThat(character.getAttributes().get(CONSTITUTION), is(50));
@@ -1519,13 +1349,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
 
         // expect
         assertThat(character.getCaste(), is(GRANDMASTER));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(51));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level51Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -1535,7 +1362,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(51));
         assertThat(character.getAttributes().get(DEXTERITY), is(51));
         assertThat(character.getAttributes().get(CONSTITUTION), is(51));
@@ -1549,13 +1375,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(160));
         assertThat(character.getHealth().totalValue(), is(600));
         assertThat(character.getMagic().totalValue(), is(256));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(52));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level52Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -1565,7 +1388,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(MENTAL_POWER, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(52));
         assertThat(character.getAttributes().get(DEXTERITY), is(52));
         assertThat(character.getAttributes().get(CONSTITUTION), is(52));
@@ -1579,13 +1401,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(163));
         assertThat(character.getHealth().totalValue(), is(610));
         assertThat(character.getMagic().totalValue(), is(266));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(53));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level53Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -1595,7 +1414,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(53));
         assertThat(character.getAttributes().get(DEXTERITY), is(53));
         assertThat(character.getAttributes().get(CONSTITUTION), is(53));
@@ -1609,13 +1427,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(166));
         assertThat(character.getHealth().totalValue(), is(620));
         assertThat(character.getMagic().totalValue(), is(271));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(54));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level54Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -1625,7 +1440,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(MENTAL_POWER, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(54));
         assertThat(character.getAttributes().get(DEXTERITY), is(54));
         assertThat(character.getAttributes().get(CONSTITUTION), is(54));
@@ -1639,13 +1453,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(169));
         assertThat(character.getHealth().totalValue(), is(630));
         assertThat(character.getMagic().totalValue(), is(281));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(55));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level55Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -1655,7 +1466,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(LORE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(55));
         assertThat(character.getAttributes().get(DEXTERITY), is(55));
         assertThat(character.getAttributes().get(CONSTITUTION), is(55));
@@ -1669,13 +1479,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(172));
         assertThat(character.getHealth().totalValue(), is(640));
         assertThat(character.getMagic().totalValue(), is(283));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(56));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level56Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -1685,7 +1492,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(56));
         assertThat(character.getAttributes().get(DEXTERITY), is(56));
         assertThat(character.getAttributes().get(CONSTITUTION), is(56));
@@ -1699,13 +1505,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(175));
         assertThat(character.getHealth().totalValue(), is(650));
         assertThat(character.getMagic().totalValue(), is(288));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(57));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level57Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -1715,7 +1518,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(57));
         assertThat(character.getAttributes().get(DEXTERITY), is(57));
         assertThat(character.getAttributes().get(CONSTITUTION), is(57));
@@ -1729,13 +1531,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(178));
         assertThat(character.getHealth().totalValue(), is(660));
         assertThat(character.getMagic().totalValue(), is(289));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(58));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level58Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -1745,7 +1544,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(MENTAL_POWER, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(58));
         assertThat(character.getAttributes().get(DEXTERITY), is(58));
         assertThat(character.getAttributes().get(CONSTITUTION), is(58));
@@ -1759,13 +1557,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(182));
         assertThat(character.getHealth().totalValue(), is(670));
         assertThat(character.getMagic().totalValue(), is(299));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(59));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level59Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -1775,7 +1570,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(59));
         assertThat(character.getAttributes().get(DEXTERITY), is(59));
         assertThat(character.getAttributes().get(CONSTITUTION), is(59));
@@ -1789,13 +1583,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(185));
         assertThat(character.getHealth().totalValue(), is(680));
         assertThat(character.getMagic().totalValue(), is(304));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(60));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level60Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -1805,7 +1596,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(LORE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(60));
         assertThat(character.getAttributes().get(DEXTERITY), is(60));
         assertThat(character.getAttributes().get(CONSTITUTION), is(60));
@@ -1819,13 +1609,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(188));
         assertThat(character.getHealth().totalValue(), is(690));
         assertThat(character.getMagic().totalValue(), is(306));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(61));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level61Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -1835,7 +1622,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(61));
         assertThat(character.getAttributes().get(DEXTERITY), is(61));
         assertThat(character.getAttributes().get(CONSTITUTION), is(61));
@@ -1849,13 +1635,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(191));
         assertThat(character.getHealth().totalValue(), is(700));
         assertThat(character.getMagic().totalValue(), is(311));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(62));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level62Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -1865,7 +1648,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(MENTAL_POWER, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(62));
         assertThat(character.getAttributes().get(DEXTERITY), is(62));
         assertThat(character.getAttributes().get(CONSTITUTION), is(62));
@@ -1879,13 +1661,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(194));
         assertThat(character.getHealth().totalValue(), is(710));
         assertThat(character.getMagic().totalValue(), is(321));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(63));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level63Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -1895,7 +1674,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(63));
         assertThat(character.getAttributes().get(DEXTERITY), is(63));
         assertThat(character.getAttributes().get(CONSTITUTION), is(63));
@@ -1909,13 +1687,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(197));
         assertThat(character.getHealth().totalValue(), is(720));
         assertThat(character.getMagic().totalValue(), is(326));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(64));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level64Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -1925,7 +1700,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(LORE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(64));
         assertThat(character.getAttributes().get(DEXTERITY), is(64));
         assertThat(character.getAttributes().get(CONSTITUTION), is(64));
@@ -1939,13 +1713,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(200));
         assertThat(character.getHealth().totalValue(), is(730));
         assertThat(character.getMagic().totalValue(), is(328));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(65));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level65Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -1955,7 +1726,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(65));
         assertThat(character.getAttributes().get(DEXTERITY), is(65));
         assertThat(character.getAttributes().get(CONSTITUTION), is(65));
@@ -1969,13 +1739,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(203));
         assertThat(character.getHealth().totalValue(), is(740));
         assertThat(character.getMagic().totalValue(), is(333));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(66));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level66Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -1985,7 +1752,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(MENTAL_POWER, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(66));
         assertThat(character.getAttributes().get(DEXTERITY), is(66));
         assertThat(character.getAttributes().get(CONSTITUTION), is(66));
@@ -1999,13 +1765,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(207));
         assertThat(character.getHealth().totalValue(), is(750));
         assertThat(character.getMagic().totalValue(), is(333));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(67));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level67Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -2015,7 +1778,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(67));
         assertThat(character.getAttributes().get(DEXTERITY), is(67));
         assertThat(character.getAttributes().get(CONSTITUTION), is(67));
@@ -2029,13 +1791,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(210));
         assertThat(character.getHealth().totalValue(), is(760));
         assertThat(character.getMagic().totalValue(), is(338));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(68));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level68Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -2045,7 +1804,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(LORE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(68));
         assertThat(character.getAttributes().get(DEXTERITY), is(68));
         assertThat(character.getAttributes().get(CONSTITUTION), is(68));
@@ -2059,13 +1817,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(213));
         assertThat(character.getHealth().totalValue(), is(770));
         assertThat(character.getMagic().totalValue(), is(340));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(69));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level69Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -2075,7 +1830,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(69));
         assertThat(character.getAttributes().get(DEXTERITY), is(69));
         assertThat(character.getAttributes().get(CONSTITUTION), is(69));
@@ -2089,13 +1843,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(216));
         assertThat(character.getHealth().totalValue(), is(780));
         assertThat(character.getMagic().totalValue(), is(345));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(70));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level70Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -2105,7 +1856,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(MENTAL_POWER, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(70));
         assertThat(character.getAttributes().get(DEXTERITY), is(70));
         assertThat(character.getAttributes().get(CONSTITUTION), is(70));
@@ -2119,13 +1869,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(219));
         assertThat(character.getHealth().totalValue(), is(790));
         assertThat(character.getMagic().totalValue(), is(355));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(71));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level71Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -2135,7 +1882,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(71));
         assertThat(character.getAttributes().get(DEXTERITY), is(71));
         assertThat(character.getAttributes().get(CONSTITUTION), is(71));
@@ -2149,13 +1895,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(222));
         assertThat(character.getHealth().totalValue(), is(800));
         assertThat(character.getMagic().totalValue(), is(360));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(72));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level72Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -2165,7 +1908,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(LORE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(72));
         assertThat(character.getAttributes().get(DEXTERITY), is(72));
         assertThat(character.getAttributes().get(CONSTITUTION), is(72));
@@ -2179,13 +1921,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(225));
         assertThat(character.getHealth().totalValue(), is(810));
         assertThat(character.getMagic().totalValue(), is(362));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(73));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level73Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -2195,7 +1934,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(73));
         assertThat(character.getAttributes().get(DEXTERITY), is(73));
         assertThat(character.getAttributes().get(CONSTITUTION), is(73));
@@ -2209,13 +1947,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(228));
         assertThat(character.getHealth().totalValue(), is(820));
         assertThat(character.getMagic().totalValue(), is(367));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(74));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level74Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -2225,7 +1960,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(MENTAL_POWER, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(74));
         assertThat(character.getAttributes().get(DEXTERITY), is(74));
         assertThat(character.getAttributes().get(CONSTITUTION), is(74));
@@ -2239,13 +1973,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(232));
         assertThat(character.getHealth().totalValue(), is(830));
         assertThat(character.getMagic().totalValue(), is(377));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(75));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level75Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -2255,7 +1986,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(75));
         assertThat(character.getAttributes().get(DEXTERITY), is(75));
         assertThat(character.getAttributes().get(CONSTITUTION), is(75));
@@ -2269,13 +1999,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(235));
         assertThat(character.getHealth().totalValue(), is(840));
         assertThat(character.getMagic().totalValue(), is(382));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(76));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level76Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -2285,7 +2012,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(LORE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(76));
         assertThat(character.getAttributes().get(DEXTERITY), is(76));
         assertThat(character.getAttributes().get(CONSTITUTION), is(76));
@@ -2299,13 +2025,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(238));
         assertThat(character.getHealth().totalValue(), is(850));
         assertThat(character.getMagic().totalValue(), is(384));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(77));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level77Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -2315,7 +2038,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(MENTAL_POWER, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(77));
         assertThat(character.getAttributes().get(DEXTERITY), is(77));
         assertThat(character.getAttributes().get(CONSTITUTION), is(77));
@@ -2329,13 +2051,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(241));
         assertThat(character.getHealth().totalValue(), is(860));
         assertThat(character.getMagic().totalValue(), is(394));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(78));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level78Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -2345,7 +2064,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(78));
         assertThat(character.getAttributes().get(DEXTERITY), is(78));
         assertThat(character.getAttributes().get(CONSTITUTION), is(78));
@@ -2359,13 +2077,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(244));
         assertThat(character.getHealth().totalValue(), is(870));
         assertThat(character.getMagic().totalValue(), is(399));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(79));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level79Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -2375,7 +2090,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(LORE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(79));
         assertThat(character.getAttributes().get(DEXTERITY), is(79));
         assertThat(character.getAttributes().get(CONSTITUTION), is(79));
@@ -2389,13 +2103,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(247));
         assertThat(character.getHealth().totalValue(), is(880));
         assertThat(character.getMagic().totalValue(), is(401));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(80));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level80Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -2405,7 +2116,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(80));
         assertThat(character.getAttributes().get(DEXTERITY), is(80));
         assertThat(character.getAttributes().get(CONSTITUTION), is(80));
@@ -2419,13 +2129,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(250));
         assertThat(character.getHealth().totalValue(), is(890));
         assertThat(character.getMagic().totalValue(), is(402));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(81));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level81Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -2435,7 +2142,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(81));
         assertThat(character.getAttributes().get(DEXTERITY), is(81));
         assertThat(character.getAttributes().get(CONSTITUTION), is(81));
@@ -2449,13 +2155,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(254));
         assertThat(character.getHealth().totalValue(), is(900));
         assertThat(character.getMagic().totalValue(), is(407));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(82));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level82Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -2465,7 +2168,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(MENTAL_POWER, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(82));
         assertThat(character.getAttributes().get(DEXTERITY), is(82));
         assertThat(character.getAttributes().get(CONSTITUTION), is(82));
@@ -2479,13 +2181,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(257));
         assertThat(character.getHealth().totalValue(), is(910));
         assertThat(character.getMagic().totalValue(), is(417));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(83));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level83Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -2495,7 +2194,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(83));
         assertThat(character.getAttributes().get(DEXTERITY), is(83));
         assertThat(character.getAttributes().get(CONSTITUTION), is(83));
@@ -2509,13 +2207,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(260));
         assertThat(character.getHealth().totalValue(), is(920));
         assertThat(character.getMagic().totalValue(), is(422));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(84));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level84Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -2525,7 +2220,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(LORE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(84));
         assertThat(character.getAttributes().get(DEXTERITY), is(84));
         assertThat(character.getAttributes().get(CONSTITUTION), is(84));
@@ -2539,13 +2233,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(263));
         assertThat(character.getHealth().totalValue(), is(930));
         assertThat(character.getMagic().totalValue(), is(424));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(85));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level85Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -2555,7 +2246,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(MENTAL_POWER, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(85));
         assertThat(character.getAttributes().get(DEXTERITY), is(85));
         assertThat(character.getAttributes().get(CONSTITUTION), is(85));
@@ -2569,13 +2259,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(266));
         assertThat(character.getHealth().totalValue(), is(940));
         assertThat(character.getMagic().totalValue(), is(434));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(86));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level86Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -2585,7 +2272,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(86));
         assertThat(character.getAttributes().get(DEXTERITY), is(86));
         assertThat(character.getAttributes().get(CONSTITUTION), is(86));
@@ -2599,13 +2285,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(269));
         assertThat(character.getHealth().totalValue(), is(950));
         assertThat(character.getMagic().totalValue(), is(439));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(87));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level87Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -2615,7 +2298,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(87));
         assertThat(character.getAttributes().get(DEXTERITY), is(87));
         assertThat(character.getAttributes().get(CONSTITUTION), is(87));
@@ -2629,13 +2311,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(272));
         assertThat(character.getHealth().totalValue(), is(960));
         assertThat(character.getMagic().totalValue(), is(444));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(88));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level88Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -2645,7 +2324,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(LORE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(88));
         assertThat(character.getAttributes().get(DEXTERITY), is(88));
         assertThat(character.getAttributes().get(CONSTITUTION), is(88));
@@ -2659,13 +2337,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(275));
         assertThat(character.getHealth().totalValue(), is(970));
         assertThat(character.getMagic().totalValue(), is(446));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(89));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level89Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -2675,7 +2350,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(MENTAL_POWER, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(89));
         assertThat(character.getAttributes().get(DEXTERITY), is(89));
         assertThat(character.getAttributes().get(CONSTITUTION), is(89));
@@ -2689,13 +2363,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(279));
         assertThat(character.getHealth().totalValue(), is(980));
         assertThat(character.getMagic().totalValue(), is(456));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(90));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level90Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -2705,7 +2376,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(90));
         assertThat(character.getAttributes().get(DEXTERITY), is(90));
         assertThat(character.getAttributes().get(CONSTITUTION), is(90));
@@ -2719,13 +2389,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(282));
         assertThat(character.getHealth().totalValue(), is(990));
         assertThat(character.getMagic().totalValue(), is(461));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(91));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level91Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -2735,7 +2402,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(LORE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(91));
         assertThat(character.getAttributes().get(DEXTERITY), is(91));
         assertThat(character.getAttributes().get(CONSTITUTION), is(91));
@@ -2749,13 +2415,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(285));
         assertThat(character.getHealth().totalValue(), is(1000));
         assertThat(character.getMagic().totalValue(), is(463));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(92));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level92Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -2765,7 +2428,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(92));
         assertThat(character.getAttributes().get(DEXTERITY), is(92));
         assertThat(character.getAttributes().get(CONSTITUTION), is(92));
@@ -2779,13 +2441,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(288));
         assertThat(character.getHealth().totalValue(), is(1010));
         assertThat(character.getMagic().totalValue(), is(464));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(93));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level93Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -2795,7 +2454,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(MENTAL_POWER, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(93));
         assertThat(character.getAttributes().get(DEXTERITY), is(93));
         assertThat(character.getAttributes().get(CONSTITUTION), is(93));
@@ -2809,13 +2467,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(291));
         assertThat(character.getHealth().totalValue(), is(1020));
         assertThat(character.getMagic().totalValue(), is(474));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(94));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level94Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -2825,7 +2480,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(94));
         assertThat(character.getAttributes().get(DEXTERITY), is(94));
         assertThat(character.getAttributes().get(CONSTITUTION), is(94));
@@ -2839,13 +2493,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(294));
         assertThat(character.getHealth().totalValue(), is(1030));
         assertThat(character.getMagic().totalValue(), is(479));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(95));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level95Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -2855,7 +2506,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(LORE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(95));
         assertThat(character.getAttributes().get(DEXTERITY), is(95));
         assertThat(character.getAttributes().get(CONSTITUTION), is(95));
@@ -2869,13 +2519,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(297));
         assertThat(character.getHealth().totalValue(), is(1040));
         assertThat(character.getMagic().totalValue(), is(481));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(96));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level96Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -2885,7 +2532,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(96));
         assertThat(character.getAttributes().get(DEXTERITY), is(96));
         assertThat(character.getAttributes().get(CONSTITUTION), is(96));
@@ -2899,13 +2545,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(300));
         assertThat(character.getHealth().totalValue(), is(1050));
         assertThat(character.getMagic().totalValue(), is(482));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(97));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level97Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -2915,7 +2558,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(MENTAL_POWER, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(97));
         assertThat(character.getAttributes().get(DEXTERITY), is(97));
         assertThat(character.getAttributes().get(CONSTITUTION), is(97));
@@ -2929,13 +2571,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(304));
         assertThat(character.getHealth().totalValue(), is(1060));
         assertThat(character.getMagic().totalValue(), is(492));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(98));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level98Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -2945,7 +2584,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(INTELLIGENCE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(98));
         assertThat(character.getAttributes().get(DEXTERITY), is(98));
         assertThat(character.getAttributes().get(CONSTITUTION), is(98));
@@ -2959,13 +2597,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(307));
         assertThat(character.getHealth().totalValue(), is(1070));
         assertThat(character.getMagic().totalValue(), is(497));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(99));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level99Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -2975,7 +2610,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(LORE, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(99));
         assertThat(character.getAttributes().get(DEXTERITY), is(99));
         assertThat(character.getAttributes().get(CONSTITUTION), is(99));
@@ -2989,13 +2623,10 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getDamageMultiplier(), is(310));
         assertThat(character.getHealth().totalValue(), is(1080));
         assertThat(character.getMagic().totalValue(), is(499));
+    }
 
-        // when
-        character = combatUntilNextLevel();
-
-        // expect
-        assertThat(character.getLevel(), is(100));
-        assertThat(character.getAttributePoints(), is(5));
+    private void level100Upgrade() {
+        assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then
         addAttributePoints(STRENGTH, 1);
@@ -3005,7 +2636,6 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         character = addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
-        assertThat(character.getAttributePoints(), is(0));
         assertThat(character.getAttributes().get(STRENGTH), is(100));
         assertThat(character.getAttributes().get(DEXTERITY), is(100));
         assertThat(character.getAttributes().get(CONSTITUTION), is(100));
@@ -3026,4 +2656,106 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         // expect
         assertThat(character.getCaste(), is(TITAN));
     }
+
+    private final Map<Integer, Runnable> UPGRADES = Map.ofEntries(
+            Map.entry(2, this::level2Upgrade),
+            Map.entry(3, this::level3Upgrade),
+            Map.entry(4, this::level4Upgrade),
+            Map.entry(5, this::level5Upgrade),
+            Map.entry(6, this::level6Upgrade),
+            Map.entry(7, this::level7Upgrade),
+            Map.entry(8, this::level8Upgrade),
+            Map.entry(9, this::level9Upgrade),
+            Map.entry(10, this::level10Upgrade),
+            Map.entry(11, this::level11Upgrade),
+            Map.entry(12, this::level12Upgrade),
+            Map.entry(13, this::level13Upgrade),
+            Map.entry(14, this::level14Upgrade),
+            Map.entry(15, this::level15Upgrade),
+            Map.entry(16, this::level16Upgrade),
+            Map.entry(17, this::level17Upgrade),
+            Map.entry(18, this::level18Upgrade),
+            Map.entry(19, this::level19Upgrade),
+            Map.entry(20, this::level20Upgrade),
+            Map.entry(21, this::level21Upgrade),
+            Map.entry(22, this::level22Upgrade),
+            Map.entry(23, this::level23Upgrade),
+            Map.entry(24, this::level24Upgrade),
+            Map.entry(25, this::level25Upgrade),
+            Map.entry(26, this::level26Upgrade),
+            Map.entry(27, this::level27Upgrade),
+            Map.entry(28, this::level28Upgrade),
+            Map.entry(29, this::level29Upgrade),
+            Map.entry(30, this::level30Upgrade),
+            Map.entry(31, this::level31Upgrade),
+            Map.entry(32, this::level32Upgrade),
+            Map.entry(33, this::level33Upgrade),
+            Map.entry(34, this::level34Upgrade),
+            Map.entry(35, this::level35Upgrade),
+            Map.entry(36, this::level36Upgrade),
+            Map.entry(37, this::level37Upgrade),
+            Map.entry(38, this::level38Upgrade),
+            Map.entry(39, this::level39Upgrade),
+            Map.entry(40, this::level40Upgrade),
+            Map.entry(41, this::level41Upgrade),
+            Map.entry(42, this::level42Upgrade),
+            Map.entry(43, this::level43Upgrade),
+            Map.entry(44, this::level44Upgrade),
+            Map.entry(45, this::level45Upgrade),
+            Map.entry(46, this::level46Upgrade),
+            Map.entry(47, this::level47Upgrade),
+            Map.entry(48, this::level48Upgrade),
+            Map.entry(49, this::level49Upgrade),
+            Map.entry(50, this::level50Upgrade),
+            Map.entry(51, this::level51Upgrade),
+            Map.entry(52, this::level52Upgrade),
+            Map.entry(53, this::level53Upgrade),
+            Map.entry(54, this::level54Upgrade),
+            Map.entry(55, this::level55Upgrade),
+            Map.entry(56, this::level56Upgrade),
+            Map.entry(57, this::level57Upgrade),
+            Map.entry(58, this::level58Upgrade),
+            Map.entry(59, this::level59Upgrade),
+            Map.entry(60, this::level60Upgrade),
+            Map.entry(61, this::level61Upgrade),
+            Map.entry(62, this::level62Upgrade),
+            Map.entry(63, this::level63Upgrade),
+            Map.entry(64, this::level64Upgrade),
+            Map.entry(65, this::level65Upgrade),
+            Map.entry(66, this::level66Upgrade),
+            Map.entry(67, this::level67Upgrade),
+            Map.entry(68, this::level68Upgrade),
+            Map.entry(69, this::level69Upgrade),
+            Map.entry(70, this::level70Upgrade),
+            Map.entry(71, this::level71Upgrade),
+            Map.entry(72, this::level72Upgrade),
+            Map.entry(73, this::level73Upgrade),
+            Map.entry(74, this::level74Upgrade),
+            Map.entry(75, this::level75Upgrade),
+            Map.entry(76, this::level76Upgrade),
+            Map.entry(77, this::level77Upgrade),
+            Map.entry(78, this::level78Upgrade),
+            Map.entry(79, this::level79Upgrade),
+            Map.entry(80, this::level80Upgrade),
+            Map.entry(81, this::level81Upgrade),
+            Map.entry(82, this::level82Upgrade),
+            Map.entry(83, this::level83Upgrade),
+            Map.entry(84, this::level84Upgrade),
+            Map.entry(85, this::level85Upgrade),
+            Map.entry(86, this::level86Upgrade),
+            Map.entry(87, this::level87Upgrade),
+            Map.entry(88, this::level88Upgrade),
+            Map.entry(89, this::level89Upgrade),
+            Map.entry(90, this::level90Upgrade),
+            Map.entry(91, this::level91Upgrade),
+            Map.entry(92, this::level92Upgrade),
+            Map.entry(93, this::level93Upgrade),
+            Map.entry(94, this::level94Upgrade),
+            Map.entry(95, this::level95Upgrade),
+            Map.entry(96, this::level96Upgrade),
+            Map.entry(97, this::level97Upgrade),
+            Map.entry(98, this::level98Upgrade),
+            Map.entry(99, this::level99Upgrade),
+            Map.entry(100, this::level100Upgrade)
+    );
 }

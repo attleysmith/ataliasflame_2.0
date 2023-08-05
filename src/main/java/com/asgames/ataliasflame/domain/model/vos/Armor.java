@@ -1,4 +1,4 @@
-package com.asgames.ataliasflame.domain.model.valueobjects;
+package com.asgames.ataliasflame.domain.model.vos;
 
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;

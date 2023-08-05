@@ -29,9 +29,9 @@ public class CombatContext {
             List<AttackReport> attacks = rounds.get(i).attackReports;
             for (int j = 0; j < attacks.size(); j++) {
                 sb.append("  ").append(j + 1).append(". attack:").append(lineSeparator());
-                sb.append("  ").append(attacks.get(j).getAttackerCode()).append(" deals ");
-                sb.append("  ").append(attacks.get(j).getDealtDamage()).append(" damage to ");
-                sb.append("  ").append(attacks.get(j).getDefenderCode()).append(lineSeparator());
+                sb.append("  ").append(attacks.get(j).getAttackerCode()).append(" deals ")
+                        .append(attacks.get(j).getDealtDamage()).append(" damage to ")
+                        .append(attacks.get(j).getDefenderCode()).append(lineSeparator());
                 sb.append("  ").append("Remaining health: ").append(attacks.get(j).getRemainingHealth()).append(lineSeparator());
             }
         }

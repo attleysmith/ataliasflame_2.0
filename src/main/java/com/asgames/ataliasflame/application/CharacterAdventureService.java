@@ -3,7 +3,7 @@ package com.asgames.ataliasflame.application;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.DefensiveGodConversionLog;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
-import com.asgames.ataliasflame.domain.model.structures.Monster;
+import com.asgames.ataliasflame.domain.model.dtos.Monster;
 import com.asgames.ataliasflame.domain.services.*;
 import com.asgames.ataliasflame.infrastructure.repositories.CharacterRepository;
 import com.asgames.ataliasflame.infrastructure.repositories.DefensiveGodConversionLogRepository;
@@ -52,25 +52,24 @@ public class CharacterAdventureService {
     @Transactional
     public Character combat(String characterName) {
         Character character = characterMaintenanceService.getCharacter(characterName);
-        Monster monster = monsterService.getRandomMonster();
+        List<Monster> monsters = monsterService.populateMonsters();
 
-        magicService.castMagic(character, monster);
+        magicService.castMagic(character, monsters);
 
         List<Combatant> characterTeam = new ArrayList<>();
         characterTeam.add(character);
         characterTeam.addAll(character.getSoulChips().stream().peek(soulChip ->
-                soulChip.getHealth().recover(100)).collect(toList()));
+                soulChip.getHealth().fullRecover()).collect(toList()));
 
-        combatService.combat(characterTeam, List.of(monster));
+        combatService.combat(characterTeam, monsters);
 
-        if (character.getHealth().hasOne()) {
-            character = experienceService.gainExperience(character, monster.getExperience());
+        if (character.isAlive()) {
+            character = experienceService.gainExperience(character, monsters);
             log.info("You are the winner!");
             log.info("Remaining health: " + character.getHealth().actualValue());
-            monsterService.looting(character, monster);
+            monsterService.looting(character, monsters);
         } else {
             log.info("You are defeated!");
-            log.info("Enemy's health: " + monster.getHealth().actualValue());
         }
 
         return characterRepository.save(character);

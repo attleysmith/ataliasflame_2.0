@@ -2,10 +2,10 @@ package com.asgames.ataliasflame.domain.model.entities;
 
 import com.asgames.ataliasflame.domain.model.enums.*;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
-import com.asgames.ataliasflame.domain.model.valueobjects.Armor;
-import com.asgames.ataliasflame.domain.model.valueobjects.Energy;
-import com.asgames.ataliasflame.domain.model.valueobjects.Shield;
-import com.asgames.ataliasflame.domain.model.valueobjects.Weapon;
+import com.asgames.ataliasflame.domain.model.vos.Armor;
+import com.asgames.ataliasflame.domain.model.vos.Energy;
+import com.asgames.ataliasflame.domain.model.vos.Shield;
+import com.asgames.ataliasflame.domain.model.vos.Weapon;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

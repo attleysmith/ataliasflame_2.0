@@ -1,9 +1,11 @@
 package com.asgames.ataliasflame.domain.services;
 
 import com.asgames.ataliasflame.domain.model.entities.Character;
-import com.asgames.ataliasflame.domain.model.structures.Monster;
+import com.asgames.ataliasflame.domain.model.dtos.Monster;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 import static com.asgames.ataliasflame.domain.MockConstants.*;
 
@@ -25,15 +27,19 @@ public class MagicService {
         log.info("Recovering to " + character.getMagic().actualValue() + " magic point!");
     }
 
+    public void castMagic(Character character, List<Monster> monsters) {
+        monsters.forEach(monster -> castMagic(character, monster));
+    }
+
     public void castMagic(Character character, Monster monster) {
         while (character.getMagic().has(FIREBALL_MAGIC_COST)
-                && monster.getHealth().hasOne()) {
+                && monster.isAlive()) {
             castFireBall(character, monster);
         }
     }
 
     private void castFireBall(Character character, Monster monster) {
-        if (monster.getHealth().isEmpty()) {
+        if (monster.isDead()) {
             log.debug("Unnecessary use of fireball!");
             return;
         }

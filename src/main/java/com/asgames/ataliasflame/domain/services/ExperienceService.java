@@ -1,6 +1,7 @@
 package com.asgames.ataliasflame.domain.services;
 
 import com.asgames.ataliasflame.domain.model.entities.Character;
+import com.asgames.ataliasflame.domain.model.dtos.Monster;
 import com.asgames.ataliasflame.infrastructure.repositories.LevelRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -33,8 +35,13 @@ public class ExperienceService implements InitializingBean {
         );
     }
 
+    public Character gainExperience(Character character, List<Monster> monsters) {
+        int sumExperience = monsters.stream().map(Monster::getExperience).reduce(0, Integer::sum);
+        return gainExperience(character, sumExperience);
+    }
+
     public Character gainExperience(Character character, int experience) {
-        int gainedExperience = (experienceBooster && character.getLevel() > 25) ? character.getLevel() * experience : experience;
+        int gainedExperience = experienceBooster ? character.getLevel() * experience : experience;
         character.setExperience(character.getExperience() + gainedExperience);
         log.info("Experience gained: " + gainedExperience);
         log.info("Total experience: " + character.getExperience());

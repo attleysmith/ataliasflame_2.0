@@ -18,6 +18,7 @@ public abstract class EnduranceTestBase {
     @Autowired
     protected CharacterMaintenanceService characterMaintenanceService;
 
+    protected Character character;
     protected static String characterName;
 
     @BeforeEach
@@ -35,6 +36,10 @@ public abstract class EnduranceTestBase {
     }
 
     protected Character upgradeCaste(Caste newCaste) {
+        while (!character.getHealth().isFull()) {
+            character = characterAdventureService.sleep(characterName);
+        }
+
         return characterMaintenanceService.upgradeCaste(characterName, newCaste);
     }
 
@@ -45,13 +50,13 @@ public abstract class EnduranceTestBase {
         do {
             character = characterAdventureService.combat(characterName);
             character = healing(character);
-        } while (character.getHealth().hasOne() && character.getLevel() == actualLevel);
+        } while (character.isAlive() && character.getLevel() == actualLevel);
 
         return character;
     }
 
     private Character healing(Character character) {
-        if (character.getHealth().tolerate(TOLERATED_INJURY)) {
+        if (character.getHealth().tolerateLoss(TOLERATED_INJURY)) {
             return character;
         }
         return characterAdventureService.sleep(characterName);

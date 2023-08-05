@@ -2,7 +2,7 @@ package com.asgames.ataliasflame.domain.services;
 
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.SoulChip;
-import com.asgames.ataliasflame.domain.model.valueobjects.Energy;
+import com.asgames.ataliasflame.domain.model.vos.Energy;
 
 import static com.asgames.ataliasflame.domain.MockConstants.*;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.percent;

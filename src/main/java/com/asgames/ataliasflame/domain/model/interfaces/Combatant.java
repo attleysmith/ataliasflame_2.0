@@ -1,6 +1,6 @@
 package com.asgames.ataliasflame.domain.model.interfaces;
 
-import com.asgames.ataliasflame.domain.model.valueobjects.Energy;
+import com.asgames.ataliasflame.domain.model.vos.Energy;
 
 public interface Combatant {
     String getCode();
@@ -16,4 +16,12 @@ public interface Combatant {
     Energy getHealth();
 
     int getInitiative();
+
+    default boolean isAlive() {
+        return getHealth().hasOne();
+    }
+
+    default boolean isDead() {
+        return getHealth().isEmpty();
+    }
 }

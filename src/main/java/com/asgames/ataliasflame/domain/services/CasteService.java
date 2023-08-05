@@ -3,7 +3,7 @@ package com.asgames.ataliasflame.domain.services;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
-import com.asgames.ataliasflame.domain.model.structures.CasteDetails;
+import com.asgames.ataliasflame.domain.model.dtos.CasteDetails;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -71,7 +71,7 @@ public class CasteService {
             character.getHealth().trauma(percent);
             character.getSoulChips().add(SoulChipFactory.getSoulChip(character, percent));
 
-            if (character.getHealth().isEmpty()) {
+            if (character.isDead()) {
                 throw new IllegalStateException("You died of trauma!");
             }
         }

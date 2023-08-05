@@ -1,4 +1,4 @@
-package com.asgames.ataliasflame.domain.model.valueobjects;
+package com.asgames.ataliasflame.domain.model.vos;
 
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
@@ -65,7 +65,7 @@ public class Energy {
         return actualValue() < cost;
     }
 
-    public boolean tolerate(int toleratedLossPercent) {
+    public boolean tolerateLoss(int toleratedLossPercent) {
         int toleratedLossValue = percent(totalEnergy, toleratedLossPercent);
         return usedEnergy <= toleratedLossValue;
     }
@@ -84,6 +84,10 @@ public class Energy {
 
     public void damage(int damage) {
         usedEnergy = min(totalEnergy, usedEnergy + damage);
+    }
+
+    public void fullRecover() {
+        recover(100);
     }
 
     public void recover(int recoveryEffect) {

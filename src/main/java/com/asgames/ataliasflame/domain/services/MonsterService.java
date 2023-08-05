@@ -1,19 +1,22 @@
 package com.asgames.ataliasflame.domain.services;
 
+import com.asgames.ataliasflame.domain.model.dtos.Item;
+import com.asgames.ataliasflame.domain.model.dtos.Monster;
+import com.asgames.ataliasflame.domain.model.dtos.MonsterTemplate;
 import com.asgames.ataliasflame.domain.model.entities.Character;
-import com.asgames.ataliasflame.domain.model.structures.Item;
-import com.asgames.ataliasflame.domain.model.structures.Monster;
 import com.asgames.ataliasflame.domain.utils.SelectionValue;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static com.asgames.ataliasflame.domain.MockConstants.MONSTER_DROPS;
 import static com.asgames.ataliasflame.domain.MockConstants.MONSTER_SELECTOR;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.choose;
+import static com.asgames.ataliasflame.domain.utils.DiceUtils.successX;
 
 @Slf4j
 @Service
@@ -22,12 +25,24 @@ public class MonsterService {
     @Autowired
     private InventoryService inventoryService;
 
-    public Monster getRandomMonster() {
-        Monster monster = choose(MONSTER_SELECTOR);
-        monster.getHealth().recover(100);
+    public List<Monster> populateMonsters() {
+        List<Monster> monsters = new ArrayList<>();
 
-        log.info("Enemy appeared: " + monster.getCode());
-        return monster;
+        MonsterTemplate monsterAppeared = choose(MONSTER_SELECTOR);
+        log.info("Enemy appeared: " + monsterAppeared.getCode());
+
+        int counter = 0;
+        do {
+            Monster monster = monsterAppeared.instance(String.valueOf(++counter));
+            monsters.add(monster);
+        } while (successX(monsterAppeared.getMass()));
+
+        log.info("Number of enemies: " + monsters.size());
+        return monsters;
+    }
+
+    public void looting(Character character, List<Monster> monsters) {
+        monsters.forEach(monster -> looting(character, monster));
     }
 
     public void looting(Character character, Monster monster) {

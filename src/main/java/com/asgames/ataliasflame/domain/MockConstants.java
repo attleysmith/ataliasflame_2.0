@@ -1,14 +1,13 @@
 package com.asgames.ataliasflame.domain;
 
+import com.asgames.ataliasflame.domain.model.dtos.*;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
 import com.asgames.ataliasflame.domain.model.enums.Gender;
 import com.asgames.ataliasflame.domain.model.enums.God;
 import com.asgames.ataliasflame.domain.model.enums.Race;
-import com.asgames.ataliasflame.domain.model.structures.*;
-import com.asgames.ataliasflame.domain.model.valueobjects.Armor;
-import com.asgames.ataliasflame.domain.model.valueobjects.Energy;
-import com.asgames.ataliasflame.domain.model.valueobjects.Shield;
-import com.asgames.ataliasflame.domain.model.valueobjects.Weapon;
+import com.asgames.ataliasflame.domain.model.vos.Armor;
+import com.asgames.ataliasflame.domain.model.vos.Shield;
+import com.asgames.ataliasflame.domain.model.vos.Weapon;
 import com.asgames.ataliasflame.domain.utils.SelectionValue;
 
 import java.util.List;
@@ -797,60 +796,65 @@ public final class MockConstants {
     );
 
     // Monsters
-    public static final Map<String, Monster> MONSTERS = Map.of(
-            "RAT", Monster.builder()
+    public static final Map<String, MonsterTemplate> MONSTERS = Map.of(
+            "RAT", MonsterTemplate.builder()
                     .code("RAT")
                     .attack(40)
                     .defense(0)
                     .minDamage(1)
                     .maxDamage(1)
-                    .health(Energy.withTotal(10))
-                    .experience(10)
+                    .health(10)
                     .initiative(3)
+                    .mass(70)
+                    .experience(10)
                     .build(),
-            "BOAR", Monster.builder()
+            "BOAR", MonsterTemplate.builder()
                     .code("BOAR")
                     .attack(60)
                     .defense(5)
                     .minDamage(1)
                     .maxDamage(2)
-                    .health(Energy.withTotal(25))
-                    .experience(20)
+                    .health(25)
                     .initiative(0)
+                    .mass(20)
+                    .experience(20)
                     .build(),
-            "WOLF", Monster.builder()
+            "WOLF", MonsterTemplate.builder()
                     .code("WOLF")
                     .attack(70)
                     .defense(5)
                     .minDamage(1)
                     .maxDamage(3)
-                    .health(Energy.withTotal(25))
-                    .experience(30)
+                    .health(25)
                     .initiative(-3)
+                    .mass(50)
+                    .experience(30)
                     .build(),
-            "BANDIT", Monster.builder()
+            "BANDIT", MonsterTemplate.builder()
                     .code("BANDIT")
                     .attack(75)
                     .defense(5)
                     .minDamage(1)
                     .maxDamage(4)
-                    .health(Energy.withTotal(30))
-                    .experience(40)
+                    .health(30)
                     .initiative(-1)
+                    .mass(30)
+                    .experience(40)
                     .build(),
-            "WEREWOLF", Monster.builder()
+            "WEREWOLF", MonsterTemplate.builder()
                     .code("WEREWOLF")
                     .attack(75)
                     .defense(10)
                     .minDamage(1)
                     .maxDamage(5)
-                    .health(Energy.withTotal(40))
-                    .experience(50)
+                    .health(40)
                     .initiative(-3)
+                    .mass(10)
+                    .experience(50)
                     .build()
     );
 
-    public static final List<SelectionValue<Monster>> MONSTER_SELECTOR = List.of(
+    public static final List<SelectionValue<MonsterTemplate>> MONSTER_SELECTOR = List.of(
             new SelectionValue<>(20, MONSTERS.get("RAT")),
             new SelectionValue<>(15, MONSTERS.get("BOAR")),
             new SelectionValue<>(25, MONSTERS.get("WOLF")),

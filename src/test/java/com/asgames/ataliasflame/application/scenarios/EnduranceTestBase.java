@@ -2,12 +2,18 @@ package com.asgames.ataliasflame.application.scenarios;
 
 import com.asgames.ataliasflame.application.CharacterAdventureService;
 import com.asgames.ataliasflame.application.CharacterMaintenanceService;
+import com.asgames.ataliasflame.domain.model.dtos.CasteDetails;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import static com.asgames.ataliasflame.domain.MockConstants.CASTE_DETAILS;
+import static com.asgames.ataliasflame.domain.MockConstants.SUMMONING_MAGIC_COST;
+import static com.asgames.ataliasflame.domain.model.enums.Caste.TRACKER;
+import static com.asgames.ataliasflame.domain.model.enums.CasteGroup.WANDERER;
 
 public abstract class EnduranceTestBase {
 
@@ -50,6 +56,7 @@ public abstract class EnduranceTestBase {
         do {
             character = characterAdventureService.combat(characterName);
             character = healing(character);
+            character = prepareToSummon(character);
         } while (character.isAlive() && character.getLevel() == actualLevel);
 
         return character;
@@ -60,5 +67,19 @@ public abstract class EnduranceTestBase {
             return character;
         }
         return characterAdventureService.sleep(characterName);
+    }
+
+    private Character prepareToSummon(Character character) {
+        if (canSummon(character) &&
+                character.getCompanions().size() == 0 &&
+                character.getMagic().hasNot(SUMMONING_MAGIC_COST)) {
+            return characterAdventureService.sleep(characterName);
+        }
+        return character;
+    }
+
+    private boolean canSummon(Character character) {
+        CasteDetails casteDetails = CASTE_DETAILS.get(character.getCaste());
+        return casteDetails.getGroup().equals(WANDERER) && !casteDetails.getCaste().equals(TRACKER);
     }
 }

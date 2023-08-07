@@ -1,9 +1,9 @@
 package com.asgames.ataliasflame.application;
 
+import com.asgames.ataliasflame.domain.model.dtos.Monster;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.DefensiveGodConversionLog;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
-import com.asgames.ataliasflame.domain.model.dtos.Monster;
 import com.asgames.ataliasflame.domain.services.*;
 import com.asgames.ataliasflame.infrastructure.repositories.CharacterRepository;
 import com.asgames.ataliasflame.infrastructure.repositories.DefensiveGodConversionLogRepository;
@@ -14,8 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.util.stream.Collectors.toList;
 
 @Slf4j
 @Service
@@ -54,14 +52,15 @@ public class CharacterAdventureService {
         Character character = characterMaintenanceService.getCharacter(characterName);
         List<Monster> monsters = monsterService.populateMonsters();
 
-        magicService.castMagic(character, monsters);
+        magicService.castSummoningMagic(character);
+        magicService.castAttackMagic(character, monsters);
 
         List<Combatant> characterTeam = new ArrayList<>();
         characterTeam.add(character);
-        characterTeam.addAll(character.getSoulChips().stream().peek(soulChip ->
-                soulChip.getHealth().fullRecover()).collect(toList()));
+        characterTeam.addAll(character.getCompanions());
 
         combatService.combat(characterTeam, monsters);
+        character.getCompanions().removeIf(Combatant::isDead);
 
         if (character.isAlive()) {
             character = experienceService.gainExperience(character, monsters);

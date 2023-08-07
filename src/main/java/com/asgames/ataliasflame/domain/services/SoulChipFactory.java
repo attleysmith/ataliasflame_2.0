@@ -2,7 +2,6 @@ package com.asgames.ataliasflame.domain.services;
 
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.SoulChip;
-import com.asgames.ataliasflame.domain.model.vos.Energy;
 
 import static com.asgames.ataliasflame.domain.MockConstants.*;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.percent;
@@ -17,7 +16,7 @@ public class SoulChipFactory {
                 .defense(SOUL_CHIP_DEFENSE_BASE + percent(SOUL_CHIP_DEFENSE_BONUS, percent))
                 .minDamage(SOUL_CHIP_MIN_DAMAGE_BASE + percent(SOUL_CHIP_MIN_DAMAGE_BONUS, percent))
                 .maxDamage(SOUL_CHIP_MAX_DAMAGE_BASE + percent(SOUL_CHIP_MAX_DAMAGE_BONUS, percent))
-                .health(Energy.withTotal(percent(character.getHealth().totalValue(), percent)))
+                .health(percent(character.getHealth().totalValue(), percent))
                 .initiative(SOUL_CHIP_INITIATIVE)
                 .upgradedCaste(character.getCaste())
                 .upgradePercent(percent)

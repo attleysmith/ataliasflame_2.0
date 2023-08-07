@@ -12,10 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static jakarta.persistence.CascadeType.ALL;
 import static jakarta.persistence.EnumType.STRING;
@@ -121,6 +118,9 @@ public class Character implements Combatant {
 
     @OneToMany(mappedBy = "owner", cascade = ALL, fetch = EAGER)
     private Set<SoulChip> soulChips = new HashSet<>();
+
+    @OneToMany(mappedBy = "owner", cascade = ALL, fetch = EAGER)
+    private Set<Companion> companions = new HashSet<>();
 
     @Override
     public String getCode() {

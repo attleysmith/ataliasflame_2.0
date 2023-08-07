@@ -47,6 +47,7 @@ public final class MockConstants {
     public static final int MAGIC_RECOVERY_EFFECT_OF_SLEEP = 50;
     public static final int FIREBALL_MAGIC_COST = 10;
     public static final int FIREBALL_MAGIC_DAMAGE = 10;
+    public static final int SUMMONING_MAGIC_COST = 25;
 
     // Attribute modifiers
     public static final Modifier STRENGTH_MODIFIER = Modifier.builder()

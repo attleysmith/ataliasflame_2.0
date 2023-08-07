@@ -1,20 +1,18 @@
 package com.asgames.ataliasflame.domain.model.entities;
 
-import com.asgames.ataliasflame.domain.model.enums.Caste;
+import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
 import com.asgames.ataliasflame.domain.model.vos.Energy;
 import jakarta.persistence.*;
 import lombok.*;
-
-import static jakarta.persistence.EnumType.STRING;
 
 @Entity
 @Builder
 @Data
 @AllArgsConstructor // Builder needs it
-public class SoulChip {
+public class Companion implements Combatant {
 
     // JPA needs it
-    public SoulChip() {
+    public Companion() {
     }
 
     @Id
@@ -35,28 +33,19 @@ public class SoulChip {
     private int minDamage;
     @Column(name = "maxDamage")
     private int maxDamage;
-    @Column(name = "health")
-    private int health;
     @Column(name = "initiative")
     private int initiative;
 
-    @Column(name = "upgradedCaste")
-    @Enumerated(STRING)
-    private Caste upgradedCaste;
-    @Column(name = "upgradePercent")
-    private int upgradePercent;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "totalEnergy", column = @Column(name = "totalHealth")),
+            @AttributeOverride(name = "usedEnergy", column = @Column(name = "injury"))
+    })
+    private Energy health;
 
-    public Companion summon() {
-        return Companion.builder()
-                .name(name)
-                .owner(owner)
-                .attack(attack)
-                .defense(defense)
-                .minDamage(minDamage)
-                .maxDamage(maxDamage)
-                .health(Energy.withTotal(health))
-                .initiative(initiative)
-                .build();
+    @Override
+    public String getCode() {
+        return name;
     }
 
 }

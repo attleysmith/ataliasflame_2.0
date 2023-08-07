@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 1691139316221-1
+      id: 1691423884111-1
       author: Mikló Attila (generated)
       changes:
         - createTable:
@@ -104,7 +104,7 @@ databaseChangeLog:
                   type: INT
             tableName: Character
   - changeSet:
-      id: 1691139316221-2
+      id: 1691423884111-2
       author: Mikló Attila (generated)
       changes:
         - createTable:
@@ -128,7 +128,7 @@ databaseChangeLog:
                   type: VARCHAR(255)
             tableName: CharacterAttributeMapping
   - changeSet:
-      id: 1691139316221-3
+      id: 1691423884111-3
       author: Mikló Attila (generated)
       changes:
         - createTable:
@@ -137,49 +137,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     primaryKey: true
-                    primaryKeyName: DefensiveGodConversionLogPK
-                  name: conversionCode
-                  type: VARCHAR(255)
-              - column:
-                  name: god
-                  type: VARCHAR(255)
-              - column:
-                  constraints:
-                    nullable: false
-                  name: clericId
-                  type: VARCHAR(255)
-              - column:
-                  name: convertedCharacterId
-                  type: VARCHAR(255)
-            tableName: DefensiveGodConversionLog
-  - changeSet:
-      id: 1691139316221-4
-      author: Mikló Attila (generated)
-      changes:
-        - createTable:
-            columns:
-              - column:
-                  constraints:
-                    nullable: false
-                    primaryKey: true
-                    primaryKeyName: LevelPK
-                  name: id
-                  type: INT
-              - column:
-                  name: nextLevelExperience
-                  type: INT
-            tableName: Level
-  - changeSet:
-      id: 1691139316221-5
-      author: Mikló Attila (generated)
-      changes:
-        - createTable:
-            columns:
-              - column:
-                  constraints:
-                    nullable: false
-                    primaryKey: true
-                    primaryKeyName: SoulChipPK
+                    primaryKeyName: CompanionPK
                   name: name
                   type: VARCHAR(255)
               - column:
@@ -204,6 +162,85 @@ databaseChangeLog:
                   name: minDamage
                   type: INT
               - column:
+                  constraints:
+                    nullable: false
+                  name: ownerId
+                  type: VARCHAR(255)
+            tableName: Companion
+  - changeSet:
+      id: 1691423884111-4
+      author: Mikló Attila (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: DefensiveGodConversionLogPK
+                  name: conversionCode
+                  type: VARCHAR(255)
+              - column:
+                  name: god
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: clericId
+                  type: VARCHAR(255)
+              - column:
+                  name: convertedCharacterId
+                  type: VARCHAR(255)
+            tableName: DefensiveGodConversionLog
+  - changeSet:
+      id: 1691423884111-5
+      author: Mikló Attila (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: LevelPK
+                  name: id
+                  type: INT
+              - column:
+                  name: nextLevelExperience
+                  type: INT
+            tableName: Level
+  - changeSet:
+      id: 1691423884111-6
+      author: Mikló Attila (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: SoulChipPK
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: attack
+                  type: INT
+              - column:
+                  name: defense
+                  type: INT
+              - column:
+                  name: health
+                  type: INT
+              - column:
+                  name: initiative
+                  type: INT
+              - column:
+                  name: maxDamage
+                  type: INT
+              - column:
+                  name: minDamage
+                  type: INT
+              - column:
                   name: upgradePercent
                   type: INT
               - column:
@@ -216,7 +253,7 @@ databaseChangeLog:
                   type: VARCHAR(255)
             tableName: SoulChip
   - changeSet:
-      id: 1691139316221-6
+      id: 1691423884111-7
       author: Mikló Attila (generated)
       changes:
         - addForeignKeyConstraint:
@@ -229,7 +266,7 @@ databaseChangeLog:
             referencedTableName: Character
             validate: true
   - changeSet:
-      id: 1691139316221-7
+      id: 1691423884111-8
       author: Mikló Attila (generated)
       changes:
         - addForeignKeyConstraint:
@@ -242,7 +279,7 @@ databaseChangeLog:
             referencedTableName: Character
             validate: true
   - changeSet:
-      id: 1691139316221-8
+      id: 1691423884111-9
       author: Mikló Attila (generated)
       changes:
         - addForeignKeyConstraint:
@@ -255,13 +292,26 @@ databaseChangeLog:
             referencedTableName: Character
             validate: true
   - changeSet:
-      id: 1691139316221-9
+      id: 1691423884111-10
       author: Mikló Attila (generated)
       changes:
         - addForeignKeyConstraint:
             baseColumnNames: ownerId
             baseTableName: SoulChip
             constraintName: FKqy3kven6ej0cmpjkoiuftm43i
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: name
+            referencedTableName: Character
+            validate: true
+  - changeSet:
+      id: 1691423884111-11
+      author: Mikló Attila (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: ownerId
+            baseTableName: Companion
+            constraintName: FKy8umlg2w1oyf1uvrxyf9qauj
             deferrable: false
             initiallyDeferred: false
             referencedColumnNames: name

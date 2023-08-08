@@ -1,10 +1,7 @@
 package com.asgames.ataliasflame.domain;
 
 import com.asgames.ataliasflame.domain.model.dtos.*;
-import com.asgames.ataliasflame.domain.model.enums.Caste;
-import com.asgames.ataliasflame.domain.model.enums.Gender;
-import com.asgames.ataliasflame.domain.model.enums.God;
-import com.asgames.ataliasflame.domain.model.enums.Race;
+import com.asgames.ataliasflame.domain.model.enums.*;
 import com.asgames.ataliasflame.domain.model.vos.Armor;
 import com.asgames.ataliasflame.domain.model.vos.Shield;
 import com.asgames.ataliasflame.domain.model.vos.Weapon;
@@ -21,7 +18,11 @@ import static com.asgames.ataliasflame.domain.model.enums.Gender.FEMALE;
 import static com.asgames.ataliasflame.domain.model.enums.Gender.MALE;
 import static com.asgames.ataliasflame.domain.model.enums.God.*;
 import static com.asgames.ataliasflame.domain.model.enums.ItemType.*;
+import static com.asgames.ataliasflame.domain.model.enums.MagicType.ATTACK;
+import static com.asgames.ataliasflame.domain.model.enums.MagicType.SUMMON;
 import static com.asgames.ataliasflame.domain.model.enums.Race.*;
+import static com.asgames.ataliasflame.domain.model.enums.SpellName.*;
+import static com.asgames.ataliasflame.domain.model.enums.SummonType.SOUL_CHIP;
 import static java.util.Collections.emptyList;
 
 public final class MockConstants {
@@ -45,9 +46,6 @@ public final class MockConstants {
     // Action settings
     public static final int HEALING_EFFECT_OF_SLEEP = 20;
     public static final int MAGIC_RECOVERY_EFFECT_OF_SLEEP = 50;
-    public static final int FIREBALL_MAGIC_COST = 10;
-    public static final int FIREBALL_MAGIC_DAMAGE = 10;
-    public static final int SUMMONING_MAGIC_COST = 25;
 
     // Attribute modifiers
     public static final Modifier STRENGTH_MODIFIER = Modifier.builder()
@@ -796,6 +794,86 @@ public final class MockConstants {
             new SelectionValue<>(5, Optional.of(ARMORS.get("FULL_PLATE_MAIL")))
     );
 
+    // Magic
+    public static final Map<SpellName, Spell> SPELLS = Map.ofEntries(
+            Map.entry(FIREBALL, Spell.builder()
+                    .name(FIREBALL)
+                    .type(ATTACK)
+                    .cost(10)
+                    .minDamage(2)
+                    .maxDamage(12)
+                    .build()),
+            Map.entry(LIGHTNING_STRIKE, Spell.builder()
+                    .name(LIGHTNING_STRIKE)
+                    .type(ATTACK)
+                    .cost(10)
+                    .minDamage(1)
+                    .maxDamage(15)
+                    .build()),
+            Map.entry(INFERNO, Spell.builder()
+                    .name(INFERNO)
+                    .type(ATTACK)
+                    .cost(20)
+                    .minDamage(12)
+                    .maxDamage(28)
+                    .build()),
+            Map.entry(BLADES_OF_JUDGEMENT, Spell.builder()
+                    .name(BLADES_OF_JUDGEMENT)
+                    .type(ATTACK)
+                    .cost(25)
+                    .minDamage(10)
+                    .maxDamage(30)
+                    .build()),
+            Map.entry(GLACIAL_BLOW, Spell.builder()
+                    .name(GLACIAL_BLOW)
+                    .type(ATTACK)
+                    .cost(18)
+                    .minDamage(10)
+                    .maxDamage(25)
+                    .build()),
+            Map.entry(BALL_OF_ENERGY, Spell.builder()
+                    .name(BALL_OF_ENERGY)
+                    .type(ATTACK)
+                    .cost(3)
+                    .minDamage(1)
+                    .maxDamage(5)
+                    .build()),
+            Map.entry(SOUL_OUTBURST, Spell.builder()
+                    .name(SOUL_OUTBURST)
+                    .type(ATTACK)
+                    .cost(25)
+                    .minDamage(15)
+                    .maxDamage(30)
+                    .build()),
+            Map.entry(WRATH_OF_NATURE, Spell.builder()
+                    .name(WRATH_OF_NATURE)
+                    .type(ATTACK)
+                    .cost(12)
+                    .minDamage(5)
+                    .maxDamage(20)
+                    .build()),
+            Map.entry(SPLITTING_WIND, Spell.builder()
+                    .name(SPLITTING_WIND)
+                    .type(ATTACK)
+                    .cost(8)
+                    .minDamage(1)
+                    .maxDamage(10)
+                    .build()),
+            Map.entry(DIVINE_HAMMER, Spell.builder()
+                    .name(DIVINE_HAMMER)
+                    .type(ATTACK)
+                    .cost(10)
+                    .minDamage(6)
+                    .maxDamage(18)
+                    .build()),
+            Map.entry(CALLING_THE_SOULS, Spell.builder()
+                    .name(CALLING_THE_SOULS)
+                    .type(SUMMON)
+                    .cost(25)
+                    .summonType(SOUL_CHIP)
+                    .build())
+    );
+
     // Monsters
     public static final Map<String, MonsterTemplate> MONSTERS = Map.of(
             "RAT", MonsterTemplate.builder()
@@ -1030,6 +1108,30 @@ public final class MockConstants {
             Map.entry(ARCHANGEL, emptyList())
     );
 
+    public static final Map<Caste, List<SpellName>> CASTE_SPELL_PROHIBITION = Map.ofEntries(
+            Map.entry(ROGUE, List.of(FIREBALL, LIGHTNING_STRIKE, INFERNO, BLADES_OF_JUDGEMENT, GLACIAL_BLOW, BALL_OF_ENERGY, SOUL_OUTBURST, WRATH_OF_NATURE, SPLITTING_WIND, DIVINE_HAMMER, CALLING_THE_SOULS)),
+            Map.entry(WIZARD, List.of(BLADES_OF_JUDGEMENT, BALL_OF_ENERGY, SOUL_OUTBURST, WRATH_OF_NATURE, DIVINE_HAMMER, CALLING_THE_SOULS)),
+            Map.entry(MAGE, List.of(SOUL_OUTBURST, WRATH_OF_NATURE, DIVINE_HAMMER, CALLING_THE_SOULS)),
+            Map.entry(WITCHMASTER, List.of(SOUL_OUTBURST, DIVINE_HAMMER, CALLING_THE_SOULS)),
+            Map.entry(AVATAR, List.of(SOUL_OUTBURST, DIVINE_HAMMER, CALLING_THE_SOULS)),
+            Map.entry(FIGHTER, List.of(FIREBALL, LIGHTNING_STRIKE, INFERNO, BLADES_OF_JUDGEMENT, GLACIAL_BLOW, BALL_OF_ENERGY, SOUL_OUTBURST, WRATH_OF_NATURE, SPLITTING_WIND, DIVINE_HAMMER, CALLING_THE_SOULS)),
+            Map.entry(PALADIN, List.of(FIREBALL, LIGHTNING_STRIKE, INFERNO, BLADES_OF_JUDGEMENT, GLACIAL_BLOW, SOUL_OUTBURST, WRATH_OF_NATURE, SPLITTING_WIND, DIVINE_HAMMER, CALLING_THE_SOULS)),
+            Map.entry(GRANDMASTER, List.of(LIGHTNING_STRIKE, INFERNO, GLACIAL_BLOW, SOUL_OUTBURST, WRATH_OF_NATURE, SPLITTING_WIND, DIVINE_HAMMER, CALLING_THE_SOULS)),
+            Map.entry(TITAN, List.of(INFERNO, GLACIAL_BLOW, SOUL_OUTBURST, WRATH_OF_NATURE, SPLITTING_WIND, DIVINE_HAMMER, CALLING_THE_SOULS)),
+            Map.entry(TRACKER, List.of(FIREBALL, LIGHTNING_STRIKE, INFERNO, BLADES_OF_JUDGEMENT, GLACIAL_BLOW, BALL_OF_ENERGY, SOUL_OUTBURST, WRATH_OF_NATURE, SPLITTING_WIND, DIVINE_HAMMER, CALLING_THE_SOULS)),
+            Map.entry(RANGER, List.of(FIREBALL, LIGHTNING_STRIKE, INFERNO, BLADES_OF_JUDGEMENT, GLACIAL_BLOW, BALL_OF_ENERGY, SOUL_OUTBURST, WRATH_OF_NATURE, SPLITTING_WIND, DIVINE_HAMMER)),
+            Map.entry(PILGRIM, List.of(FIREBALL, LIGHTNING_STRIKE, INFERNO, BLADES_OF_JUDGEMENT, GLACIAL_BLOW, WRATH_OF_NATURE, SPLITTING_WIND, DIVINE_HAMMER)),
+            Map.entry(FREE_SOUL, List.of(LIGHTNING_STRIKE, INFERNO, GLACIAL_BLOW, WRATH_OF_NATURE, SPLITTING_WIND, DIVINE_HAMMER)),
+            Map.entry(HERMIT, List.of(INFERNO, BLADES_OF_JUDGEMENT, BALL_OF_ENERGY, SOUL_OUTBURST, CALLING_THE_SOULS, DIVINE_HAMMER)),
+            Map.entry(DRUID, List.of(BLADES_OF_JUDGEMENT, SOUL_OUTBURST, CALLING_THE_SOULS, DIVINE_HAMMER)),
+            Map.entry(ARCHDRUID, List.of(BLADES_OF_JUDGEMENT, SOUL_OUTBURST, CALLING_THE_SOULS, DIVINE_HAMMER)),
+            Map.entry(ATALIAS_PRIEST, List.of(SOUL_OUTBURST, CALLING_THE_SOULS)),
+            Map.entry(MONK, List.of(INFERNO, BLADES_OF_JUDGEMENT, BALL_OF_ENERGY, SOUL_OUTBURST, WRATH_OF_NATURE, CALLING_THE_SOULS)),
+            Map.entry(PRIEST, List.of(BLADES_OF_JUDGEMENT, BALL_OF_ENERGY, SOUL_OUTBURST, WRATH_OF_NATURE, CALLING_THE_SOULS)),
+            Map.entry(HIERARCH, List.of(SOUL_OUTBURST, WRATH_OF_NATURE, CALLING_THE_SOULS)),
+            Map.entry(ARCHANGEL, List.of(SOUL_OUTBURST, WRATH_OF_NATURE, CALLING_THE_SOULS))
+    );
+
     public static final Map<Race, List<Gender>> RACE_GENDER_PROHIBITION = Map.of(
             HUMAN, emptyList(),
             ELF, emptyList(),
@@ -1053,6 +1155,19 @@ public final class MockConstants {
             ARIMASPI, emptyList(),
             NYMPH, List.of(GETON, ALATE),
             HALFLING, emptyList()
+    );
+
+    public static final Map<Race, List<SpellName>> RACE_SPELL_PROHIBITION = Map.of(
+            HUMAN, emptyList(),
+            ELF, emptyList(),
+            HALF_ELF, emptyList(),
+            NIGHT_ELF, emptyList(),
+            DWARF, List.of(LIGHTNING_STRIKE, INFERNO, GLACIAL_BLOW, BALL_OF_ENERGY, SPLITTING_WIND),
+            ORC, List.of(LIGHTNING_STRIKE, INFERNO, GLACIAL_BLOW, BALL_OF_ENERGY, SPLITTING_WIND, DIVINE_HAMMER),
+            MINOTAUR, List.of(LIGHTNING_STRIKE, GLACIAL_BLOW, BALL_OF_ENERGY, SPLITTING_WIND, DIVINE_HAMMER),
+            ARIMASPI, emptyList(),
+            NYMPH, emptyList(),
+            HALFLING, List.of(BLADES_OF_JUDGEMENT, DIVINE_HAMMER)
     );
 
     // Soul chips

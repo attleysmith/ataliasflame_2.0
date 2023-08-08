@@ -1,18 +1,24 @@
 package com.asgames.ataliasflame.domain.services;
 
-import com.asgames.ataliasflame.domain.model.dtos.CasteDetails;
 import com.asgames.ataliasflame.domain.model.dtos.Monster;
+import com.asgames.ataliasflame.domain.model.dtos.Spell;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Companion;
 import com.asgames.ataliasflame.domain.model.entities.SoulChip;
+import com.asgames.ataliasflame.domain.model.enums.MagicType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.asgames.ataliasflame.domain.MockConstants.*;
-import static com.asgames.ataliasflame.domain.model.enums.Caste.TRACKER;
-import static com.asgames.ataliasflame.domain.model.enums.CasteGroup.WANDERER;
+import static com.asgames.ataliasflame.domain.model.enums.MagicType.ATTACK;
+import static com.asgames.ataliasflame.domain.model.enums.MagicType.SUMMON;
+import static com.asgames.ataliasflame.domain.model.enums.SummonType.SOUL_CHIP;
+import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.pointOut;
+import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
 
 @Slf4j
@@ -34,55 +40,100 @@ public class MagicService {
     }
 
     public void castSummoningMagic(Character character) {
-        if (canSummon(character) && character.getMagic().has(SUMMONING_MAGIC_COST)) {
-            List<String> companionNames = character.getCompanions().stream().map(Companion::getName).collect(toList());
-            for (SoulChip soulChip : character.getSoulChips()) {
-                if (!companionNames.contains(soulChip.getName())) {
-                    summonSoulChip(character, soulChip);
-                    break;
-                }
-            }
+        selectSummoningSpell(character)
+                .ifPresent(spell -> summonSoulChip(character, spell));
+    }
+
+    private Optional<Spell> selectSummoningSpell(Character character) {
+        List<Spell> summoningSpells = usableSpellsOfType(character, SUMMON);
+        switch (summoningSpells.size()) {
+            case 0:
+                return Optional.empty();
+            case 1:
+                return Optional.of(summoningSpells.get(0));
+            default:
+                return summoningSpells.stream()
+                        .min(comparing(Spell::getCost));
         }
     }
 
-    private void summonSoulChip(Character character, SoulChip soulChip) {
-        if (character.getMagic().hasNot(SUMMONING_MAGIC_COST)) {
-            throw new IllegalArgumentException("Character doesn't have enough magic for summoning a soul chip!");
+    private void summonSoulChip(Character character, Spell spell) {
+        if (!spell.getSummonType().equals(SOUL_CHIP)) {
+            throw new UnsupportedOperationException("Only soul chip summoning is supported!");
         }
-        character.getMagic().use(SUMMONING_MAGIC_COST);
-        character.getCompanions().add(soulChip.summon());
-        log.info(soulChip.getName() + " summoned as companion.");
+
+        SoulChip summonedSoulChip = null;
+        List<String> companionNames = character.getCompanions().stream().map(Companion::getName).collect(toList());
+        for (SoulChip soulChip : character.getSoulChips()) {
+            if (!companionNames.contains(soulChip.getName())) {
+                summonedSoulChip = soulChip;
+                break;
+            }
+        }
+        if (summonedSoulChip == null) {
+            log.warn("Soul chip summoning was unsuccessful!");
+            return;
+        }
+
+        character.getMagic().use(spell.getCost());
+        character.getCompanions().add(summonedSoulChip.summon());
+        log.info(summonedSoulChip.getName() + " summoned as companion.");
     }
 
     public void castAttackMagic(Character character, List<Monster> monsters) {
-        if (canSummon(character) && character.getCompanions().isEmpty()) {
+        if (character.getCompanions().isEmpty() && !spellsOfType(character, SUMMON).isEmpty()) {
             return;
         }
         monsters.forEach(monster -> castAttackMagic(character, monster));
     }
 
     public void castAttackMagic(Character character, Monster monster) {
-        while (character.getMagic().has(FIREBALL_MAGIC_COST)
-                && monster.isAlive()) {
-            castFireBall(character, monster);
+        AtomicBoolean tryToAttack = new AtomicBoolean(true);
+        while (tryToAttack.get() && monster.isAlive()) {
+            selectAttackingSpell(character).ifPresentOrElse(
+                    spell -> castAttackSpell(character, monster, spell),
+                    () -> tryToAttack.set(false)
+            );
         }
     }
 
-    private void castFireBall(Character character, Monster monster) {
+    private Optional<Spell> selectAttackingSpell(Character character) {
+        List<Spell> attackingSpells = usableSpellsOfType(character, ATTACK);
+        switch (attackingSpells.size()) {
+            case 0:
+                return Optional.empty();
+            case 1:
+                return Optional.of(attackingSpells.get(0));
+            default:
+                return attackingSpells.stream()
+                        .max(comparing(Spell::getCost));
+        }
+    }
+
+    private void castAttackSpell(Character character, Monster monster, Spell spell) {
         if (monster.isDead()) {
-            log.debug("Unnecessary use of fireball!");
+            log.warn("Unnecessary use of attack spell!");
             return;
         }
-        if (character.getMagic().hasNot(FIREBALL_MAGIC_COST)) {
-            throw new IllegalArgumentException("Character doesn't have enough magic for casting a fireball!");
-        }
-        character.getMagic().use(FIREBALL_MAGIC_COST);
-        monster.getHealth().damage(FIREBALL_MAGIC_DAMAGE);
-        log.info("Fireball used on " + monster.getCode());
+        character.getMagic().use(spell.getCost());
+        int damage = pointOut(spell.getMinDamage(), spell.getMaxDamage());
+        monster.getHealth().damage(damage);
+        log.info(spell.getName() + " deals " + damage + " damage to " + monster.getCode());
     }
 
-    private boolean canSummon(Character character) {
-        CasteDetails casteDetails = CASTE_DETAILS.get(character.getCaste());
-        return casteDetails.getGroup().equals(WANDERER) && !casteDetails.getCaste().equals(TRACKER);
+    private List<Spell> spellsOfType(Character character, MagicType magicType) {
+        return SPELLS.values().stream()
+                .filter(spell -> spell.getType().equals(magicType))
+                .filter(spell -> !CASTE_SPELL_PROHIBITION.get(character.getCaste())
+                        .contains(spell.getName()))
+                .filter(spell -> !RACE_SPELL_PROHIBITION.get(character.getRace())
+                        .contains(spell.getName()))
+                .collect(toList());
+    }
+
+    private List<Spell> usableSpellsOfType(Character character, MagicType magicType) {
+        return spellsOfType(character, magicType).stream()
+                .filter(spell -> character.getMagic().has(spell.getCost()))
+                .collect(toList());
     }
 }

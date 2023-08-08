@@ -12,7 +12,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import static jakarta.persistence.CascadeType.ALL;
 import static jakarta.persistence.EnumType.STRING;

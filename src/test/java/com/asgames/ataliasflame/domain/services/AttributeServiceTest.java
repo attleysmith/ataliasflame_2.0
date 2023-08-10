@@ -10,6 +10,8 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.UUID;
+
 import static com.asgames.ataliasflame.domain.MockConstants.WEAPONS;
 import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
 import static com.asgames.ataliasflame.domain.model.enums.Gender.MALE;
@@ -39,7 +41,7 @@ class AttributeServiceTest {
                 .race(HUMAN)
                 .gender(MALE)
                 .defensiveGod(ALATE)
-                .name("Hugo")
+                .name("Hugo" + UUID.randomUUID())
                 .build();
         character = addDagger(characterMaintenanceService.createCharacter(characterInput));
 

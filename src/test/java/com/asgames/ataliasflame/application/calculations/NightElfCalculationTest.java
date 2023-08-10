@@ -26,7 +26,7 @@ class NightElfCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("rogueCalculations")
     void rogueTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = "Bhumarth";
+        String characterName = characterName("Bhumarth");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(NIGHT_ELF)
                 .gender(MALE)
@@ -61,7 +61,7 @@ class NightElfCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("fighterCalculations")
     void fighterTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = "Mebnina";
+        String characterName = characterName("Mebnina");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(NIGHT_ELF)
                 .gender(MALE)
@@ -96,7 +96,7 @@ class NightElfCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("paladinCalculations")
     void paladinTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = "Rhikrod";
+        String characterName = characterName("Rhikrod");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(NIGHT_ELF)
                 .gender(MALE)
@@ -131,7 +131,7 @@ class NightElfCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("grandmasterCalculations")
     void grandmasterTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = "Rhurvud";
+        String characterName = characterName("Rhurvud");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(NIGHT_ELF)
                 .gender(MALE)
@@ -166,7 +166,7 @@ class NightElfCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("titanCalculations")
     void titanTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = "Conuth";
+        String characterName = characterName("Conuth");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(NIGHT_ELF)
                 .gender(MALE)

@@ -26,7 +26,7 @@ class DwarfCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("rogueCalculations")
     void rogueTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = "Thangrar";
+        String characterName = characterName("Thangrar");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(DWARF)
                 .gender(MALE)
@@ -60,7 +60,7 @@ class DwarfCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("fighterCalculations")
     void fighterTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = "Forbik";
+        String characterName = characterName("Forbik");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(DWARF)
                 .gender(MALE)
@@ -94,7 +94,7 @@ class DwarfCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("paladinCalculations")
     void paladinTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = "Anmum";
+        String characterName = characterName("Anmum");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(DWARF)
                 .gender(MALE)
@@ -128,7 +128,7 @@ class DwarfCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("grandmasterCalculations")
     void grandmasterTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = "Gronmomi";
+        String characterName = characterName("Gronmomi");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(DWARF)
                 .gender(MALE)
@@ -162,7 +162,7 @@ class DwarfCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("titanCalculations")
     void titanTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = "Kirronlim";
+        String characterName = characterName("Kirronlim");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(DWARF)
                 .gender(MALE)

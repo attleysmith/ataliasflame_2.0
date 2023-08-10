@@ -26,7 +26,7 @@ class HalfElfCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("rogueCalculations")
     void rogueTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = "Luirlan";
+        String characterName = characterName("Luirlan");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(HALF_ELF)
                 .gender(MALE)
@@ -61,7 +61,7 @@ class HalfElfCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("fighterCalculations")
     void fighterTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = "Durothil";
+        String characterName = characterName("Durothil");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(HALF_ELF)
                 .gender(MALE)
@@ -96,7 +96,7 @@ class HalfElfCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("paladinCalculations")
     void paladinTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = "Ehlark";
+        String characterName = characterName("Ehlark");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(HALF_ELF)
                 .gender(MALE)
@@ -131,7 +131,7 @@ class HalfElfCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("grandmasterCalculations")
     void grandmasterTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = "Aired";
+        String characterName = characterName("Aired");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(HALF_ELF)
                 .gender(MALE)
@@ -166,7 +166,7 @@ class HalfElfCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("titanCalculations")
     void titanTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = "Tiarsus";
+        String characterName = characterName("Tiarsus");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(HALF_ELF)
                 .gender(MALE)

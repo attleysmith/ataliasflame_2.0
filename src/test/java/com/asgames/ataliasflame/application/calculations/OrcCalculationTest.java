@@ -26,7 +26,7 @@ class OrcCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("rogueCalculations")
     void rogueTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = "Buordud";
+        String characterName = characterName("Buordud");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(ORC)
                 .gender(MALE)
@@ -59,7 +59,7 @@ class OrcCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("fighterCalculations")
     void fighterTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = "Kurdan";
+        String characterName = characterName("Kurdan");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(ORC)
                 .gender(MALE)
@@ -92,7 +92,7 @@ class OrcCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("paladinCalculations")
     void paladinTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = "Farod";
+        String characterName = characterName("Farod");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(ORC)
                 .gender(MALE)
@@ -125,7 +125,7 @@ class OrcCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("grandmasterCalculations")
     void grandmasterTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = "Guarg";
+        String characterName = characterName("Guarg");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(ORC)
                 .gender(MALE)
@@ -158,7 +158,7 @@ class OrcCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("titanCalculations")
     void titanTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = "Kharag";
+        String characterName = characterName("Kharag");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(ORC)
                 .gender(MALE)

@@ -6,18 +6,19 @@ import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Companion;
 import com.asgames.ataliasflame.domain.model.entities.SoulChip;
 import com.asgames.ataliasflame.domain.model.enums.MagicType;
+import com.asgames.ataliasflame.domain.model.vos.Energy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.asgames.ataliasflame.domain.MockConstants.*;
 import static com.asgames.ataliasflame.domain.model.enums.MagicType.ATTACK;
 import static com.asgames.ataliasflame.domain.model.enums.MagicType.SUMMON;
-import static com.asgames.ataliasflame.domain.model.enums.SummonType.SOUL_CHIP;
-import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.pointOut;
+import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.*;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
 
@@ -40,44 +41,106 @@ public class MagicService {
     }
 
     public void castSummoningMagic(Character character) {
-        selectSummoningSpell(character)
-                .ifPresent(spell -> summonSoulChip(character, spell));
+        int previousNumberOfCompanions = -1;
+        int actualNumberOfCompanions = character.getCompanions().size();
+        while (previousNumberOfCompanions < actualNumberOfCompanions) {
+            previousNumberOfCompanions = actualNumberOfCompanions;
+
+            usableSpellsOfType(character, SUMMON).stream()
+                    .sorted(comparing(Spell::getCost).reversed())
+                    .forEach(spell -> {
+                        if (character.getMagic().has(spell.getCost())) {
+                            castSummoningSpell(character, spell);
+                        }
+                    });
+
+            actualNumberOfCompanions = character.getCompanions().size();
+        }
     }
 
-    private Optional<Spell> selectSummoningSpell(Character character) {
-        List<Spell> summoningSpells = usableSpellsOfType(character, SUMMON);
-        switch (summoningSpells.size()) {
-            case 0:
-                return Optional.empty();
-            case 1:
-                return Optional.of(summoningSpells.get(0));
+    private void castSummoningSpell(Character character, Spell spell) {
+        Optional<Companion> summoning;
+        switch (spell.getGroup()) {
+            case SOUL:
+                summoning = summonSoulChip(character);
+                break;
+            case NATURE:
+                summoning = summonAnimal(character);
+                break;
+            case GENERAL:
+                summoning = summonGuardianWarrior(character);
+                break;
+            case ENERGY:
+                summoning = summonEnergy(character);
+                break;
+            case DIVINE:
+                summoning = summonDivineGuardian(character);
+                break;
             default:
-                return summoningSpells.stream()
-                        .min(comparing(Spell::getCost));
+                throw new UnsupportedOperationException(spell.getGroup() + " summoning is not supported!");
         }
+        if (summoning.isEmpty()) {
+            log.warn("Summoning was unsuccessful!");
+            return;
+        }
+        character.getMagic().use(spell.getCost());
+        character.getCompanions().add(summoning.get());
+        log.info(summoning.get().getName() + " summoned as companion.");
     }
 
-    private void summonSoulChip(Character character, Spell spell) {
-        if (!spell.getSummonType().equals(SOUL_CHIP)) {
-            throw new UnsupportedOperationException("Only soul chip summoning is supported!");
-        }
-
-        SoulChip summonedSoulChip = null;
+    private Optional<Companion> summonSoulChip(Character character) {
         List<String> companionNames = character.getCompanions().stream().map(Companion::getName).collect(toList());
         for (SoulChip soulChip : character.getSoulChips()) {
             if (!companionNames.contains(soulChip.getName())) {
-                summonedSoulChip = soulChip;
-                break;
+                return Optional.of(soulChip.summon());
             }
         }
-        if (summonedSoulChip == null) {
-            log.warn("Soul chip summoning was unsuccessful!");
-            return;
-        }
+        return Optional.empty();
+    }
 
-        character.getMagic().use(spell.getCost());
-        character.getCompanions().add(summonedSoulChip.summon());
-        log.info(summonedSoulChip.getName() + " summoned as companion.");
+    private Optional<Companion> summonAnimal(Character character) {
+        int numberOfCompanions = character.getCompanions().size();
+        if (numberOfCompanions < 5) {
+            return choose(ANIMAL_SELECTOR).map(animalSummoned ->
+                    animalSummoned.instance(character, UUID.randomUUID().toString()));
+        }
+        return Optional.empty();
+    }
+
+    private Optional<Companion> summonGuardianWarrior(Character character) {
+        int numberOfCompanions = character.getCompanions().size();
+        if (numberOfCompanions < 2) {
+            return choose(GUARDIAN_WARRIOR_SELECTOR).map(guardianSummoned ->
+                    guardianSummoned.instance(character, UUID.randomUUID().toString()));
+        }
+        return Optional.empty();
+    }
+
+    private Optional<Companion> summonEnergy(Character character) {
+        int numberOfCompanions = character.getCompanions().size();
+        if (numberOfCompanions < 1) {
+            Companion projection = Companion.builder()
+                    .name("Energy of " + character.getName() + "-" + UUID.randomUUID())
+                    .owner(character)
+                    .attack(percent(character.getAttack(), ENERGY_PROJECTION_PERCENT))
+                    .defense(percent(character.getDefense(), ENERGY_PROJECTION_PERCENT))
+                    .minDamage(percent(character.getMinDamage(), ENERGY_PROJECTION_PERCENT))
+                    .maxDamage(percent(character.getMaxDamage(), ENERGY_PROJECTION_PERCENT))
+                    .health(Energy.withTotal(percent(character.getHealth().totalValue(), ENERGY_PROJECTION_PERCENT)))
+                    .initiative(character.getInitiative())
+                    .build();
+            return Optional.of(projection);
+        }
+        return Optional.empty();
+    }
+
+    private Optional<Companion> summonDivineGuardian(Character character) {
+        int numberOfCompanions = character.getCompanions().size();
+        if (numberOfCompanions < 1) {
+            return choose(DIVINE_GUARDIAN_SELECTOR).map(guardianSummoned ->
+                    guardianSummoned.instance(character, UUID.randomUUID().toString()));
+        }
+        return Optional.empty();
     }
 
     public void castAttackMagic(Character character, List<Monster> monsters) {

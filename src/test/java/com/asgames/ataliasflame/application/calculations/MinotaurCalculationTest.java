@@ -26,7 +26,7 @@ class MinotaurCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("rogueCalculations")
     void rogueTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = "Sirzeus";
+        String characterName = characterName("Sirzeus");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(MINOTAUR)
                 .gender(MALE)
@@ -60,7 +60,7 @@ class MinotaurCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("fighterCalculations")
     void fighterTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = "Grudir";
+        String characterName = characterName("Grudir");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(MINOTAUR)
                 .gender(MALE)
@@ -94,7 +94,7 @@ class MinotaurCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("paladinCalculations")
     void paladinTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = "Rahdnur";
+        String characterName = characterName("Rahdnur");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(MINOTAUR)
                 .gender(MALE)
@@ -128,7 +128,7 @@ class MinotaurCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("grandmasterCalculations")
     void grandmasterTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = "Gararius";
+        String characterName = characterName("Gararius");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(MINOTAUR)
                 .gender(MALE)
@@ -162,7 +162,7 @@ class MinotaurCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("titanCalculations")
     void titanTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = "Nohrmud";
+        String characterName = characterName("Nohrmud");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(MINOTAUR)
                 .gender(MALE)

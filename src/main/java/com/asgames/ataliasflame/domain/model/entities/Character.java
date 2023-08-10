@@ -122,7 +122,7 @@ public class Character implements Combatant {
     @OneToMany(mappedBy = "owner", cascade = ALL, fetch = EAGER)
     private Set<SoulChip> soulChips = new HashSet<>();
 
-    @OneToMany(mappedBy = "owner", cascade = ALL, fetch = EAGER)
+    @OneToMany(mappedBy = "owner", cascade = ALL, fetch = EAGER, orphanRemoval = true)
     private Set<Companion> companions = new HashSet<>();
 
     @Override

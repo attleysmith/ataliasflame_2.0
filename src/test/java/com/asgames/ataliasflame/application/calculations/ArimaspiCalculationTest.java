@@ -26,7 +26,7 @@ class ArimaspiCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("rogueCalculations")
     void rogueTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = "Throlf";
+        String characterName = characterName("Throlf");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(ARIMASPI)
                 .gender(MALE)
@@ -61,7 +61,7 @@ class ArimaspiCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("fighterCalculations")
     void fighterTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = "Iblur";
+        String characterName = characterName("Iblur");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(ARIMASPI)
                 .gender(MALE)
@@ -96,7 +96,7 @@ class ArimaspiCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("paladinCalculations")
     void paladinTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = "Baunweg";
+        String characterName = characterName("Baunweg");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(ARIMASPI)
                 .gender(MALE)
@@ -131,7 +131,7 @@ class ArimaspiCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("grandmasterCalculations")
     void grandmasterTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = "Khalumm";
+        String characterName = characterName("Khalumm");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(ARIMASPI)
                 .gender(MALE)
@@ -166,7 +166,7 @@ class ArimaspiCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("titanCalculations")
     void titanTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = "Olk";
+        String characterName = characterName("Olk");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(ARIMASPI)
                 .gender(MALE)

@@ -31,7 +31,7 @@ class CharacterServiceTest extends CharacterTestBase {
     @MethodSource("characters")
     void characterCreationTest(Race race, Gender gender, God defensiveGod) {
         // given
-        String characterName = "Dain";
+        String characterName = characterName("Dain");
         // and
         CharacterInput characterInput = CharacterInput.builder()
                 .race(race)
@@ -56,7 +56,7 @@ class CharacterServiceTest extends CharacterTestBase {
     @MethodSource("characters")
     void characterQueryTest(Race race, Gender gender, God defensiveGod) {
         // given
-        String characterName = "Walt";
+        String characterName = characterName("Walt");
         // and
         CharacterInput characterInput = CharacterInput.builder()
                 .race(race)
@@ -81,8 +81,8 @@ class CharacterServiceTest extends CharacterTestBase {
     @Test
     void defensiveGodConversionTest() {
         // given
-        String clericName = "Guag";
-        String fighterName = "Janadiane";
+        String clericName = characterName("Guag");
+        String fighterName = characterName("Janadiane");
         // and
         CharacterInput clericInput = CharacterInput.builder()
                 .race(ORC)

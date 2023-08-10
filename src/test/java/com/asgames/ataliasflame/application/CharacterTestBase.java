@@ -10,11 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import static com.asgames.ataliasflame.domain.MockConstants.CASTE_DETAILS;
 import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
 
 public abstract class CharacterTestBase {
+
+    protected String characterName(String name) {
+        return name + UUID.randomUUID();
+    }
 
     @Autowired
     protected CharacterAdventureService characterAdventureService;

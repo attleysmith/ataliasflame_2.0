@@ -26,7 +26,7 @@ class NymphCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("rogueCalculations")
     void rogueTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = "Castalia";
+        String characterName = characterName("Castalia");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(NYMPH)
                 .gender(FEMALE)
@@ -59,7 +59,7 @@ class NymphCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("wizardCalculations")
     void wizardTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = "Kahliste";
+        String characterName = characterName("Kahliste");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(NYMPH)
                 .gender(FEMALE)
@@ -92,7 +92,7 @@ class NymphCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("mageCalculations")
     void mageTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = "Sylphise";
+        String characterName = characterName("Sylphise");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(NYMPH)
                 .gender(FEMALE)
@@ -125,7 +125,7 @@ class NymphCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("witchmasterCalculations")
     void witchmasterTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = "Melita";
+        String characterName = characterName("Melita");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(NYMPH)
                 .gender(FEMALE)
@@ -158,7 +158,7 @@ class NymphCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("avatarCalculations")
     void avatarTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = "Gatalea";
+        String characterName = characterName("Gatalea");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(NYMPH)
                 .gender(FEMALE)

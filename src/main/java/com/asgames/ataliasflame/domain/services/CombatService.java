@@ -30,15 +30,15 @@ public class CombatService {
                 team1.stream()
                         .filter(Combatant::isAlive)
                         .map(combatant -> TeamMember.builder()
-                        .team(1)
-                        .combatant(combatant)
-                        .build()).collect(toList()),
+                                .team(1)
+                                .combatant(combatant)
+                                .build()).collect(toList()),
                 team2.stream()
                         .filter(Combatant::isAlive)
                         .map(combatant -> TeamMember.builder()
-                        .team(2)
-                        .combatant(combatant)
-                        .build()).collect(toList()));
+                                .team(2)
+                                .combatant(combatant)
+                                .build()).collect(toList()));
     }
 
     private void teamCombat(List<TeamMember> team1, List<TeamMember> team2) {

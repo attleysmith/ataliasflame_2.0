@@ -1,7 +1,7 @@
 package com.asgames.ataliasflame.domain.services;
 
-import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.dtos.Item;
+import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.vos.Armor;
 import com.asgames.ataliasflame.domain.model.vos.Shield;
 import com.asgames.ataliasflame.domain.model.vos.Weapon;
@@ -21,6 +21,8 @@ public class InventoryService {
     private CharacterCalculationService characterCalculationService;
     @Autowired
     private HealingService healingService;
+    @Autowired
+    private MagicService magicService;
 
     public void setStartingInventory(Character character) {
         Weapon startingWeapon = choose(STARTING_WEAPON_SELECTOR);
@@ -38,6 +40,7 @@ public class InventoryService {
         switch (item.getType()) {
             case FOOD:
                 healingService.eat(character, item);
+                magicService.eat(character, item);
                 break;
             case WEAPON:
                 changeWeapon(character, item);

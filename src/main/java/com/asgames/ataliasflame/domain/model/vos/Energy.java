@@ -35,6 +35,9 @@ public class Energy {
 
     public void set(int totalValue) {
         totalEnergy = totalValue;
+        if (usedEnergy > totalEnergy) {
+            usedEnergy = totalEnergy;
+        }
     }
 
     public int totalValue() {

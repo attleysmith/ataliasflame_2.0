@@ -11,4 +11,5 @@ public class Item {
     private final String code;
     private final ItemType type;
     private final int healingEffect;
+    private final int magicEffect;
 }

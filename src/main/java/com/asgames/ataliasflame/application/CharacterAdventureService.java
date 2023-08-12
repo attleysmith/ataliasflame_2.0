@@ -53,6 +53,7 @@ public class CharacterAdventureService {
         List<Monster> monsters = monsterService.populateMonsters();
 
         magicService.castSummoningMagic(character);
+        magicService.castBlessingMagic(character);
         magicService.castAttackMagic(character, monsters);
 
         List<Combatant> characterTeam = new ArrayList<>();
@@ -61,6 +62,7 @@ public class CharacterAdventureService {
 
         combatService.combat(characterTeam, monsters);
         character.getCompanions().removeIf(Combatant::isDead);
+        magicService.removeBlessingMagic(character);
 
         if (character.isAlive()) {
             character = experienceService.gainExperience(character, monsters);

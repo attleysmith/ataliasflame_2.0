@@ -20,6 +20,7 @@ import static com.asgames.ataliasflame.domain.model.enums.God.*;
 import static com.asgames.ataliasflame.domain.model.enums.ItemType.*;
 import static com.asgames.ataliasflame.domain.model.enums.MagicType.*;
 import static com.asgames.ataliasflame.domain.model.enums.Race.*;
+import static com.asgames.ataliasflame.domain.model.enums.SoulChipShape.*;
 import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.*;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.*;
 import static java.util.Collections.emptyList;
@@ -370,7 +371,7 @@ public final class MockConstants {
             ))
             .build();
 
-    public static final Booster SHARK_BOOSTER = Booster.builder()
+    public static final Booster CANINE_SOUL_CHIP_BOOSTER = Booster.builder()
             .effects(Map.of(
                     STRENGTH, 5,
                     DEXTERITY, 5,
@@ -383,7 +384,7 @@ public final class MockConstants {
             ))
             .build();
 
-    public static final Booster MONKEY_BOOSTER = Booster.builder()
+    public static final Booster APE_LIKE_SOUL_CHIP_BOOSTER = Booster.builder()
             .effects(Map.of(
                     STRENGTH, 5,
                     DEXTERITY, 2,
@@ -396,7 +397,7 @@ public final class MockConstants {
             ))
             .build();
 
-    public static final Booster HAWK_BOOSTER = Booster.builder()
+    public static final Booster BIRD_OF_PREY_SOUL_CHIP_BOOSTER = Booster.builder()
             .effects(Map.of(
                     STRENGTH, 2,
                     DEXTERITY, 5,
@@ -455,9 +456,9 @@ public final class MockConstants {
             Map.entry(HALFLING.name(), HALFLING_BOOSTER),
             Map.entry(DIVINE_PROTECTION.name(), DIVINE_PROTECTION_BOOSTER),
             Map.entry(STRENGTHENING.name(), STRENGTHENING_BOOSTER),
-            Map.entry("Shark", SHARK_BOOSTER),
-            Map.entry("Monkey", MONKEY_BOOSTER),
-            Map.entry("Hawk", HAWK_BOOSTER),
+            Map.entry(CANINE.name(), CANINE_SOUL_CHIP_BOOSTER),
+            Map.entry(APE_LIKE.name(), APE_LIKE_SOUL_CHIP_BOOSTER),
+            Map.entry(BIRD_OF_PREY.name(), BIRD_OF_PREY_SOUL_CHIP_BOOSTER),
             Map.entry(PROTECTIVE_HAND_OF_NATURE.name(), PROTECTIVE_HAND_OF_NATURE_BOOSTER),
             Map.entry(ENERGY_SHIELD.name(), ENERGY_SHIELD_BOOSTER)
     );
@@ -1341,12 +1342,6 @@ public final class MockConstants {
     );
 
     // Soul chips
-    public static final Map<Integer, String> SOUL_CHIP_NAMES = Map.of(
-            0, "Shark",
-            1, "Monkey",
-            2, "Hawk"
-    );
-
     public static final int SOUL_CHIP_ATTACK_BASE = 50;
     public static final int SOUL_CHIP_ATTACK_BONUS = 100;
     public static final int SOUL_CHIP_DEFENSE_BASE = 0;

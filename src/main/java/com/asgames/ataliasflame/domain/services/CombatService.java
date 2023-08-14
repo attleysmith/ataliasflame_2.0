@@ -7,14 +7,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.pointOut;
 import static com.asgames.ataliasflame.domain.utils.DiceUtils.*;
+import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
+import static org.apache.commons.collections4.ListUtils.union;
 
 @Slf4j
 @Service
@@ -46,7 +47,7 @@ public class CombatService {
         List<TeamMember> remainingTeam2 = new ArrayList<>(team2);
         CombatContext combatContext = new CombatContext();
         while (remainingTeam1.size() > 0 && remainingTeam2.size() > 0) {
-            List<TeamMember> combatOrder = getCombatOrder(remainingTeam1, remainingTeam2);
+            List<TeamMember> combatOrder = getCombatOrder(union(remainingTeam1, remainingTeam2), true);
 
             List<AttackReport> attackReports = new ArrayList<>();
             for (TeamMember attacker : combatOrder) {
@@ -93,22 +94,17 @@ public class CombatService {
         return new AttackReport(attacker.getCode(), defender.getCode(), damage, defender.getHealth().actualValue());
     }
 
-    private List<TeamMember> getCombatOrder(List<TeamMember> team1, List<TeamMember> team2) {
-        return Stream
-                .concat(team1.stream(), team2.stream())
-                .collect(toMap(
-                        teamMember -> teamMember,
-                        teamMember -> teamMember.getCombatant().getInitiative() + roll10()
-                ))
-                .entrySet().stream().sorted((initiative1, initiative2) -> {
-                    int naturalOrder = initiative1.getValue().compareTo(initiative2.getValue());
-                    if (naturalOrder == 0) {
-                        return diceDuel();
-                    } else {
-                        return naturalOrder;
-                    }
-                })
-                .map(Map.Entry::getKey)
+    private List<TeamMember> getCombatOrder(List<TeamMember> naturalOrder, boolean initiate) {
+        if (naturalOrder.size() == 1) {
+            return naturalOrder;
+        }
+
+        return naturalOrder.stream()
+                .collect(groupingBy(teamMember -> (initiate ? teamMember.getInitiative() : 0) + roll10()))
+                .entrySet().stream()
+                .sorted(Map.Entry.comparingByKey())
+                .map(ties -> getCombatOrder(ties.getValue(), false))
+                .flatMap(Collection::stream)
                 .collect(toList());
     }
 }

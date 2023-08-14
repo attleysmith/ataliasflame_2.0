@@ -15,6 +15,10 @@ public class TeamMember {
         return combatant.getCode();
     }
 
+    public int getInitiative() {
+        return combatant.getInitiative();
+    }
+
     public boolean isDead() {
         return combatant.isDead();
     }

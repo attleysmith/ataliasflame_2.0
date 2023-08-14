@@ -14,7 +14,6 @@ import java.util.Optional;
 import static com.asgames.ataliasflame.domain.MockConstants.BOOSTERS;
 import static com.asgames.ataliasflame.domain.model.enums.MagicType.BLESSING;
 import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.SOUL;
-import static com.asgames.ataliasflame.domain.services.SoulChipFactory.getOriginalSoulChipName;
 
 @Slf4j
 @Service
@@ -44,7 +43,7 @@ public class BlessingMagicService extends AttackMagicService {
         if (unusedSouls.isEmpty()) {
             return Optional.empty();
         } else {
-            return Optional.of(getOriginalSoulChipName(character, unusedSouls.get(0).getName()));
+            return Optional.of(unusedSouls.get(0).getShape().name());
         }
     }
 

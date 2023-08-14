@@ -1,6 +1,7 @@
 package com.asgames.ataliasflame.domain.model.entities;
 
 import com.asgames.ataliasflame.domain.model.enums.Caste;
+import com.asgames.ataliasflame.domain.model.enums.SoulChipShape;
 import com.asgames.ataliasflame.domain.model.vos.Energy;
 import jakarta.persistence.*;
 import lombok.*;
@@ -20,6 +21,9 @@ public class SoulChip {
     @Id
     @Column(name = "name")
     private String name;
+    @Column(name = "shape")
+    @Enumerated(STRING)
+    private SoulChipShape shape;
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude

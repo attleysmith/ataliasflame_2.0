@@ -11,8 +11,8 @@ public class TeamMember {
     private final Combatant combatant;
     private final int team;
 
-    public String getCode() {
-        return combatant.getCode();
+    public String getReference() {
+        return combatant.getReference();
     }
 
     public int getInitiative() {

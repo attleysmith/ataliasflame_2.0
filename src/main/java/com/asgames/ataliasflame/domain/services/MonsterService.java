@@ -31,9 +31,8 @@ public class MonsterService {
         MonsterTemplate monsterAppeared = choose(MONSTER_SELECTOR);
         log.info("Enemy appeared: " + monsterAppeared.getCode());
 
-        int counter = 0;
         do {
-            Monster monster = monsterAppeared.instance(String.valueOf(++counter));
+            Monster monster = monsterAppeared.instance();
             monsters.add(monster);
         } while (successX(monsterAppeared.getMass()));
 

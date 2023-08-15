@@ -42,6 +42,6 @@ public class AttackMagicService extends AbstractMagicService {
         character.getMagic().use(spell.getCost());
         int damage = pointOut(spell.getMinDamage(), spell.getMaxDamage());
         monster.getHealth().damage(damage);
-        log.info(spell.getName() + " deals " + damage + " damage to " + monster.getCode());
+        log.info(spell.getName() + " deals " + damage + " damage to " + monster.getReference());
     }
 }

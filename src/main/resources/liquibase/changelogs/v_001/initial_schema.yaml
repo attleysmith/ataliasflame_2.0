@@ -1,6 +1,40 @@
 databaseChangeLog:
   - changeSet:
-      id: 1692023439194-1
+      id: 1692106819361-1
+      author: Mikló Attila (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: ArmorPK
+                  name: reference
+                  type: VARCHAR(255)
+              - column:
+                  name: absorption
+                  type: INT
+              - column:
+                  name: code
+                  type: VARCHAR(255)
+              - column:
+                  name: defense
+                  type: INT
+              - column:
+                  name: durability
+                  type: INT
+              - column:
+                  name: wearAndTear
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: ownerId
+                  type: VARCHAR(255)
+            tableName: Armor
+  - changeSet:
+      id: 1692106819361-2
       author: Mikló Attila (generated)
       changes:
         - createTable:
@@ -12,15 +46,6 @@ databaseChangeLog:
                     primaryKeyName: CharacterPK
                   name: name
                   type: VARCHAR(255)
-              - column:
-                  name: armorCode
-                  type: VARCHAR(255)
-              - column:
-                  name: armorDefense
-                  type: INT
-              - column:
-                  name: armorPopularity
-                  type: INT
               - column:
                   name: attack
                   type: INT
@@ -104,7 +129,7 @@ databaseChangeLog:
                   type: INT
             tableName: Character
   - changeSet:
-      id: 1692023439194-2
+      id: 1692106819361-3
       author: Mikló Attila (generated)
       changes:
         - createTable:
@@ -128,7 +153,7 @@ databaseChangeLog:
                   type: VARCHAR(255)
             tableName: CharacterAttributeMapping
   - changeSet:
-      id: 1692023439194-3
+      id: 1692106819361-4
       author: Mikló Attila (generated)
       changes:
         - createTable:
@@ -168,7 +193,7 @@ databaseChangeLog:
                   type: VARCHAR(255)
             tableName: Companion
   - changeSet:
-      id: 1692023439194-4
+      id: 1692106819361-5
       author: Mikló Attila (generated)
       changes:
         - createTable:
@@ -193,7 +218,7 @@ databaseChangeLog:
                   type: VARCHAR(255)
             tableName: DefensiveGodConversionLog
   - changeSet:
-      id: 1692023439194-5
+      id: 1692106819361-6
       author: Mikló Attila (generated)
       changes:
         - createTable:
@@ -210,7 +235,7 @@ databaseChangeLog:
                   type: INT
             tableName: Level
   - changeSet:
-      id: 1692023439194-6
+      id: 1692106819361-7
       author: Mikló Attila (generated)
       changes:
         - createTable:
@@ -256,7 +281,7 @@ databaseChangeLog:
                   type: VARCHAR(255)
             tableName: SoulChip
   - changeSet:
-      id: 1692023439194-7
+      id: 1692106819361-8
       author: Mikló Attila (generated)
       changes:
         - addForeignKeyConstraint:
@@ -269,7 +294,7 @@ databaseChangeLog:
             referencedTableName: Character
             validate: true
   - changeSet:
-      id: 1692023439194-8
+      id: 1692106819361-9
       author: Mikló Attila (generated)
       changes:
         - addForeignKeyConstraint:
@@ -282,7 +307,20 @@ databaseChangeLog:
             referencedTableName: Character
             validate: true
   - changeSet:
-      id: 1692023439194-9
+      id: 1692106819361-10
+      author: Mikló Attila (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: ownerId
+            baseTableName: Armor
+            constraintName: FKkic3wqfbbocovvpoe7721cafn
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: name
+            referencedTableName: Character
+            validate: true
+  - changeSet:
+      id: 1692106819361-11
       author: Mikló Attila (generated)
       changes:
         - addForeignKeyConstraint:
@@ -295,7 +333,7 @@ databaseChangeLog:
             referencedTableName: Character
             validate: true
   - changeSet:
-      id: 1692023439194-10
+      id: 1692106819361-12
       author: Mikló Attila (generated)
       changes:
         - addForeignKeyConstraint:
@@ -308,7 +346,7 @@ databaseChangeLog:
             referencedTableName: Character
             validate: true
   - changeSet:
-      id: 1692023439194-11
+      id: 1692106819361-13
       author: Mikló Attila (generated)
       changes:
         - addForeignKeyConstraint:

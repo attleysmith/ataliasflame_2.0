@@ -2,7 +2,6 @@ package com.asgames.ataliasflame.domain.model.entities;
 
 import com.asgames.ataliasflame.domain.model.enums.*;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
-import com.asgames.ataliasflame.domain.model.vos.Armor;
 import com.asgames.ataliasflame.domain.model.vos.Energy;
 import com.asgames.ataliasflame.domain.model.vos.Shield;
 import com.asgames.ataliasflame.domain.model.vos.Weapon;
@@ -12,10 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static jakarta.persistence.CascadeType.ALL;
 import static jakarta.persistence.EnumType.STRING;
@@ -102,15 +98,6 @@ public class Character implements Combatant {
     })
     private Shield shield;
 
-    @Nullable
-    @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "code", column = @Column(name = "armorCode")),
-            @AttributeOverride(name = "defense", column = @Column(name = "armorDefense")),
-            @AttributeOverride(name = "popularity", column = @Column(name = "armorPopularity"))
-    })
-    private Armor armor;
-
     @ElementCollection(fetch = EAGER)
     @CollectionTable(name = "CharacterAttributeMapping",
             joinColumns = {@JoinColumn(name = "characterName")})
@@ -125,8 +112,16 @@ public class Character implements Combatant {
     @OneToMany(mappedBy = "owner", cascade = ALL, fetch = EAGER, orphanRemoval = true)
     private Set<Companion> companions = new HashSet<>();
 
+    @OneToOne(mappedBy = "owner", cascade = ALL, fetch = EAGER, orphanRemoval = true)
+    private Armor armor;
+
     @Override
-    public String getCode() {
+    public Optional<Armor> getArmor() {
+        return Optional.ofNullable(armor);
+    }
+
+    @Override
+    public String getReference() {
         return name;
     }
 

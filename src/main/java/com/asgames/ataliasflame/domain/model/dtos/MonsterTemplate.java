@@ -4,6 +4,8 @@ import com.asgames.ataliasflame.domain.model.vos.Energy;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.UUID;
+
 @Builder
 @Data
 public class MonsterTemplate {
@@ -19,9 +21,10 @@ public class MonsterTemplate {
     private final int mass;
     private final int experience;
 
-    public Monster instance(String codeSuffix) {
+    public Monster instance() {
         return Monster.builder()
-                .code(codeSuffix.length() == 0 ? code : code + "-" + codeSuffix)
+                .reference(UUID.randomUUID().toString())
+                .code(code)
                 .attack(attack)
                 .defense(defense)
                 .minDamage(minDamage)

@@ -9,6 +9,7 @@ import lombok.Data;
 @Data
 public class Monster implements Combatant {
 
+    private final String reference;
     private final String code;
     private final int attack;
     private final int defense;

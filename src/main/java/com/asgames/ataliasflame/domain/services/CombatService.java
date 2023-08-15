@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.percent;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.pointOut;
 import static com.asgames.ataliasflame.domain.utils.DiceUtils.*;
 import static java.util.stream.Collectors.groupingBy;
@@ -52,7 +53,7 @@ public class CombatService {
             List<AttackReport> attackReports = new ArrayList<>();
             for (TeamMember attacker : combatOrder) {
                 if (attacker.isDead()) {
-                    log.debug("Skipping attack. " + attacker.getCode() + " is already dead.");
+                    log.debug("Skipping attack. " + attacker.getReference() + " is already dead.");
                     continue;
                 }
                 List<TeamMember> defenders = attacker.getTeam() == 1 ? remainingTeam2 : remainingTeam1;
@@ -88,10 +89,10 @@ public class CombatService {
             int chance = attacker.getAttack() - defender.getDefense();
             if (successX(chance)) {
                 damage = pointOut(attacker.getMinDamage(), attacker.getMaxDamage());
-                defender.getHealth().damage(damage);
+                doDamage(defender, damage);
             }
         }
-        return new AttackReport(attacker.getCode(), defender.getCode(), damage, defender.getHealth().actualValue());
+        return new AttackReport(attacker.getReference(), defender.getReference(), damage, defender.getHealth().actualValue());
     }
 
     private List<TeamMember> getCombatOrder(List<TeamMember> naturalOrder, boolean initiate) {
@@ -106,5 +107,15 @@ public class CombatService {
                 .map(ties -> getCombatOrder(ties.getValue(), false))
                 .flatMap(Collection::stream)
                 .collect(toList());
+    }
+
+    private void doDamage(Combatant defender, int damage) {
+        defender.getArmor().ifPresentOrElse(
+                armor -> {
+                    int absorbedDamage = percent(damage, armor.getAbsorption());
+                    int penetration = armor.getDurability().penetrate(absorbedDamage);
+                    defender.getHealth().damage(damage - absorbedDamage + penetration);
+                },
+                () -> defender.getHealth().damage(damage));
     }
 }

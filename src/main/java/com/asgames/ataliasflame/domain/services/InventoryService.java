@@ -1,8 +1,9 @@
 package com.asgames.ataliasflame.domain.services;
 
+import com.asgames.ataliasflame.domain.model.dtos.ArmorTemplate;
 import com.asgames.ataliasflame.domain.model.dtos.Item;
+import com.asgames.ataliasflame.domain.model.entities.Armor;
 import com.asgames.ataliasflame.domain.model.entities.Character;
-import com.asgames.ataliasflame.domain.model.vos.Armor;
 import com.asgames.ataliasflame.domain.model.vos.Shield;
 import com.asgames.ataliasflame.domain.model.vos.Weapon;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import static com.asgames.ataliasflame.domain.MockConstants.*;
 import static com.asgames.ataliasflame.domain.model.enums.ItemType.*;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.choose;
+import static com.asgames.ataliasflame.domain.utils.DiceUtils.roll100;
 
 @Slf4j
 @Service
@@ -28,12 +30,10 @@ public class InventoryService {
         Weapon startingWeapon = choose(STARTING_WEAPON_SELECTOR);
         takeWeapon(character, startingWeapon);
 
-        choose(STARTING_SHIELD_SELECTOR).ifPresent(startingShield -> {
-            takeShield(character, startingShield);
-        });
-        choose(STARTING_ARMOR_SELECTOR).ifPresent(startingArmor -> {
-            takeArmor(character, startingArmor);
-        });
+        choose(STARTING_SHIELD_SELECTOR).ifPresent(startingShield ->
+                takeShield(character, startingShield));
+        choose(STARTING_ARMOR_SELECTOR).ifPresent(startingArmor ->
+                takeArmor(character, startingArmor.instance()));
     }
 
     public void use(Character character, Item item) {
@@ -91,12 +91,14 @@ public class InventoryService {
             throw new IllegalArgumentException("Only armor can be used as armor!");
         }
 
-        Armor newArmor = ARMORS.get(item.getCode());
-        if (newArmor == null) {
+        ArmorTemplate newArmorTemplate = ARMORS.get(item.getCode());
+        if (newArmorTemplate == null) {
             throw new IllegalStateException("New armor not recognized as real armor: " + item.getCode());
         }
 
-        if (character.getArmor() == null || newArmor.getPopularity() > character.getArmor().getPopularity()) {
+        Armor newArmor = newArmorTemplate.instance();
+        newArmor.getDurability().trauma(roll100());
+        if (character.getArmor().isEmpty() || newArmor.isBetterThan(character.getArmor().get())) {
             takeArmor(character, newArmor);
         }
     }
@@ -122,6 +124,7 @@ public class InventoryService {
     }
 
     private void takeArmor(Character character, Armor armor) {
+        armor.setOwner(character);
         character.setArmor(armor);
         characterCalculationService.recalculateProperties(character);
         log.info("Armor used: " + armor.getCode());

@@ -89,6 +89,12 @@ public class Energy {
         usedEnergy = min(totalEnergy, usedEnergy + damage);
     }
 
+    public int penetrate(int damage) {
+        int realDamage = min(damage, actualValue());
+        damage(realDamage);
+        return damage - realDamage;
+    }
+
     public void fullRecover() {
         recover(100);
     }

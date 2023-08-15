@@ -2,7 +2,6 @@ package com.asgames.ataliasflame.domain;
 
 import com.asgames.ataliasflame.domain.model.dtos.*;
 import com.asgames.ataliasflame.domain.model.enums.*;
-import com.asgames.ataliasflame.domain.model.vos.Armor;
 import com.asgames.ataliasflame.domain.model.vos.Shield;
 import com.asgames.ataliasflame.domain.model.vos.Weapon;
 import com.asgames.ataliasflame.domain.utils.SelectionValue;
@@ -833,36 +832,42 @@ public final class MockConstants {
                     .build()
     );
 
-    public static final Map<String, Armor> ARMORS = Map.of(
-            "LINEN_ARMOR", Armor.builder()
+    public static final Map<String, ArmorTemplate> ARMORS = Map.of(
+            "LINEN_ARMOR", ArmorTemplate.builder()
                     .code("LINEN_ARMOR")
-                    .defense(10)
-                    .popularity(10)
+                    .defense(0)
+                    .absorption(10)
+                    .durability(50)
                     .build(),
-            "LEATHER_ARMOR", Armor.builder()
+            "LEATHER_ARMOR", ArmorTemplate.builder()
                     .code("LEATHER_ARMOR")
-                    .defense(15)
-                    .popularity(20)
+                    .defense(3)
+                    .absorption(25)
+                    .durability(60)
                     .build(),
-            "STUDDED_LEATHER_ARMOR", Armor.builder()
+            "STUDDED_LEATHER_ARMOR", ArmorTemplate.builder()
                     .code("STUDDED_LEATHER_ARMOR")
-                    .defense(20)
-                    .popularity(30)
+                    .defense(5)
+                    .absorption(30)
+                    .durability(80)
                     .build(),
-            "CHAIN_MAIL", Armor.builder()
+            "CHAIN_MAIL", ArmorTemplate.builder()
                     .code("CHAIN_MAIL")
-                    .defense(25)
-                    .popularity(40)
+                    .defense(6)
+                    .absorption(40)
+                    .durability(100)
                     .build(),
-            "PLATE_MAIL", Armor.builder()
+            "PLATE_MAIL", ArmorTemplate.builder()
                     .code("PLATE_MAIL")
-                    .defense(30)
-                    .popularity(50)
+                    .defense(8)
+                    .absorption(50)
+                    .durability(100)
                     .build(),
-            "FULL_PLATE_MAIL", Armor.builder()
+            "FULL_PLATE_MAIL", ArmorTemplate.builder()
                     .code("FULL_PLATE_MAIL")
-                    .defense(40)
-                    .popularity(60)
+                    .defense(10)
+                    .absorption(60)
+                    .durability(120)
                     .build()
     );
 
@@ -882,7 +887,7 @@ public final class MockConstants {
             new SelectionValue<>(5, Optional.of(SHIELDS.get("TOWER_SHIELD")))
     );
 
-    public static final List<SelectionValue<Optional<Armor>>> STARTING_ARMOR_SELECTOR = List.of(
+    public static final List<SelectionValue<Optional<ArmorTemplate>>> STARTING_ARMOR_SELECTOR = List.of(
             new SelectionValue<>(50, Optional.empty()),
             new SelectionValue<>(15, Optional.of(ARMORS.get("LINEN_ARMOR"))),
             new SelectionValue<>(10, Optional.of(ARMORS.get("LEATHER_ARMOR"))),

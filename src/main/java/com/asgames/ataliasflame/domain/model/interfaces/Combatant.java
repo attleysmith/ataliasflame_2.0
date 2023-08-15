@@ -1,9 +1,13 @@
 package com.asgames.ataliasflame.domain.model.interfaces;
 
+import com.asgames.ataliasflame.domain.model.entities.Armor;
 import com.asgames.ataliasflame.domain.model.vos.Energy;
 
+import java.util.Optional;
+
 public interface Combatant {
-    String getCode();
+
+    String getReference();
 
     int getAttack();
 
@@ -23,5 +27,9 @@ public interface Combatant {
 
     default boolean isDead() {
         return getHealth().isEmpty();
+    }
+
+    default Optional<Armor> getArmor() {
+        return Optional.empty();
     }
 }

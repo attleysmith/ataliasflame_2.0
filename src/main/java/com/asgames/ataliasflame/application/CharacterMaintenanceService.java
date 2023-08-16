@@ -48,33 +48,33 @@ public class CharacterMaintenanceService {
     }
 
     @Transactional(readOnly = true)
-    public Character getCharacter(String characterName) {
-        return characterRepository.findById(characterName)
+    public Character getCharacter(String characterReference) {
+        return characterRepository.findById(characterReference)
                 .orElseThrow(() -> new EntityNotFoundException("Character does not exist!"));
     }
 
     @Transactional
-    public void removeCharacter(String characterName) {
-        characterRepository.deleteById(characterName);
+    public void removeCharacter(String characterReference) {
+        characterRepository.deleteById(characterReference);
     }
 
     @Transactional
-    public Character addAttributePoints(String characterName, Attribute attribute, int points) {
-        Character character = getCharacter(characterName);
+    public Character addAttributePoints(String characterReference, Attribute attribute, int points) {
+        Character character = getCharacter(characterReference);
         character = attributeService.addAttributePoints(character, attribute, points);
         return characterRepository.save(character);
     }
 
     @Transactional
-    public Character upgradeCaste(String characterName, Caste newCaste) {
-        Character character = getCharacter(characterName);
+    public Character upgradeCaste(String characterReference, Caste newCaste) {
+        Character character = getCharacter(characterReference);
         character = casteService.upgradeCaste(character, newCaste);
         return characterRepository.save(character);
     }
 
     @Transactional
-    public Character convertDefensiveGod(String characterName, String conversionCode) {
-        Character character = getCharacter(characterName);
+    public Character convertDefensiveGod(String characterReference, String conversionCode) {
+        Character character = getCharacter(characterReference);
         DefensiveGodConversionLog conversionLog = defensiveGodConversionLogRepository.findById(conversionCode)
                 .orElseThrow(() -> new EntityNotFoundException("Missing conversion code!"));
 

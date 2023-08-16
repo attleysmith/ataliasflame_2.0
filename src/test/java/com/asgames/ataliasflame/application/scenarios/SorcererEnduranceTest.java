@@ -26,11 +26,9 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
                 .race(ELF)
                 .gender(MALE)
                 .defensiveGod(HORA)
-                .name(characterName)
+                .name("Plato")
                 .build();
-        characterMaintenanceService.createCharacter(characterInput);
-        // and
-        character = characterMaintenanceService.getCharacter(characterName);
+        character = characterMaintenanceService.createCharacter(characterInput);
 
         // expect
         level1Upgrade();

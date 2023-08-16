@@ -28,6 +28,8 @@ public class Character implements Combatant {
     }
 
     @Id
+    @Column(name = "reference")
+    private String reference;
     @Column(name = "name")
     private String name;
     @Column(name = "gender")
@@ -100,7 +102,7 @@ public class Character implements Combatant {
 
     @ElementCollection(fetch = EAGER)
     @CollectionTable(name = "CharacterAttributeMapping",
-            joinColumns = {@JoinColumn(name = "characterName")})
+            joinColumns = {@JoinColumn(name = "characterId")})
     @MapKeyColumn(name = "attributeCode")
     @MapKeyEnumerated(EnumType.STRING)
     @Column(name = "attributeValue")
@@ -118,11 +120,6 @@ public class Character implements Combatant {
     @Override
     public Optional<Armor> getArmor() {
         return Optional.ofNullable(armor);
-    }
-
-    @Override
-    public String getReference() {
-        return name;
     }
 
     public Energy getHealth() {

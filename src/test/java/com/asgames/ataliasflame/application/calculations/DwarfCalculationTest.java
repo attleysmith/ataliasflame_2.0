@@ -26,18 +26,18 @@ class DwarfCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("rogueCalculations")
     void rogueTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = characterName("Thangrar");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(DWARF)
                 .gender(MALE)
                 .defensiveGod(god)
-                .name(characterName)
+                .name("Thangrar")
                 .build();
         Character character = characterMaintenanceService.createCharacter(characterInput);
+        String characterReference = character.getReference();
         assertThat(character.getCaste(), is(ROGUE));
-        addDagger(characterName);
+        addDagger(characterReference);
 
-        character = characterMaintenanceService.getCharacter(characterName);
+        character = characterMaintenanceService.getCharacter(characterReference);
         assertThat(character.getAttack(), is(equalTo(attack)));
         assertThat(character.getDefense(), is(equalTo(defense)));
         assertThat(character.getMinDamage(), is(equalTo(minDamage)));
@@ -60,18 +60,18 @@ class DwarfCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("fighterCalculations")
     void fighterTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = characterName("Forbik");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(DWARF)
                 .gender(MALE)
                 .defensiveGod(god)
-                .name(characterName)
+                .name("Forbik")
                 .build();
-        characterMaintenanceService.createCharacter(characterInput);
-        upgradeCaste(characterName, List.of(FIGHTER));
-        addDagger(characterName);
+        Character character = characterMaintenanceService.createCharacter(characterInput);
+        String characterReference = character.getReference();
+        upgradeCaste(characterReference, List.of(FIGHTER));
+        addDagger(characterReference);
 
-        Character character = characterMaintenanceService.getCharacter(characterName);
+        character = characterMaintenanceService.getCharacter(characterReference);
         assertThat(character.getAttack(), is(equalTo(attack)));
         assertThat(character.getDefense(), is(equalTo(defense)));
         assertThat(character.getMinDamage(), is(equalTo(minDamage)));
@@ -94,18 +94,18 @@ class DwarfCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("paladinCalculations")
     void paladinTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = characterName("Anmum");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(DWARF)
                 .gender(MALE)
                 .defensiveGod(god)
-                .name(characterName)
+                .name("Anmum")
                 .build();
-        characterMaintenanceService.createCharacter(characterInput);
-        upgradeCaste(characterName, List.of(FIGHTER, PALADIN));
-        addDagger(characterName);
+        Character character = characterMaintenanceService.createCharacter(characterInput);
+        String characterReference = character.getReference();
+        upgradeCaste(characterReference, List.of(FIGHTER, PALADIN));
+        addDagger(characterReference);
 
-        Character character = characterMaintenanceService.getCharacter(characterName);
+        character = characterMaintenanceService.getCharacter(characterReference);
         assertThat(character.getAttack(), is(equalTo(attack)));
         assertThat(character.getDefense(), is(equalTo(defense)));
         assertThat(character.getMinDamage(), is(equalTo(minDamage)));
@@ -128,18 +128,18 @@ class DwarfCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("grandmasterCalculations")
     void grandmasterTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = characterName("Gronmomi");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(DWARF)
                 .gender(MALE)
                 .defensiveGod(god)
-                .name(characterName)
+                .name("Gronmomi")
                 .build();
-        characterMaintenanceService.createCharacter(characterInput);
-        upgradeCaste(characterName, List.of(FIGHTER, PALADIN, GRANDMASTER));
-        addDagger(characterName);
+        Character character = characterMaintenanceService.createCharacter(characterInput);
+        String characterReference = character.getReference();
+        upgradeCaste(characterReference, List.of(FIGHTER, PALADIN, GRANDMASTER));
+        addDagger(characterReference);
 
-        Character character = characterMaintenanceService.getCharacter(characterName);
+        character = characterMaintenanceService.getCharacter(characterReference);
         assertThat(character.getAttack(), is(equalTo(attack)));
         assertThat(character.getDefense(), is(equalTo(defense)));
         assertThat(character.getMinDamage(), is(equalTo(minDamage)));
@@ -162,18 +162,18 @@ class DwarfCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("titanCalculations")
     void titanTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = characterName("Kirronlim");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(DWARF)
                 .gender(MALE)
                 .defensiveGod(god)
-                .name(characterName)
+                .name("Kirronlim")
                 .build();
-        characterMaintenanceService.createCharacter(characterInput);
-        upgradeCaste(characterName, List.of(FIGHTER, PALADIN, GRANDMASTER, TITAN));
-        addDagger(characterName);
+        Character character = characterMaintenanceService.createCharacter(characterInput);
+        String characterReference = character.getReference();
+        upgradeCaste(characterReference, List.of(FIGHTER, PALADIN, GRANDMASTER, TITAN));
+        addDagger(characterReference);
 
-        Character character = characterMaintenanceService.getCharacter(characterName);
+        character = characterMaintenanceService.getCharacter(characterReference);
         assertThat(character.getAttack(), is(equalTo(attack)));
         assertThat(character.getDefense(), is(equalTo(defense)));
         assertThat(character.getMinDamage(), is(equalTo(minDamage)));

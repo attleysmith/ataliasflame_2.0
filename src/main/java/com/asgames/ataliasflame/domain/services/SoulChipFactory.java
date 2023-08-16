@@ -4,6 +4,8 @@ import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.SoulChip;
 import com.asgames.ataliasflame.domain.model.enums.SoulChipShape;
 
+import java.util.UUID;
+
 import static com.asgames.ataliasflame.domain.MockConstants.*;
 import static com.asgames.ataliasflame.domain.model.enums.SoulChipShape.valueByOrder;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.percent;
@@ -14,7 +16,8 @@ public class SoulChipFactory {
         SoulChipShape shape = valueByOrder(character.getSoulChips().size());
         return SoulChip.builder()
                 .owner(character)
-                .name(character.getName() + "'s " + shape.givenName)
+                .reference(UUID.randomUUID().toString())
+                .name(shape.name)
                 .shape(shape)
                 .attack(SOUL_CHIP_ATTACK_BASE + percent(SOUL_CHIP_ATTACK_BONUS, percent))
                 .defense(SOUL_CHIP_DEFENSE_BASE + percent(SOUL_CHIP_DEFENSE_BONUS, percent))

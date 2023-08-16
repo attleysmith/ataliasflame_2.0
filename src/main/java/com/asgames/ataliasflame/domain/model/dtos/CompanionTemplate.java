@@ -6,6 +6,8 @@ import com.asgames.ataliasflame.domain.model.vos.Energy;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.UUID;
+
 @Builder
 @Data
 public class CompanionTemplate {
@@ -20,6 +22,7 @@ public class CompanionTemplate {
 
     public Companion instance(Character owner, String codeSuffix) {
         return Companion.builder()
+                .reference(UUID.randomUUID().toString())
                 .name(codeSuffix.length() == 0 ? code : code + "-" + codeSuffix)
                 .owner(owner)
                 .attack(attack)

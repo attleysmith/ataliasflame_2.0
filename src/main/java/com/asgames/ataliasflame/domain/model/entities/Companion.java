@@ -16,6 +16,8 @@ public class Companion implements Combatant {
     }
 
     @Id
+    @Column(name = "reference")
+    private String reference;
     @Column(name = "name")
     private String name;
 
@@ -42,10 +44,5 @@ public class Companion implements Combatant {
             @AttributeOverride(name = "usedEnergy", column = @Column(name = "injury"))
     })
     private Energy health;
-
-    @Override
-    public String getReference() {
-        return name;
-    }
 
 }

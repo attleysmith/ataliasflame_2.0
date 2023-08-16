@@ -7,7 +7,6 @@ import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -26,60 +25,53 @@ public abstract class EnduranceTestBase {
     protected CharacterMaintenanceService characterMaintenanceService;
 
     protected Character character;
-    protected static String characterName;
-
-    @BeforeEach
-    void setUp() {
-        characterName = "Takemoto";
-    }
 
     @AfterEach
     void tearDown() {
-        characterMaintenanceService.removeCharacter(characterName);
+        characterMaintenanceService.removeCharacter(character.getReference());
     }
 
     protected Character addAttributePoints(Attribute attribute, int points) {
-        return characterMaintenanceService.addAttributePoints(characterName, attribute, points);
+        return characterMaintenanceService.addAttributePoints(character.getReference(), attribute, points);
     }
 
     protected Character upgradeCaste(Caste newCaste) {
         while (!character.getHealth().isFull()) {
-            character = characterAdventureService.sleep(characterName);
+            character = characterAdventureService.sleep(character.getReference());
         }
 
-        return characterMaintenanceService.upgradeCaste(characterName, newCaste);
+        return characterMaintenanceService.upgradeCaste(character.getReference(), newCaste);
     }
 
     protected Character combatUntilNextLevel() {
-        Character character = characterMaintenanceService.getCharacter(characterName);
         int actualLevel = character.getLevel();
 
         do {
-            character = characterAdventureService.combat(characterName);
-            character = healing(character);
-            character = prepareToSummon(character);
+            character = characterAdventureService.combat(character.getReference());
+            character = healing();
+            character = prepareToSummon();
         } while (character.isAlive() && character.getLevel() == actualLevel);
 
         return character;
     }
 
-    private Character healing(Character character) {
+    private Character healing() {
         if (character.getHealth().tolerateLoss(TOLERATED_INJURY)) {
             return character;
         }
-        return characterAdventureService.sleep(characterName);
+        return characterAdventureService.sleep(character.getReference());
     }
 
-    private Character prepareToSummon(Character character) {
+    private Character prepareToSummon() {
         if (character.getCompanions().isEmpty()
-                && !summoningSpells(character).isEmpty()
-                && usableSummoningSpells(character).isEmpty()) {
-            return characterAdventureService.sleep(characterName);
+                && !summoningSpells().isEmpty()
+                && usableSummoningSpells().isEmpty()) {
+            return characterAdventureService.sleep(character.getReference());
         }
         return character;
     }
 
-    private List<Spell> summoningSpells(Character character) {
+    private List<Spell> summoningSpells() {
         return SPELLS.values().stream()
                 .filter(spell -> spell.getType().equals(SUMMON))
                 .filter(spell -> !CASTE_SPELL_PROHIBITION.get(character.getCaste())
@@ -89,8 +81,8 @@ public abstract class EnduranceTestBase {
                 .collect(toList());
     }
 
-    private List<Spell> usableSummoningSpells(Character character) {
-        return summoningSpells(character).stream()
+    private List<Spell> usableSummoningSpells() {
+        return summoningSpells().stream()
                 .filter(spell -> character.getMagic().has(spell.getCost()))
                 .collect(toList());
     }

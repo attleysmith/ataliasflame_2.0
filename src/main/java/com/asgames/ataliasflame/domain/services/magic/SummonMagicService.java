@@ -83,7 +83,7 @@ public class SummonMagicService extends AbstractMagicService {
         int numberOfCompanions = character.getCompanions().size();
         if (numberOfCompanions < 5) {
             return choose(ANIMAL_SELECTOR).map(animalSummoned ->
-                    animalSummoned.instance(character, UUID.randomUUID().toString()));
+                    animalSummoned.instance(character, String.valueOf(numberOfCompanions)));
         }
         return Optional.empty();
     }
@@ -92,7 +92,7 @@ public class SummonMagicService extends AbstractMagicService {
         int numberOfCompanions = character.getCompanions().size();
         if (numberOfCompanions < 2) {
             return choose(GUARDIAN_WARRIOR_SELECTOR).map(guardianSummoned ->
-                    guardianSummoned.instance(character, UUID.randomUUID().toString()));
+                    guardianSummoned.instance(character, String.valueOf(numberOfCompanions)));
         }
         return Optional.empty();
     }
@@ -101,7 +101,8 @@ public class SummonMagicService extends AbstractMagicService {
         int numberOfCompanions = character.getCompanions().size();
         if (numberOfCompanions < 1) {
             Companion projection = Companion.builder()
-                    .name("Energy of " + character.getName() + "-" + UUID.randomUUID())
+                    .reference(UUID.randomUUID().toString())
+                    .name("Energy of " + character.getName())
                     .owner(character)
                     .attack(percent(character.getAttack(), ENERGY_PROJECTION_PERCENT))
                     .defense(percent(character.getDefense(), ENERGY_PROJECTION_PERCENT))
@@ -119,7 +120,7 @@ public class SummonMagicService extends AbstractMagicService {
         int numberOfCompanions = character.getCompanions().size();
         if (numberOfCompanions < 1) {
             return choose(DIVINE_GUARDIAN_SELECTOR).map(guardianSummoned ->
-                    guardianSummoned.instance(character, UUID.randomUUID().toString()));
+                    guardianSummoned.instance(character, String.valueOf(numberOfCompanions)));
         }
         return Optional.empty();
     }

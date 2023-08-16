@@ -26,11 +26,9 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
                 .race(NIGHT_ELF)
                 .gender(MALE)
                 .defensiveGod(ALATE)
-                .name(characterName)
+                .name("Bhakri")
                 .build();
-        characterMaintenanceService.createCharacter(characterInput);
-        // and
-        character = characterMaintenanceService.getCharacter(characterName);
+        character = characterMaintenanceService.createCharacter(characterInput);
 
         // expect
         level1Upgrade();

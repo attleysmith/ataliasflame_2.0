@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 import static com.asgames.ataliasflame.domain.MockConstants.*;
 
 @Slf4j
@@ -19,6 +21,7 @@ public class CharacterInitializer {
     private InventoryService inventoryService;
 
     public Character initialize(Character character) {
+        character.setReference(UUID.randomUUID().toString());
         initializeAttributes(character);
         setStartingCaste(character);
         setStartingInventory(character);

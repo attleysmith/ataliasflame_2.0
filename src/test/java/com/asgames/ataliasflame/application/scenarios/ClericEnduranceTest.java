@@ -26,11 +26,9 @@ public class ClericEnduranceTest extends EnduranceTestBase {
                 .race(DWARF)
                 .gender(FEMALE)
                 .defensiveGod(RUNID)
-                .name(characterName)
+                .name("Nobela")
                 .build();
-        characterMaintenanceService.createCharacter(characterInput);
-        // and
-        character = characterMaintenanceService.getCharacter(characterName);
+        character = characterMaintenanceService.createCharacter(characterInput);
 
         // expect
         level1Upgrade();

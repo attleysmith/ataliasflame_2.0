@@ -10,8 +10,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.UUID;
-
+import static com.asgames.ataliasflame.domain.MockConstants.MAX_ATTRIBUTE_POINTS;
 import static com.asgames.ataliasflame.domain.MockConstants.WEAPONS;
 import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
 import static com.asgames.ataliasflame.domain.model.enums.Gender.MALE;
@@ -19,6 +18,7 @@ import static com.asgames.ataliasflame.domain.model.enums.God.ALATE;
 import static com.asgames.ataliasflame.domain.model.enums.Race.HUMAN;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest
@@ -41,7 +41,7 @@ class AttributeServiceTest {
                 .race(HUMAN)
                 .gender(MALE)
                 .defensiveGod(ALATE)
-                .name("Hugo" + UUID.randomUUID())
+                .name("Hugo")
                 .build();
         character = addDagger(characterMaintenanceService.createCharacter(characterInput));
 
@@ -200,6 +200,22 @@ class AttributeServiceTest {
         assertThat(character.getDamageMultiplier(), is(15));
         assertThat(character.getHealth().totalValue(), is(150));
         assertThat(character.getMagic().totalValue(), is(23));
+    }
+
+    @Test
+    @Order(9)
+    void maxAttributeValueTest() {
+        // given
+        int allowedAdditionalStrength = MAX_ATTRIBUTE_POINTS - character.getAttributes().get(STRENGTH);
+        // and
+        character.setAttributePoints(allowedAdditionalStrength + 1);
+
+        // when
+        attributeService.addAttributePoints(character, STRENGTH, allowedAdditionalStrength);
+
+        // expect
+        assertThrows(IllegalArgumentException.class,
+                () -> attributeService.addAttributePoints(character, STRENGTH, 1));
     }
 
     private Character addDagger(Character character) {

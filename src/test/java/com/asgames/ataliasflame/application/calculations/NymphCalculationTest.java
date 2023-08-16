@@ -26,18 +26,18 @@ class NymphCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("rogueCalculations")
     void rogueTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = characterName("Castalia");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(NYMPH)
                 .gender(FEMALE)
                 .defensiveGod(god)
-                .name(characterName)
+                .name("Castalia")
                 .build();
         Character character = characterMaintenanceService.createCharacter(characterInput);
+        String characterReference = character.getReference();
         assertThat(character.getCaste(), is(ROGUE));
-        addDagger(characterName);
+        addDagger(characterReference);
 
-        character = characterMaintenanceService.getCharacter(characterName);
+        character = characterMaintenanceService.getCharacter(characterReference);
         assertThat(character.getAttack(), is(equalTo(attack)));
         assertThat(character.getDefense(), is(equalTo(defense)));
         assertThat(character.getMinDamage(), is(equalTo(minDamage)));
@@ -59,18 +59,18 @@ class NymphCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("wizardCalculations")
     void wizardTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = characterName("Kahliste");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(NYMPH)
                 .gender(FEMALE)
                 .defensiveGod(god)
-                .name(characterName)
+                .name("Kahliste")
                 .build();
-        characterMaintenanceService.createCharacter(characterInput);
-        upgradeCaste(characterName, List.of(WIZARD));
-        addDagger(characterName);
+        Character character = characterMaintenanceService.createCharacter(characterInput);
+        String characterReference = character.getReference();
+        upgradeCaste(characterReference, List.of(WIZARD));
+        addDagger(characterReference);
 
-        Character character = characterMaintenanceService.getCharacter(characterName);
+        character = characterMaintenanceService.getCharacter(characterReference);
         assertThat(character.getAttack(), is(equalTo(attack)));
         assertThat(character.getDefense(), is(equalTo(defense)));
         assertThat(character.getMinDamage(), is(equalTo(minDamage)));
@@ -92,18 +92,18 @@ class NymphCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("mageCalculations")
     void mageTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = characterName("Sylphise");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(NYMPH)
                 .gender(FEMALE)
                 .defensiveGod(god)
-                .name(characterName)
+                .name("Sylphise")
                 .build();
-        characterMaintenanceService.createCharacter(characterInput);
-        upgradeCaste(characterName, List.of(WIZARD, MAGE));
-        addDagger(characterName);
+        Character character = characterMaintenanceService.createCharacter(characterInput);
+        String characterReference = character.getReference();
+        upgradeCaste(characterReference, List.of(WIZARD, MAGE));
+        addDagger(characterReference);
 
-        Character character = characterMaintenanceService.getCharacter(characterName);
+        character = characterMaintenanceService.getCharacter(characterReference);
         assertThat(character.getAttack(), is(equalTo(attack)));
         assertThat(character.getDefense(), is(equalTo(defense)));
         assertThat(character.getMinDamage(), is(equalTo(minDamage)));
@@ -125,18 +125,18 @@ class NymphCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("witchmasterCalculations")
     void witchmasterTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = characterName("Melita");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(NYMPH)
                 .gender(FEMALE)
                 .defensiveGod(god)
-                .name(characterName)
+                .name("Melita")
                 .build();
-        characterMaintenanceService.createCharacter(characterInput);
-        upgradeCaste(characterName, List.of(WIZARD, MAGE, WITCHMASTER));
-        addDagger(characterName);
+        Character character = characterMaintenanceService.createCharacter(characterInput);
+        String characterReference = character.getReference();
+        upgradeCaste(characterReference, List.of(WIZARD, MAGE, WITCHMASTER));
+        addDagger(characterReference);
 
-        Character character = characterMaintenanceService.getCharacter(characterName);
+        character = characterMaintenanceService.getCharacter(characterReference);
         assertThat(character.getAttack(), is(equalTo(attack)));
         assertThat(character.getDefense(), is(equalTo(defense)));
         assertThat(character.getMinDamage(), is(equalTo(minDamage)));
@@ -158,18 +158,18 @@ class NymphCalculationTest extends RaceCalculationTestBase {
     @ParameterizedTest
     @MethodSource("avatarCalculations")
     void avatarTest(God god, int attack, int defense, int minDamage, int maxDamage, int damageMultiplier, int health, int magic) {
-        String characterName = characterName("Gatalea");
         CharacterInput characterInput = CharacterInput.builder()
                 .race(NYMPH)
                 .gender(FEMALE)
                 .defensiveGod(god)
-                .name(characterName)
+                .name("Gatalea")
                 .build();
-        characterMaintenanceService.createCharacter(characterInput);
-        upgradeCaste(characterName, List.of(WIZARD, MAGE, WITCHMASTER, AVATAR));
-        addDagger(characterName);
+        Character character = characterMaintenanceService.createCharacter(characterInput);
+        String characterReference = character.getReference();
+        upgradeCaste(characterReference, List.of(WIZARD, MAGE, WITCHMASTER, AVATAR));
+        addDagger(characterReference);
 
-        Character character = characterMaintenanceService.getCharacter(characterName);
+        character = characterMaintenanceService.getCharacter(characterReference);
         assertThat(character.getAttack(), is(equalTo(attack)));
         assertThat(character.getDefense(), is(equalTo(defense)));
         assertThat(character.getMinDamage(), is(equalTo(minDamage)));

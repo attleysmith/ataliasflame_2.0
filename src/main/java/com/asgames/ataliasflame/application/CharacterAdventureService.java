@@ -40,16 +40,16 @@ public class CharacterAdventureService {
     private DefensiveGodConversionLogRepository defensiveGodConversionLogRepository;
 
     @Transactional
-    public Character sleep(String characterName) {
-        Character character = characterMaintenanceService.getCharacter(characterName);
+    public Character sleep(String characterReference) {
+        Character character = characterMaintenanceService.getCharacter(characterReference);
         healingService.sleep(character);
         magicService.sleep(character);
         return characterRepository.save(character);
     }
 
     @Transactional
-    public Character combat(String characterName) {
-        Character character = characterMaintenanceService.getCharacter(characterName);
+    public Character combat(String characterReference) {
+        Character character = characterMaintenanceService.getCharacter(characterReference);
         List<Monster> monsters = monsterService.populateMonsters();
 
         magicService.castSummoningMagic(character);
@@ -77,8 +77,8 @@ public class CharacterAdventureService {
     }
 
     @Transactional
-    public String getDefensiveGodConversionCode(String characterName) {
-        Character character = characterMaintenanceService.getCharacter(characterName);
+    public String getDefensiveGodConversionCode(String characterReference) {
+        Character character = characterMaintenanceService.getCharacter(characterReference);
         String conversionCode = defensiveGodConversionService.getConversionCode(character);
 
         DefensiveGodConversionLog conversionLog = defensiveGodConversionLogRepository.save(DefensiveGodConversionLog.builder()

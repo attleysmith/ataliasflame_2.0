@@ -26,11 +26,9 @@ public class WandererEnduranceTest extends EnduranceTestBase {
                 .race(HUMAN)
                 .gender(MALE)
                 .defensiveGod(GETON)
-                .name(characterName)
+                .name("Takemoto")
                 .build();
-        characterMaintenanceService.createCharacter(characterInput);
-        // and
-        character = characterMaintenanceService.getCharacter(characterName);
+        character = characterMaintenanceService.createCharacter(characterInput);
 
         // expect
         level1Upgrade();

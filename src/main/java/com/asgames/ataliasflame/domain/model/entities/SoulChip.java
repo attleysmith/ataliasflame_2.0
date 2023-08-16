@@ -19,6 +19,8 @@ public class SoulChip {
     }
 
     @Id
+    @Column(name = "reference")
+    private String reference;
     @Column(name = "name")
     private String name;
     @Column(name = "shape")
@@ -52,6 +54,7 @@ public class SoulChip {
 
     public Companion summon() {
         return Companion.builder()
+                .reference(reference)
                 .name(name)
                 .owner(owner)
                 .attack(attack)

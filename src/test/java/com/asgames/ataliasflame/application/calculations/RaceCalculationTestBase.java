@@ -7,8 +7,8 @@ import static com.asgames.ataliasflame.domain.MockConstants.WEAPONS;
 
 public abstract class RaceCalculationTestBase extends CharacterTestBase {
 
-    protected void addDagger(String characterName) {
-        Character character = characterMaintenanceService.getCharacter(characterName);
+    protected void addDagger(String characterReference) {
+        Character character = characterMaintenanceService.getCharacter(characterReference);
         character.setWeapon(WEAPONS.get("DAGGER"));
         character.setShield(null);
         character.setArmor(null);

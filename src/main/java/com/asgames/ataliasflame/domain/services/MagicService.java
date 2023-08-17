@@ -5,6 +5,7 @@ import com.asgames.ataliasflame.domain.model.dtos.Monster;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.services.magic.AttackMagicService;
 import com.asgames.ataliasflame.domain.services.magic.BlessingMagicService;
+import com.asgames.ataliasflame.domain.services.magic.HealingMagicService;
 import com.asgames.ataliasflame.domain.services.magic.SummonMagicService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ public class MagicService {
     private AttackMagicService attackMagicService;
     @Autowired
     private BlessingMagicService blessingMagicService;
+    @Autowired
+    private HealingMagicService healingMagicService;
 
     public void sleep(Character character) {
         recover(character, MAGIC_RECOVERY_EFFECT_OF_SLEEP);
@@ -61,5 +64,9 @@ public class MagicService {
 
     public void removeBlessingMagic(Character character) {
         blessingMagicService.removeBlessingMagic(character);
+    }
+
+    public void castHealingMagic(Character character) {
+        healingMagicService.castHealingMagic(character);
     }
 }

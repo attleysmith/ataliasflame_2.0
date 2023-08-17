@@ -33,9 +33,11 @@ public class BlessingMagicService extends AttackMagicService {
         if (spell.getGroup().equals(SOUL)) {
             boosterName = getSoulBooster(character);
         }
-        boosterName.ifPresent(booster -> enforceBoosterEffect(character, booster));
-        character.getMagic().use(spell.getCost());
-        log.info("Blessed by " + spell.getName());
+        boosterName.ifPresent(booster -> {
+            character.getMagic().use(spell.getCost());
+            enforceBoosterEffect(character, booster);
+            log.info("Blessed by " + spell.getName());
+        });
     }
 
     private Optional<String> getSoulBooster(Character character) {

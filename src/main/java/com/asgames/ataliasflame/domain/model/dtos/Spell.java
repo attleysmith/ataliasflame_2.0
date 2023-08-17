@@ -16,4 +16,6 @@ public class Spell {
     private final Integer cost;
     private final int minDamage;
     private final int maxDamage;
+    private final int healingEffect;
+    private final boolean area;
 }

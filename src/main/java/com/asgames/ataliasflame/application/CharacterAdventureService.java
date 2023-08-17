@@ -62,13 +62,14 @@ public class CharacterAdventureService {
 
         combatService.combat(characterTeam, monsters);
         character.getCompanions().removeIf(Combatant::isDead);
-        magicService.removeBlessingMagic(character);
 
         if (character.isAlive()) {
             character = experienceService.gainExperience(character, monsters);
             log.info("You are the winner!");
             log.info("Remaining health: " + character.getHealth().actualValue());
             monsterService.looting(character, monsters);
+            magicService.castHealingMagic(character);
+            magicService.removeBlessingMagic(character);
         } else {
             log.info("You are defeated!");
         }

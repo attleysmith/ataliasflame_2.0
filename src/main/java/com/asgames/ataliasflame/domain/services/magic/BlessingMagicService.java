@@ -61,7 +61,7 @@ public class BlessingMagicService extends AttackMagicService {
     public void removeBlessingMagic(Character character) {
         characterCalculationService.recalculateProperties(character);
         if (character.getHealth().isEmpty()) {
-            throw new IllegalStateException("You died of an expired bless effect!");
+            log.info("You died of an expired bless effect!");
         }
     }
 }

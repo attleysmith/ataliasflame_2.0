@@ -1,9 +1,10 @@
 package com.asgames.ataliasflame.domain.services;
 
 import com.asgames.ataliasflame.domain.model.dtos.Item;
-import com.asgames.ataliasflame.domain.model.dtos.Monster;
 import com.asgames.ataliasflame.domain.model.dtos.MonsterTemplate;
 import com.asgames.ataliasflame.domain.model.entities.Character;
+import com.asgames.ataliasflame.domain.model.entities.Location;
+import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.utils.SelectionValue;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,18 +26,15 @@ public class MonsterService {
     @Autowired
     private InventoryService inventoryService;
 
-    public List<Monster> populateMonsters() {
+    public List<Monster> populateMonsters(Location location) {
         List<Monster> monsters = new ArrayList<>();
 
         MonsterTemplate monsterAppeared = choose(MONSTER_SELECTOR);
-        log.info("Enemy appeared: " + monsterAppeared.getCode());
-
         do {
-            Monster monster = monsterAppeared.instance();
+            Monster monster = monsterAppeared.instance(location);
             monsters.add(monster);
         } while (successX(monsterAppeared.getMass()));
 
-        log.info("Number of enemies: " + monsters.size());
         return monsters;
     }
 

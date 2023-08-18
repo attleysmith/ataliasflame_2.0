@@ -77,7 +77,7 @@ public class CharacterCalculationService {
     private int actualDefense(Character character) {
         return BASE_DEFENSE
                 + character.getWeapon().getDefense()
-                + (character.getShield() == null ? 0 : character.getShield().getDefense())
+                + (character.getShield().isEmpty() ? 0 : character.getShield().get().getDefense())
                 + (character.getArmor().isEmpty() ? 0 : character.getArmor().get().getDefense());
     }
 

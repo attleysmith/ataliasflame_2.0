@@ -2,9 +2,10 @@ package com.asgames.ataliasflame.domain.services;
 
 import com.asgames.ataliasflame.domain.model.dtos.ArmorTemplate;
 import com.asgames.ataliasflame.domain.model.dtos.Item;
+import com.asgames.ataliasflame.domain.model.dtos.ShieldTemplate;
 import com.asgames.ataliasflame.domain.model.entities.Armor;
 import com.asgames.ataliasflame.domain.model.entities.Character;
-import com.asgames.ataliasflame.domain.model.vos.Shield;
+import com.asgames.ataliasflame.domain.model.entities.Shield;
 import com.asgames.ataliasflame.domain.model.vos.Weapon;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class InventoryService {
         takeWeapon(character, startingWeapon);
 
         choose(STARTING_SHIELD_SELECTOR).ifPresent(startingShield ->
-                takeShield(character, startingShield));
+                takeShield(character, startingShield.instance()));
         choose(STARTING_ARMOR_SELECTOR).ifPresent(startingArmor ->
                 takeArmor(character, startingArmor.instance()));
     }
@@ -76,12 +77,14 @@ public class InventoryService {
             throw new IllegalArgumentException("Only shield can be used as shield!");
         }
 
-        Shield newShield = SHIELDS.get(item.getCode());
-        if (newShield == null) {
+        ShieldTemplate newShieldTemplate = SHIELDS.get(item.getCode());
+        if (newShieldTemplate == null) {
             throw new IllegalStateException("New shield not recognized as real shield: " + item.getCode());
         }
 
-        if (character.getShield() == null || newShield.getPopularity() > character.getShield().getPopularity()) {
+        Shield newShield = newShieldTemplate.instance();
+        newShield.getDurability().trauma(roll100());
+        if (character.getShield().isEmpty() || newShield.isBetterThan(character.getShield().get())) {
             takeShield(character, newShield);
         }
     }
@@ -104,7 +107,7 @@ public class InventoryService {
     }
 
     private void takeWeapon(Character character, Weapon weapon) {
-        if (weapon.isOneHanded() || character.getShield() == null) {
+        if (weapon.isOneHanded() || character.getShield().isEmpty()) {
             character.setWeapon(weapon);
             characterCalculationService.recalculateProperties(character);
             log.info("Weapon used: " + weapon.getCode());
@@ -115,6 +118,7 @@ public class InventoryService {
 
     private void takeShield(Character character, Shield shield) {
         if (character.getWeapon().isOneHanded()) {
+            shield.setOwner(character);
             character.setShield(shield);
             characterCalculationService.recalculateProperties(character);
             log.info("Shield used: " + shield.getCode());

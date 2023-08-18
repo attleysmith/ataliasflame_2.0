@@ -3,9 +3,7 @@ package com.asgames.ataliasflame.domain.model.entities;
 import com.asgames.ataliasflame.domain.model.enums.*;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
 import com.asgames.ataliasflame.domain.model.vos.Energy;
-import com.asgames.ataliasflame.domain.model.vos.Shield;
 import com.asgames.ataliasflame.domain.model.vos.Weapon;
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -91,15 +89,6 @@ public class Character implements Combatant {
     })
     private Weapon weapon;
 
-    @Nullable
-    @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "code", column = @Column(name = "shieldCode")),
-            @AttributeOverride(name = "defense", column = @Column(name = "shieldDefense")),
-            @AttributeOverride(name = "popularity", column = @Column(name = "shieldPopularity"))
-    })
-    private Shield shield;
-
     @ElementCollection(fetch = EAGER)
     @CollectionTable(name = "CharacterAttributeMapping",
             joinColumns = {@JoinColumn(name = "characterId")})
@@ -115,7 +104,15 @@ public class Character implements Combatant {
     private Set<Companion> companions = new HashSet<>();
 
     @OneToOne(mappedBy = "owner", cascade = ALL, fetch = EAGER, orphanRemoval = true)
+    private Shield shield;
+
+    @OneToOne(mappedBy = "owner", cascade = ALL, fetch = EAGER, orphanRemoval = true)
     private Armor armor;
+
+    @Override
+    public Optional<Shield> getShield() {
+        return Optional.ofNullable(shield);
+    }
 
     @Override
     public Optional<Armor> getArmor() {

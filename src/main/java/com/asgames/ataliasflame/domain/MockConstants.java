@@ -2,7 +2,6 @@ package com.asgames.ataliasflame.domain;
 
 import com.asgames.ataliasflame.domain.model.dtos.*;
 import com.asgames.ataliasflame.domain.model.enums.*;
-import com.asgames.ataliasflame.domain.model.vos.Shield;
 import com.asgames.ataliasflame.domain.model.vos.Weapon;
 import com.asgames.ataliasflame.domain.utils.SelectionValue;
 
@@ -809,26 +808,30 @@ public final class MockConstants {
                     .build()
     );
 
-    public static final Map<String, Shield> SHIELDS = Map.of(
-            "BUCKLER", Shield.builder()
+    public static final Map<String, ShieldTemplate> SHIELDS = Map.of(
+            "BUCKLER", ShieldTemplate.builder()
                     .code("BUCKLER")
-                    .defense(5)
-                    .popularity(0)
+                    .defense(3)
+                    .absorption(25)
+                    .durability(30)
                     .build(),
-            "ROUND_SHIELD", Shield.builder()
+            "ROUND_SHIELD", ShieldTemplate.builder()
                     .code("ROUND_SHIELD")
-                    .defense(10)
-                    .popularity(10)
+                    .defense(5)
+                    .absorption(30)
+                    .durability(50)
                     .build(),
-            "KITE_SHIELD", Shield.builder()
+            "KITE_SHIELD", ShieldTemplate.builder()
                     .code("KITE_SHIELD")
-                    .defense(15)
-                    .popularity(20)
+                    .defense(8)
+                    .absorption(35)
+                    .durability(70)
                     .build(),
-            "TOWER_SHIELD", Shield.builder()
+            "TOWER_SHIELD", ShieldTemplate.builder()
                     .code("TOWER_SHIELD")
-                    .defense(20)
-                    .popularity(30)
+                    .defense(10)
+                    .absorption(50)
+                    .durability(100)
                     .build()
     );
 
@@ -879,7 +882,7 @@ public final class MockConstants {
             new SelectionValue<>(15, WEAPONS.get("SWORD"))
     );
 
-    public static final List<SelectionValue<Optional<Shield>>> STARTING_SHIELD_SELECTOR = List.of(
+    public static final List<SelectionValue<Optional<ShieldTemplate>>> STARTING_SHIELD_SELECTOR = List.of(
             new SelectionValue<>(60, Optional.empty()),
             new SelectionValue<>(10, Optional.of(SHIELDS.get("BUCKLER"))),
             new SelectionValue<>(15, Optional.of(SHIELDS.get("ROUND_SHIELD"))),

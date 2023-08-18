@@ -1,12 +1,14 @@
 package com.asgames.ataliasflame.application;
 
-import com.asgames.ataliasflame.domain.model.dtos.Monster;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.DefensiveGodConversionLog;
+import com.asgames.ataliasflame.domain.model.entities.Location;
+import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
 import com.asgames.ataliasflame.domain.services.*;
 import com.asgames.ataliasflame.infrastructure.repositories.CharacterRepository;
 import com.asgames.ataliasflame.infrastructure.repositories.DefensiveGodConversionLogRepository;
+import com.asgames.ataliasflame.infrastructure.repositories.LocationRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,9 +23,13 @@ public class CharacterAdventureService {
 
     @Autowired
     private CharacterRepository characterRepository;
+    @Autowired
+    private LocationRepository locationRepository;
 
     @Autowired
     private CharacterMaintenanceService characterMaintenanceService;
+    @Autowired
+    private LocationAdventureService locationAdventureService;
     @Autowired
     private CombatService combatService;
     @Autowired
@@ -48,9 +54,10 @@ public class CharacterAdventureService {
     }
 
     @Transactional
-    public Character combat(String characterReference) {
+    public Character combat(String characterReference, String locationReference) {
         Character character = characterMaintenanceService.getCharacter(characterReference);
-        List<Monster> monsters = monsterService.populateMonsters();
+        Location location = locationAdventureService.getLocation(locationReference);
+        List<Monster> monsters = location.getMonsters();
 
         magicService.castSummoningMagic(character);
         magicService.castBlessingMagic(character);
@@ -65,14 +72,15 @@ public class CharacterAdventureService {
 
         if (character.isAlive()) {
             character = experienceService.gainExperience(character, monsters);
-            log.info("You are the winner!");
-            log.info("Remaining health: " + character.getHealth().actualValue());
+            log.info("You are the winner! Remaining health: " + character.getHealth().actualValue());
             monsterService.looting(character, monsters);
             magicService.castHealingMagic(character);
             magicService.removeBlessingMagic(character);
         } else {
             log.info("You are defeated!");
         }
+
+        locationRepository.save(location);
 
         return characterRepository.save(character);
     }

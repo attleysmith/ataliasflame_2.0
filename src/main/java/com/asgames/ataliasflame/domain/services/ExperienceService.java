@@ -1,7 +1,7 @@
 package com.asgames.ataliasflame.domain.services;
 
 import com.asgames.ataliasflame.domain.model.entities.Character;
-import com.asgames.ataliasflame.domain.model.dtos.Monster;
+import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.infrastructure.repositories.LevelRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;

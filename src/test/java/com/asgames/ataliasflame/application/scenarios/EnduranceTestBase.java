@@ -2,8 +2,10 @@ package com.asgames.ataliasflame.application.scenarios;
 
 import com.asgames.ataliasflame.application.CharacterAdventureService;
 import com.asgames.ataliasflame.application.CharacterMaintenanceService;
+import com.asgames.ataliasflame.application.LocationAdventureService;
 import com.asgames.ataliasflame.domain.model.dtos.Spell;
 import com.asgames.ataliasflame.domain.model.entities.Character;
+import com.asgames.ataliasflame.domain.model.entities.Location;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
 import org.junit.jupiter.api.AfterEach;
@@ -23,6 +25,8 @@ public abstract class EnduranceTestBase {
     protected CharacterAdventureService characterAdventureService;
     @Autowired
     protected CharacterMaintenanceService characterMaintenanceService;
+    @Autowired
+    protected LocationAdventureService locationAdventureService;
 
     protected Character character;
 
@@ -47,7 +51,8 @@ public abstract class EnduranceTestBase {
         int actualLevel = character.getLevel();
 
         do {
-            character = characterAdventureService.combat(character.getReference());
+            Location location = locationAdventureService.buildLocation();
+            character = characterAdventureService.combat(character.getReference(), location.getReference());
             character = healing();
             character = prepareToSummon();
         } while (character.isAlive() && character.getLevel() == actualLevel);

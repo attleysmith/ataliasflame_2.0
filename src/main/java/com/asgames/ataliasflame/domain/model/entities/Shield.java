@@ -9,10 +9,10 @@ import lombok.*;
 @Builder
 @Data
 @AllArgsConstructor // Builder needs it
-public class Armor implements AbsorptionDefense {
+public class Shield implements AbsorptionDefense {
 
     // JPA needs it
-    public Armor() {
+    public Shield() {
     }
 
     @Id
@@ -39,7 +39,7 @@ public class Armor implements AbsorptionDefense {
     })
     private Energy durability;
 
-    public boolean isBetterThan(Armor otherArmor) {
-        return this.getDurability().actualValue() > otherArmor.getDurability().actualValue();
+    public boolean isBetterThan(Shield otherShield) {
+        return this.getDurability().actualValue() > otherShield.getDurability().actualValue();
     }
 }

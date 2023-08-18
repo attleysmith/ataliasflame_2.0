@@ -1,6 +1,7 @@
 package com.asgames.ataliasflame.domain.services;
 
 import com.asgames.ataliasflame.domain.model.dtos.TeamMember;
+import com.asgames.ataliasflame.domain.model.interfaces.AbsorptionDefense;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
 import com.asgames.ataliasflame.domain.services.CombatContext.Round;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.percent;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.pointOut;
@@ -110,12 +112,18 @@ public class CombatService {
     }
 
     private void doDamage(Combatant defender, int damage) {
-        defender.getArmor().ifPresentOrElse(
-                armor -> {
-                    int absorbedDamage = percent(damage, armor.getAbsorption());
-                    int penetration = armor.getDurability().penetrate(absorbedDamage);
-                    defender.getHealth().damage(damage - absorbedDamage + penetration);
-                },
-                () -> defender.getHealth().damage(damage));
+        AtomicInteger remainingDamage = new AtomicInteger(damage);
+        defender.getShield().ifPresent(
+                shield -> absorption(shield, remainingDamage));
+        defender.getArmor().ifPresent(
+                armor -> absorption(armor, remainingDamage));
+        defender.getHealth().damage(remainingDamage.get());
+    }
+
+    private void absorption(AbsorptionDefense defense, AtomicInteger damage) {
+        int originalDamage = damage.get();
+        int absorbedDamage = percent(originalDamage, defense.getAbsorption());
+        int penetration = defense.getDurability().penetrate(absorbedDamage);
+        damage.set(originalDamage - absorbedDamage + penetration);
     }
 }

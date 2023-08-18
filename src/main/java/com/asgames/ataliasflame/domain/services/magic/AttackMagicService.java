@@ -1,6 +1,6 @@
 package com.asgames.ataliasflame.domain.services.magic;
 
-import com.asgames.ataliasflame.domain.model.dtos.Monster;
+import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.dtos.Spell;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import lombok.extern.slf4j.Slf4j;

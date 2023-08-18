@@ -72,7 +72,7 @@ public class CasteService {
             character.getSoulChips().add(SoulChipFactory.getSoulChip(character, percent));
 
             if (character.isDead()) {
-                throw new IllegalStateException("You died of trauma!");
+                log.info("You died of trauma!");
             }
         }
     }

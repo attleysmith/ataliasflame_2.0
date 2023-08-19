@@ -18,12 +18,17 @@ public class DefensiveGodConversionService {
     @Autowired
     private CharacterCalculationService characterCalculationService;
 
-    public String getConversionCode(Character character) {
+    public DefensiveGodConversionLog getConversionLog(Character character) {
         CasteDetails casteDetails = CASTE_DETAILS.get(character.getCaste());
         if (casteDetails.getCaste().equals(MONK) || !casteDetails.getGroup().equals(CLERIC)) {
             throw new IllegalArgumentException("Only higher rank clerics can convert characters! (At least priests.)");
         }
-        return UUID.randomUUID().toString();
+
+        return DefensiveGodConversionLog.builder()
+                .conversionCode(UUID.randomUUID().toString())
+                .cleric(character)
+                .god(character.getDefensiveGod())
+                .build();
     }
 
     public DefensiveGodConversionLog convert(Character character, DefensiveGodConversionLog conversionLog) {

@@ -1,8 +1,6 @@
 package com.asgames.ataliasflame.application.scenarios;
 
-import com.asgames.ataliasflame.application.CharacterAdventureService;
-import com.asgames.ataliasflame.application.CharacterMaintenanceService;
-import com.asgames.ataliasflame.application.LocationAdventureService;
+import com.asgames.ataliasflame.application.*;
 import com.asgames.ataliasflame.domain.model.dtos.Spell;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Location;
@@ -22,9 +20,13 @@ public abstract class EnduranceTestBase {
     private static final int TOLERATED_INJURY = 40;
 
     @Autowired
+    protected CharacterMaintenanceService characterMaintenanceService;
+    @Autowired
     protected CharacterAdventureService characterAdventureService;
     @Autowired
-    protected CharacterMaintenanceService characterMaintenanceService;
+    protected CharacterMagicService characterMagicService;
+    @Autowired
+    protected CharacterLocationService characterLocationService;
     @Autowired
     protected LocationAdventureService locationAdventureService;
 
@@ -52,15 +54,24 @@ public abstract class EnduranceTestBase {
 
         do {
             Location location = locationAdventureService.buildLocation();
-            character = characterAdventureService.combat(character.getReference(), location.getReference());
-            character = healing();
-            character = prepareToSummon();
+            character = characterMagicService.castSummoningMagic(character.getReference());
+            character = characterMagicService.castBlessingMagic(character.getReference());
+            character = characterMagicService.castAttackMagic(character.getReference(), location.getReference());
+            character = characterLocationService.seizeLocation(character.getReference(), location.getReference());
+            if (character.isAlive()) {
+                character = characterLocationService.lootLocation(character.getReference(), location.getReference());
+                character = characterMagicService.castHealingMagic(character.getReference());
+                character = characterMagicService.removeBlessingMagic(character.getReference());
+
+                character = sleeping();
+                character = prepareToSummon();
+            }
         } while (character.isAlive() && character.getLevel() == actualLevel);
 
         return character;
     }
 
-    private Character healing() {
+    private Character sleeping() {
         if (character.getHealth().tolerateLoss(TOLERATED_INJURY)) {
             return character;
         }

@@ -38,11 +38,7 @@ public class MonsterService {
         return monsters;
     }
 
-    public void looting(Character character, List<Monster> monsters) {
-        monsters.forEach(monster -> looting(character, monster));
-    }
-
-    public void looting(Character character, Monster monster) {
+    public void lootMonster(Character character, Monster monster) {
         List<SelectionValue<Optional<Item>>> drops = MONSTER_DROPS.get(monster.getCode());
         if (drops == null) {
             return;

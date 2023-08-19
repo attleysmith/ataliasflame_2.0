@@ -1,6 +1,7 @@
 package com.asgames.ataliasflame.application;
 
 import com.asgames.ataliasflame.application.model.CharacterInput;
+import com.asgames.ataliasflame.application.model.DefensiveGodConversionCode;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.enums.Gender;
 import com.asgames.ataliasflame.domain.model.enums.God;
@@ -108,8 +109,15 @@ class CharacterServiceTest extends CharacterTestBase {
         assertThat(fighter.getMagic().totalValue(), is(530));
 
         // when
-        String conversionCode = characterAdventureService.getDefensiveGodConversionCode(clericReference);
-        fighter = characterMaintenanceService.convertDefensiveGod(fighterReference, conversionCode);
+        DefensiveGodConversionCode conversionCode = characterAdventureService.getDefensiveGodConversionCode(clericReference);
+
+        // then
+        assertThat(conversionCode.getClericReference(), is(cleric.getReference()));
+        assertThat(conversionCode.getClericName(), is(cleric.getName()));
+        assertThat(conversionCode.getGod(), is(cleric.getDefensiveGod()));
+
+        // when
+        fighter = characterMaintenanceService.convertDefensiveGod(fighterReference, conversionCode.getCode());
 
         // expect
         assertThat(cleric.getDefensiveGod(), is(equalTo(fighter.getDefensiveGod())));
@@ -120,7 +128,7 @@ class CharacterServiceTest extends CharacterTestBase {
 
         // and
         assertThrows(IllegalArgumentException.class,
-                () -> characterMaintenanceService.convertDefensiveGod(fighterReference, conversionCode));
+                () -> characterMaintenanceService.convertDefensiveGod(fighterReference, conversionCode.getCode()));
     }
 
     private static Stream<Arguments> characters() {

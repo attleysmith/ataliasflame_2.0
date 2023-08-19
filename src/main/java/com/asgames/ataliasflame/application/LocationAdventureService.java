@@ -15,6 +15,7 @@ public class LocationAdventureService {
 
     @Autowired
     private LocationRepository locationRepository;
+
     @Autowired
     private LocationService locationService;
 

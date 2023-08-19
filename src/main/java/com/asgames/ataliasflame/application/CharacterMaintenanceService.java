@@ -26,6 +26,11 @@ public class CharacterMaintenanceService {
     private CharacterMapper characterMapper;
 
     @Autowired
+    private CharacterRepository characterRepository;
+    @Autowired
+    private DefensiveGodConversionLogRepository defensiveGodConversionLogRepository;
+
+    @Autowired
     private CharacterInitializer characterInitializer;
     @Autowired
     private AttributeService attributeService;
@@ -33,11 +38,6 @@ public class CharacterMaintenanceService {
     private CasteService casteService;
     @Autowired
     private DefensiveGodConversionService defensiveGodConversionService;
-
-    @Autowired
-    private CharacterRepository characterRepository;
-    @Autowired
-    private DefensiveGodConversionLogRepository defensiveGodConversionLogRepository;
 
     @Transactional
     public Character createCharacter(CharacterInput characterInput) {

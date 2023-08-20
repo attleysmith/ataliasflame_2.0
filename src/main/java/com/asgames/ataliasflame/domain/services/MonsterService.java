@@ -13,9 +13,10 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import static com.asgames.ataliasflame.domain.MockConstants.MONSTERS;
 import static com.asgames.ataliasflame.domain.MockConstants.MONSTER_DROPS;
-import static com.asgames.ataliasflame.domain.MockConstants.MONSTER_SELECTOR;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.choose;
 import static com.asgames.ataliasflame.domain.utils.DiceUtils.successX;
 
@@ -28,12 +29,16 @@ public class MonsterService {
 
     public List<Monster> populateMonsters(Location location) {
         List<Monster> monsters = new ArrayList<>();
+        List<SelectionValue<MonsterTemplate>> monsterSelector = MONSTERS.values().stream()
+                .filter(monsterTemplate -> monsterTemplate.getLevel() <= location.getLevel())
+                .map(monsterTemplate -> new SelectionValue<>(monsterTemplate.getChance(), monsterTemplate))
+                .collect(Collectors.toList());
 
-        MonsterTemplate monsterAppeared = choose(MONSTER_SELECTOR);
+        MonsterTemplate monsterAppeared = choose(monsterSelector);
         do {
             Monster monster = monsterAppeared.instance(location);
             monsters.add(monster);
-        } while (successX(monsterAppeared.getMass()));
+        } while (successX(monsterAppeared.getSpawn()));
 
         return monsters;
     }

@@ -28,12 +28,16 @@ public class Location {
     @Column(name = "reference")
     private String reference;
 
+    @Column(name = "level")
+    private int level;
+
     @OneToMany(mappedBy = "location", cascade = ALL, fetch = EAGER, orphanRemoval = true)
     private List<Monster> monsters;
 
-    public static Location build() {
+    public static Location build(int level) {
         return Location.builder()
                 .reference(UUID.randomUUID().toString())
+                .level(level)
                 .build();
     }
 }

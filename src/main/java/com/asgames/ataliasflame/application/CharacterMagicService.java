@@ -1,9 +1,12 @@
 package com.asgames.ataliasflame.application;
 
+import com.asgames.ataliasflame.domain.model.dtos.Spell;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Location;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
+import com.asgames.ataliasflame.domain.model.enums.MagicType;
 import com.asgames.ataliasflame.domain.services.MagicService;
+import com.asgames.ataliasflame.domain.services.SpellService;
 import com.asgames.ataliasflame.infrastructure.repositories.CharacterRepository;
 import com.asgames.ataliasflame.infrastructure.repositories.LocationRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +32,8 @@ public class CharacterMagicService {
 
     @Autowired
     private MagicService magicService;
+    @Autowired
+    private SpellService spellService;
 
     @Transactional
     public Character castSummoningMagic(String characterReference) {
@@ -68,5 +73,11 @@ public class CharacterMagicService {
         Character character = characterMaintenanceService.getCharacter(characterReference);
         magicService.removeBlessingMagic(character);
         return characterRepository.save(character);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Spell> listCharacterSpells(String characterReference, MagicType magicType) {
+        Character character = characterMaintenanceService.getCharacter(characterReference);
+        return spellService.listSpellsByType(character, magicType);
     }
 }

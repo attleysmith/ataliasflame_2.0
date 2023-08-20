@@ -11,9 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-import static com.asgames.ataliasflame.domain.MockConstants.*;
 import static com.asgames.ataliasflame.domain.model.enums.MagicType.SUMMON;
-import static java.util.stream.Collectors.toList;
 
 public abstract class EnduranceTestBase {
 
@@ -53,7 +51,7 @@ public abstract class EnduranceTestBase {
         int actualLevel = character.getLevel();
 
         do {
-            Location location = locationAdventureService.buildLocation();
+            Location location = locationAdventureService.buildLocation(character.getLevel());
             character = characterMagicService.castSummoningMagic(character.getReference());
             character = characterMagicService.castBlessingMagic(character.getReference());
             character = characterMagicService.castAttackMagic(character.getReference(), location.getReference());
@@ -79,27 +77,17 @@ public abstract class EnduranceTestBase {
     }
 
     private Character prepareToSummon() {
-        if (character.getCompanions().isEmpty()
-                && !summoningSpells().isEmpty()
-                && usableSummoningSpells().isEmpty()) {
+        if (!character.getCompanions().isEmpty()) {
+            return character;
+        }
+
+        List<Spell> summoningSpells = characterMagicService.listCharacterSpells(character.getReference(), SUMMON);
+        boolean hasSpell = !summoningSpells.isEmpty();
+        boolean lowMagic = summoningSpells.stream().noneMatch(spell -> character.getMagic().has(spell.getCost()));
+
+        if (hasSpell && lowMagic) {
             return characterAdventureService.sleep(character.getReference());
         }
         return character;
-    }
-
-    private List<Spell> summoningSpells() {
-        return SPELLS.values().stream()
-                .filter(spell -> spell.getType().equals(SUMMON))
-                .filter(spell -> !CASTE_SPELL_PROHIBITION.get(character.getCaste())
-                        .contains(spell.getName()))
-                .filter(spell -> !RACE_SPELL_PROHIBITION.get(character.getRace())
-                        .contains(spell.getName()))
-                .collect(toList());
-    }
-
-    private List<Spell> usableSummoningSpells() {
-        return summoningSpells().stream()
-                .filter(spell -> character.getMagic().has(spell.getCost()))
-                .collect(toList());
     }
 }

@@ -40,6 +40,8 @@ public class Monster implements Combatant {
 
     @Column(name = "experience")
     private int experience;
+    @Column(name = "level")
+    private int level;
 
     @Embedded
     @AttributeOverrides({

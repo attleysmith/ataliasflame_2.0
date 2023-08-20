@@ -1125,8 +1125,10 @@ public final class MockConstants {
                     .maxDamage(1)
                     .health(10)
                     .initiative(3)
-                    .mass(70)
+                    .level(1)
                     .experience(10)
+                    .chance(20)
+                    .spawn(70)
                     .build(),
             "BOAR", MonsterTemplate.builder()
                     .code("BOAR")
@@ -1136,8 +1138,10 @@ public final class MockConstants {
                     .maxDamage(2)
                     .health(25)
                     .initiative(0)
-                    .mass(20)
+                    .level(11)
                     .experience(20)
+                    .chance(15)
+                    .spawn(25)
                     .build(),
             "WOLF", MonsterTemplate.builder()
                     .code("WOLF")
@@ -1147,8 +1151,10 @@ public final class MockConstants {
                     .maxDamage(3)
                     .health(25)
                     .initiative(-3)
-                    .mass(50)
+                    .level(21)
                     .experience(30)
+                    .chance(25)
+                    .spawn(50)
                     .build(),
             "BANDIT", MonsterTemplate.builder()
                     .code("BANDIT")
@@ -1158,8 +1164,10 @@ public final class MockConstants {
                     .maxDamage(4)
                     .health(30)
                     .initiative(-1)
-                    .mass(30)
+                    .level(31)
                     .experience(40)
+                    .chance(35)
+                    .spawn(40)
                     .build(),
             "WEREWOLF", MonsterTemplate.builder()
                     .code("WEREWOLF")
@@ -1169,17 +1177,76 @@ public final class MockConstants {
                     .maxDamage(5)
                     .health(40)
                     .initiative(-3)
-                    .mass(10)
+                    .level(41)
                     .experience(50)
+                    .chance(5)
+                    .spawn(15)
+                    .build(),
+            "NAGA", MonsterTemplate.builder()
+                    .code("NAGA")
+                    .attack(80)
+                    .defense(10)
+                    .minDamage(2)
+                    .maxDamage(8)
+                    .health(50)
+                    .initiative(-3)
+                    .level(51)
+                    .experience(60)
+                    .chance(5)
+                    .spawn(10)
+                    .build(),
+            "OGRE", MonsterTemplate.builder()
+                    .code("OGRE")
+                    .attack(85)
+                    .defense(15)
+                    .minDamage(2)
+                    .maxDamage(10)
+                    .health(65)
+                    .initiative(0)
+                    .level(61)
+                    .experience(70)
+                    .chance(5)
+                    .spawn(5)
+                    .build(),
+            "GHOUL", MonsterTemplate.builder()
+                    .code("GHOUL")
+                    .attack(90)
+                    .defense(10)
+                    .minDamage(3)
+                    .maxDamage(12)
+                    .health(80)
+                    .initiative(0)
+                    .level(71)
+                    .experience(80)
+                    .chance(5)
+                    .spawn(5)
+                    .build(),
+            "GRIFFIN", MonsterTemplate.builder()
+                    .code("GRIFFIN")
+                    .attack(100)
+                    .defense(20)
+                    .minDamage(5)
+                    .maxDamage(15)
+                    .health(100)
+                    .initiative(-3)
+                    .level(81)
+                    .experience(90)
+                    .chance(5)
+                    .spawn(10)
+                    .build(),
+            "DRAGON", MonsterTemplate.builder()
+                    .code("DRAGON")
+                    .attack(120)
+                    .defense(25)
+                    .minDamage(5)
+                    .maxDamage(20)
+                    .health(150)
+                    .initiative(-3)
+                    .level(91)
+                    .experience(100)
+                    .chance(5)
+                    .spawn(5)
                     .build()
-    );
-
-    public static final List<SelectionValue<MonsterTemplate>> MONSTER_SELECTOR = List.of(
-            new SelectionValue<>(20, MONSTERS.get("RAT")),
-            new SelectionValue<>(15, MONSTERS.get("BOAR")),
-            new SelectionValue<>(25, MONSTERS.get("WOLF")),
-            new SelectionValue<>(35, MONSTERS.get("BANDIT")),
-            new SelectionValue<>(5, MONSTERS.get("WEREWOLF"))
     );
 
     public static final Map<String, List<SelectionValue<Optional<Item>>>> MONSTER_DROPS = Map.of(
@@ -1306,6 +1373,76 @@ public final class MockConstants {
                     new SelectionValue<>(5, Optional.of(Item.builder()
                             .type(WEAPON)
                             .code("SWORD")
+                            .build()))),
+            "NAGA", List.of(
+                    new SelectionValue<>(30, Optional.empty()),
+                    new SelectionValue<>(15, Optional.of(Item.builder()
+                            .type(FOOD)
+                            .code("WATER")
+                            .healingEffect(3)
+                            .magicEffect(0)
+                            .build())),
+                    new SelectionValue<>(15, Optional.of(Item.builder()
+                            .type(FOOD)
+                            .code("MEAT")
+                            .healingEffect(10)
+                            .magicEffect(1)
+                            .build())),
+                    new SelectionValue<>(5, Optional.of(Item.builder()
+                            .type(FOOD)
+                            .code("HEALING_HERB")
+                            .healingEffect(20)
+                            .magicEffect(10)
+                            .build())),
+                    new SelectionValue<>(10, Optional.of(Item.builder()
+                            .type(WEAPON)
+                            .code("DAGGER")
+                            .build())),
+                    new SelectionValue<>(15, Optional.of(Item.builder()
+                            .type(WEAPON)
+                            .code("SPEAR")
+                            .build())),
+                    new SelectionValue<>(5, Optional.of(Item.builder()
+                            .type(WEAPON)
+                            .code("SWORD")
+                            .build())),
+                    new SelectionValue<>(5, Optional.of(Item.builder()
+                            .type(ARMOR)
+                            .code("LEATHER_ARMOR")
+                            .build()))),
+            "OGRE", List.of(
+                    new SelectionValue<>(35, Optional.empty()),
+                    new SelectionValue<>(15, Optional.of(Item.builder()
+                            .type(FOOD)
+                            .code("WATER")
+                            .healingEffect(3)
+                            .magicEffect(0)
+                            .build())),
+                    new SelectionValue<>(20, Optional.of(Item.builder()
+                            .type(FOOD)
+                            .code("MEAT")
+                            .healingEffect(10)
+                            .magicEffect(1)
+                            .build())),
+                    new SelectionValue<>(5, Optional.of(Item.builder()
+                            .type(FOOD)
+                            .code("HEALING_HERB")
+                            .healingEffect(20)
+                            .magicEffect(10)
+                            .build())),
+                    new SelectionValue<>(10, Optional.of(Item.builder()
+                            .type(WEAPON)
+                            .code("DAGGER")
+                            .build())),
+                    new SelectionValue<>(15, Optional.of(Item.builder()
+                            .type(WEAPON)
+                            .code("SPEAR")
+                            .build()))),
+            "GHOUL", List.of(
+                    new SelectionValue<>(80, Optional.empty()),
+                    new SelectionValue<>(20, Optional.of(Item.builder()
+                            .type(WEAPON)
+                            .code("DAGGER")
                             .build())))
     );
 

@@ -20,8 +20,8 @@ public class LocationAdventureService {
     private LocationService locationService;
 
     @Transactional
-    public Location buildLocation() {
-        return locationRepository.save(locationService.buildLocation());
+    public Location buildLocation(int level) {
+        return locationRepository.save(locationService.buildLocation(level));
     }
 
     @Transactional(readOnly = true)

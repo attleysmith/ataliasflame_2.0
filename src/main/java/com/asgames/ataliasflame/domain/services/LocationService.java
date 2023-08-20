@@ -24,8 +24,8 @@ public class LocationService {
     @Autowired
     private ExperienceService experienceService;
 
-    public Location buildLocation() {
-        Location location = Location.build();
+    public Location buildLocation(int level) {
+        Location location = Location.build(level);
 
         List<Monster> monsters = monsterService.populateMonsters(location);
         log.info("Enemies appeared (" + monsters.size() + ")! -> " + monsters.stream().map(Monster::getCode).collect(joining(", ")));

@@ -5,30 +5,24 @@ import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Companion;
 import com.asgames.ataliasflame.domain.model.entities.SoulChip;
 import com.asgames.ataliasflame.domain.model.enums.MagicType;
+import com.asgames.ataliasflame.domain.services.SpellService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.asgames.ataliasflame.domain.MockConstants.*;
 import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.SOUL;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
 
 public abstract class AbstractMagicService {
 
-    protected List<Spell> spellsOfType(Character character, MagicType magicType) {
-        return SPELLS.values().stream()
-                .filter(spell -> spell.getType().equals(magicType))
-                .filter(spell -> !CASTE_SPELL_PROHIBITION.get(character.getCaste())
-                        .contains(spell.getName()))
-                .filter(spell -> !RACE_SPELL_PROHIBITION.get(character.getRace())
-                        .contains(spell.getName()))
-                .collect(toList());
-    }
+    @Autowired
+    private SpellService spellService;
 
     protected List<Spell> usableSpellsOfType(Character character, MagicType magicType) {
-        return spellsOfType(character, magicType).stream()
+        return spellService.listSpellsByType(character, magicType).stream()
                 .filter(spell -> character.getMagic().has(spell.getCost()))
                 .filter(spell -> !(spell.getGroup().equals(SOUL) && listUnusedSouls(character).isEmpty()))
                 .collect(toList());

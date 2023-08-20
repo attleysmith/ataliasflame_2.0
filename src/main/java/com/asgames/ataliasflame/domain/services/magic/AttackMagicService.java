@@ -1,8 +1,8 @@
 package com.asgames.ataliasflame.domain.services.magic;
 
-import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.dtos.Spell;
 import com.asgames.ataliasflame.domain.model.entities.Character;
+import com.asgames.ataliasflame.domain.model.entities.Monster;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.asgames.ataliasflame.domain.model.enums.MagicType.ATTACK;
-import static com.asgames.ataliasflame.domain.model.enums.MagicType.SUMMON;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.pointOut;
 
 @Slf4j
@@ -18,9 +17,6 @@ import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.pointOut;
 public class AttackMagicService extends AbstractMagicService {
 
     public void castAttackMagic(Character character, List<Monster> monsters) {
-        if (character.getCompanions().isEmpty() && !spellsOfType(character, SUMMON).isEmpty()) {
-            return;
-        }
         monsters.forEach(monster -> castAttackMagic(character, monster));
     }
 

@@ -6,6 +6,7 @@ import com.asgames.ataliasflame.domain.model.vos.Energy;
 import jakarta.persistence.*;
 import lombok.*;
 
+import static com.asgames.ataliasflame.domain.model.enums.CompanionType.SOUL_CHIP;
 import static jakarta.persistence.EnumType.STRING;
 
 @Entity
@@ -56,6 +57,7 @@ public class SoulChip {
         return Companion.builder()
                 .reference(reference)
                 .name(name)
+                .type(SOUL_CHIP)
                 .owner(owner)
                 .attack(attack)
                 .defense(defense)

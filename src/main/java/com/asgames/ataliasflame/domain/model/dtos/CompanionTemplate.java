@@ -2,6 +2,7 @@ package com.asgames.ataliasflame.domain.model.dtos;
 
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Companion;
+import com.asgames.ataliasflame.domain.model.enums.CompanionType;
 import com.asgames.ataliasflame.domain.model.vos.Energy;
 import lombok.Builder;
 import lombok.Data;
@@ -13,6 +14,7 @@ import java.util.UUID;
 public class CompanionTemplate {
 
     private final String code;
+    private final CompanionType type;
     private final int attack;
     private final int defense;
     private final int minDamage;
@@ -24,6 +26,7 @@ public class CompanionTemplate {
         return Companion.builder()
                 .reference(UUID.randomUUID().toString())
                 .name(codeSuffix.length() == 0 ? code : code + "-" + codeSuffix)
+                .type(type)
                 .owner(owner)
                 .attack(attack)
                 .defense(defense)

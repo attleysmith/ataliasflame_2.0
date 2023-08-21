@@ -13,6 +13,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static com.asgames.ataliasflame.domain.MockConstants.*;
+import static com.asgames.ataliasflame.domain.model.enums.CompanionType.ENERGY_PROJECTION;
 import static com.asgames.ataliasflame.domain.model.enums.MagicType.SUMMON;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.choose;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.percent;
@@ -103,6 +104,7 @@ public class SummonMagicService extends AbstractMagicService {
             Companion projection = Companion.builder()
                     .reference(UUID.randomUUID().toString())
                     .name("Energy of " + character.getName())
+                    .type(ENERGY_PROJECTION)
                     .owner(character)
                     .attack(percent(character.getAttack(), ENERGY_PROJECTION_PERCENT))
                     .defense(percent(character.getDefense(), ENERGY_PROJECTION_PERCENT))

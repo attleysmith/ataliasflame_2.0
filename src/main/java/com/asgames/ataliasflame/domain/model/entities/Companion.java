@@ -1,9 +1,12 @@
 package com.asgames.ataliasflame.domain.model.entities;
 
+import com.asgames.ataliasflame.domain.model.enums.CompanionType;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
 import com.asgames.ataliasflame.domain.model.vos.Energy;
 import jakarta.persistence.*;
 import lombok.*;
+
+import static jakarta.persistence.EnumType.STRING;
 
 @Entity
 @Builder
@@ -20,6 +23,9 @@ public class Companion implements Combatant {
     private String reference;
     @Column(name = "name")
     private String name;
+    @Column(name = "type")
+    @Enumerated(STRING)
+    private CompanionType type;
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude

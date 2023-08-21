@@ -1,7 +1,8 @@
 package com.asgames.ataliasflame.domain;
 
 import com.asgames.ataliasflame.domain.model.dtos.*;
-import com.asgames.ataliasflame.domain.model.enums.*;
+import com.asgames.ataliasflame.domain.model.enums.Caste;
+import com.asgames.ataliasflame.domain.model.enums.SpellName;
 import com.asgames.ataliasflame.domain.model.vos.Weapon;
 import com.asgames.ataliasflame.domain.utils.SelectionValue;
 
@@ -12,8 +13,7 @@ import java.util.Optional;
 import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
 import static com.asgames.ataliasflame.domain.model.enums.Caste.*;
 import static com.asgames.ataliasflame.domain.model.enums.CasteGroup.*;
-import static com.asgames.ataliasflame.domain.model.enums.Gender.FEMALE;
-import static com.asgames.ataliasflame.domain.model.enums.Gender.MALE;
+import static com.asgames.ataliasflame.domain.model.enums.CompanionType.*;
 import static com.asgames.ataliasflame.domain.model.enums.God.*;
 import static com.asgames.ataliasflame.domain.model.enums.ItemType.*;
 import static com.asgames.ataliasflame.domain.model.enums.MagicType.*;
@@ -900,6 +900,96 @@ public final class MockConstants {
             new SelectionValue<>(5, Optional.of(ARMORS.get("FULL_PLATE_MAIL")))
     );
 
+    // Items
+    public static final Map<String, Item> ITEMS = Map.ofEntries(
+            Map.entry("WATER", Item.builder()
+                    .type(FOOD)
+                    .code("WATER")
+                    .healingEffect(3)
+                    .magicEffect(0)
+                    .build()),
+            Map.entry("BREAD", Item.builder()
+                    .type(FOOD)
+                    .code("BREAD")
+                    .healingEffect(5)
+                    .magicEffect(0)
+                    .build()),
+            Map.entry("FRUIT", Item.builder()
+                    .type(FOOD)
+                    .code("FRUIT")
+                    .healingEffect(8)
+                    .magicEffect(2)
+                    .build()),
+            Map.entry("MEAT", Item.builder()
+                    .type(FOOD)
+                    .code("MEAT")
+                    .healingEffect(10)
+                    .magicEffect(1)
+                    .build()),
+            Map.entry("HEALING_HERB", Item.builder()
+                    .type(FOOD)
+                    .code("HEALING_HERB")
+                    .healingEffect(20)
+                    .magicEffect(10)
+                    .build()),
+            Map.entry("STAFF", Item.builder()
+                    .type(WEAPON)
+                    .code("STAFF")
+                    .build()),
+            Map.entry("DAGGER", Item.builder()
+                    .type(WEAPON)
+                    .code("DAGGER")
+                    .build()),
+            Map.entry("SPEAR", Item.builder()
+                    .type(WEAPON)
+                    .code("SPEAR")
+                    .build()),
+            Map.entry("SWORD", Item.builder()
+                    .type(WEAPON)
+                    .code("SWORD")
+                    .build()),
+            Map.entry("BUCKLER", Item.builder()
+                    .type(SHIELD)
+                    .code("BUCKLER")
+                    .build()),
+            Map.entry("ROUND_SHIELD", Item.builder()
+                    .type(SHIELD)
+                    .code("ROUND_SHIELD")
+                    .build()),
+            Map.entry("KITE_SHIELD", Item.builder()
+                    .type(SHIELD)
+                    .code("KITE_SHIELD")
+                    .build()),
+            Map.entry("TOWER_SHIELD", Item.builder()
+                    .type(SHIELD)
+                    .code("TOWER_SHIELD")
+                    .build()),
+            Map.entry("LINEN_ARMOR", Item.builder()
+                    .type(ARMOR)
+                    .code("LINEN_ARMOR")
+                    .build()),
+            Map.entry("LEATHER_ARMOR", Item.builder()
+                    .type(ARMOR)
+                    .code("LEATHER_ARMOR")
+                    .build()),
+            Map.entry("STUDDED_LEATHER_ARMOR", Item.builder()
+                    .type(ARMOR)
+                    .code("STUDDED_LEATHER_ARMOR")
+                    .build()),
+            Map.entry("CHAIN_MAIL", Item.builder()
+                    .type(ARMOR)
+                    .code("CHAIN_MAIL")
+                    .build()),
+            Map.entry("PLATE_MAIL", Item.builder()
+                    .type(ARMOR)
+                    .code("PLATE_MAIL")
+                    .build()),
+            Map.entry("FULL_PLATE_MAIL", Item.builder()
+                    .type(ARMOR)
+                    .code("FULL_PLATE_MAIL")
+                    .build())
+    );
+
     // Magic
     public static final Map<SpellName, Spell> SPELLS = Map.ofEntries(
             Map.entry(FIREBALL, Spell.builder()
@@ -909,6 +999,8 @@ public final class MockConstants {
                     .cost(10)
                     .minDamage(2)
                     .maxDamage(12)
+                    .prohibitedCastes(List.of(ROGUE, FIGHTER, PALADIN, TRACKER, RANGER, PILGRIM))
+                    .prohibitedRaces(List.of())
                     .build()),
             Map.entry(LIGHTNING_STRIKE, Spell.builder()
                     .name(LIGHTNING_STRIKE)
@@ -917,6 +1009,8 @@ public final class MockConstants {
                     .cost(10)
                     .minDamage(1)
                     .maxDamage(15)
+                    .prohibitedCastes(List.of(ROGUE, FIGHTER, PALADIN, GRANDMASTER, TRACKER, RANGER, PILGRIM, FREE_SOUL))
+                    .prohibitedRaces(List.of(DWARF, ORC, MINOTAUR))
                     .build()),
             Map.entry(INFERNO, Spell.builder()
                     .name(INFERNO)
@@ -925,6 +1019,8 @@ public final class MockConstants {
                     .cost(20)
                     .minDamage(12)
                     .maxDamage(28)
+                    .prohibitedCastes(List.of(ROGUE, FIGHTER, PALADIN, GRANDMASTER, TITAN, TRACKER, RANGER, PILGRIM, FREE_SOUL, HERMIT, MONK))
+                    .prohibitedRaces(List.of(DWARF, ORC))
                     .build()),
             Map.entry(BLADES_OF_JUDGEMENT, Spell.builder()
                     .name(BLADES_OF_JUDGEMENT)
@@ -933,6 +1029,8 @@ public final class MockConstants {
                     .cost(25)
                     .minDamage(10)
                     .maxDamage(30)
+                    .prohibitedCastes(List.of(ROGUE, WIZARD, FIGHTER, PALADIN, TRACKER, RANGER, PILGRIM, HERMIT, DRUID, ARCHDRUID, MONK, PRIEST))
+                    .prohibitedRaces(List.of(HALFLING))
                     .build()),
             Map.entry(GLACIAL_BLOW, Spell.builder()
                     .name(GLACIAL_BLOW)
@@ -941,6 +1039,8 @@ public final class MockConstants {
                     .cost(18)
                     .minDamage(10)
                     .maxDamage(25)
+                    .prohibitedCastes(List.of(ROGUE, FIGHTER, PALADIN, GRANDMASTER, TITAN, TRACKER, RANGER, PILGRIM, FREE_SOUL))
+                    .prohibitedRaces(List.of(DWARF, ORC, MINOTAUR))
                     .build()),
             Map.entry(BALL_OF_ENERGY, Spell.builder()
                     .name(BALL_OF_ENERGY)
@@ -949,6 +1049,8 @@ public final class MockConstants {
                     .cost(3)
                     .minDamage(1)
                     .maxDamage(5)
+                    .prohibitedCastes(List.of(ROGUE, WIZARD, FIGHTER, TRACKER, RANGER, HERMIT, MONK, PRIEST))
+                    .prohibitedRaces(List.of(DWARF, ORC, MINOTAUR))
                     .build()),
             Map.entry(SOUL_OUTBURST, Spell.builder()
                     .name(SOUL_OUTBURST)
@@ -957,6 +1059,8 @@ public final class MockConstants {
                     .cost(25)
                     .minDamage(15)
                     .maxDamage(30)
+                    .prohibitedCastes(List.of(ROGUE, WIZARD, MAGE, WITCHMASTER, AVATAR, FIGHTER, PALADIN, GRANDMASTER, TITAN, TRACKER, RANGER, HERMIT, DRUID, ARCHDRUID, ATALIAS_PRIEST, MONK, PRIEST, HIERARCH, ARCHANGEL))
+                    .prohibitedRaces(List.of())
                     .build()),
             Map.entry(WRATH_OF_NATURE, Spell.builder()
                     .name(WRATH_OF_NATURE)
@@ -965,6 +1069,8 @@ public final class MockConstants {
                     .cost(12)
                     .minDamage(5)
                     .maxDamage(20)
+                    .prohibitedCastes(List.of(ROGUE, WIZARD, MAGE, FIGHTER, PALADIN, GRANDMASTER, TITAN, TRACKER, RANGER, PILGRIM, FREE_SOUL, MONK, PRIEST, HIERARCH, ARCHANGEL))
+                    .prohibitedRaces(List.of())
                     .build()),
             Map.entry(SPLITTING_WIND, Spell.builder()
                     .name(SPLITTING_WIND)
@@ -973,6 +1079,8 @@ public final class MockConstants {
                     .cost(8)
                     .minDamage(1)
                     .maxDamage(10)
+                    .prohibitedCastes(List.of(ROGUE, FIGHTER, PALADIN, GRANDMASTER, TITAN, TRACKER, RANGER, PILGRIM, FREE_SOUL))
+                    .prohibitedRaces(List.of(DWARF, ORC, MINOTAUR))
                     .build()),
             Map.entry(DIVINE_HAMMER, Spell.builder()
                     .name(DIVINE_HAMMER)
@@ -981,6 +1089,8 @@ public final class MockConstants {
                     .cost(10)
                     .minDamage(6)
                     .maxDamage(18)
+                    .prohibitedCastes(List.of(ROGUE, WIZARD, MAGE, WITCHMASTER, AVATAR, FIGHTER, PALADIN, GRANDMASTER, TITAN, TRACKER, RANGER, PILGRIM, FREE_SOUL, HERMIT, DRUID, ARCHDRUID))
+                    .prohibitedRaces(List.of(ORC, MINOTAUR, HALFLING))
                     .build()),
             Map.entry(WOUND_HEALING, Spell.builder()
                     .name(WOUND_HEALING)
@@ -988,6 +1098,8 @@ public final class MockConstants {
                     .group(GENERAL)
                     .cost(1)
                     .healingEffect(1)
+                    .prohibitedCastes(List.of(ROGUE))
+                    .prohibitedRaces(List.of())
                     .build()),
             Map.entry(HEALING_WORD, Spell.builder()
                     .name(HEALING_WORD)
@@ -995,6 +1107,8 @@ public final class MockConstants {
                     .group(DIVINE)
                     .cost(5)
                     .healingEffect(12)
+                    .prohibitedCastes(List.of(ROGUE, WIZARD, MAGE, WITCHMASTER, FIGHTER, PALADIN, GRANDMASTER, TITAN, TRACKER, RANGER, PILGRIM, FREE_SOUL, HERMIT, DRUID))
+                    .prohibitedRaces(List.of(DWARF, ORC, MINOTAUR))
                     .build()),
             Map.entry(CURE, Spell.builder()
                     .name(CURE)
@@ -1002,6 +1116,8 @@ public final class MockConstants {
                     .group(GENERAL)
                     .cost(5)
                     .healingEffect(8)
+                    .prohibitedCastes(List.of(ROGUE, TRACKER, RANGER))
+                    .prohibitedRaces(List.of(DWARF, ORC, MINOTAUR))
                     .build()),
             Map.entry(REGENERATION, Spell.builder()
                     .name(REGENERATION)
@@ -1009,6 +1125,8 @@ public final class MockConstants {
                     .group(GENERAL)
                     .cost(10)
                     .healingEffect(30)
+                    .prohibitedCastes(List.of(ROGUE, TRACKER))
+                    .prohibitedRaces(List.of())
                     .build()),
             Map.entry(BREATH_OF_GOD, Spell.builder()
                     .name(BREATH_OF_GOD)
@@ -1016,6 +1134,8 @@ public final class MockConstants {
                     .group(DIVINE)
                     .cost(7)
                     .healingEffect(15)
+                    .prohibitedCastes(List.of(ROGUE, WIZARD, MAGE, WITCHMASTER, AVATAR, FIGHTER, PALADIN, GRANDMASTER, TITAN, TRACKER, RANGER, PILGRIM, FREE_SOUL, HERMIT, DRUID, ARCHDRUID))
+                    .prohibitedRaces(List.of(DWARF, ORC, MINOTAUR))
                     .build()),
             Map.entry(POWER_OF_NATURE, Spell.builder()
                     .name(POWER_OF_NATURE)
@@ -1023,6 +1143,8 @@ public final class MockConstants {
                     .group(NATURE)
                     .cost(5)
                     .healingEffect(10)
+                    .prohibitedCastes(List.of(ROGUE, WIZARD, MAGE, FIGHTER, PALADIN, GRANDMASTER, TITAN, TRACKER, RANGER, MONK, PRIEST, HIERARCH, ARCHANGEL))
+                    .prohibitedRaces(List.of())
                     .build()),
             Map.entry(SOUL_POWER, Spell.builder()
                     .name(SOUL_POWER)
@@ -1030,6 +1152,8 @@ public final class MockConstants {
                     .group(SOUL)
                     .cost(10)
                     .healingEffect(40)
+                    .prohibitedCastes(List.of(ROGUE, WIZARD, MAGE, WITCHMASTER, AVATAR, FIGHTER, PALADIN, GRANDMASTER, TITAN, TRACKER, HERMIT, DRUID, ARCHDRUID, ATALIAS_PRIEST, MONK, PRIEST, HIERARCH, ARCHANGEL))
+                    .prohibitedRaces(List.of())
                     .build()),
             Map.entry(RECHARGING, Spell.builder()
                     .name(RECHARGING)
@@ -1037,6 +1161,8 @@ public final class MockConstants {
                     .group(ENERGY)
                     .cost(8)
                     .healingEffect(20)
+                    .prohibitedCastes(List.of(ROGUE, FIGHTER, TRACKER, RANGER, HERMIT, MONK))
+                    .prohibitedRaces(List.of(DWARF, ORC, MINOTAUR))
                     .build()),
             Map.entry(HEALING_WAVE, Spell.builder()
                     .name(HEALING_WAVE)
@@ -1045,6 +1171,8 @@ public final class MockConstants {
                     .cost(15)
                     .healingEffect(20)
                     .area(true)
+                    .prohibitedCastes(List.of(ROGUE, TRACKER, RANGER, PILGRIM))
+                    .prohibitedRaces(List.of(DWARF, ORC, MINOTAUR))
                     .build()),
             Map.entry(ENERGY_ABSORPTION, Spell.builder()
                     .name(ENERGY_ABSORPTION)
@@ -1052,66 +1180,88 @@ public final class MockConstants {
                     .group(ENERGY)
                     .cost(10)
                     .healingEffect(28)
+                    .prohibitedCastes(List.of(ROGUE, WIZARD, FIGHTER, TRACKER, RANGER, HERMIT, MONK, PRIEST))
+                    .prohibitedRaces(List.of(DWARF, ORC, MINOTAUR))
                     .build()),
             Map.entry(DIVINE_PROTECTION, Spell.builder()
                     .name(DIVINE_PROTECTION)
                     .type(BLESSING)
                     .group(DIVINE)
                     .cost(10)
+                    .prohibitedCastes(List.of(ROGUE, WIZARD, MAGE, WITCHMASTER, AVATAR, FIGHTER, PALADIN, GRANDMASTER, TITAN, TRACKER, RANGER, PILGRIM, FREE_SOUL, HERMIT, DRUID, ARCHDRUID))
+                    .prohibitedRaces(List.of(DWARF, ORC, MINOTAUR))
                     .build()),
             Map.entry(STRENGTHENING, Spell.builder()
                     .name(STRENGTHENING)
                     .type(BLESSING)
                     .group(GENERAL)
                     .cost(5)
+                    .prohibitedCastes(List.of(ROGUE, TRACKER, RANGER, PILGRIM, HERMIT))
+                    .prohibitedRaces(List.of())
                     .build()),
             Map.entry(SOUL_CONNECTION, Spell.builder()
                     .name(SOUL_CONNECTION)
                     .type(BLESSING)
                     .group(SOUL)
                     .cost(10)
+                    .prohibitedCastes(List.of(ROGUE, WIZARD, MAGE, WITCHMASTER, AVATAR, FIGHTER, PALADIN, GRANDMASTER, TITAN, TRACKER, HERMIT, DRUID, ARCHDRUID, ATALIAS_PRIEST, MONK, PRIEST, HIERARCH, ARCHANGEL))
+                    .prohibitedRaces(List.of())
                     .build()),
             Map.entry(PROTECTIVE_HAND_OF_NATURE, Spell.builder()
                     .name(PROTECTIVE_HAND_OF_NATURE)
                     .type(BLESSING)
                     .group(NATURE)
                     .cost(5)
+                    .prohibitedCastes(List.of(ROGUE, WIZARD, MAGE, FIGHTER, PALADIN, GRANDMASTER, TITAN, TRACKER, RANGER, PILGRIM, FREE_SOUL, MONK, PRIEST, HIERARCH, ARCHANGEL))
+                    .prohibitedRaces(List.of())
                     .build()),
             Map.entry(ENERGY_SHIELD, Spell.builder()
                     .name(ENERGY_SHIELD)
                     .type(BLESSING)
                     .group(ENERGY)
                     .cost(8)
+                    .prohibitedCastes(List.of(ROGUE, WIZARD, FIGHTER, TRACKER, RANGER, HERMIT, DRUID, MONK, PRIEST))
+                    .prohibitedRaces(List.of(ORC))
                     .build()),
             Map.entry(CALLING_THE_SOULS, Spell.builder()
                     .name(CALLING_THE_SOULS)
                     .type(SUMMON)
                     .group(SOUL)
                     .cost(25)
+                    .prohibitedCastes(List.of(ROGUE, WIZARD, MAGE, WITCHMASTER, AVATAR, FIGHTER, PALADIN, GRANDMASTER, TITAN, TRACKER, HERMIT, DRUID, ARCHDRUID, ATALIAS_PRIEST, MONK, PRIEST, HIERARCH, ARCHANGEL))
+                    .prohibitedRaces(List.of())
                     .build()),
             Map.entry(CALLING_ANIMALS, Spell.builder()
                     .name(CALLING_ANIMALS)
                     .type(SUMMON)
                     .group(NATURE)
                     .cost(10)
+                    .prohibitedCastes(List.of(ROGUE, WIZARD, MAGE, FIGHTER, PALADIN, GRANDMASTER, TITAN, MONK, PRIEST, HIERARCH, ARCHANGEL))
+                    .prohibitedRaces(List.of(ORC, MINOTAUR))
                     .build()),
             Map.entry(SUMMON_GUARDIAN, Spell.builder()
                     .name(SUMMON_GUARDIAN)
                     .type(SUMMON)
                     .group(GENERAL)
                     .cost(20)
+                    .prohibitedCastes(List.of(ROGUE, FIGHTER, PALADIN, TRACKER, RANGER, PILGRIM, HERMIT, DRUID))
+                    .prohibitedRaces(List.of(DWARF, ORC, MINOTAUR))
                     .build()),
             Map.entry(PROJECTION_OF_ENERGY, Spell.builder()
                     .name(PROJECTION_OF_ENERGY)
                     .type(SUMMON)
                     .group(ENERGY)
                     .cost(30)
+                    .prohibitedCastes(List.of(ROGUE, WIZARD, FIGHTER, PALADIN, TRACKER, RANGER, HERMIT, DRUID, ARCHDRUID, MONK, PRIEST))
+                    .prohibitedRaces(List.of(DWARF, ORC, MINOTAUR))
                     .build()),
             Map.entry(FRIEND_IN_NEED, Spell.builder()
                     .name(FRIEND_IN_NEED)
                     .type(SUMMON)
                     .group(DIVINE)
                     .cost(15)
+                    .prohibitedCastes(List.of(ROGUE, WIZARD, MAGE, FIGHTER, PALADIN, GRANDMASTER, TITAN, TRACKER, RANGER, PILGRIM, FREE_SOUL, HERMIT))
+                    .prohibitedRaces(List.of(DWARF, ORC, MINOTAUR))
                     .build())
     );
 
@@ -1252,309 +1402,54 @@ public final class MockConstants {
     public static final Map<String, List<SelectionValue<Optional<Item>>>> MONSTER_DROPS = Map.of(
             "BOAR", List.of(
                     new SelectionValue<>(10, Optional.empty()),
-                    new SelectionValue<>(90, Optional.of(Item.builder()
-                            .type(FOOD)
-                            .code("MEAT")
-                            .healingEffect(10)
-                            .magicEffect(1)
-                            .build()))),
+                    new SelectionValue<>(90, Optional.of(ITEMS.get("MEAT")))),
             "BANDIT", List.of(
                     new SelectionValue<>(5, Optional.empty()),
-                    new SelectionValue<>(5, Optional.of(Item.builder()
-                            .type(FOOD)
-                            .code("WATER")
-                            .healingEffect(3)
-                            .magicEffect(0)
-                            .build())),
-                    new SelectionValue<>(5, Optional.of(Item.builder()
-                            .type(FOOD)
-                            .code("BREAD")
-                            .healingEffect(5)
-                            .magicEffect(0)
-                            .build())),
-                    new SelectionValue<>(5, Optional.of(Item.builder()
-                            .type(FOOD)
-                            .code("FRUIT")
-                            .healingEffect(8)
-                            .magicEffect(2)
-                            .build())),
-                    new SelectionValue<>(5, Optional.of(Item.builder()
-                            .type(FOOD)
-                            .code("MEAT")
-                            .healingEffect(10)
-                            .magicEffect(1)
-                            .build())),
-                    new SelectionValue<>(5, Optional.of(Item.builder()
-                            .type(FOOD)
-                            .code("HEALING_HERB")
-                            .healingEffect(20)
-                            .magicEffect(10)
-                            .build())),
-                    new SelectionValue<>(5, Optional.of(Item.builder()
-                            .type(WEAPON)
-                            .code("STAFF")
-                            .build())),
-                    new SelectionValue<>(5, Optional.of(Item.builder()
-                            .type(WEAPON)
-                            .code("DAGGER")
-                            .build())),
-                    new SelectionValue<>(5, Optional.of(Item.builder()
-                            .type(WEAPON)
-                            .code("SPEAR")
-                            .build())),
-                    new SelectionValue<>(5, Optional.of(Item.builder()
-                            .type(WEAPON)
-                            .code("SWORD")
-                            .build())),
-                    new SelectionValue<>(5, Optional.of(Item.builder()
-                            .type(SHIELD)
-                            .code("BUCKLER")
-                            .build())),
-                    new SelectionValue<>(5, Optional.of(Item.builder()
-                            .type(SHIELD)
-                            .code("ROUND_SHIELD")
-                            .build())),
-                    new SelectionValue<>(5, Optional.of(Item.builder()
-                            .type(SHIELD)
-                            .code("KITE_SHIELD")
-                            .build())),
-                    new SelectionValue<>(5, Optional.of(Item.builder()
-                            .type(SHIELD)
-                            .code("TOWER_SHIELD")
-                            .build())),
-                    new SelectionValue<>(5, Optional.of(Item.builder()
-                            .type(ARMOR)
-                            .code("LINEN_ARMOR")
-                            .build())),
-                    new SelectionValue<>(5, Optional.of(Item.builder()
-                            .type(ARMOR)
-                            .code("LEATHER_ARMOR")
-                            .build())),
-                    new SelectionValue<>(5, Optional.of(Item.builder()
-                            .type(ARMOR)
-                            .code("STUDDED_LEATHER_ARMOR")
-                            .build())),
-                    new SelectionValue<>(5, Optional.of(Item.builder()
-                            .type(ARMOR)
-                            .code("CHAIN_MAIL")
-                            .build())),
-                    new SelectionValue<>(5, Optional.of(Item.builder()
-                            .type(ARMOR)
-                            .code("PLATE_MAIL")
-                            .build())),
-                    new SelectionValue<>(5, Optional.of(Item.builder()
-                            .type(ARMOR)
-                            .code("FULL_PLATE_MAIL")
-                            .build()))),
+                    new SelectionValue<>(5, Optional.of(ITEMS.get("WATER"))),
+                    new SelectionValue<>(5, Optional.of(ITEMS.get("BREAD"))),
+                    new SelectionValue<>(5, Optional.of(ITEMS.get("FRUIT"))),
+                    new SelectionValue<>(5, Optional.of(ITEMS.get("MEAT"))),
+                    new SelectionValue<>(5, Optional.of(ITEMS.get("HEALING_HERB"))),
+                    new SelectionValue<>(5, Optional.of(ITEMS.get("STAFF"))),
+                    new SelectionValue<>(5, Optional.of(ITEMS.get("DAGGER"))),
+                    new SelectionValue<>(5, Optional.of(ITEMS.get("SPEAR"))),
+                    new SelectionValue<>(5, Optional.of(ITEMS.get("SWORD"))),
+                    new SelectionValue<>(5, Optional.of(ITEMS.get("BUCKLER"))),
+                    new SelectionValue<>(5, Optional.of(ITEMS.get("ROUND_SHIELD"))),
+                    new SelectionValue<>(5, Optional.of(ITEMS.get("KITE_SHIELD"))),
+                    new SelectionValue<>(5, Optional.of(ITEMS.get("TOWER_SHIELD"))),
+                    new SelectionValue<>(5, Optional.of(ITEMS.get("LINEN_ARMOR"))),
+                    new SelectionValue<>(5, Optional.of(ITEMS.get("LEATHER_ARMOR"))),
+                    new SelectionValue<>(5, Optional.of(ITEMS.get("STUDDED_LEATHER_ARMOR"))),
+                    new SelectionValue<>(5, Optional.of(ITEMS.get("CHAIN_MAIL"))),
+                    new SelectionValue<>(5, Optional.of(ITEMS.get("PLATE_MAIL"))),
+                    new SelectionValue<>(5, Optional.of(ITEMS.get("FULL_PLATE_MAIL")))),
             "WEREWOLF", List.of(
                     new SelectionValue<>(50, Optional.empty()),
-                    new SelectionValue<>(15, Optional.of(Item.builder()
-                            .type(FOOD)
-                            .code("WATER")
-                            .healingEffect(3)
-                            .magicEffect(0)
-                            .build())),
-                    new SelectionValue<>(15, Optional.of(Item.builder()
-                            .type(FOOD)
-                            .code("MEAT")
-                            .healingEffect(10)
-                            .magicEffect(1)
-                            .build())),
-                    new SelectionValue<>(5, Optional.of(Item.builder()
-                            .type(FOOD)
-                            .code("HEALING_HERB")
-                            .healingEffect(20)
-                            .magicEffect(10)
-                            .build())),
-                    new SelectionValue<>(10, Optional.of(Item.builder()
-                            .type(WEAPON)
-                            .code("DAGGER")
-                            .build())),
-                    new SelectionValue<>(5, Optional.of(Item.builder()
-                            .type(WEAPON)
-                            .code("SWORD")
-                            .build()))),
+                    new SelectionValue<>(15, Optional.of(ITEMS.get("WATER"))),
+                    new SelectionValue<>(15, Optional.of(ITEMS.get("MEAT"))),
+                    new SelectionValue<>(5, Optional.of(ITEMS.get("HEALING_HERB"))),
+                    new SelectionValue<>(10, Optional.of(ITEMS.get("DAGGER"))),
+                    new SelectionValue<>(5, Optional.of(ITEMS.get("SWORD")))),
             "NAGA", List.of(
                     new SelectionValue<>(30, Optional.empty()),
-                    new SelectionValue<>(15, Optional.of(Item.builder()
-                            .type(FOOD)
-                            .code("WATER")
-                            .healingEffect(3)
-                            .magicEffect(0)
-                            .build())),
-                    new SelectionValue<>(15, Optional.of(Item.builder()
-                            .type(FOOD)
-                            .code("MEAT")
-                            .healingEffect(10)
-                            .magicEffect(1)
-                            .build())),
-                    new SelectionValue<>(5, Optional.of(Item.builder()
-                            .type(FOOD)
-                            .code("HEALING_HERB")
-                            .healingEffect(20)
-                            .magicEffect(10)
-                            .build())),
-                    new SelectionValue<>(10, Optional.of(Item.builder()
-                            .type(WEAPON)
-                            .code("DAGGER")
-                            .build())),
-                    new SelectionValue<>(15, Optional.of(Item.builder()
-                            .type(WEAPON)
-                            .code("SPEAR")
-                            .build())),
-                    new SelectionValue<>(5, Optional.of(Item.builder()
-                            .type(WEAPON)
-                            .code("SWORD")
-                            .build())),
-                    new SelectionValue<>(5, Optional.of(Item.builder()
-                            .type(ARMOR)
-                            .code("LEATHER_ARMOR")
-                            .build()))),
+                    new SelectionValue<>(15, Optional.of(ITEMS.get("WATER"))),
+                    new SelectionValue<>(15, Optional.of(ITEMS.get("MEAT"))),
+                    new SelectionValue<>(5, Optional.of(ITEMS.get("HEALING_HERB"))),
+                    new SelectionValue<>(10, Optional.of(ITEMS.get("DAGGER"))),
+                    new SelectionValue<>(15, Optional.of(ITEMS.get("SPEAR"))),
+                    new SelectionValue<>(5, Optional.of(ITEMS.get("SWORD"))),
+                    new SelectionValue<>(5, Optional.of(ITEMS.get("LEATHER_ARMOR")))),
             "OGRE", List.of(
                     new SelectionValue<>(35, Optional.empty()),
-                    new SelectionValue<>(15, Optional.of(Item.builder()
-                            .type(FOOD)
-                            .code("WATER")
-                            .healingEffect(3)
-                            .magicEffect(0)
-                            .build())),
-                    new SelectionValue<>(20, Optional.of(Item.builder()
-                            .type(FOOD)
-                            .code("MEAT")
-                            .healingEffect(10)
-                            .magicEffect(1)
-                            .build())),
-                    new SelectionValue<>(5, Optional.of(Item.builder()
-                            .type(FOOD)
-                            .code("HEALING_HERB")
-                            .healingEffect(20)
-                            .magicEffect(10)
-                            .build())),
-                    new SelectionValue<>(10, Optional.of(Item.builder()
-                            .type(WEAPON)
-                            .code("DAGGER")
-                            .build())),
-                    new SelectionValue<>(15, Optional.of(Item.builder()
-                            .type(WEAPON)
-                            .code("SPEAR")
-                            .build()))),
+                    new SelectionValue<>(15, Optional.of(ITEMS.get("WATER"))),
+                    new SelectionValue<>(20, Optional.of(ITEMS.get("MEAT"))),
+                    new SelectionValue<>(5, Optional.of(ITEMS.get("HEALING_HERB"))),
+                    new SelectionValue<>(10, Optional.of(ITEMS.get("DAGGER"))),
+                    new SelectionValue<>(15, Optional.of(ITEMS.get("SPEAR")))),
             "GHOUL", List.of(
                     new SelectionValue<>(80, Optional.empty()),
-                    new SelectionValue<>(20, Optional.of(Item.builder()
-                            .type(WEAPON)
-                            .code("DAGGER")
-                            .build())))
-    );
-
-    // Character constraints
-    public static final Map<Caste, List<Race>> CASTE_RACE_PROHIBITION = Map.ofEntries(
-            Map.entry(ROGUE, emptyList()),
-            Map.entry(WIZARD, List.of(DWARF, ORC, MINOTAUR, ARIMASPI)),
-            Map.entry(MAGE, List.of(DWARF, ORC, MINOTAUR, ARIMASPI)),
-            Map.entry(WITCHMASTER, List.of(DWARF, ORC, MINOTAUR, ARIMASPI)),
-            Map.entry(AVATAR, List.of(DWARF, ORC, MINOTAUR, ARIMASPI)),
-            Map.entry(FIGHTER, List.of(NYMPH)),
-            Map.entry(PALADIN, List.of(NYMPH)),
-            Map.entry(GRANDMASTER, List.of(NYMPH)),
-            Map.entry(TITAN, List.of(NYMPH)),
-            Map.entry(TRACKER, List.of(NYMPH)),
-            Map.entry(RANGER, List.of(NYMPH)),
-            Map.entry(PILGRIM, List.of(NYMPH)),
-            Map.entry(FREE_SOUL, List.of(NYMPH)),
-            Map.entry(HERMIT, emptyList()),
-            Map.entry(DRUID, emptyList()),
-            Map.entry(ARCHDRUID, emptyList()),
-            Map.entry(ATALIAS_PRIEST, emptyList()),
-            Map.entry(MONK, List.of(MINOTAUR)),
-            Map.entry(PRIEST, List.of(MINOTAUR)),
-            Map.entry(HIERARCH, List.of(MINOTAUR)),
-            Map.entry(ARCHANGEL, List.of(MINOTAUR))
-    );
-
-    public static final Map<Caste, List<God>> CASTE_GOD_PROHIBITION = Map.ofEntries(
-            Map.entry(ROGUE, emptyList()),
-            Map.entry(WIZARD, List.of(ALATE)),
-            Map.entry(MAGE, List.of(ALATE)),
-            Map.entry(WITCHMASTER, List.of(ALATE)),
-            Map.entry(AVATAR, List.of(ALATE)),
-            Map.entry(FIGHTER, emptyList()),
-            Map.entry(PALADIN, emptyList()),
-            Map.entry(GRANDMASTER, emptyList()),
-            Map.entry(TITAN, emptyList()),
-            Map.entry(TRACKER, emptyList()),
-            Map.entry(RANGER, emptyList()),
-            Map.entry(PILGRIM, emptyList()),
-            Map.entry(FREE_SOUL, emptyList()),
-            Map.entry(HERMIT, emptyList()),
-            Map.entry(DRUID, emptyList()),
-            Map.entry(ARCHDRUID, emptyList()),
-            Map.entry(ATALIAS_PRIEST, emptyList()),
-            Map.entry(MONK, emptyList()),
-            Map.entry(PRIEST, emptyList()),
-            Map.entry(HIERARCH, emptyList()),
-            Map.entry(ARCHANGEL, emptyList())
-    );
-
-    public static final Map<Caste, List<SpellName>> CASTE_SPELL_PROHIBITION = Map.ofEntries(
-            Map.entry(ROGUE, List.of(FIREBALL, LIGHTNING_STRIKE, INFERNO, BLADES_OF_JUDGEMENT, GLACIAL_BLOW, BALL_OF_ENERGY, SOUL_OUTBURST, WRATH_OF_NATURE, SPLITTING_WIND, DIVINE_HAMMER, WOUND_HEALING, HEALING_WORD, CURE, REGENERATION, BREATH_OF_GOD, POWER_OF_NATURE, SOUL_POWER, RECHARGING, HEALING_WAVE, ENERGY_ABSORPTION, DIVINE_PROTECTION, STRENGTHENING, SOUL_CONNECTION, PROTECTIVE_HAND_OF_NATURE, ENERGY_SHIELD, CALLING_THE_SOULS, CALLING_ANIMALS, SUMMON_GUARDIAN, PROJECTION_OF_ENERGY, FRIEND_IN_NEED)),
-            Map.entry(WIZARD, List.of(BLADES_OF_JUDGEMENT, BALL_OF_ENERGY, SOUL_OUTBURST, WRATH_OF_NATURE, DIVINE_HAMMER, HEALING_WORD, BREATH_OF_GOD, POWER_OF_NATURE, SOUL_POWER, ENERGY_ABSORPTION, DIVINE_PROTECTION, SOUL_CONNECTION, PROTECTIVE_HAND_OF_NATURE, ENERGY_SHIELD, CALLING_THE_SOULS, CALLING_ANIMALS, PROJECTION_OF_ENERGY, FRIEND_IN_NEED)),
-            Map.entry(MAGE, List.of(SOUL_OUTBURST, WRATH_OF_NATURE, DIVINE_HAMMER, HEALING_WORD, BREATH_OF_GOD, POWER_OF_NATURE, SOUL_POWER, DIVINE_PROTECTION, SOUL_CONNECTION, PROTECTIVE_HAND_OF_NATURE, CALLING_THE_SOULS, CALLING_ANIMALS, FRIEND_IN_NEED)),
-            Map.entry(WITCHMASTER, List.of(SOUL_OUTBURST, DIVINE_HAMMER, HEALING_WORD, BREATH_OF_GOD, SOUL_POWER, DIVINE_PROTECTION, SOUL_CONNECTION, CALLING_THE_SOULS)),
-            Map.entry(AVATAR, List.of(SOUL_OUTBURST, DIVINE_HAMMER, BREATH_OF_GOD, SOUL_POWER, DIVINE_PROTECTION, SOUL_CONNECTION, CALLING_THE_SOULS)),
-            Map.entry(FIGHTER, List.of(FIREBALL, LIGHTNING_STRIKE, INFERNO, BLADES_OF_JUDGEMENT, GLACIAL_BLOW, BALL_OF_ENERGY, SOUL_OUTBURST, WRATH_OF_NATURE, SPLITTING_WIND, DIVINE_HAMMER, HEALING_WORD, BREATH_OF_GOD, POWER_OF_NATURE, SOUL_POWER, RECHARGING, ENERGY_ABSORPTION, DIVINE_PROTECTION, SOUL_CONNECTION, PROTECTIVE_HAND_OF_NATURE, ENERGY_SHIELD, CALLING_THE_SOULS, CALLING_ANIMALS, SUMMON_GUARDIAN, PROJECTION_OF_ENERGY, FRIEND_IN_NEED)),
-            Map.entry(PALADIN, List.of(FIREBALL, LIGHTNING_STRIKE, INFERNO, BLADES_OF_JUDGEMENT, GLACIAL_BLOW, SOUL_OUTBURST, WRATH_OF_NATURE, SPLITTING_WIND, DIVINE_HAMMER, HEALING_WORD, BREATH_OF_GOD, POWER_OF_NATURE, SOUL_POWER, DIVINE_PROTECTION, SOUL_CONNECTION, PROTECTIVE_HAND_OF_NATURE, CALLING_THE_SOULS, CALLING_ANIMALS, SUMMON_GUARDIAN, PROJECTION_OF_ENERGY, FRIEND_IN_NEED)),
-            Map.entry(GRANDMASTER, List.of(LIGHTNING_STRIKE, INFERNO, GLACIAL_BLOW, SOUL_OUTBURST, WRATH_OF_NATURE, SPLITTING_WIND, DIVINE_HAMMER, HEALING_WORD, BREATH_OF_GOD, POWER_OF_NATURE, SOUL_POWER, DIVINE_PROTECTION, SOUL_CONNECTION, PROTECTIVE_HAND_OF_NATURE, CALLING_THE_SOULS, CALLING_ANIMALS, FRIEND_IN_NEED)),
-            Map.entry(TITAN, List.of(INFERNO, GLACIAL_BLOW, SOUL_OUTBURST, WRATH_OF_NATURE, SPLITTING_WIND, DIVINE_HAMMER, HEALING_WORD, BREATH_OF_GOD, POWER_OF_NATURE, SOUL_POWER, DIVINE_PROTECTION, SOUL_CONNECTION, PROTECTIVE_HAND_OF_NATURE, CALLING_THE_SOULS, CALLING_ANIMALS, FRIEND_IN_NEED)),
-            Map.entry(TRACKER, List.of(FIREBALL, LIGHTNING_STRIKE, INFERNO, BLADES_OF_JUDGEMENT, GLACIAL_BLOW, BALL_OF_ENERGY, SOUL_OUTBURST, WRATH_OF_NATURE, SPLITTING_WIND, DIVINE_HAMMER, HEALING_WORD, CURE, REGENERATION, BREATH_OF_GOD, POWER_OF_NATURE, SOUL_POWER, RECHARGING, HEALING_WAVE, ENERGY_ABSORPTION, DIVINE_PROTECTION, STRENGTHENING, SOUL_CONNECTION, PROTECTIVE_HAND_OF_NATURE, ENERGY_SHIELD, CALLING_THE_SOULS, SUMMON_GUARDIAN, PROJECTION_OF_ENERGY, FRIEND_IN_NEED)),
-            Map.entry(RANGER, List.of(FIREBALL, LIGHTNING_STRIKE, INFERNO, BLADES_OF_JUDGEMENT, GLACIAL_BLOW, BALL_OF_ENERGY, SOUL_OUTBURST, WRATH_OF_NATURE, SPLITTING_WIND, DIVINE_HAMMER, HEALING_WORD, CURE, BREATH_OF_GOD, POWER_OF_NATURE, RECHARGING, HEALING_WAVE, ENERGY_ABSORPTION, DIVINE_PROTECTION, STRENGTHENING, PROTECTIVE_HAND_OF_NATURE, ENERGY_SHIELD, SUMMON_GUARDIAN, PROJECTION_OF_ENERGY, FRIEND_IN_NEED)),
-            Map.entry(PILGRIM, List.of(FIREBALL, LIGHTNING_STRIKE, INFERNO, BLADES_OF_JUDGEMENT, GLACIAL_BLOW, WRATH_OF_NATURE, SPLITTING_WIND, DIVINE_HAMMER, HEALING_WORD, BREATH_OF_GOD, HEALING_WAVE, DIVINE_PROTECTION, STRENGTHENING, PROTECTIVE_HAND_OF_NATURE, SUMMON_GUARDIAN, FRIEND_IN_NEED)),
-            Map.entry(FREE_SOUL, List.of(LIGHTNING_STRIKE, INFERNO, GLACIAL_BLOW, WRATH_OF_NATURE, SPLITTING_WIND, DIVINE_HAMMER, HEALING_WORD, BREATH_OF_GOD, DIVINE_PROTECTION, PROTECTIVE_HAND_OF_NATURE, FRIEND_IN_NEED)),
-            Map.entry(HERMIT, List.of(INFERNO, BLADES_OF_JUDGEMENT, BALL_OF_ENERGY, SOUL_OUTBURST, CALLING_THE_SOULS, DIVINE_HAMMER, HEALING_WORD, BREATH_OF_GOD, SOUL_POWER, RECHARGING, ENERGY_ABSORPTION, DIVINE_PROTECTION, STRENGTHENING, SOUL_CONNECTION, ENERGY_SHIELD, SUMMON_GUARDIAN, PROJECTION_OF_ENERGY, FRIEND_IN_NEED)),
-            Map.entry(DRUID, List.of(BLADES_OF_JUDGEMENT, SOUL_OUTBURST, CALLING_THE_SOULS, DIVINE_HAMMER, HEALING_WORD, BREATH_OF_GOD, SOUL_POWER, DIVINE_PROTECTION, SOUL_CONNECTION, ENERGY_SHIELD, SUMMON_GUARDIAN, PROJECTION_OF_ENERGY)),
-            Map.entry(ARCHDRUID, List.of(BLADES_OF_JUDGEMENT, SOUL_OUTBURST, CALLING_THE_SOULS, DIVINE_HAMMER, BREATH_OF_GOD, SOUL_POWER, DIVINE_PROTECTION, SOUL_CONNECTION, PROJECTION_OF_ENERGY)),
-            Map.entry(ATALIAS_PRIEST, List.of(SOUL_OUTBURST, SOUL_POWER, SOUL_CONNECTION, CALLING_THE_SOULS)),
-            Map.entry(MONK, List.of(INFERNO, BLADES_OF_JUDGEMENT, BALL_OF_ENERGY, SOUL_OUTBURST, WRATH_OF_NATURE, POWER_OF_NATURE, SOUL_POWER, RECHARGING, ENERGY_ABSORPTION, SOUL_CONNECTION, PROTECTIVE_HAND_OF_NATURE, ENERGY_SHIELD, CALLING_THE_SOULS, CALLING_ANIMALS, PROJECTION_OF_ENERGY)),
-            Map.entry(PRIEST, List.of(BLADES_OF_JUDGEMENT, BALL_OF_ENERGY, SOUL_OUTBURST, WRATH_OF_NATURE, POWER_OF_NATURE, SOUL_POWER, ENERGY_ABSORPTION, SOUL_CONNECTION, PROTECTIVE_HAND_OF_NATURE, ENERGY_SHIELD, CALLING_THE_SOULS, CALLING_ANIMALS, PROJECTION_OF_ENERGY)),
-            Map.entry(HIERARCH, List.of(SOUL_OUTBURST, WRATH_OF_NATURE, POWER_OF_NATURE, SOUL_POWER, SOUL_CONNECTION, PROTECTIVE_HAND_OF_NATURE, CALLING_THE_SOULS, CALLING_ANIMALS)),
-            Map.entry(ARCHANGEL, List.of(SOUL_OUTBURST, WRATH_OF_NATURE, POWER_OF_NATURE, SOUL_POWER, SOUL_CONNECTION, PROTECTIVE_HAND_OF_NATURE, CALLING_THE_SOULS, CALLING_ANIMALS))
-    );
-
-    public static final Map<Race, List<Gender>> RACE_GENDER_PROHIBITION = Map.of(
-            HUMAN, emptyList(),
-            ELF, emptyList(),
-            HALF_ELF, emptyList(),
-            NIGHT_ELF, emptyList(),
-            DWARF, emptyList(),
-            ORC, emptyList(),
-            MINOTAUR, List.of(FEMALE),
-            ARIMASPI, emptyList(),
-            NYMPH, List.of(MALE),
-            HALFLING, emptyList()
-    );
-    public static final Map<Race, List<God>> RACE_GOD_PROHIBITION = Map.of(
-            HUMAN, emptyList(),
-            ELF, emptyList(),
-            HALF_ELF, emptyList(),
-            NIGHT_ELF, emptyList(),
-            DWARF, List.of(HORA),
-            ORC, List.of(HORA, RUNID),
-            MINOTAUR, List.of(HORA),
-            ARIMASPI, emptyList(),
-            NYMPH, List.of(GETON, ALATE),
-            HALFLING, emptyList()
-    );
-
-    public static final Map<Race, List<SpellName>> RACE_SPELL_PROHIBITION = Map.of(
-            HUMAN, emptyList(),
-            ELF, emptyList(),
-            HALF_ELF, emptyList(),
-            NIGHT_ELF, emptyList(),
-            DWARF, List.of(LIGHTNING_STRIKE, INFERNO, GLACIAL_BLOW, BALL_OF_ENERGY, SPLITTING_WIND, HEALING_WORD, CURE, BREATH_OF_GOD, RECHARGING, HEALING_WAVE, ENERGY_ABSORPTION, DIVINE_PROTECTION, SUMMON_GUARDIAN, PROJECTION_OF_ENERGY, FRIEND_IN_NEED),
-            ORC, List.of(LIGHTNING_STRIKE, INFERNO, GLACIAL_BLOW, BALL_OF_ENERGY, SPLITTING_WIND, DIVINE_HAMMER, HEALING_WORD, CURE, BREATH_OF_GOD, RECHARGING, HEALING_WAVE, ENERGY_ABSORPTION, DIVINE_PROTECTION, ENERGY_SHIELD, CALLING_ANIMALS, SUMMON_GUARDIAN, PROJECTION_OF_ENERGY, FRIEND_IN_NEED),
-            MINOTAUR, List.of(LIGHTNING_STRIKE, GLACIAL_BLOW, BALL_OF_ENERGY, SPLITTING_WIND, DIVINE_HAMMER, HEALING_WORD, CURE, BREATH_OF_GOD, RECHARGING, HEALING_WAVE, ENERGY_ABSORPTION, DIVINE_PROTECTION, CALLING_ANIMALS, SUMMON_GUARDIAN, PROJECTION_OF_ENERGY, FRIEND_IN_NEED),
-            ARIMASPI, emptyList(),
-            NYMPH, emptyList(),
-            HALFLING, List.of(BLADES_OF_JUDGEMENT, DIVINE_HAMMER)
+                    new SelectionValue<>(20, Optional.of(ITEMS.get("DAGGER"))))
     );
 
     // Soul chips
@@ -1573,6 +1468,7 @@ public final class MockConstants {
     public static final Map<String, CompanionTemplate> ANIMALS = Map.of(
             "FALCON", CompanionTemplate.builder()
                     .code("FALCON")
+                    .type(ANIMAL)
                     .attack(75)
                     .defense(0)
                     .minDamage(1)
@@ -1582,6 +1478,7 @@ public final class MockConstants {
                     .build(),
             "DOG", CompanionTemplate.builder()
                     .code("DOG")
+                    .type(ANIMAL)
                     .attack(70)
                     .defense(5)
                     .minDamage(1)
@@ -1591,6 +1488,7 @@ public final class MockConstants {
                     .build(),
             "WOLF", CompanionTemplate.builder()
                     .code("WOLF")
+                    .type(ANIMAL)
                     .attack(70)
                     .defense(5)
                     .minDamage(1)
@@ -1600,6 +1498,7 @@ public final class MockConstants {
                     .build(),
             "BEAR", CompanionTemplate.builder()
                     .code("BEAR")
+                    .type(ANIMAL)
                     .attack(80)
                     .defense(10)
                     .minDamage(1)
@@ -1620,6 +1519,7 @@ public final class MockConstants {
     public static final Map<String, CompanionTemplate> GUARDIAN_WARRIORS = Map.of(
             "HUNTER", CompanionTemplate.builder()
                     .code("HUNTER")
+                    .type(GUARDIAN_WARRIOR)
                     .attack(85)
                     .defense(5)
                     .minDamage(2)
@@ -1629,6 +1529,7 @@ public final class MockConstants {
                     .build(),
             "MILITIA", CompanionTemplate.builder()
                     .code("MILITIA")
+                    .type(GUARDIAN_WARRIOR)
                     .attack(85)
                     .defense(10)
                     .minDamage(3)
@@ -1638,6 +1539,7 @@ public final class MockConstants {
                     .build(),
             "SWORDSMAN", CompanionTemplate.builder()
                     .code("SWORDSMAN")
+                    .type(GUARDIAN_WARRIOR)
                     .attack(90)
                     .defense(25)
                     .minDamage(5)
@@ -1660,6 +1562,7 @@ public final class MockConstants {
     public static final Map<String, CompanionTemplate> DIVINE_GUARDIANS = Map.of(
             "KNIGHT", CompanionTemplate.builder()
                     .code("KNIGHT")
+                    .type(DIVINE_GUARDIAN)
                     .attack(90)
                     .defense(25)
                     .minDamage(5)
@@ -1669,6 +1572,7 @@ public final class MockConstants {
                     .build(),
             "COMMANDER", CompanionTemplate.builder()
                     .code("COMMANDER")
+                    .type(DIVINE_GUARDIAN)
                     .attack(100)
                     .defense(40)
                     .minDamage(6)

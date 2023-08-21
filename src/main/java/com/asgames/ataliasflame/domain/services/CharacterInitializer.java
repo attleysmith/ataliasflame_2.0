@@ -35,17 +35,17 @@ public class CharacterInitializer {
     }
 
     private void validateConstraints(Character character) {
-        if (CASTE_RACE_PROHIBITION.get(character.getCaste()).contains(character.getRace())) {
+        if (character.getRace().prohibitedCastes.contains(character.getCaste())) {
             throw new IllegalArgumentException(character.getRace() + " cannot be " + character.getCaste());
         }
-        if (CASTE_GOD_PROHIBITION.get(character.getCaste()).contains(character.getDefensiveGod())) {
-            throw new IllegalArgumentException("Followers of " + character.getDefensiveGod() + " cannot be " + character.getCaste());
-        }
-        if (RACE_GENDER_PROHIBITION.get(character.getRace()).contains(character.getGender())) {
+        if (character.getRace().prohibitedGenders.contains(character.getGender())) {
             throw new IllegalArgumentException(character.getRace() + " cannot be " + character.getGender());
         }
-        if (RACE_GOD_PROHIBITION.get(character.getRace()).contains(character.getDefensiveGod())) {
+        if (character.getRace().prohibitedGods.contains(character.getDefensiveGod())) {
             throw new IllegalArgumentException(character.getRace() + " cannot be a follower of " + character.getDefensiveGod());
+        }
+        if (character.getDefensiveGod().prohibitedCastes.contains(character.getCaste())) {
+            throw new IllegalArgumentException("Followers of " + character.getDefensiveGod() + " cannot be " + character.getCaste());
         }
     }
 

@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static com.asgames.ataliasflame.domain.MockConstants.*;
+import static com.asgames.ataliasflame.domain.MockConstants.CASTE_DETAILS;
 import static com.asgames.ataliasflame.domain.model.enums.CasteGroup.WANDERER;
 import static com.asgames.ataliasflame.domain.utils.DiceUtils.roll100;
 
@@ -32,10 +32,10 @@ public class CasteService {
     }
 
     private void validateConstraints(Character character, Caste newCaste) {
-        if (CASTE_RACE_PROHIBITION.get(newCaste).contains(character.getRace())) {
+        if (character.getRace().prohibitedCastes.contains(newCaste)) {
             throw new IllegalArgumentException(character.getRace() + " cannot be " + newCaste);
         }
-        if (CASTE_GOD_PROHIBITION.get(newCaste).contains(character.getDefensiveGod())) {
+        if (character.getDefensiveGod().prohibitedCastes.contains(newCaste)) {
             throw new IllegalArgumentException("Followers of " + character.getDefensiveGod() + " cannot be " + newCaste);
         }
     }

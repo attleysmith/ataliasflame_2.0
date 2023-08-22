@@ -3,6 +3,7 @@ package com.asgames.ataliasflame.domain.services;
 import com.asgames.ataliasflame.domain.model.dtos.CasteDetails;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
+import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,10 +11,14 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 import static com.asgames.ataliasflame.domain.MockConstants.*;
+import static com.asgames.ataliasflame.domain.services.storyline.EventType.DEBUG;
 
 @Slf4j
 @Service
 public class CharacterInitializer {
+
+    @Autowired
+    private StoryLineLogger storyLineLogger;
 
     @Autowired
     private AttributeService attributeService;
@@ -30,7 +35,7 @@ public class CharacterInitializer {
 
         validateConstraints(character);
 
-        log.debug("Character initialized: " + character);
+        storyLineLogger.event(DEBUG, "Character initialized: " + character);
         return character;
     }
 

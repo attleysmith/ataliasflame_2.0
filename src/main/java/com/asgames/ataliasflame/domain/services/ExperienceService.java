@@ -2,6 +2,7 @@ package com.asgames.ataliasflame.domain.services;
 
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
+import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
 import com.asgames.ataliasflame.infrastructure.repositories.LevelRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
@@ -15,10 +16,15 @@ import java.util.Map;
 import java.util.Optional;
 
 import static com.asgames.ataliasflame.domain.MockConstants.LEVEL_ATTRIBUTE_POINTS;
+import static com.asgames.ataliasflame.domain.services.storyline.EventType.DEBUG;
+import static com.asgames.ataliasflame.domain.services.storyline.EventType.INFO;
 
 @Slf4j
 @Service
 public class ExperienceService implements InitializingBean {
+
+    @Autowired
+    private StoryLineLogger storyLineLogger;
 
     @Autowired
     private LevelRepository levelRepository;
@@ -43,8 +49,7 @@ public class ExperienceService implements InitializingBean {
     public Character gainExperience(Character character, int experience) {
         int gainedExperience = experienceBooster ? character.getLevel() * experience : experience;
         character.setExperience(character.getExperience() + gainedExperience);
-        log.info("Experience gained: " + gainedExperience);
-        log.info("Total experience: " + character.getExperience());
+        storyLineLogger.event(INFO, "Experience gained: " + gainedExperience + "; Total experience: " + character.getExperience());
         return levelUp(character);
     }
 
@@ -53,10 +58,9 @@ public class ExperienceService implements InitializingBean {
                 && levels.get(character.getLevel()).get() <= character.getExperience()) {
             character.setLevel(character.getLevel() + 1);
             character.setAttributePoints(character.getAttributePoints() + LEVEL_ATTRIBUTE_POINTS);
-            log.info("Leveling up!");
-            log.info("Level: " + character.getLevel());
-            log.info("Attribute points: " + character.getAttributePoints());
+            storyLineLogger.event(INFO, "Leveling up -> " + character.getLevel());
         }
+        storyLineLogger.event(DEBUG, "Attribute points: " + character.getAttributePoints());
         return character;
     }
 }

@@ -5,7 +5,9 @@ import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Companion;
 import com.asgames.ataliasflame.domain.model.entities.SoulChip;
 import com.asgames.ataliasflame.domain.model.vos.Energy;
+import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +17,8 @@ import java.util.UUID;
 import static com.asgames.ataliasflame.domain.MockConstants.*;
 import static com.asgames.ataliasflame.domain.model.enums.CompanionType.ENERGY_PROJECTION;
 import static com.asgames.ataliasflame.domain.model.enums.MagicType.SUMMON;
+import static com.asgames.ataliasflame.domain.services.storyline.EventType.DEBUG;
+import static com.asgames.ataliasflame.domain.services.storyline.EventType.INFO;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.choose;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.percent;
 import static java.util.Comparator.comparing;
@@ -22,6 +26,9 @@ import static java.util.Comparator.comparing;
 @Slf4j
 @Service
 public class SummonMagicService extends AbstractMagicService {
+
+    @Autowired
+    private StoryLineLogger storyLineLogger;
 
     public void castSummoningMagic(Character character) {
         int previousNumberOfCompanions = -1;
@@ -63,12 +70,12 @@ public class SummonMagicService extends AbstractMagicService {
                 throw new UnsupportedOperationException(spell.getGroup() + " summoning is not supported!");
         }
         if (summoning.isEmpty()) {
-            log.warn("Summoning was unsuccessful!");
+            storyLineLogger.event(DEBUG, "Summoning was unsuccessful!");
             return;
         }
         character.getMagic().use(spell.getCost());
         character.getCompanions().add(summoning.get());
-        log.info(summoning.get().getName() + " summoned as companion.");
+        storyLineLogger.event(INFO, summoning.get().getName() + " summoned as companion.");
     }
 
     private Optional<Companion> summonSoulChip(Character character) {

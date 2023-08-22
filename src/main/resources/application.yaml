@@ -1,6 +1,9 @@
 #logging:
+#  file:
+#    name: storyline.log
+#    max-size: 100MB
 #  level:
-#    com.asgames.ataliasflame:  # OFF
+#    com.asgames.ataliasflame:
 #      domain.services:
 #        CharacterInitializer: debug
 #        CombatService: debug

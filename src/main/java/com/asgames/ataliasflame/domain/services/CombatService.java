@@ -4,7 +4,9 @@ import com.asgames.ataliasflame.domain.model.dtos.TeamMember;
 import com.asgames.ataliasflame.domain.model.interfaces.AbsorptionDefense;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
 import com.asgames.ataliasflame.domain.services.CombatContext.Round;
+import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static com.asgames.ataliasflame.domain.services.storyline.EventType.DEBUG;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.percent;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.pointOut;
 import static com.asgames.ataliasflame.domain.utils.DiceUtils.*;
@@ -23,6 +26,9 @@ import static org.apache.commons.collections4.ListUtils.union;
 @Slf4j
 @Service
 public class CombatService {
+
+    @Autowired
+    private StoryLineLogger storyLineLogger;
 
     public void combat(List<? extends Combatant> team1, List<? extends Combatant> team2) {
         if (team1.isEmpty() || team2.isEmpty()) {
@@ -55,19 +61,19 @@ public class CombatService {
             List<AttackReport> attackReports = new ArrayList<>();
             for (TeamMember attacker : combatOrder) {
                 if (attacker.isDead()) {
-                    log.debug("Skipping attack. " + attacker.getReference() + " is already dead.");
+                    storyLineLogger.event(DEBUG, "Skipping attack. " + attacker.getReference() + " is already dead.");
                     continue;
                 }
                 List<TeamMember> defenders = attacker.getTeam() == 1 ? remainingTeam2 : remainingTeam1;
                 if (defenders.isEmpty()) {
-                    log.debug("Stop fighting. One of the teams is eliminated.");
+                    storyLineLogger.event(DEBUG, "Stop fighting. One of the teams is eliminated.");
                     break;
                 }
                 attackReports.add(attackTeam(attacker, defenders));
             }
             combatContext.addRound(new Round(attackReports));
         }
-        log.debug(combatContext.report());
+        storyLineLogger.event(DEBUG, combatContext.report());
     }
 
     private AttackReport attackTeam(TeamMember attacker, List<TeamMember> defenders) {

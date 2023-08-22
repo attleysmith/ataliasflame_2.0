@@ -7,18 +7,24 @@ import com.asgames.ataliasflame.domain.model.entities.Armor;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Shield;
 import com.asgames.ataliasflame.domain.model.vos.Weapon;
+import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import static com.asgames.ataliasflame.domain.MockConstants.*;
 import static com.asgames.ataliasflame.domain.model.enums.ItemType.*;
+import static com.asgames.ataliasflame.domain.services.storyline.EventType.DEBUG;
+import static com.asgames.ataliasflame.domain.services.storyline.EventType.INFO;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.choose;
 import static com.asgames.ataliasflame.domain.utils.DiceUtils.roll100;
 
 @Slf4j
 @Service
 public class InventoryService {
+
+    @Autowired
+    private StoryLineLogger storyLineLogger;
 
     @Autowired
     private CharacterCalculationService characterCalculationService;
@@ -110,9 +116,9 @@ public class InventoryService {
         if (weapon.isOneHanded() || character.getShield().isEmpty()) {
             character.setWeapon(weapon);
             characterCalculationService.recalculateProperties(character);
-            log.info("Weapon used: " + weapon.getCode());
+            storyLineLogger.event(INFO, "Weapon used: " + weapon.getCode());
         } else {
-            log.info(weapon.getCode() + " cannot be used with a shield!");
+            storyLineLogger.event(DEBUG, weapon.getCode() + " cannot be used with a shield!");
         }
     }
 
@@ -121,9 +127,9 @@ public class InventoryService {
             shield.setOwner(character);
             character.setShield(shield);
             characterCalculationService.recalculateProperties(character);
-            log.info("Shield used: " + shield.getCode());
+            storyLineLogger.event(INFO, "Shield used: " + shield.getCode());
         } else {
-            log.info(shield.getCode() + " cannot be used with two-handed weapon!");
+            storyLineLogger.event(DEBUG, shield.getCode() + " cannot be used with two-handed weapon!");
         }
     }
 
@@ -131,6 +137,6 @@ public class InventoryService {
         armor.setOwner(character);
         character.setArmor(armor);
         characterCalculationService.recalculateProperties(character);
-        log.info("Armor used: " + armor.getCode());
+        storyLineLogger.event(INFO, "Armor used: " + armor.getCode());
     }
 }

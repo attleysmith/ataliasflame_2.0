@@ -4,17 +4,22 @@ import com.asgames.ataliasflame.domain.model.dtos.CasteDetails;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
+import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import static com.asgames.ataliasflame.domain.MockConstants.CASTE_DETAILS;
 import static com.asgames.ataliasflame.domain.model.enums.CasteGroup.WANDERER;
+import static com.asgames.ataliasflame.domain.services.storyline.EventType.INFO;
 import static com.asgames.ataliasflame.domain.utils.DiceUtils.roll100;
 
 @Slf4j
 @Service
 public class CasteService {
+
+    @Autowired
+    private StoryLineLogger storyLineLogger;
 
     @Autowired
     private CharacterCalculationService characterCalculationService;
@@ -26,8 +31,9 @@ public class CasteService {
 
         ripOutSoulChip(character);
 
-        log.info("New caste: " + newCaste);
         character.setCaste(newCaste);
+        storyLineLogger.event(INFO, "New caste: " + newCaste);
+
         return characterCalculationService.recalculateProperties(character);
     }
 
@@ -66,13 +72,12 @@ public class CasteService {
         if (casteDetails.getGroup().equals(WANDERER)) {
             int percent = roll100();
 
-            log.info("Ripping out a soul chip! " + percent + " percent");
-
             character.getHealth().trauma(percent);
             character.getSoulChips().add(SoulChipFactory.getSoulChip(character, percent));
 
+            storyLineLogger.event(INFO, "Ripping out a soul chip! " + percent + " percent");
             if (character.isDead()) {
-                log.info("You died of trauma!");
+                storyLineLogger.event(INFO, "You died of trauma!");
             }
         }
     }

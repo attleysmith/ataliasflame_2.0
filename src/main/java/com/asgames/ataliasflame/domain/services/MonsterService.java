@@ -5,6 +5,7 @@ import com.asgames.ataliasflame.domain.model.dtos.MonsterTemplate;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Location;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
+import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
 import com.asgames.ataliasflame.domain.utils.SelectionValue;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +18,16 @@ import java.util.stream.Collectors;
 
 import static com.asgames.ataliasflame.domain.MockConstants.MONSTERS;
 import static com.asgames.ataliasflame.domain.MockConstants.MONSTER_DROPS;
+import static com.asgames.ataliasflame.domain.services.storyline.EventType.DEBUG;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.choose;
 import static com.asgames.ataliasflame.domain.utils.DiceUtils.successX;
 
 @Slf4j
 @Service
 public class MonsterService {
+
+    @Autowired
+    private StoryLineLogger storyLineLogger;
 
     @Autowired
     private InventoryService inventoryService;
@@ -44,13 +49,15 @@ public class MonsterService {
     }
 
     public void lootMonster(Character character, Monster monster) {
-        List<SelectionValue<Optional<Item>>> drops = MONSTER_DROPS.get(monster.getCode());
+        List<List<SelectionValue<Optional<Item>>>> drops = MONSTER_DROPS.get(monster.getCode());
         if (drops == null) {
             return;
         }
-        choose(drops).ifPresent(item -> {
-            log.info(item.getCode() + " gained!");
-            inventoryService.use(character, item);
-        });
+        for (List<SelectionValue<Optional<Item>>> drop : drops) {
+            choose(drop).ifPresent(item -> {
+                storyLineLogger.event(DEBUG, item.getCode() + " gained!");
+                inventoryService.use(character, item);
+            });
+        }
     }
 }

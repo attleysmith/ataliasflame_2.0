@@ -4,6 +4,7 @@ import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Location;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
+import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,11 +12,15 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.asgames.ataliasflame.domain.services.storyline.EventType.INFO;
 import static java.util.stream.Collectors.joining;
 
 @Slf4j
 @Service
 public class LocationService {
+
+    @Autowired
+    private StoryLineLogger storyLineLogger;
 
     @Autowired
     private MonsterService monsterService;
@@ -28,7 +33,7 @@ public class LocationService {
         Location location = Location.build(level);
 
         List<Monster> monsters = monsterService.populateMonsters(location);
-        log.info("Enemies appeared (" + monsters.size() + ")! -> " + monsters.stream().map(Monster::getCode).collect(joining(", ")));
+        storyLineLogger.event(INFO, "Enemies appeared (" + monsters.size() + ")! -> " + monsters.stream().map(Monster::getCode).collect(joining(", ")));
 
         location.setMonsters(monsters);
         return location;
@@ -46,9 +51,9 @@ public class LocationService {
 
         if (character.isAlive()) {
             character = experienceService.gainExperience(character, monsters);
-            log.info("You are the winner! Remaining health: " + character.getHealth().actualValue());
+            storyLineLogger.event(INFO, "You are the winner! Remaining health: " + character.getHealth().actualValue());
         } else {
-            log.info("You are defeated!");
+            storyLineLogger.event(INFO, "You are defeated!");
         }
     }
 

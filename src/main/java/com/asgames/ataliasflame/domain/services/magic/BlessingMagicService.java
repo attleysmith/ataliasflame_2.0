@@ -4,6 +4,7 @@ import com.asgames.ataliasflame.domain.model.dtos.Spell;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.SoulChip;
 import com.asgames.ataliasflame.domain.services.CharacterCalculationService;
+import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,10 +15,15 @@ import java.util.Optional;
 import static com.asgames.ataliasflame.domain.MockConstants.BOOSTERS;
 import static com.asgames.ataliasflame.domain.model.enums.MagicType.BLESSING;
 import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.SOUL;
+import static com.asgames.ataliasflame.domain.services.storyline.EventType.DEBUG;
+import static com.asgames.ataliasflame.domain.services.storyline.EventType.INFO;
 
 @Slf4j
 @Service
 public class BlessingMagicService extends AttackMagicService {
+
+    @Autowired
+    private StoryLineLogger storyLineLogger;
 
     @Autowired
     private CharacterCalculationService characterCalculationService;
@@ -36,7 +42,7 @@ public class BlessingMagicService extends AttackMagicService {
         boosterName.ifPresent(booster -> {
             character.getMagic().use(spell.getCost());
             enforceBoosterEffect(character, booster);
-            log.info("Blessed by " + spell.getName());
+            storyLineLogger.event(DEBUG, "Blessed by " + spell.getName());
         });
     }
 
@@ -61,7 +67,7 @@ public class BlessingMagicService extends AttackMagicService {
     public void removeBlessingMagic(Character character) {
         characterCalculationService.recalculateProperties(character);
         if (character.getHealth().isEmpty()) {
-            log.info("You died of an expired bless effect!");
+            storyLineLogger.event(INFO, "You died of an expired bless effect!");
         }
     }
 }

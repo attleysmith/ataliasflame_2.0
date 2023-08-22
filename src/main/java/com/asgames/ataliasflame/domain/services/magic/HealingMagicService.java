@@ -3,7 +3,9 @@ package com.asgames.ataliasflame.domain.services.magic;
 import com.asgames.ataliasflame.domain.model.dtos.Spell;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
+import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,6 +13,7 @@ import java.util.Optional;
 
 import static com.asgames.ataliasflame.domain.model.enums.MagicType.HEALING;
 import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.SOUL;
+import static com.asgames.ataliasflame.domain.services.storyline.EventType.INFO;
 import static java.util.Comparator.comparing;
 
 @Slf4j
@@ -18,6 +21,9 @@ import static java.util.Comparator.comparing;
 public class HealingMagicService extends AttackMagicService {
 
     private static final int TOLERATED_INJURY = 80;
+
+    @Autowired
+    private StoryLineLogger storyLineLogger;
 
     public void castHealingMagic(Character character) {
         if (character.getHealth().tolerateLoss(TOLERATED_INJURY)) {
@@ -35,13 +41,13 @@ public class HealingMagicService extends AttackMagicService {
         }
         character.getMagic().use(spell.getCost());
         character.getHealth().recover(spell.getHealingEffect());
-        log.info("Healed by " + spell.getName());
+        storyLineLogger.event(INFO, "Healed by " + spell.getName());
         if (spell.isArea()) {
             character.getCompanions().stream()
                     .filter(Combatant::isAlive)
                     .forEach(companion -> {
                         companion.getHealth().recover(spell.getHealingEffect());
-                        log.info(companion.getName() + " healed!");
+                        storyLineLogger.event(INFO, companion.getName() + " healed!");
                     });
         }
     }

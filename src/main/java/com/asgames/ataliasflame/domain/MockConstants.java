@@ -1399,57 +1399,91 @@ public final class MockConstants {
                     .build()
     );
 
-    public static final Map<String, List<SelectionValue<Optional<Item>>>> MONSTER_DROPS = Map.of(
+    public static final Map<String, List<List<SelectionValue<Optional<Item>>>>> MONSTER_DROPS = Map.of(
             "BOAR", List.of(
-                    new SelectionValue<>(10, Optional.empty()),
-                    new SelectionValue<>(90, Optional.of(ITEMS.get("MEAT")))),
+                    List.of(
+                            new SelectionValue<>(10, Optional.empty()),
+                            new SelectionValue<>(90, Optional.of(ITEMS.get("MEAT")))
+                    )),
             "BANDIT", List.of(
-                    new SelectionValue<>(5, Optional.empty()),
-                    new SelectionValue<>(5, Optional.of(ITEMS.get("WATER"))),
-                    new SelectionValue<>(5, Optional.of(ITEMS.get("BREAD"))),
-                    new SelectionValue<>(5, Optional.of(ITEMS.get("FRUIT"))),
-                    new SelectionValue<>(5, Optional.of(ITEMS.get("MEAT"))),
-                    new SelectionValue<>(5, Optional.of(ITEMS.get("HEALING_HERB"))),
-                    new SelectionValue<>(5, Optional.of(ITEMS.get("STAFF"))),
-                    new SelectionValue<>(5, Optional.of(ITEMS.get("DAGGER"))),
-                    new SelectionValue<>(5, Optional.of(ITEMS.get("SPEAR"))),
-                    new SelectionValue<>(5, Optional.of(ITEMS.get("SWORD"))),
-                    new SelectionValue<>(5, Optional.of(ITEMS.get("BUCKLER"))),
-                    new SelectionValue<>(5, Optional.of(ITEMS.get("ROUND_SHIELD"))),
-                    new SelectionValue<>(5, Optional.of(ITEMS.get("KITE_SHIELD"))),
-                    new SelectionValue<>(5, Optional.of(ITEMS.get("TOWER_SHIELD"))),
-                    new SelectionValue<>(5, Optional.of(ITEMS.get("LINEN_ARMOR"))),
-                    new SelectionValue<>(5, Optional.of(ITEMS.get("LEATHER_ARMOR"))),
-                    new SelectionValue<>(5, Optional.of(ITEMS.get("STUDDED_LEATHER_ARMOR"))),
-                    new SelectionValue<>(5, Optional.of(ITEMS.get("CHAIN_MAIL"))),
-                    new SelectionValue<>(5, Optional.of(ITEMS.get("PLATE_MAIL"))),
-                    new SelectionValue<>(5, Optional.of(ITEMS.get("FULL_PLATE_MAIL")))),
+                    List.of(
+                            new SelectionValue<>(90, Optional.empty()),
+                            new SelectionValue<>(10, Optional.of(ITEMS.get("WATER")))),
+                    List.of(
+                            new SelectionValue<>(85, Optional.empty()),
+                            new SelectionValue<>(15, Optional.of(ITEMS.get("BREAD")))),
+                    List.of(
+                            new SelectionValue<>(90, Optional.empty()),
+                            new SelectionValue<>(10, Optional.of(ITEMS.get("FRUIT")))),
+                    List.of(
+                            new SelectionValue<>(85, Optional.empty()),
+                            new SelectionValue<>(15, Optional.of(ITEMS.get("MEAT")))),
+                    List.of(
+                            new SelectionValue<>(95, Optional.empty()),
+                            new SelectionValue<>(5, Optional.of(ITEMS.get("HEALING_HERB")))),
+                    List.of(
+                            new SelectionValue<>(5, Optional.empty()),
+                            new SelectionValue<>(15, Optional.of(ITEMS.get("STAFF"))),
+                            new SelectionValue<>(25, Optional.of(ITEMS.get("DAGGER"))),
+                            new SelectionValue<>(25, Optional.of(ITEMS.get("SPEAR"))),
+                            new SelectionValue<>(30, Optional.of(ITEMS.get("SWORD")))),
+                    List.of(
+                            new SelectionValue<>(40, Optional.empty()),
+                            new SelectionValue<>(15, Optional.of(ITEMS.get("BUCKLER"))),
+                            new SelectionValue<>(25, Optional.of(ITEMS.get("ROUND_SHIELD"))),
+                            new SelectionValue<>(15, Optional.of(ITEMS.get("KITE_SHIELD"))),
+                            new SelectionValue<>(5, Optional.of(ITEMS.get("TOWER_SHIELD")))),
+                    List.of(
+                            new SelectionValue<>(10, Optional.empty()),
+                            new SelectionValue<>(15, Optional.of(ITEMS.get("LINEN_ARMOR"))),
+                            new SelectionValue<>(20, Optional.of(ITEMS.get("LEATHER_ARMOR"))),
+                            new SelectionValue<>(25, Optional.of(ITEMS.get("STUDDED_LEATHER_ARMOR"))),
+                            new SelectionValue<>(15, Optional.of(ITEMS.get("CHAIN_MAIL"))),
+                            new SelectionValue<>(10, Optional.of(ITEMS.get("PLATE_MAIL"))),
+                            new SelectionValue<>(5, Optional.of(ITEMS.get("FULL_PLATE_MAIL")))
+                    )),
             "WEREWOLF", List.of(
-                    new SelectionValue<>(50, Optional.empty()),
-                    new SelectionValue<>(15, Optional.of(ITEMS.get("WATER"))),
-                    new SelectionValue<>(15, Optional.of(ITEMS.get("MEAT"))),
-                    new SelectionValue<>(5, Optional.of(ITEMS.get("HEALING_HERB"))),
-                    new SelectionValue<>(10, Optional.of(ITEMS.get("DAGGER"))),
-                    new SelectionValue<>(5, Optional.of(ITEMS.get("SWORD")))),
+                    List.of(
+                            new SelectionValue<>(65, Optional.empty()),
+                            new SelectionValue<>(15, Optional.of(ITEMS.get("WATER"))),
+                            new SelectionValue<>(15, Optional.of(ITEMS.get("MEAT"))),
+                            new SelectionValue<>(5, Optional.of(ITEMS.get("HEALING_HERB")))),
+                    List.of(
+                            new SelectionValue<>(85, Optional.empty()),
+                            new SelectionValue<>(10, Optional.of(ITEMS.get("DAGGER"))),
+                            new SelectionValue<>(5, Optional.of(ITEMS.get("SWORD")))
+                    )),
             "NAGA", List.of(
-                    new SelectionValue<>(30, Optional.empty()),
-                    new SelectionValue<>(15, Optional.of(ITEMS.get("WATER"))),
-                    new SelectionValue<>(15, Optional.of(ITEMS.get("MEAT"))),
-                    new SelectionValue<>(5, Optional.of(ITEMS.get("HEALING_HERB"))),
-                    new SelectionValue<>(10, Optional.of(ITEMS.get("DAGGER"))),
-                    new SelectionValue<>(15, Optional.of(ITEMS.get("SPEAR"))),
-                    new SelectionValue<>(5, Optional.of(ITEMS.get("SWORD"))),
-                    new SelectionValue<>(5, Optional.of(ITEMS.get("LEATHER_ARMOR")))),
+                    List.of(
+                            new SelectionValue<>(60, Optional.empty()),
+                            new SelectionValue<>(15, Optional.of(ITEMS.get("WATER"))),
+                            new SelectionValue<>(15, Optional.of(ITEMS.get("MEAT"))),
+                            new SelectionValue<>(10, Optional.of(ITEMS.get("HEALING_HERB")))),
+                    List.of(
+                            new SelectionValue<>(50, Optional.empty()),
+                            new SelectionValue<>(25, Optional.of(ITEMS.get("DAGGER"))),
+                            new SelectionValue<>(15, Optional.of(ITEMS.get("SPEAR"))),
+                            new SelectionValue<>(10, Optional.of(ITEMS.get("SWORD")))),
+                    List.of(
+                            new SelectionValue<>(90, Optional.empty()),
+                            new SelectionValue<>(10, Optional.of(ITEMS.get("LEATHER_ARMOR")))
+                    )),
             "OGRE", List.of(
-                    new SelectionValue<>(35, Optional.empty()),
-                    new SelectionValue<>(15, Optional.of(ITEMS.get("WATER"))),
-                    new SelectionValue<>(20, Optional.of(ITEMS.get("MEAT"))),
-                    new SelectionValue<>(5, Optional.of(ITEMS.get("HEALING_HERB"))),
-                    new SelectionValue<>(10, Optional.of(ITEMS.get("DAGGER"))),
-                    new SelectionValue<>(15, Optional.of(ITEMS.get("SPEAR")))),
+                    List.of(
+                            new SelectionValue<>(60, Optional.empty()),
+                            new SelectionValue<>(15, Optional.of(ITEMS.get("WATER"))),
+                            new SelectionValue<>(20, Optional.of(ITEMS.get("MEAT"))),
+                            new SelectionValue<>(5, Optional.of(ITEMS.get("HEALING_HERB")))),
+                    List.of(
+                            new SelectionValue<>(65, Optional.empty()),
+                            new SelectionValue<>(15, Optional.of(ITEMS.get("DAGGER"))),
+                            new SelectionValue<>(20, Optional.of(ITEMS.get("SPEAR")))
+                    )),
             "GHOUL", List.of(
-                    new SelectionValue<>(80, Optional.empty()),
-                    new SelectionValue<>(20, Optional.of(ITEMS.get("DAGGER"))))
+                    List.of(
+                            new SelectionValue<>(80, Optional.empty()),
+                            new SelectionValue<>(20, Optional.of(ITEMS.get("DAGGER")))
+                    ))
     );
 
     // Soul chips

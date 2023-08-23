@@ -8,33 +8,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-
-import static com.asgames.ataliasflame.domain.model.enums.MagicType.HEALING;
 import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.SOUL;
 import static com.asgames.ataliasflame.domain.services.storyline.EventType.INFO;
-import static java.util.Comparator.comparing;
 
 @Slf4j
 @Service
 public class HealingMagicService extends AttackMagicService {
 
-    private static final int TOLERATED_INJURY = 80;
-
     @Autowired
     private StoryLineLogger storyLineLogger;
 
-    public void castHealingMagic(Character character) {
-        if (character.getHealth().tolerateLoss(TOLERATED_INJURY)) {
-            return;
-        }
-        selectBestHealingSpell(character).ifPresent(
-                spell -> castHealingSpell(character, spell)
-        );
-    }
-
-    private void castHealingSpell(Character character, Spell spell) {
+    public void castHealingSpell(Character character, Spell spell) {
         if (spell.getGroup().equals(SOUL)
                 && listUnusedSouls(character).isEmpty()) {
             return;
@@ -49,19 +33,6 @@ public class HealingMagicService extends AttackMagicService {
                         companion.getHealth().recover(spell.getHealingEffect());
                         storyLineLogger.event(INFO, companion.getName() + " healed!");
                     });
-        }
-    }
-
-    private Optional<Spell> selectBestHealingSpell(Character character) {
-        List<Spell> spells = usableSpellsOfType(character, HEALING);
-        switch (spells.size()) {
-            case 0:
-                return Optional.empty();
-            case 1:
-                return Optional.of(spells.get(0));
-            default:
-                return spells.stream()
-                        .max(comparing(Spell::getHealingEffect));
         }
     }
 }

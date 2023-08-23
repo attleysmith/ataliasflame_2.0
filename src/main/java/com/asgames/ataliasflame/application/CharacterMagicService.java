@@ -5,6 +5,7 @@ import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Location;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.enums.MagicType;
+import com.asgames.ataliasflame.domain.model.enums.SpellName;
 import com.asgames.ataliasflame.domain.services.MagicService;
 import com.asgames.ataliasflame.domain.services.SpellService;
 import com.asgames.ataliasflame.infrastructure.repositories.CharacterRepository;
@@ -15,6 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
+import static com.asgames.ataliasflame.domain.MockConstants.SPELLS;
 
 @Slf4j
 @Service
@@ -36,16 +39,13 @@ public class CharacterMagicService {
     private SpellService spellService;
 
     @Transactional
-    public Character castSummoningMagic(String characterReference) {
+    public Character castSpell(String characterReference, SpellName spellName) {
         Character character = characterMaintenanceService.getCharacter(characterReference);
-        magicService.castSummoningMagic(character);
-        return characterRepository.save(character);
-    }
-
-    @Transactional
-    public Character castBlessingMagic(String characterReference) {
-        Character character = characterMaintenanceService.getCharacter(characterReference);
-        magicService.castBlessingMagic(character);
+        Spell spell = SPELLS.get(spellName);
+        if (spell == null) {
+            throw new IllegalStateException("Unknown spell: " + spellName);
+        }
+        magicService.castSpell(character, spell);
         return characterRepository.save(character);
     }
 
@@ -58,13 +58,6 @@ public class CharacterMagicService {
         magicService.castAttackMagic(character, monsters);
 
         locationRepository.save(location);
-        return characterRepository.save(character);
-    }
-
-    @Transactional
-    public Character castHealingMagic(String characterReference) {
-        Character character = characterMaintenanceService.getCharacter(characterReference);
-        magicService.castHealingMagic(character);
         return characterRepository.save(character);
     }
 

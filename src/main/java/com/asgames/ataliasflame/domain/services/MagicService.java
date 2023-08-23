@@ -1,6 +1,7 @@
 package com.asgames.ataliasflame.domain.services;
 
 import com.asgames.ataliasflame.domain.model.dtos.Item;
+import com.asgames.ataliasflame.domain.model.dtos.Spell;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.services.magic.AttackMagicService;
@@ -54,23 +55,30 @@ public class MagicService {
         storyLineLogger.event(INFO, "Recovering magic -> " + character.getMagic().actualValue());
     }
 
-    public void castSummoningMagic(Character character) {
-        summonMagicService.castSummoningMagic(character);
+    public void castSpell(Character character, Spell spell) {
+        if (!character.getMagic().has(spell.getCost())) {
+            throw new IllegalArgumentException("Character does not have enough magic to cast spell!");
+        }
+        switch (spell.getType()) {
+            case SUMMON:
+                summonMagicService.castSummoningSpell(character, spell);
+                break;
+            case BLESSING:
+                blessingMagicService.castBlessingSpell(character, spell);
+                break;
+            case HEALING:
+                healingMagicService.castHealingSpell(character, spell);
+            case ATTACK:
+            default:
+                throw new UnsupportedOperationException("Spell type is not supported: " + spell.getType());
+        }
     }
 
     public void castAttackMagic(Character character, List<Monster> monsters) {
         attackMagicService.castAttackMagic(character, monsters);
     }
 
-    public void castBlessingMagic(Character character) {
-        blessingMagicService.castBlessingMagic(character);
-    }
-
     public void removeBlessingMagic(Character character) {
         blessingMagicService.removeBlessingMagic(character);
-    }
-
-    public void castHealingMagic(Character character) {
-        healingMagicService.castHealingMagic(character);
     }
 }

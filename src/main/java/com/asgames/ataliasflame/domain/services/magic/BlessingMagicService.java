@@ -28,13 +28,10 @@ public class BlessingMagicService extends AttackMagicService {
     @Autowired
     private CharacterCalculationService characterCalculationService;
 
-    public void castBlessingMagic(Character character) {
-        selectBestSpell(character, BLESSING).ifPresent(
-                spell -> castBlessingSpell(character, spell)
-        );
-    }
-
-    private void castBlessingSpell(Character character, Spell spell) {
+    public void castBlessingSpell(Character character, Spell spell) {
+        if (!spell.getType().equals(BLESSING)) {
+            throw new IllegalArgumentException("Blessing spell expected!");
+        }
         Optional<String> boosterName = Optional.of(spell.getName().name());
         if (spell.getGroup().equals(SOUL)) {
             boosterName = getSoulBooster(character);

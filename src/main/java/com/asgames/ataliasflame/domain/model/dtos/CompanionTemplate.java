@@ -22,10 +22,10 @@ public class CompanionTemplate {
     private final int health;
     private final int initiative;
 
-    public Companion instance(Character owner, String codeSuffix) {
+    public Companion instance(Character owner) {
         return Companion.builder()
                 .reference(UUID.randomUUID().toString())
-                .name(codeSuffix.length() == 0 ? code : code + "-" + codeSuffix)
+                .name(code)
                 .type(type)
                 .owner(owner)
                 .attack(attack)

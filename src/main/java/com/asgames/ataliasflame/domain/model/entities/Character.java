@@ -98,10 +98,10 @@ public class Character implements Combatant {
     private Map<Attribute, Integer> attributes;
 
     @OneToMany(mappedBy = "owner", cascade = ALL, fetch = EAGER)
-    private Set<SoulChip> soulChips = new HashSet<>();
+    private Set<SoulChip> soulChips;
 
     @OneToMany(mappedBy = "owner", cascade = ALL, fetch = EAGER, orphanRemoval = true)
-    private Set<Companion> companions = new HashSet<>();
+    private Set<Companion> companions;
 
     @OneToOne(mappedBy = "owner", cascade = ALL, fetch = EAGER, orphanRemoval = true)
     private Shield shield;
@@ -138,5 +138,19 @@ public class Character implements Combatant {
             attributes = new HashMap<>();
         }
         return attributes;
+    }
+
+    public Set<SoulChip> getSoulChips() {
+        if (soulChips == null) {
+            soulChips = new HashSet<>();
+        }
+        return soulChips;
+    }
+
+    public Set<Companion> getCompanions() {
+        if (companions == null) {
+            companions = new HashSet<>();
+        }
+        return companions;
     }
 }

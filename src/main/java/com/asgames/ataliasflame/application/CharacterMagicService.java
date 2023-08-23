@@ -1,15 +1,14 @@
 package com.asgames.ataliasflame.application;
 
+import com.asgames.ataliasflame.application.model.AttackContext;
 import com.asgames.ataliasflame.domain.model.dtos.Spell;
 import com.asgames.ataliasflame.domain.model.entities.Character;
-import com.asgames.ataliasflame.domain.model.entities.Location;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
-import com.asgames.ataliasflame.domain.model.enums.MagicType;
 import com.asgames.ataliasflame.domain.model.enums.SpellName;
 import com.asgames.ataliasflame.domain.services.MagicService;
 import com.asgames.ataliasflame.domain.services.SpellService;
 import com.asgames.ataliasflame.infrastructure.repositories.CharacterRepository;
-import com.asgames.ataliasflame.infrastructure.repositories.LocationRepository;
+import com.asgames.ataliasflame.infrastructure.repositories.MonsterRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +25,7 @@ public class CharacterMagicService {
     @Autowired
     private CharacterRepository characterRepository;
     @Autowired
-    private LocationRepository locationRepository;
+    private MonsterRepository monsterRepository;
 
     @Autowired
     private CharacterMaintenanceService characterMaintenanceService;
@@ -50,15 +49,19 @@ public class CharacterMagicService {
     }
 
     @Transactional
-    public Character castAttackMagic(String characterReference, String locationReference) {
+    public AttackContext castAttackSpell(String characterReference, SpellName spellName, String monsterReference) {
         Character character = characterMaintenanceService.getCharacter(characterReference);
-        Location location = locationAdventureService.getLocation(locationReference);
-        List<Monster> monsters = location.getMonsters();
+        Spell spell = SPELLS.get(spellName);
+        if (spell == null) {
+            throw new IllegalStateException("Unknown spell: " + spellName);
+        }
+        Monster monster = locationAdventureService.getMonster(monsterReference);
+        magicService.castAttackSpell(character, spell, monster);
 
-        magicService.castAttackMagic(character, monsters);
-
-        locationRepository.save(location);
-        return characterRepository.save(character);
+        return AttackContext.builder()
+                .character(characterRepository.save(character))
+                .monster(monsterRepository.save(monster))
+                .build();
     }
 
     @Transactional
@@ -69,8 +72,8 @@ public class CharacterMagicService {
     }
 
     @Transactional(readOnly = true)
-    public List<Spell> listCharacterSpells(String characterReference, MagicType magicType) {
+    public List<Spell> listCharacterSpells(String characterReference) {
         Character character = characterMaintenanceService.getCharacter(characterReference);
-        return spellService.listSpellsByType(character, magicType);
+        return spellService.listSpells(character);
     }
 }

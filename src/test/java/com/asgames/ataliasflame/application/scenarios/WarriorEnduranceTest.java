@@ -28,7 +28,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
                 .defensiveGod(ALATE)
                 .name("Bhakri")
                 .build();
-        character = characterMaintenanceService.createCharacter(characterInput);
+        createCharacter(characterInput);
 
         // expect
         level1Upgrade();
@@ -38,7 +38,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
             int startingLevel = character.getLevel();
 
             // when
-            character = combatUntilNextLevel();
+            combatUntilNextLevel();
 
             // expect
             assertThat(character.getLevel(), is(greaterThan(startingLevel)));
@@ -79,7 +79,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         // then
         addAttributePoints(DEXTERITY, 2);
         addAttributePoints(CONSTITUTION, 1);
-        character = addAttributePoints(AGILITY, 2);
+        addAttributePoints(AGILITY, 2);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(1));
@@ -103,7 +103,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         // then
         addAttributePoints(DEXTERITY, 2);
         addAttributePoints(CONSTITUTION, 1);
-        character = addAttributePoints(AGILITY, 2);
+        addAttributePoints(AGILITY, 2);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(1));
@@ -126,7 +126,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
 
         // then
         addAttributePoints(STRENGTH, 3);
-        character = addAttributePoints(CONSTITUTION, 2);
+        addAttributePoints(CONSTITUTION, 2);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(4));
@@ -152,7 +152,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
         addAttributePoints(MENTAL_POWER, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(5));
@@ -170,7 +170,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getMagic().totalValue(), is(23));
 
         // then
-        character = upgradeCaste(FIGHTER);
+        upgradeCaste(FIGHTER);
 
         // expect
         assertThat(character.getCaste(), is(FIGHTER));
@@ -183,7 +183,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(STRENGTH, 1);
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 2);
-        character = addAttributePoints(AGILITY, 1);
+        addAttributePoints(AGILITY, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(6));
@@ -207,7 +207,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         // then
         addAttributePoints(DEXTERITY, 2);
         addAttributePoints(AGILITY, 2);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(6));
@@ -231,7 +231,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         // then
         addAttributePoints(DEXTERITY, 2);
         addAttributePoints(AGILITY, 2);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(6));
@@ -257,7 +257,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(7));
@@ -282,7 +282,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(STRENGTH, 2);
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
-        character = addAttributePoints(AGILITY, 1);
+        addAttributePoints(AGILITY, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(9));
@@ -308,7 +308,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(10));
@@ -333,7 +333,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(STRENGTH, 1);
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 2);
-        character = addAttributePoints(AGILITY, 1);
+        addAttributePoints(AGILITY, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(11));
@@ -359,7 +359,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(12));
@@ -384,7 +384,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(STRENGTH, 2);
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
-        character = addAttributePoints(AGILITY, 1);
+        addAttributePoints(AGILITY, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(14));
@@ -410,7 +410,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(15));
@@ -435,7 +435,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(STRENGTH, 1);
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 2);
-        character = addAttributePoints(AGILITY, 1);
+        addAttributePoints(AGILITY, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(16));
@@ -461,7 +461,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(17));
@@ -487,7 +487,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(18));
@@ -513,7 +513,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(19));
@@ -539,7 +539,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
         addAttributePoints(MENTAL_POWER, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(20));
@@ -557,7 +557,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getMagic().totalValue(), is(99));
 
         // then
-        character = upgradeCaste(PALADIN);
+        upgradeCaste(PALADIN);
 
         // expect
         assertThat(character.getCaste(), is(PALADIN));
@@ -571,7 +571,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(21));
@@ -597,7 +597,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(22));
@@ -623,7 +623,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(23));
@@ -649,7 +649,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(24));
@@ -675,7 +675,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(25));
@@ -701,7 +701,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(26));
@@ -727,7 +727,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(27));
@@ -753,7 +753,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(28));
@@ -779,7 +779,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(29));
@@ -805,7 +805,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(30));
@@ -831,7 +831,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(31));
@@ -857,7 +857,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(32));
@@ -883,7 +883,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(33));
@@ -909,7 +909,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(34));
@@ -935,7 +935,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(35));
@@ -961,7 +961,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(36));
@@ -987,7 +987,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(37));
@@ -1013,7 +1013,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(38));
@@ -1039,7 +1039,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(39));
@@ -1065,7 +1065,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(40));
@@ -1091,7 +1091,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(41));
@@ -1117,7 +1117,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(42));
@@ -1143,7 +1143,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(43));
@@ -1169,7 +1169,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(44));
@@ -1195,7 +1195,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(45));
@@ -1221,7 +1221,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(46));
@@ -1247,7 +1247,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(47));
@@ -1273,7 +1273,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(48));
@@ -1299,7 +1299,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(49));
@@ -1325,7 +1325,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(50));
@@ -1343,7 +1343,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getMagic().totalValue(), is(251));
 
         // then
-        character = upgradeCaste(GRANDMASTER);
+        upgradeCaste(GRANDMASTER);
 
         // expect
         assertThat(character.getCaste(), is(GRANDMASTER));
@@ -1357,7 +1357,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(51));
@@ -1383,7 +1383,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(52));
@@ -1409,7 +1409,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(53));
@@ -1435,7 +1435,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(54));
@@ -1461,7 +1461,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(55));
@@ -1487,7 +1487,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(56));
@@ -1513,7 +1513,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(57));
@@ -1539,7 +1539,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(58));
@@ -1565,7 +1565,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(59));
@@ -1591,7 +1591,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(60));
@@ -1617,7 +1617,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(61));
@@ -1643,7 +1643,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(62));
@@ -1669,7 +1669,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(63));
@@ -1695,7 +1695,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(64));
@@ -1721,7 +1721,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(65));
@@ -1747,7 +1747,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(66));
@@ -1773,7 +1773,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(67));
@@ -1799,7 +1799,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(68));
@@ -1825,7 +1825,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(69));
@@ -1851,7 +1851,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(70));
@@ -1877,7 +1877,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(71));
@@ -1903,7 +1903,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(72));
@@ -1929,7 +1929,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(73));
@@ -1955,7 +1955,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(74));
@@ -1981,7 +1981,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(75));
@@ -2007,7 +2007,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(76));
@@ -2033,7 +2033,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(77));
@@ -2059,7 +2059,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(78));
@@ -2085,7 +2085,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(79));
@@ -2111,7 +2111,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(80));
@@ -2137,7 +2137,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(81));
@@ -2163,7 +2163,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(82));
@@ -2189,7 +2189,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(83));
@@ -2215,7 +2215,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(84));
@@ -2241,7 +2241,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(85));
@@ -2267,7 +2267,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(86));
@@ -2293,7 +2293,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(87));
@@ -2319,7 +2319,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(88));
@@ -2345,7 +2345,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(89));
@@ -2371,7 +2371,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(90));
@@ -2397,7 +2397,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(91));
@@ -2423,7 +2423,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(92));
@@ -2449,7 +2449,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(93));
@@ -2475,7 +2475,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(94));
@@ -2501,7 +2501,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(95));
@@ -2527,7 +2527,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(96));
@@ -2553,7 +2553,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(97));
@@ -2579,7 +2579,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(98));
@@ -2605,7 +2605,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(99));
@@ -2631,7 +2631,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(100));
@@ -2649,7 +2649,7 @@ public class WarriorEnduranceTest extends EnduranceTestBase {
         assertThat(character.getMagic().totalValue(), is(500));
 
         // then
-        character = upgradeCaste(TITAN);
+        upgradeCaste(TITAN);
 
         // expect
         assertThat(character.getCaste(), is(TITAN));

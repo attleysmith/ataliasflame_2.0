@@ -28,7 +28,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
                 .defensiveGod(GETON)
                 .name("Takemoto")
                 .build();
-        character = characterMaintenanceService.createCharacter(characterInput);
+        createCharacter(characterInput);
 
         // expect
         level1Upgrade();
@@ -38,7 +38,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
             int startingLevel = character.getLevel();
 
             // when
-            character = combatUntilNextLevel();
+            combatUntilNextLevel();
 
             // expect
             assertThat(character.getLevel(), is(greaterThan(startingLevel)));
@@ -79,7 +79,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // then
         addAttributePoints(DEXTERITY, 2);
         addAttributePoints(CONSTITUTION, 1);
-        character = addAttributePoints(AGILITY, 2);
+        addAttributePoints(AGILITY, 2);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(1));
@@ -103,7 +103,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // then
         addAttributePoints(DEXTERITY, 2);
         addAttributePoints(CONSTITUTION, 1);
-        character = addAttributePoints(AGILITY, 2);
+        addAttributePoints(AGILITY, 2);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(1));
@@ -126,7 +126,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
 
         // then
         addAttributePoints(STRENGTH, 3);
-        character = addAttributePoints(CONSTITUTION, 2);
+        addAttributePoints(CONSTITUTION, 2);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(4));
@@ -151,7 +151,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
         addAttributePoints(MENTAL_POWER, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 2);
+        addAttributePoints(SPIRITUAL_POWER, 2);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(4));
@@ -169,7 +169,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         assertThat(character.getMagic().totalValue(), is(24));
 
         // then
-        character = upgradeCaste(TRACKER);
+        upgradeCaste(TRACKER);
 
         // expect
         assertThat(character.getCaste(), is(TRACKER));
@@ -184,7 +184,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(5));
@@ -210,7 +210,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(5));
@@ -236,7 +236,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(6));
@@ -262,7 +262,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(6));
@@ -288,7 +288,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(7));
@@ -314,7 +314,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(8));
@@ -340,7 +340,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(8));
@@ -366,7 +366,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(9));
@@ -392,7 +392,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(10));
@@ -418,7 +418,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(INTELLIGENCE, 1);
+        addAttributePoints(INTELLIGENCE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(11));
@@ -444,7 +444,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(12));
@@ -470,7 +470,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(13));
@@ -496,7 +496,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(14));
@@ -522,7 +522,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(15));
@@ -548,7 +548,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(16));
@@ -566,7 +566,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         assertThat(character.getMagic().totalValue(), is(81));
 
         // then
-        character = upgradeCaste(RANGER);
+        upgradeCaste(RANGER);
 
         // expect
         assertThat(character.getCaste(), is(RANGER));
@@ -581,7 +581,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(17));
@@ -607,7 +607,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(18));
@@ -633,7 +633,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
         addAttributePoints(MENTAL_POWER, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(18));
@@ -659,7 +659,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(19));
@@ -685,7 +685,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(AGILITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(20));
@@ -711,7 +711,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(20));
@@ -737,7 +737,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(21));
@@ -763,7 +763,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(22));
@@ -789,7 +789,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(22));
@@ -815,7 +815,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(AGILITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(23));
@@ -841,7 +841,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(24));
@@ -867,7 +867,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(24));
@@ -893,7 +893,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(25));
@@ -919,7 +919,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(26));
@@ -944,7 +944,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(AGILITY, 1);
         addAttributePoints(INTELLIGENCE, 2);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(26));
@@ -970,7 +970,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(27));
@@ -996,7 +996,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(28));
@@ -1022,7 +1022,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(28));
@@ -1048,7 +1048,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(29));
@@ -1074,7 +1074,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(AGILITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(30));
@@ -1100,7 +1100,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(30));
@@ -1126,7 +1126,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(31));
@@ -1152,7 +1152,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(32));
@@ -1178,7 +1178,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(32));
@@ -1204,7 +1204,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(AGILITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(33));
@@ -1230,7 +1230,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(34));
@@ -1256,7 +1256,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(34));
@@ -1282,7 +1282,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(INTELLIGENCE, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(35));
@@ -1308,7 +1308,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(35));
@@ -1333,7 +1333,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 2);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(35));
@@ -1351,7 +1351,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         assertThat(character.getMagic().totalValue(), is(226));
 
         // then
-        character = upgradeCaste(PILGRIM);
+        upgradeCaste(PILGRIM);
 
         // expect
         assertThat(character.getCaste(), is(PILGRIM));
@@ -1366,7 +1366,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
         addAttributePoints(MENTAL_POWER, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(36));
@@ -1392,7 +1392,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
         addAttributePoints(MENTAL_POWER, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(37));
@@ -1418,7 +1418,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
         addAttributePoints(MENTAL_POWER, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(38));
@@ -1444,7 +1444,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
         addAttributePoints(MENTAL_POWER, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(39));
@@ -1469,7 +1469,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(MENTAL_POWER, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 2);
+        addAttributePoints(SPIRITUAL_POWER, 2);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(39));
@@ -1495,7 +1495,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(40));
@@ -1521,7 +1521,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(41));
@@ -1547,7 +1547,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(42));
@@ -1573,7 +1573,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(43));
@@ -1597,7 +1597,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // then
         addAttributePoints(INTELLIGENCE, 2);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 2);
+        addAttributePoints(SPIRITUAL_POWER, 2);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(43));
@@ -1623,7 +1623,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(44));
@@ -1649,7 +1649,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(45));
@@ -1675,7 +1675,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(46));
@@ -1701,7 +1701,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(47));
@@ -1725,7 +1725,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // then
         addAttributePoints(INTELLIGENCE, 2);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 2);
+        addAttributePoints(SPIRITUAL_POWER, 2);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(47));
@@ -1751,7 +1751,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(48));
@@ -1777,7 +1777,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(49));
@@ -1803,7 +1803,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(50));
@@ -1829,7 +1829,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(51));
@@ -1853,7 +1853,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // then
         addAttributePoints(INTELLIGENCE, 2);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 2);
+        addAttributePoints(SPIRITUAL_POWER, 2);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(51));
@@ -1879,7 +1879,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(52));
@@ -1905,7 +1905,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(53));
@@ -1931,7 +1931,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(54));
@@ -1957,7 +1957,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(55));
@@ -1981,7 +1981,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // then
         addAttributePoints(INTELLIGENCE, 2);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 2);
+        addAttributePoints(SPIRITUAL_POWER, 2);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(55));
@@ -2007,7 +2007,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(56));
@@ -2033,7 +2033,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(57));
@@ -2059,7 +2059,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(58));
@@ -2085,7 +2085,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(59));
@@ -2109,7 +2109,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // then
         addAttributePoints(INTELLIGENCE, 2);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 2);
+        addAttributePoints(SPIRITUAL_POWER, 2);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(59));
@@ -2135,7 +2135,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(60));
@@ -2161,7 +2161,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(61));
@@ -2187,7 +2187,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(62));
@@ -2213,7 +2213,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(63));
@@ -2237,7 +2237,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // then
         addAttributePoints(INTELLIGENCE, 2);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 2);
+        addAttributePoints(SPIRITUAL_POWER, 2);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(63));
@@ -2263,7 +2263,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(64));
@@ -2289,7 +2289,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(65));
@@ -2315,7 +2315,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(66));
@@ -2341,7 +2341,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(67));
@@ -2365,7 +2365,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // then
         addAttributePoints(INTELLIGENCE, 2);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 2);
+        addAttributePoints(SPIRITUAL_POWER, 2);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(67));
@@ -2391,7 +2391,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(68));
@@ -2417,7 +2417,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(69));
@@ -2443,7 +2443,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(70));
@@ -2469,7 +2469,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(71));
@@ -2493,7 +2493,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         // then
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(INTELLIGENCE, 2);
-        character = addAttributePoints(SPIRITUAL_POWER, 2);
+        addAttributePoints(SPIRITUAL_POWER, 2);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(71));
@@ -2519,7 +2519,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(72));
@@ -2545,7 +2545,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(73));
@@ -2571,7 +2571,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(74));
@@ -2597,7 +2597,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(75));
@@ -2620,7 +2620,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
 
         // then
         addAttributePoints(INTELLIGENCE, 3);
-        character = addAttributePoints(SPIRITUAL_POWER, 2);
+        addAttributePoints(SPIRITUAL_POWER, 2);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(75));
@@ -2638,7 +2638,7 @@ public class WandererEnduranceTest extends EnduranceTestBase {
         assertThat(character.getMagic().totalValue(), is(450));
 
         // then
-        character = upgradeCaste(FREE_SOUL);
+        upgradeCaste(FREE_SOUL);
 
         // expect
         assertThat(character.getCaste(), is(FREE_SOUL));

@@ -109,7 +109,7 @@ class CharacterServiceTest extends CharacterTestBase {
         assertThat(fighter.getMagic().totalValue(), is(530));
 
         // when
-        DefensiveGodConversionCode conversionCode = characterAdventureService.getDefensiveGodConversionCode(clericReference);
+        DefensiveGodConversionCode conversionCode = characterAdventureService.produceDefensiveGodConversionCode(clericReference);
 
         // then
         assertThat(conversionCode.getClericReference(), is(cleric.getReference()));

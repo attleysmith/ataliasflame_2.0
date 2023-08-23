@@ -45,7 +45,7 @@ public class CharacterAdventureService {
     }
 
     @Transactional
-    public DefensiveGodConversionCode getDefensiveGodConversionCode(String characterReference) {
+    public DefensiveGodConversionCode produceDefensiveGodConversionCode(String characterReference) {
         Character character = characterMaintenanceService.getCharacter(characterReference);
 
         DefensiveGodConversionLog conversionLog = defensiveGodConversionService.getConversionLog(character);

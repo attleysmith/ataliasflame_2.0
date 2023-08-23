@@ -8,7 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static com.asgames.ataliasflame.domain.model.enums.MagicType.HEALING;
 import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.SOUL;
+import static com.asgames.ataliasflame.domain.services.storyline.EventType.DEBUG;
 import static com.asgames.ataliasflame.domain.services.storyline.EventType.INFO;
 
 @Slf4j
@@ -19,8 +21,12 @@ public class HealingMagicService extends AttackMagicService {
     private StoryLineLogger storyLineLogger;
 
     public void castHealingSpell(Character character, Spell spell) {
+        if (!spell.getType().equals(HEALING)) {
+            throw new IllegalArgumentException("Healing spell expected!");
+        }
         if (spell.getGroup().equals(SOUL)
                 && listUnusedSouls(character).isEmpty()) {
+            storyLineLogger.event(DEBUG, "Soul chips are occupied!");
             return;
         }
         character.getMagic().use(spell.getCost());

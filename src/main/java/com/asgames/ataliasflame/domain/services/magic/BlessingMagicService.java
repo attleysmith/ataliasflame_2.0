@@ -46,6 +46,7 @@ public class BlessingMagicService extends AttackMagicService {
     private Optional<String> getSoulBooster(Character character) {
         List<SoulChip> unusedSouls = listUnusedSouls(character);
         if (unusedSouls.isEmpty()) {
+            storyLineLogger.event(DEBUG, "Soul chips are occupied!");
             return Optional.empty();
         } else {
             return Optional.of(unusedSouls.get(0).getShape().name());

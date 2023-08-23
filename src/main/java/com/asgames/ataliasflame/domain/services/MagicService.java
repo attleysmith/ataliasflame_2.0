@@ -13,8 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 import static com.asgames.ataliasflame.domain.MockConstants.MAGIC_RECOVERY_EFFECT_OF_SLEEP;
 import static com.asgames.ataliasflame.domain.model.enums.ItemType.FOOD;
 import static com.asgames.ataliasflame.domain.services.storyline.EventType.INFO;
@@ -74,8 +72,20 @@ public class MagicService {
         }
     }
 
-    public void castAttackMagic(Character character, List<Monster> monsters) {
-        attackMagicService.castAttackMagic(character, monsters);
+    public void castAttackSpell(Character character, Spell spell, Monster monster) {
+        if (!character.getMagic().has(spell.getCost())) {
+            throw new IllegalArgumentException("Character does not have enough magic to cast spell!");
+        }
+        switch (spell.getType()) {
+            case ATTACK:
+                attackMagicService.castAttackSpell(character, spell, monster);
+                break;
+            case SUMMON:
+            case BLESSING:
+            case HEALING:
+            default:
+                throw new UnsupportedOperationException("Spell type is not supported: " + spell.getType());
+        }
     }
 
     public void removeBlessingMagic(Character character) {

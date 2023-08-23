@@ -28,7 +28,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
                 .defensiveGod(RUNID)
                 .name("Nobela")
                 .build();
-        character = characterMaintenanceService.createCharacter(characterInput);
+        createCharacter(characterInput);
 
         // expect
         level1Upgrade();
@@ -38,7 +38,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
             int startingLevel = character.getLevel();
 
             // when
-            character = combatUntilNextLevel();
+            combatUntilNextLevel();
 
             // expect
             assertThat(character.getLevel(), is(greaterThan(startingLevel)));
@@ -80,7 +80,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(STRENGTH, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 2);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(2));
@@ -106,7 +106,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(AGILITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(2));
@@ -132,7 +132,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(3));
@@ -158,7 +158,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(AGILITY, 1);
         addAttributePoints(LORE, 1);
         addAttributePoints(MENTAL_POWER, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(3));
@@ -176,7 +176,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         assertThat(character.getMagic().totalValue(), is(61));
 
         // then
-        character = upgradeCaste(MONK);
+        upgradeCaste(MONK);
 
         // expect
         assertThat(character.getCaste(), is(MONK));
@@ -190,7 +190,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(3));
@@ -216,7 +216,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(3));
@@ -242,7 +242,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(AGILITY, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(4));
@@ -268,7 +268,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(AGILITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(4));
@@ -294,7 +294,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(5));
@@ -320,7 +320,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(AGILITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(6));
@@ -346,7 +346,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(6));
@@ -372,7 +372,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(AGILITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(6));
@@ -398,7 +398,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(AGILITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(6));
@@ -424,7 +424,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(7));
@@ -450,7 +450,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(7));
@@ -476,7 +476,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(AGILITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(8));
@@ -502,7 +502,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(8));
@@ -528,7 +528,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(AGILITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(8));
@@ -554,7 +554,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(AGILITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(8));
@@ -572,7 +572,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         assertThat(character.getMagic().totalValue(), is(272));
 
         // then
-        character = upgradeCaste(PRIEST);
+        upgradeCaste(PRIEST);
 
         // expect
         assertThat(character.getCaste(), is(PRIEST));
@@ -586,7 +586,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(9));
@@ -612,7 +612,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(AGILITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(9));
@@ -638,7 +638,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(10));
@@ -664,7 +664,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(AGILITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(10));
@@ -690,7 +690,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(11));
@@ -716,7 +716,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(AGILITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(11));
@@ -742,7 +742,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(12));
@@ -768,7 +768,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(AGILITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(12));
@@ -794,7 +794,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(13));
@@ -820,7 +820,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(AGILITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(13));
@@ -846,7 +846,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(14));
@@ -872,7 +872,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(AGILITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(14));
@@ -898,7 +898,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(15));
@@ -924,7 +924,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(AGILITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(15));
@@ -950,7 +950,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(16));
@@ -976,7 +976,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(AGILITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(16));
@@ -1002,7 +1002,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(17));
@@ -1028,7 +1028,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(AGILITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(17));
@@ -1054,7 +1054,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(18));
@@ -1080,7 +1080,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(AGILITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(18));
@@ -1106,7 +1106,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(19));
@@ -1132,7 +1132,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(AGILITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(19));
@@ -1158,7 +1158,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(20));
@@ -1184,7 +1184,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(AGILITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(20));
@@ -1210,7 +1210,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(21));
@@ -1236,7 +1236,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(AGILITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(21));
@@ -1262,7 +1262,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(22));
@@ -1288,7 +1288,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(AGILITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(22));
@@ -1314,7 +1314,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(23));
@@ -1339,7 +1339,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(STRENGTH, 2);
         addAttributePoints(AGILITY, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(25));
@@ -1357,7 +1357,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         assertThat(character.getMagic().totalValue(), is(715));
 
         // then
-        character = upgradeCaste(HIERARCH);
+        upgradeCaste(HIERARCH);
 
         // expect
         assertThat(character.getCaste(), is(HIERARCH));
@@ -1371,7 +1371,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(26));
@@ -1397,7 +1397,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(26));
@@ -1423,7 +1423,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(27));
@@ -1449,7 +1449,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
         addAttributePoints(MENTAL_POWER, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(27));
@@ -1475,7 +1475,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(28));
@@ -1501,7 +1501,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
         addAttributePoints(INTELLIGENCE, 1);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(28));
@@ -1527,7 +1527,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(LORE, 1);
         addAttributePoints(MENTAL_POWER, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(29));
@@ -1553,7 +1553,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(29));
@@ -1579,7 +1579,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(30));
@@ -1603,7 +1603,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         // then
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 3);
+        addAttributePoints(MENTAL_POWER, 3);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(30));
@@ -1629,7 +1629,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(31));
@@ -1655,7 +1655,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
         addAttributePoints(MENTAL_POWER, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(31));
@@ -1681,7 +1681,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(AGILITY, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(32));
@@ -1707,7 +1707,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
         addAttributePoints(MENTAL_POWER, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(32));
@@ -1733,7 +1733,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(33));
@@ -1757,7 +1757,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         // then
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 3);
+        addAttributePoints(MENTAL_POWER, 3);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(33));
@@ -1783,7 +1783,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(34));
@@ -1809,7 +1809,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
         addAttributePoints(MENTAL_POWER, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(34));
@@ -1835,7 +1835,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(AGILITY, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(35));
@@ -1861,7 +1861,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
         addAttributePoints(MENTAL_POWER, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(35));
@@ -1887,7 +1887,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(36));
@@ -1911,7 +1911,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         // then
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 3);
+        addAttributePoints(MENTAL_POWER, 3);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(36));
@@ -1937,7 +1937,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(37));
@@ -1963,7 +1963,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
         addAttributePoints(MENTAL_POWER, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(37));
@@ -1989,7 +1989,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(AGILITY, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(38));
@@ -2015,7 +2015,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
         addAttributePoints(MENTAL_POWER, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(38));
@@ -2041,7 +2041,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(39));
@@ -2065,7 +2065,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         // then
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 3);
+        addAttributePoints(MENTAL_POWER, 3);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(39));
@@ -2091,7 +2091,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(40));
@@ -2117,7 +2117,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
         addAttributePoints(MENTAL_POWER, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(40));
@@ -2143,7 +2143,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(AGILITY, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(41));
@@ -2169,7 +2169,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
         addAttributePoints(MENTAL_POWER, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(41));
@@ -2195,7 +2195,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(42));
@@ -2219,7 +2219,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         // then
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 3);
+        addAttributePoints(MENTAL_POWER, 3);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(42));
@@ -2245,7 +2245,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(43));
@@ -2271,7 +2271,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
         addAttributePoints(MENTAL_POWER, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(43));
@@ -2297,7 +2297,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(AGILITY, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(44));
@@ -2323,7 +2323,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
         addAttributePoints(MENTAL_POWER, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(44));
@@ -2349,7 +2349,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(45));
@@ -2373,7 +2373,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         // then
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 3);
+        addAttributePoints(MENTAL_POWER, 3);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(45));
@@ -2399,7 +2399,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(46));
@@ -2425,7 +2425,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
         addAttributePoints(MENTAL_POWER, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(46));
@@ -2451,7 +2451,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(AGILITY, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 1);
+        addAttributePoints(MENTAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(47));
@@ -2477,7 +2477,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
         addAttributePoints(MENTAL_POWER, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(47));
@@ -2503,7 +2503,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(48));
@@ -2527,7 +2527,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         // then
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(MENTAL_POWER, 3);
+        addAttributePoints(MENTAL_POWER, 3);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(48));
@@ -2553,7 +2553,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(AGILITY, 1);
-        character = addAttributePoints(LORE, 1);
+        addAttributePoints(LORE, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(49));
@@ -2578,7 +2578,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(CONSTITUTION, 1);
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 2);
+        addAttributePoints(SPIRITUAL_POWER, 2);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(49));
@@ -2604,7 +2604,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         addAttributePoints(DEXTERITY, 1);
         addAttributePoints(AGILITY, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 1);
+        addAttributePoints(SPIRITUAL_POWER, 1);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(50));
@@ -2628,7 +2628,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         // then
         addAttributePoints(INTELLIGENCE, 1);
         addAttributePoints(LORE, 1);
-        character = addAttributePoints(SPIRITUAL_POWER, 3);
+        addAttributePoints(SPIRITUAL_POWER, 3);
 
         // expect
         assertThat(character.getAttributes().get(STRENGTH), is(50));
@@ -2646,7 +2646,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         assertThat(character.getMagic().totalValue(), is(1350));
 
         // then
-        character = upgradeCaste(ARCHANGEL);
+        upgradeCaste(ARCHANGEL);
 
         // expect
         assertThat(character.getCaste(), is(ARCHANGEL));

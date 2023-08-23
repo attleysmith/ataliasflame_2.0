@@ -1,5 +1,6 @@
 package com.asgames.ataliasflame.application;
 
+import com.asgames.ataliasflame.application.model.LocationContext;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Location;
 import com.asgames.ataliasflame.domain.services.LocationService;
@@ -28,24 +29,28 @@ public class CharacterLocationService {
     private LocationService locationService;
 
     @Transactional
-    public Character seizeLocation(String characterReference, String locationReference) {
+    public LocationContext seizeLocation(String characterReference, String locationReference) {
         Character character = characterMaintenanceService.getCharacter(characterReference);
         Location location = locationAdventureService.getLocation(locationReference);
 
         locationService.seizeLocation(character, location);
 
-        locationRepository.save(location);
-        return characterRepository.save(character);
+        return LocationContext.builder()
+                .character(characterRepository.save(character))
+                .location(locationRepository.save(location))
+                .build();
     }
 
     @Transactional
-    public Character lootLocation(String characterReference, String locationReference) {
+    public LocationContext lootLocation(String characterReference, String locationReference) {
         Character character = characterMaintenanceService.getCharacter(characterReference);
         Location location = locationAdventureService.getLocation(locationReference);
 
         locationService.lootLocation(character, location);
 
-        locationRepository.save(location);
-        return characterRepository.save(character);
+        return LocationContext.builder()
+                .character(characterRepository.save(character))
+                .location(locationRepository.save(location))
+                .build();
     }
 }

@@ -1,8 +1,8 @@
 package com.asgames.ataliasflame.domain.services;
 
-import com.asgames.ataliasflame.domain.model.entities.Item;
 import com.asgames.ataliasflame.domain.model.dtos.Spell;
 import com.asgames.ataliasflame.domain.model.entities.Character;
+import com.asgames.ataliasflame.domain.model.entities.Item;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.services.magic.AttackMagicService;
 import com.asgames.ataliasflame.domain.services.magic.BlessingMagicService;

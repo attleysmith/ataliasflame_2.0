@@ -3,7 +3,6 @@ package com.asgames.ataliasflame.domain.model.entities;
 import com.asgames.ataliasflame.domain.model.enums.*;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
 import com.asgames.ataliasflame.domain.model.vos.Energy;
-import com.asgames.ataliasflame.domain.model.vos.Weapon;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -77,18 +76,6 @@ public class Character implements Combatant {
     })
     private Energy magic;
 
-    @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "code", column = @Column(name = "weaponCode")),
-            @AttributeOverride(name = "minDamage", column = @Column(name = "weaponMinDamage")),
-            @AttributeOverride(name = "maxDamage", column = @Column(name = "weaponMaxDamage")),
-            @AttributeOverride(name = "defense", column = @Column(name = "weaponDefense")),
-            @AttributeOverride(name = "initiative", column = @Column(name = "weaponInitiative")),
-            @AttributeOverride(name = "popularity", column = @Column(name = "weaponPopularity")),
-            @AttributeOverride(name = "oneHanded", column = @Column(name = "weaponOneHanded"))
-    })
-    private Weapon weapon;
-
     @ElementCollection(fetch = EAGER)
     @CollectionTable(name = "CharacterAttributeMapping",
             joinColumns = {@JoinColumn(name = "characterId")})
@@ -102,6 +89,9 @@ public class Character implements Combatant {
 
     @OneToMany(mappedBy = "owner", cascade = ALL, fetch = EAGER, orphanRemoval = true)
     private Set<Companion> companions;
+
+    @OneToOne(mappedBy = "owner", cascade = ALL, fetch = EAGER, orphanRemoval = true)
+    private Weapon weapon;
 
     @OneToOne(mappedBy = "owner", cascade = ALL, fetch = EAGER, orphanRemoval = true)
     private Shield shield;

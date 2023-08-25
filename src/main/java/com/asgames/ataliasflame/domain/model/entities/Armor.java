@@ -42,4 +42,9 @@ public class Armor implements AbsorptionDefense {
     public boolean isBetterThan(Armor otherArmor) {
         return this.getDurability().actualValue() > otherArmor.getDurability().actualValue();
     }
+
+    public void belongsTo(Character character) {
+        setOwner(character);
+        character.setArmor(this);
+    }
 }

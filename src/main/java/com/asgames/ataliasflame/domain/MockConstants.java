@@ -3,7 +3,6 @@ package com.asgames.ataliasflame.domain;
 import com.asgames.ataliasflame.domain.model.dtos.*;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
 import com.asgames.ataliasflame.domain.model.enums.SpellName;
-import com.asgames.ataliasflame.domain.model.vos.Weapon;
 import com.asgames.ataliasflame.domain.utils.SelectionValue;
 
 import java.util.List;
@@ -760,50 +759,45 @@ public final class MockConstants {
     );
 
     // Armory
-    public static final Map<String, Weapon> WEAPONS = Map.of(
-            "FIST", Weapon.builder()
+    public static final Map<String, WeaponTemplate> WEAPONS = Map.of(
+            "FIST", WeaponTemplate.builder()
                     .code("FIST")
                     .minDamage(1)
                     .maxDamage(2)
                     .defense(0)
                     .initiative(1)
-                    .popularity(0)
                     .oneHanded(true)
                     .build(),
-            "STAFF", Weapon.builder()
+            "STAFF", WeaponTemplate.builder()
                     .code("STAFF")
                     .minDamage(1)
                     .maxDamage(5)
                     .defense(5)
                     .initiative(-5)
-                    .popularity(10)
                     .oneHanded(false)
                     .build(),
-            "DAGGER", Weapon.builder()
+            "DAGGER", WeaponTemplate.builder()
                     .code("DAGGER")
                     .minDamage(2)
                     .maxDamage(6)
                     .defense(1)
                     .initiative(0)
-                    .popularity(20)
                     .oneHanded(true)
                     .build(),
-            "SPEAR", Weapon.builder()
+            "SPEAR", WeaponTemplate.builder()
                     .code("SPEAR")
                     .minDamage(2)
                     .maxDamage(12)
                     .defense(5)
                     .initiative(-6)
-                    .popularity(30)
                     .oneHanded(false)
                     .build(),
-            "SWORD", Weapon.builder()
+            "SWORD", WeaponTemplate.builder()
                     .code("SWORD")
                     .minDamage(2)
                     .maxDamage(18)
                     .defense(3)
                     .initiative(-3)
-                    .popularity(40)
                     .oneHanded(true)
                     .build()
     );
@@ -874,7 +868,7 @@ public final class MockConstants {
                     .build()
     );
 
-    public static final List<SelectionValue<Weapon>> STARTING_WEAPON_SELECTOR = List.of(
+    public static final List<SelectionValue<WeaponTemplate>> STARTING_WEAPON_SELECTOR = List.of(
             new SelectionValue<>(5, WEAPONS.get("FIST")),
             new SelectionValue<>(30, WEAPONS.get("STAFF")),
             new SelectionValue<>(30, WEAPONS.get("DAGGER")),

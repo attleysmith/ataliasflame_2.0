@@ -219,7 +219,7 @@ class AttributeServiceTest {
     }
 
     private Character addDagger(Character character) {
-        character.setWeapon(WEAPONS.get("DAGGER"));
+        WEAPONS.get("DAGGER").instance().belongsTo(character);
         character.setArmor(null);
         character.setShield(null);
 

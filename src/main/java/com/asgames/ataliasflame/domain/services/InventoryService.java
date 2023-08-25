@@ -2,11 +2,9 @@ package com.asgames.ataliasflame.domain.services;
 
 import com.asgames.ataliasflame.domain.model.dtos.ArmorTemplate;
 import com.asgames.ataliasflame.domain.model.dtos.ShieldTemplate;
-import com.asgames.ataliasflame.domain.model.entities.Armor;
+import com.asgames.ataliasflame.domain.model.dtos.WeaponTemplate;
 import com.asgames.ataliasflame.domain.model.entities.Character;
-import com.asgames.ataliasflame.domain.model.entities.Item;
-import com.asgames.ataliasflame.domain.model.entities.Shield;
-import com.asgames.ataliasflame.domain.model.vos.Weapon;
+import com.asgames.ataliasflame.domain.model.entities.*;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +32,7 @@ public class InventoryService {
     private MagicService magicService;
 
     public void setStartingInventory(Character character) {
-        Weapon startingWeapon = choose(STARTING_WEAPON_SELECTOR);
-        takeWeapon(character, startingWeapon);
+        takeWeapon(character, choose(STARTING_WEAPON_SELECTOR).instance());
 
         choose(STARTING_SHIELD_SELECTOR).ifPresent(startingShield ->
                 takeShield(character, startingShield.instance()));
@@ -68,12 +65,13 @@ public class InventoryService {
             throw new IllegalArgumentException("Only weapon can be used as weapon!");
         }
 
-        Weapon newWeapon = WEAPONS.get(item.getCode());
-        if (newWeapon == null) {
+        WeaponTemplate newWeaponTemplate = WEAPONS.get(item.getCode());
+        if (newWeaponTemplate == null) {
             throw new IllegalStateException("New weapon not recognized as real weapon: " + item.getCode());
         }
 
-        if (newWeapon.getPopularity() > character.getWeapon().getPopularity()) {
+        Weapon newWeapon = newWeaponTemplate.instance();
+        if (newWeapon.isBetterThan(character.getWeapon())) {
             takeWeapon(character, newWeapon);
         }
     }
@@ -114,7 +112,7 @@ public class InventoryService {
 
     private void takeWeapon(Character character, Weapon weapon) {
         if (weapon.isOneHanded() || character.getShield().isEmpty()) {
-            character.setWeapon(weapon);
+            weapon.belongsTo(character);
             characterCalculationService.recalculateProperties(character);
             storyLineLogger.event(INFO, "Weapon used: " + weapon.getCode());
         } else {
@@ -124,8 +122,7 @@ public class InventoryService {
 
     private void takeShield(Character character, Shield shield) {
         if (character.getWeapon().isOneHanded()) {
-            shield.setOwner(character);
-            character.setShield(shield);
+            shield.belongsTo(character);
             characterCalculationService.recalculateProperties(character);
             storyLineLogger.event(INFO, "Shield used: " + shield.getCode());
         } else {
@@ -134,8 +131,7 @@ public class InventoryService {
     }
 
     private void takeArmor(Character character, Armor armor) {
-        armor.setOwner(character);
-        character.setArmor(armor);
+        armor.belongsTo(character);
         characterCalculationService.recalculateProperties(character);
         storyLineLogger.event(INFO, "Armor used: " + armor.getCode());
     }

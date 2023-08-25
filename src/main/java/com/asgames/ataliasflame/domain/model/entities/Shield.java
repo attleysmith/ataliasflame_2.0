@@ -42,4 +42,9 @@ public class Shield implements AbsorptionDefense {
     public boolean isBetterThan(Shield otherShield) {
         return this.getDurability().actualValue() > otherShield.getDurability().actualValue();
     }
+
+    public void belongsTo(Character character) {
+        setOwner(character);
+        character.setShield(this);
+    }
 }

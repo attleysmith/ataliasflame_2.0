@@ -1,10 +1,10 @@
 package com.asgames.ataliasflame.domain.services;
 
 import com.asgames.ataliasflame.domain.model.dtos.ArmorTemplate;
-import com.asgames.ataliasflame.domain.model.dtos.Item;
 import com.asgames.ataliasflame.domain.model.dtos.ShieldTemplate;
 import com.asgames.ataliasflame.domain.model.entities.Armor;
 import com.asgames.ataliasflame.domain.model.entities.Character;
+import com.asgames.ataliasflame.domain.model.entities.Item;
 import com.asgames.ataliasflame.domain.model.entities.Shield;
 import com.asgames.ataliasflame.domain.model.vos.Weapon;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;

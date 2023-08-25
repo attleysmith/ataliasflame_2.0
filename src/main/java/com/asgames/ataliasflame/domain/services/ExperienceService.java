@@ -41,19 +41,19 @@ public class ExperienceService implements InitializingBean {
         );
     }
 
-    public Character gainExperience(Character character, List<Monster> monsters) {
+    public void gainExperience(Character character, List<Monster> monsters) {
         int sumExperience = monsters.stream().map(Monster::getExperience).reduce(0, Integer::sum);
-        return gainExperience(character, sumExperience);
+        gainExperience(character, sumExperience);
     }
 
-    public Character gainExperience(Character character, int experience) {
+    public void gainExperience(Character character, int experience) {
         int gainedExperience = experienceBooster ? character.getLevel() * experience : experience;
         character.setExperience(character.getExperience() + gainedExperience);
         storyLineLogger.event(INFO, "Experience gained: " + gainedExperience + "; Total experience: " + character.getExperience());
-        return levelUp(character);
+        levelUp(character);
     }
 
-    public Character levelUp(Character character) {
+    public void levelUp(Character character) {
         while (levels.get(character.getLevel()).isPresent()
                 && levels.get(character.getLevel()).get() <= character.getExperience()) {
             character.setLevel(character.getLevel() + 1);
@@ -61,6 +61,5 @@ public class ExperienceService implements InitializingBean {
             storyLineLogger.event(INFO, "Leveling up -> " + character.getLevel());
         }
         storyLineLogger.event(DEBUG, "Attribute points: " + character.getAttributePoints());
-        return character;
     }
 }

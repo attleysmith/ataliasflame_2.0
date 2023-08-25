@@ -901,90 +901,90 @@ public final class MockConstants {
     );
 
     // Items
-    public static final Map<String, Item> ITEMS = Map.ofEntries(
-            Map.entry("WATER", Item.builder()
+    public static final Map<String, ItemTemplate> ITEMS = Map.ofEntries(
+            Map.entry("WATER", ItemTemplate.builder()
                     .type(FOOD)
                     .code("WATER")
                     .healingEffect(3)
                     .magicEffect(0)
                     .build()),
-            Map.entry("BREAD", Item.builder()
+            Map.entry("BREAD", ItemTemplate.builder()
                     .type(FOOD)
                     .code("BREAD")
                     .healingEffect(5)
                     .magicEffect(0)
                     .build()),
-            Map.entry("FRUIT", Item.builder()
+            Map.entry("FRUIT", ItemTemplate.builder()
                     .type(FOOD)
                     .code("FRUIT")
                     .healingEffect(8)
                     .magicEffect(2)
                     .build()),
-            Map.entry("MEAT", Item.builder()
+            Map.entry("MEAT", ItemTemplate.builder()
                     .type(FOOD)
                     .code("MEAT")
                     .healingEffect(10)
                     .magicEffect(1)
                     .build()),
-            Map.entry("HEALING_HERB", Item.builder()
+            Map.entry("HEALING_HERB", ItemTemplate.builder()
                     .type(FOOD)
                     .code("HEALING_HERB")
                     .healingEffect(20)
                     .magicEffect(10)
                     .build()),
-            Map.entry("STAFF", Item.builder()
+            Map.entry("STAFF", ItemTemplate.builder()
                     .type(WEAPON)
                     .code("STAFF")
                     .build()),
-            Map.entry("DAGGER", Item.builder()
+            Map.entry("DAGGER", ItemTemplate.builder()
                     .type(WEAPON)
                     .code("DAGGER")
                     .build()),
-            Map.entry("SPEAR", Item.builder()
+            Map.entry("SPEAR", ItemTemplate.builder()
                     .type(WEAPON)
                     .code("SPEAR")
                     .build()),
-            Map.entry("SWORD", Item.builder()
+            Map.entry("SWORD", ItemTemplate.builder()
                     .type(WEAPON)
                     .code("SWORD")
                     .build()),
-            Map.entry("BUCKLER", Item.builder()
+            Map.entry("BUCKLER", ItemTemplate.builder()
                     .type(SHIELD)
                     .code("BUCKLER")
                     .build()),
-            Map.entry("ROUND_SHIELD", Item.builder()
+            Map.entry("ROUND_SHIELD", ItemTemplate.builder()
                     .type(SHIELD)
                     .code("ROUND_SHIELD")
                     .build()),
-            Map.entry("KITE_SHIELD", Item.builder()
+            Map.entry("KITE_SHIELD", ItemTemplate.builder()
                     .type(SHIELD)
                     .code("KITE_SHIELD")
                     .build()),
-            Map.entry("TOWER_SHIELD", Item.builder()
+            Map.entry("TOWER_SHIELD", ItemTemplate.builder()
                     .type(SHIELD)
                     .code("TOWER_SHIELD")
                     .build()),
-            Map.entry("LINEN_ARMOR", Item.builder()
+            Map.entry("LINEN_ARMOR", ItemTemplate.builder()
                     .type(ARMOR)
                     .code("LINEN_ARMOR")
                     .build()),
-            Map.entry("LEATHER_ARMOR", Item.builder()
+            Map.entry("LEATHER_ARMOR", ItemTemplate.builder()
                     .type(ARMOR)
                     .code("LEATHER_ARMOR")
                     .build()),
-            Map.entry("STUDDED_LEATHER_ARMOR", Item.builder()
+            Map.entry("STUDDED_LEATHER_ARMOR", ItemTemplate.builder()
                     .type(ARMOR)
                     .code("STUDDED_LEATHER_ARMOR")
                     .build()),
-            Map.entry("CHAIN_MAIL", Item.builder()
+            Map.entry("CHAIN_MAIL", ItemTemplate.builder()
                     .type(ARMOR)
                     .code("CHAIN_MAIL")
                     .build()),
-            Map.entry("PLATE_MAIL", Item.builder()
+            Map.entry("PLATE_MAIL", ItemTemplate.builder()
                     .type(ARMOR)
                     .code("PLATE_MAIL")
                     .build()),
-            Map.entry("FULL_PLATE_MAIL", Item.builder()
+            Map.entry("FULL_PLATE_MAIL", ItemTemplate.builder()
                     .type(ARMOR)
                     .code("FULL_PLATE_MAIL")
                     .build())
@@ -1399,7 +1399,7 @@ public final class MockConstants {
                     .build()
     );
 
-    public static final Map<String, List<List<SelectionValue<Optional<Item>>>>> MONSTER_DROPS = Map.of(
+    public static final Map<String, List<List<SelectionValue<Optional<ItemTemplate>>>>> MONSTER_DROPS = Map.of(
             "BOAR", List.of(
                     List.of(
                             new SelectionValue<>(10, Optional.empty()),

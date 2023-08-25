@@ -2,7 +2,10 @@ package com.asgames.ataliasflame.application;
 
 import com.asgames.ataliasflame.application.model.LocationContext;
 import com.asgames.ataliasflame.domain.model.entities.Character;
+import com.asgames.ataliasflame.domain.model.entities.Item;
 import com.asgames.ataliasflame.domain.model.entities.Location;
+import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
+import com.asgames.ataliasflame.domain.services.InventoryService;
 import com.asgames.ataliasflame.domain.services.LocationService;
 import com.asgames.ataliasflame.infrastructure.repositories.CharacterRepository;
 import com.asgames.ataliasflame.infrastructure.repositories.LocationRepository;
@@ -27,6 +30,8 @@ public class CharacterLocationService {
 
     @Autowired
     private LocationService locationService;
+    @Autowired
+    private InventoryService inventoryService;
 
     @Transactional
     public LocationContext seizeLocation(String characterReference, String locationReference) {
@@ -42,11 +47,21 @@ public class CharacterLocationService {
     }
 
     @Transactional
-    public LocationContext lootLocation(String characterReference, String locationReference) {
+    public LocationContext useItem(String characterReference, String locationReference, String itemReference) {
         Character character = characterMaintenanceService.getCharacter(characterReference);
         Location location = locationAdventureService.getLocation(locationReference);
 
-        locationService.lootLocation(character, location);
+        if (location.getMonsters().stream().anyMatch(Combatant::isAlive)) {
+            throw new IllegalStateException("There are alive enemies on the location. Looting is impossible!");
+        }
+
+        Item item = location.getItems().stream()
+                .filter(locationItem -> locationItem.getReference().equals(itemReference))
+                .findFirst().orElseThrow(
+                        () -> new IllegalArgumentException("Referenced item is not at the location!"));
+
+        inventoryService.use(character, item);
+        location.getItems().remove(item);
 
         return LocationContext.builder()
                 .character(characterRepository.save(character))

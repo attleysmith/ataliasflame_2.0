@@ -1,9 +1,6 @@
 package com.asgames.ataliasflame.domain.model.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,6 +30,14 @@ public class Location {
 
     @OneToMany(mappedBy = "location", cascade = ALL, fetch = EAGER, orphanRemoval = true)
     private List<Monster> monsters;
+
+    @JoinTable(
+            name = "LocationItem",
+            joinColumns = @JoinColumn(name = "LocationId", referencedColumnName = "reference"),
+            inverseJoinColumns = @JoinColumn(name = "ItemId", referencedColumnName = "reference")
+    )
+    @OneToMany(cascade = ALL, fetch = EAGER, orphanRemoval = true)
+    private List<Item> items;
 
     public static Location build(int level) {
         return Location.builder()

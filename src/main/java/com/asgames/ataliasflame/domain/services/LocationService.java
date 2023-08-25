@@ -48,21 +48,13 @@ public class LocationService {
 
         combatService.combat(characterTeam, monsters);
         character.getCompanions().removeIf(Combatant::isDead);
+        monsterService.processMonsters(location);
 
         if (character.isAlive()) {
-            character = experienceService.gainExperience(character, monsters);
+            experienceService.gainExperience(character, monsters);
             storyLineLogger.event(INFO, "You are the winner! Remaining health: " + character.getHealth().actualValue());
         } else {
             storyLineLogger.event(INFO, "You are defeated!");
         }
-    }
-
-    public void lootLocation(Character character, Location location) {
-        location.getMonsters().forEach(monster -> {
-            if (monster.isAlive()) {
-                throw new IllegalStateException("There are alive enemies on the location. Looting is impossible!");
-            }
-            monsterService.lootMonster(character, monster);
-        });
     }
 }

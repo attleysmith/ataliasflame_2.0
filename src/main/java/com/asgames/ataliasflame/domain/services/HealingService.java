@@ -1,6 +1,6 @@
 package com.asgames.ataliasflame.domain.services;
 
-import com.asgames.ataliasflame.domain.model.dtos.Item;
+import com.asgames.ataliasflame.domain.model.entities.Item;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
 import lombok.extern.slf4j.Slf4j;

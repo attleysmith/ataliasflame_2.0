@@ -167,9 +167,11 @@ public abstract class EnduranceTestBase {
     }
 
     private void lootLocation() {
-        LocationContext locationContext = characterLocationService.lootLocation(character.getReference(), location.getReference());
-        character = locationContext.getCharacter();
-        location = locationContext.getLocation();
+        location.getItems().forEach(item -> {
+            LocationContext locationContext = characterLocationService.useItem(character.getReference(), location.getReference(), item.getReference());
+            character = locationContext.getCharacter();
+            location = locationContext.getLocation();
+        });
     }
 
     private void heal() {

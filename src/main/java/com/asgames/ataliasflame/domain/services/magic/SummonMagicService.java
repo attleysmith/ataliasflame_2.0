@@ -17,8 +17,11 @@ import java.util.UUID;
 import static com.asgames.ataliasflame.domain.MockConstants.*;
 import static com.asgames.ataliasflame.domain.model.enums.CompanionType.ENERGY_PROJECTION;
 import static com.asgames.ataliasflame.domain.model.enums.MagicType.SUMMON;
-import static com.asgames.ataliasflame.domain.services.storyline.EventType.DEBUG;
-import static com.asgames.ataliasflame.domain.services.storyline.EventType.INFO;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasted;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CompanionEvents.CompanionSummoningEvent.summoning;
+import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.WarningReportCause.OCCUPIED_SOULS;
+import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.WarningReportCause.UNSUCCESSFUL_SUMMON;
+import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.warningReport;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.choose;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.percent;
 
@@ -54,18 +57,20 @@ public class SummonMagicService extends AbstractMagicService {
                 throw new UnsupportedOperationException(spell.getGroup() + " summoning is not supported!");
         }
         if (summoning.isEmpty()) {
-            storyLineLogger.event(DEBUG, "Summoning was unsuccessful!");
+            storyLineLogger.event(warningReport(UNSUCCESSFUL_SUMMON));
             return;
         }
+        Companion companion = summoning.get();
         character.getMagic().use(spell.getCost());
-        character.getCompanions().add(summoning.get());
-        storyLineLogger.event(INFO, summoning.get().getName() + " summoned as companion.");
+        storyLineLogger.event(spellCasted(character, spell));
+        character.getCompanions().add(companion);
+        storyLineLogger.event(summoning(companion));
     }
 
     private Optional<Companion> summonSoulChip(Character character) {
         List<SoulChip> unusedSouls = listUnusedSouls(character);
         if (unusedSouls.isEmpty()) {
-            storyLineLogger.event(DEBUG, "Soul chips are occupied!");
+            storyLineLogger.event(warningReport(OCCUPIED_SOULS));
             return Optional.empty();
         } else {
             return Optional.of(unusedSouls.get(0).summon());

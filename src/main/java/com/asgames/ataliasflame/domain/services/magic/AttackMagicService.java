@@ -10,7 +10,11 @@ import org.springframework.stereotype.Service;
 
 import static com.asgames.ataliasflame.domain.model.enums.MagicType.ATTACK;
 import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.SOUL;
-import static com.asgames.ataliasflame.domain.services.storyline.EventType.DEBUG;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasted;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CombatEvents.CombatDamageEvent.combatDamage;
+import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.WarningReportCause.OCCUPIED_SOULS;
+import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.WarningReportCause.UNNECESSARY_SPELL_ATTACK;
+import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.warningReport;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.pointOut;
 
 @Slf4j
@@ -26,16 +30,17 @@ public class AttackMagicService extends AbstractMagicService {
         }
         if (spell.getGroup().equals(SOUL)
                 && listUnusedSouls(character).isEmpty()) {
-            storyLineLogger.event(DEBUG, "Soul chips are occupied!");
+            storyLineLogger.event(warningReport(OCCUPIED_SOULS));
             return;
         }
         if (monster.isDead()) {
-            storyLineLogger.event(DEBUG, "Unnecessary use of attack spell!");
+            storyLineLogger.event(warningReport(UNNECESSARY_SPELL_ATTACK));
             return;
         }
         character.getMagic().use(spell.getCost());
+        storyLineLogger.event(spellCasted(character, spell));
         int damage = pointOut(spell.getMinDamage(), spell.getMaxDamage());
         monster.getHealth().damage(damage);
-        storyLineLogger.event(DEBUG, spell.getName() + " deals " + damage + " damage to " + monster.getReference());
+        storyLineLogger.event(combatDamage(character, monster, damage));
     }
 }

@@ -2,6 +2,7 @@ package com.asgames.ataliasflame.domain.services;
 
 import com.asgames.ataliasflame.domain.model.dtos.CasteDetails;
 import com.asgames.ataliasflame.domain.model.entities.Character;
+import com.asgames.ataliasflame.domain.model.entities.SoulChip;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
@@ -11,7 +12,10 @@ import org.springframework.stereotype.Service;
 
 import static com.asgames.ataliasflame.domain.MockConstants.CASTE_DETAILS;
 import static com.asgames.ataliasflame.domain.model.enums.CasteGroup.WANDERER;
-import static com.asgames.ataliasflame.domain.services.storyline.EventType.INFO;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.CharacterReportCause.TRAUMA;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.characterReport;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.NewCasteEvent.newCaste;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SoulChipEvent.newSoulChip;
 import static com.asgames.ataliasflame.domain.utils.DiceUtils.roll100;
 
 @Slf4j
@@ -31,8 +35,9 @@ public class CasteService {
 
         ripOutSoulChip(character);
 
+        Caste oldCaste = character.getCaste();
         character.setCaste(newCaste);
-        storyLineLogger.event(INFO, "New caste: " + newCaste);
+        storyLineLogger.event(newCaste(character, oldCaste));
 
         return characterCalculationService.recalculateProperties(character);
     }
@@ -72,12 +77,13 @@ public class CasteService {
         if (casteDetails.getGroup().equals(WANDERER)) {
             int percent = roll100();
 
+            SoulChip soulChip = SoulChipFactory.getSoulChip(character, percent);
             character.getHealth().trauma(percent);
-            character.getSoulChips().add(SoulChipFactory.getSoulChip(character, percent));
+            character.getSoulChips().add(soulChip);
 
-            storyLineLogger.event(INFO, "Ripping out a soul chip! " + percent + " percent");
+            storyLineLogger.event(newSoulChip(character, soulChip));
             if (character.isDead()) {
-                storyLineLogger.event(INFO, "You died of trauma!");
+                storyLineLogger.event(characterReport(character, TRAUMA));
             }
         }
     }

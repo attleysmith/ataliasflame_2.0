@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 1692962924536-1
+      id: 1693074779165-1
       author: Mikló Attila (generated)
       changes:
         - createTable:
@@ -27,14 +27,9 @@ databaseChangeLog:
               - column:
                   name: wearAndTear
                   type: INT
-              - column:
-                  constraints:
-                    nullable: false
-                  name: ownerId
-                  type: VARCHAR(255)
             tableName: Armor
   - changeSet:
-      id: 1692962924536-2
+      id: 1693074779165-2
       author: Mikló Attila (generated)
       changes:
         - createTable:
@@ -100,9 +95,20 @@ databaseChangeLog:
               - column:
                   name: race
                   type: VARCHAR(255)
+              - column:
+                  name: armorId
+                  type: VARCHAR(255)
+              - column:
+                  name: shieldId
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: weaponId
+                  type: VARCHAR(255)
             tableName: Character
   - changeSet:
-      id: 1692962924536-3
+      id: 1693074779165-3
       author: Mikló Attila (generated)
       changes:
         - createTable:
@@ -126,7 +132,7 @@ databaseChangeLog:
                   type: VARCHAR(255)
             tableName: CharacterAttributeMapping
   - changeSet:
-      id: 1692962924536-4
+      id: 1693074779165-4
       author: Mikló Attila (generated)
       changes:
         - createTable:
@@ -172,7 +178,7 @@ databaseChangeLog:
                   type: VARCHAR(255)
             tableName: Companion
   - changeSet:
-      id: 1692962924536-5
+      id: 1693074779165-5
       author: Mikló Attila (generated)
       changes:
         - createTable:
@@ -197,7 +203,7 @@ databaseChangeLog:
                   type: VARCHAR(255)
             tableName: DefensiveGodConversionLog
   - changeSet:
-      id: 1692962924536-6
+      id: 1693074779165-6
       author: Mikló Attila (generated)
       changes:
         - createTable:
@@ -223,7 +229,7 @@ databaseChangeLog:
                   type: VARCHAR(255)
             tableName: Item
   - changeSet:
-      id: 1692962924536-7
+      id: 1693074779165-7
       author: Mikló Attila (generated)
       changes:
         - createTable:
@@ -240,7 +246,7 @@ databaseChangeLog:
                   type: INT
             tableName: Level
   - changeSet:
-      id: 1692962924536-8
+      id: 1693074779165-8
       author: Mikló Attila (generated)
       changes:
         - createTable:
@@ -257,7 +263,7 @@ databaseChangeLog:
                   type: INT
             tableName: Location
   - changeSet:
-      id: 1692962924536-9
+      id: 1693074779165-9
       author: Mikló Attila (generated)
       changes:
         - createTable:
@@ -274,7 +280,7 @@ databaseChangeLog:
                   type: VARCHAR(255)
             tableName: LocationItem
   - changeSet:
-      id: 1692962924536-10
+      id: 1693074779165-10
       author: Mikló Attila (generated)
       changes:
         - createTable:
@@ -323,7 +329,7 @@ databaseChangeLog:
                   type: VARCHAR(255)
             tableName: Monster
   - changeSet:
-      id: 1692962924536-11
+      id: 1693074779165-11
       author: Mikló Attila (generated)
       changes:
         - createTable:
@@ -350,14 +356,9 @@ databaseChangeLog:
               - column:
                   name: wearAndTear
                   type: INT
-              - column:
-                  constraints:
-                    nullable: false
-                  name: ownerId
-                  type: VARCHAR(255)
             tableName: Shield
   - changeSet:
-      id: 1692962924536-12
+      id: 1693074779165-12
       author: Mikló Attila (generated)
       changes:
         - createTable:
@@ -406,7 +407,7 @@ databaseChangeLog:
                   type: VARCHAR(255)
             tableName: SoulChip
   - changeSet:
-      id: 1692962924536-13
+      id: 1693074779165-13
       author: Mikló Attila (generated)
       changes:
         - createTable:
@@ -436,14 +437,9 @@ databaseChangeLog:
               - column:
                   name: oneHanded
                   type: BOOLEAN
-              - column:
-                  constraints:
-                    nullable: false
-                  name: ownerId
-                  type: VARCHAR(255)
             tableName: Weapon
   - changeSet:
-      id: 1692962924536-14
+      id: 1693074779165-14
       author: Mikló Attila (generated)
       changes:
         - addUniqueConstraint:
@@ -451,7 +447,20 @@ databaseChangeLog:
             constraintName: UK_o0copm3cmhvlg49omjh1aon68
             tableName: LocationItem
   - changeSet:
-      id: 1692962924536-15
+      id: 1693074779165-15
+      author: Mikló Attila (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: weaponId
+            baseTableName: Character
+            constraintName: FK11atnqq79jdu6bonvsb091xvd
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: reference
+            referencedTableName: Weapon
+            validate: true
+  - changeSet:
+      id: 1693074779165-16
       author: Mikló Attila (generated)
       changes:
         - addForeignKeyConstraint:
@@ -464,7 +473,7 @@ databaseChangeLog:
             referencedTableName: Character
             validate: true
   - changeSet:
-      id: 1692962924536-16
+      id: 1693074779165-17
       author: Mikló Attila (generated)
       changes:
         - addForeignKeyConstraint:
@@ -477,7 +486,20 @@ databaseChangeLog:
             referencedTableName: Item
             validate: true
   - changeSet:
-      id: 1692962924536-17
+      id: 1693074779165-18
+      author: Mikló Attila (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: armorId
+            baseTableName: Character
+            constraintName: FK59torv6pomrwcofr8s5fhkias
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: reference
+            referencedTableName: Armor
+            validate: true
+  - changeSet:
+      id: 1693074779165-19
       author: Mikló Attila (generated)
       changes:
         - addForeignKeyConstraint:
@@ -490,7 +512,7 @@ databaseChangeLog:
             referencedTableName: Character
             validate: true
   - changeSet:
-      id: 1692962924536-18
+      id: 1693074779165-20
       author: Mikló Attila (generated)
       changes:
         - addForeignKeyConstraint:
@@ -503,33 +525,20 @@ databaseChangeLog:
             referencedTableName: Location
             validate: true
   - changeSet:
-      id: 1692962924536-19
+      id: 1693074779165-21
       author: Mikló Attila (generated)
       changes:
         - addForeignKeyConstraint:
-            baseColumnNames: ownerId
-            baseTableName: Weapon
-            constraintName: FKh6u60c1t20s5u2oq9483l5c1v
+            baseColumnNames: shieldId
+            baseTableName: Character
+            constraintName: FKfu1fplijr8immeibb3ubm8mmk
             deferrable: false
             initiallyDeferred: false
             referencedColumnNames: reference
-            referencedTableName: Character
+            referencedTableName: Shield
             validate: true
   - changeSet:
-      id: 1692962924536-20
-      author: Mikló Attila (generated)
-      changes:
-        - addForeignKeyConstraint:
-            baseColumnNames: ownerId
-            baseTableName: Shield
-            constraintName: FKiorbxmjl11kgnfjxj85a6b34n
-            deferrable: false
-            initiallyDeferred: false
-            referencedColumnNames: reference
-            referencedTableName: Character
-            validate: true
-  - changeSet:
-      id: 1692962924536-21
+      id: 1693074779165-22
       author: Mikló Attila (generated)
       changes:
         - addForeignKeyConstraint:
@@ -542,20 +551,7 @@ databaseChangeLog:
             referencedTableName: Character
             validate: true
   - changeSet:
-      id: 1692962924536-22
-      author: Mikló Attila (generated)
-      changes:
-        - addForeignKeyConstraint:
-            baseColumnNames: ownerId
-            baseTableName: Armor
-            constraintName: FKkic3wqfbbocovvpoe7721cafn
-            deferrable: false
-            initiallyDeferred: false
-            referencedColumnNames: reference
-            referencedTableName: Character
-            validate: true
-  - changeSet:
-      id: 1692962924536-23
+      id: 1693074779165-23
       author: Mikló Attila (generated)
       changes:
         - addForeignKeyConstraint:
@@ -568,7 +564,7 @@ databaseChangeLog:
             referencedTableName: Character
             validate: true
   - changeSet:
-      id: 1692962924536-24
+      id: 1693074779165-24
       author: Mikló Attila (generated)
       changes:
         - addForeignKeyConstraint:
@@ -581,7 +577,7 @@ databaseChangeLog:
             referencedTableName: Location
             validate: true
   - changeSet:
-      id: 1692962924536-25
+      id: 1693074779165-25
       author: Mikló Attila (generated)
       changes:
         - addForeignKeyConstraint:

@@ -90,13 +90,16 @@ public class Character implements Combatant {
     @OneToMany(mappedBy = "owner", cascade = ALL, fetch = EAGER, orphanRemoval = true)
     private Set<Companion> companions;
 
-    @OneToOne(mappedBy = "owner", cascade = ALL, fetch = EAGER, orphanRemoval = true)
+    @JoinColumn(name = "weaponId", nullable = false)
+    @OneToOne(cascade = ALL, fetch = EAGER, orphanRemoval = true)
     private Weapon weapon;
 
-    @OneToOne(mappedBy = "owner", cascade = ALL, fetch = EAGER, orphanRemoval = true)
+    @JoinColumn(name = "shieldId")
+    @OneToOne(cascade = ALL, fetch = EAGER, orphanRemoval = true)
     private Shield shield;
 
-    @OneToOne(mappedBy = "owner", cascade = ALL, fetch = EAGER, orphanRemoval = true)
+    @JoinColumn(name = "armorId")
+    @OneToOne(cascade = ALL, fetch = EAGER, orphanRemoval = true)
     private Armor armor;
 
     @Override
@@ -107,6 +110,11 @@ public class Character implements Combatant {
     @Override
     public Optional<Armor> getArmor() {
         return Optional.ofNullable(armor);
+    }
+
+    @Override
+    public String getCode() {
+        return name;
     }
 
     public Energy getHealth() {

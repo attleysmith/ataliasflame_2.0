@@ -2,6 +2,7 @@ package com.asgames.ataliasflame.domain.services;
 
 import com.asgames.ataliasflame.domain.model.dtos.ItemTemplate;
 import com.asgames.ataliasflame.domain.model.dtos.MonsterTemplate;
+import com.asgames.ataliasflame.domain.model.entities.Item;
 import com.asgames.ataliasflame.domain.model.entities.Location;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 
 import static com.asgames.ataliasflame.domain.MockConstants.MONSTERS;
 import static com.asgames.ataliasflame.domain.MockConstants.MONSTER_DROPS;
-import static com.asgames.ataliasflame.domain.services.storyline.EventType.DEBUG;
+import static com.asgames.ataliasflame.domain.services.storyline.events.MonsterEvents.DropEvent.drop;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.choose;
 import static com.asgames.ataliasflame.domain.utils.DiceUtils.successX;
 
@@ -45,21 +46,22 @@ public class MonsterService {
         return monsters;
     }
 
-    public void processMonsters(Location location) {
-        location.getMonsters().stream()
+    public void processMonsters(List<Monster> monsters) {
+        monsters.stream()
                 .filter(Combatant::isDead)
                 .forEach(this::processMonster);
     }
 
     private void processMonster(Monster monster) {
-        List<List<SelectionValue<Optional<ItemTemplate>>>> drops = MONSTER_DROPS.get(monster.getCode());
-        if (drops == null) {
+        List<List<SelectionValue<Optional<ItemTemplate>>>> dropGroups = MONSTER_DROPS.get(monster.getCode());
+        if (dropGroups == null) {
             return;
         }
-        for (List<SelectionValue<Optional<ItemTemplate>>> drop : drops) {
-            choose(drop).ifPresent(item -> {
-                monster.getLocation().getItems().add(item.instance());
-                storyLineLogger.event(DEBUG, monster.getCode() + " dropped " + item.getCode());
+        for (List<SelectionValue<Optional<ItemTemplate>>> dropGroup : dropGroups) {
+            choose(dropGroup).ifPresent(drop -> {
+                Item item = drop.instance();
+                monster.getLocation().getItems().add(item);
+                storyLineLogger.event(drop(monster, item));
             });
         }
     }

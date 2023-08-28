@@ -11,7 +11,8 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 import static com.asgames.ataliasflame.domain.MockConstants.*;
-import static com.asgames.ataliasflame.domain.services.storyline.EventType.DEBUG;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.CharacterReportCause.INIT;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.characterReport;
 
 @Slf4j
 @Service
@@ -35,7 +36,7 @@ public class CharacterInitializer {
 
         validateConstraints(character);
 
-        storyLineLogger.event(DEBUG, "Character initialized: " + character);
+        storyLineLogger.event(characterReport(character, INIT));
         return character;
     }
 

@@ -12,8 +12,10 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.asgames.ataliasflame.domain.services.storyline.EventType.INFO;
-import static java.util.stream.Collectors.joining;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.CharacterReportCause.DEFEAT;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.CharacterReportCause.WIN;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.characterReport;
+import static com.asgames.ataliasflame.domain.services.storyline.events.LocationEvents.MonstersAppearEvent.monstersAppear;
 
 @Slf4j
 @Service
@@ -31,11 +33,9 @@ public class LocationService {
 
     public Location buildLocation(int level) {
         Location location = Location.build(level);
-
         List<Monster> monsters = monsterService.populateMonsters(location);
-        storyLineLogger.event(INFO, "Enemies appeared (" + monsters.size() + ")! -> " + monsters.stream().map(Monster::getCode).collect(joining(", ")));
-
         location.setMonsters(monsters);
+        storyLineLogger.event(monstersAppear(location));
         return location;
     }
 
@@ -48,13 +48,13 @@ public class LocationService {
 
         combatService.combat(characterTeam, monsters);
         character.getCompanions().removeIf(Combatant::isDead);
-        monsterService.processMonsters(location);
+        monsterService.processMonsters(monsters);
 
         if (character.isAlive()) {
             experienceService.gainExperience(character, monsters);
-            storyLineLogger.event(INFO, "You are the winner! Remaining health: " + character.getHealth().actualValue());
+            storyLineLogger.event(characterReport(character, WIN));
         } else {
-            storyLineLogger.event(INFO, "You are defeated!");
+            storyLineLogger.event(characterReport(character, DEFEAT));
         }
     }
 }

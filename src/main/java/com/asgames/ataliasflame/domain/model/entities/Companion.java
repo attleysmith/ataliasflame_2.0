@@ -51,4 +51,8 @@ public class Companion implements Combatant {
     })
     private Energy health;
 
+    @Override
+    public String getCode() {
+        return name;
+    }
 }

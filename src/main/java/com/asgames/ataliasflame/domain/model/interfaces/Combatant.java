@@ -10,6 +10,8 @@ public interface Combatant {
 
     String getReference();
 
+    String getCode();
+
     int getAttack();
 
     int getDefense();

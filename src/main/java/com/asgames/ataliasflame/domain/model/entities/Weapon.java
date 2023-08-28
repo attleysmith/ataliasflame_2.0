@@ -19,12 +19,6 @@ public class Weapon {
     @Column(name = "code")
     private String code;
 
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    @OneToOne
-    @JoinColumn(name = "ownerId", nullable = false, updatable = false)
-    private Character owner;
-
     @Column(name = "minDamage")
     private int minDamage;
     @Column(name = "maxDamage")
@@ -41,7 +35,6 @@ public class Weapon {
     }
 
     public void belongsTo(Character character) {
-        setOwner(character);
         character.setWeapon(this);
     }
 

@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import static com.asgames.ataliasflame.domain.MockConstants.MAX_ATTRIBUTE_POINTS;
-import static com.asgames.ataliasflame.domain.services.storyline.EventType.DEBUG;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.AttributeUpgradeEvent.attributeUpgrade;
 
 @Slf4j
 @Service
@@ -34,7 +34,7 @@ public class AttributeService {
 
         character.getAttributes().put(attribute, newValue);
         character.setAttributePoints(character.getAttributePoints() - points);
-        storyLineLogger.event(DEBUG, attribute.name() + ": " + oldValue + " >> " + newValue);
+        storyLineLogger.event(attributeUpgrade(character, attribute, oldValue));
 
         return characterCalculationService.recalculateProperties(character);
     }

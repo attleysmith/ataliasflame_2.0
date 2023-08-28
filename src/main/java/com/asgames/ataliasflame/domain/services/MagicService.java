@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 import static com.asgames.ataliasflame.domain.MockConstants.MAGIC_RECOVERY_EFFECT_OF_SLEEP;
 import static com.asgames.ataliasflame.domain.model.enums.ItemType.FOOD;
-import static com.asgames.ataliasflame.domain.services.storyline.EventType.INFO;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.MagicRecoveryEvent.magicRecovery;
 
 @Slf4j
 @Service
@@ -49,8 +49,9 @@ public class MagicService {
             return;
         }
 
+        int oldMagic = character.getMagic().actualValue();
         character.getMagic().recover(recoveryEffect);
-        storyLineLogger.event(INFO, "Recovering magic -> " + character.getMagic().actualValue());
+        storyLineLogger.event(magicRecovery(character, oldMagic));
     }
 
     public void castSpell(Character character, Spell spell) {
@@ -66,6 +67,7 @@ public class MagicService {
                 break;
             case HEALING:
                 healingMagicService.castHealingSpell(character, spell);
+                break;
             case ATTACK:
             default:
                 throw new UnsupportedOperationException("Spell type is not supported: " + spell.getType());

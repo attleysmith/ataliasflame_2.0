@@ -15,12 +15,15 @@ import java.util.Optional;
 import static com.asgames.ataliasflame.domain.MockConstants.BOOSTERS;
 import static com.asgames.ataliasflame.domain.model.enums.MagicType.BLESSING;
 import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.SOUL;
-import static com.asgames.ataliasflame.domain.services.storyline.EventType.DEBUG;
-import static com.asgames.ataliasflame.domain.services.storyline.EventType.INFO;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.CharacterReportCause.BLESSING_EXPIRY;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.characterReport;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasted;
+import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.WarningReportCause.OCCUPIED_SOULS;
+import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.warningReport;
 
 @Slf4j
 @Service
-public class BlessingMagicService extends AttackMagicService {
+public class BlessingMagicService extends AbstractMagicService {
 
     @Autowired
     private StoryLineLogger storyLineLogger;
@@ -38,15 +41,15 @@ public class BlessingMagicService extends AttackMagicService {
         }
         boosterName.ifPresent(booster -> {
             character.getMagic().use(spell.getCost());
+            storyLineLogger.event(spellCasted(character, spell));
             enforceBoosterEffect(character, booster);
-            storyLineLogger.event(DEBUG, "Blessed by " + spell.getName());
         });
     }
 
     private Optional<String> getSoulBooster(Character character) {
         List<SoulChip> unusedSouls = listUnusedSouls(character);
         if (unusedSouls.isEmpty()) {
-            storyLineLogger.event(DEBUG, "Soul chips are occupied!");
+            storyLineLogger.event(warningReport(OCCUPIED_SOULS));
             return Optional.empty();
         } else {
             return Optional.of(unusedSouls.get(0).getShape().name());
@@ -65,7 +68,7 @@ public class BlessingMagicService extends AttackMagicService {
     public void removeBlessingMagic(Character character) {
         characterCalculationService.recalculateProperties(character);
         if (character.getHealth().isEmpty()) {
-            storyLineLogger.event(INFO, "You died of an expired bless effect!");
+            storyLineLogger.event(characterReport(character, BLESSING_EXPIRY));
         }
     }
 }

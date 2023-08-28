@@ -12,8 +12,11 @@ import org.springframework.stereotype.Service;
 
 import static com.asgames.ataliasflame.domain.MockConstants.*;
 import static com.asgames.ataliasflame.domain.model.enums.ItemType.*;
-import static com.asgames.ataliasflame.domain.services.storyline.EventType.DEBUG;
-import static com.asgames.ataliasflame.domain.services.storyline.EventType.INFO;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.ArmorChangeEvent.newArmor;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.ShieldChangeEvent.newShield;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.WeaponChangeEvent.newWeapon;
+import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.WarningReportCause.WEAPON_SHIELD_MISMATCH;
+import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.warningReport;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.choose;
 import static com.asgames.ataliasflame.domain.utils.DiceUtils.roll100;
 
@@ -112,27 +115,30 @@ public class InventoryService {
 
     private void takeWeapon(Character character, Weapon weapon) {
         if (weapon.isOneHanded() || character.getShield().isEmpty()) {
+            Weapon oldWeapon = character.getWeapon();
             weapon.belongsTo(character);
             characterCalculationService.recalculateProperties(character);
-            storyLineLogger.event(INFO, "Weapon used: " + weapon.getCode());
+            storyLineLogger.event(newWeapon(character, oldWeapon));
         } else {
-            storyLineLogger.event(DEBUG, weapon.getCode() + " cannot be used with a shield!");
+            storyLineLogger.event(warningReport(WEAPON_SHIELD_MISMATCH));
         }
     }
 
     private void takeShield(Character character, Shield shield) {
         if (character.getWeapon().isOneHanded()) {
+            Shield oldShield = character.getShield().orElse(null);
             shield.belongsTo(character);
             characterCalculationService.recalculateProperties(character);
-            storyLineLogger.event(INFO, "Shield used: " + shield.getCode());
+            storyLineLogger.event(newShield(character, oldShield));
         } else {
-            storyLineLogger.event(DEBUG, shield.getCode() + " cannot be used with two-handed weapon!");
+            storyLineLogger.event(warningReport(WEAPON_SHIELD_MISMATCH));
         }
     }
 
     private void takeArmor(Character character, Armor armor) {
+        Armor oldArmor = character.getArmor().orElse(null);
         armor.belongsTo(character);
         characterCalculationService.recalculateProperties(character);
-        storyLineLogger.event(INFO, "Armor used: " + armor.getCode());
+        storyLineLogger.event(newArmor(character, oldArmor));
     }
 }

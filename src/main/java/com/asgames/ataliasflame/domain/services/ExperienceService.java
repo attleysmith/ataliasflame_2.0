@@ -16,8 +16,9 @@ import java.util.Map;
 import java.util.Optional;
 
 import static com.asgames.ataliasflame.domain.MockConstants.LEVEL_ATTRIBUTE_POINTS;
-import static com.asgames.ataliasflame.domain.services.storyline.EventType.DEBUG;
-import static com.asgames.ataliasflame.domain.services.storyline.EventType.INFO;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.CharacterReportCause.LEVEL_UP;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.characterReport;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.ExperienceEvent.experienceGain;
 
 @Slf4j
 @Service
@@ -49,7 +50,7 @@ public class ExperienceService implements InitializingBean {
     public void gainExperience(Character character, int experience) {
         int gainedExperience = experienceBooster ? character.getLevel() * experience : experience;
         character.setExperience(character.getExperience() + gainedExperience);
-        storyLineLogger.event(INFO, "Experience gained: " + gainedExperience + "; Total experience: " + character.getExperience());
+        storyLineLogger.event(experienceGain(character, gainedExperience));
         levelUp(character);
     }
 
@@ -58,8 +59,7 @@ public class ExperienceService implements InitializingBean {
                 && levels.get(character.getLevel()).get() <= character.getExperience()) {
             character.setLevel(character.getLevel() + 1);
             character.setAttributePoints(character.getAttributePoints() + LEVEL_ATTRIBUTE_POINTS);
-            storyLineLogger.event(INFO, "Leveling up -> " + character.getLevel());
+            storyLineLogger.event(characterReport(character, LEVEL_UP));
         }
-        storyLineLogger.event(DEBUG, "Attribute points: " + character.getAttributePoints());
     }
 }

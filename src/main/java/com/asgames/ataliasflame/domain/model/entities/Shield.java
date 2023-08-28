@@ -21,12 +21,6 @@ public class Shield implements AbsorptionDefense {
     @Column(name = "code")
     private String code;
 
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    @OneToOne
-    @JoinColumn(name = "ownerId", nullable = false, updatable = false)
-    private Character owner;
-
     @Column(name = "defense")
     private int defense;
     @Column(name = "absorption")
@@ -44,7 +38,6 @@ public class Shield implements AbsorptionDefense {
     }
 
     public void belongsTo(Character character) {
-        setOwner(character);
         character.setShield(this);
     }
 }

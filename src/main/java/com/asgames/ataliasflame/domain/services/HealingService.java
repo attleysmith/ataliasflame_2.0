@@ -1,6 +1,7 @@
 package com.asgames.ataliasflame.domain.services;
 
 import com.asgames.ataliasflame.domain.model.entities.Character;
+import com.asgames.ataliasflame.domain.model.entities.Companion;
 import com.asgames.ataliasflame.domain.model.entities.Item;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
 import lombok.extern.slf4j.Slf4j;
@@ -9,7 +10,8 @@ import org.springframework.stereotype.Service;
 
 import static com.asgames.ataliasflame.domain.MockConstants.HEALING_EFFECT_OF_SLEEP;
 import static com.asgames.ataliasflame.domain.model.enums.ItemType.FOOD;
-import static com.asgames.ataliasflame.domain.services.storyline.EventType.INFO;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.HealthRecoveryEvent.healthRecovery;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CompanionEvents.CompanionHealingEvent.companionHealing;
 
 @Slf4j
 @Service
@@ -29,12 +31,23 @@ public class HealingService {
         heal(character, item.getHealingEffect());
     }
 
-    private void heal(Character character, int healingEffect) {
+    public void heal(Character character, int healingEffect) {
         if (character.getHealth().isFull()) {
             return;
         }
 
+        int oldHealth = character.getHealth().actualValue();
         character.getHealth().recover(healingEffect);
-        storyLineLogger.event(INFO, "Healing -> " + character.getHealth().actualValue());
+        storyLineLogger.event(healthRecovery(character, oldHealth));
+    }
+
+    public void healCompanion(Companion companion, int healingEffect) {
+        if (companion.getHealth().isFull()) {
+            return;
+        }
+
+        int oldHealth = companion.getHealth().actualValue();
+        companion.getHealth().recover(healingEffect);
+        storyLineLogger.event(companionHealing(companion, oldHealth));
     }
 }

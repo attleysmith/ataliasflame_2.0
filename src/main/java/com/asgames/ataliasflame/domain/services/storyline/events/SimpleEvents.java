@@ -36,28 +36,19 @@ public class SimpleEvents {
 
         @Override
         public String message() {
-            String message;
-            switch (cause) {
-                case ELIMINATED_TEAM:
-                    message = "Stop fighting. One of the teams is eliminated.";
-                    break;
-                case DEAD_ATTACKER:
-                    message = "Skipping attack. Attacker is already dead.";
-                    break;
-                case COMBAT_START:
-                    message = "Combat started.";
-                    break;
-                default:
-                    throw new UnsupportedOperationException("Unknown debug report cause!");
-            }
-            return message;
+            return switch (cause) {
+                case ELIMINATED_TEAM -> "Stop fighting. One of the teams is eliminated.";
+                case DEAD_ATTACKER -> "Skipping attack. Attacker is already dead.";
+                case COMBAT_START -> "Combat started.";
+                default -> throw new UnsupportedOperationException("Unknown debug report cause!");
+            };
         }
     }
 
     public static class WarningEvent extends SimpleEvent {
 
         public enum WarningReportCause {
-            OCCUPIED_SOULS, UNSUCCESSFUL_SUMMON, UNNECESSARY_SPELL_ATTACK, WEAPON_SHIELD_MISMATCH, NO_ENEMY
+            OCCUPIED_SOULS, UNSUCCESSFUL_SUMMON, UNNECESSARY_SPELL_ATTACK, WEAPON_SHIELD_MISMATCH, NO_ENEMY, DUPLICATED_BLESSING
         }
 
         private final WarningReportCause cause;
@@ -73,27 +64,15 @@ public class SimpleEvents {
 
         @Override
         public String message() {
-            String message;
-            switch (cause) {
-                case OCCUPIED_SOULS:
-                    message = "Soul chips are occupied!";
-                    break;
-                case UNSUCCESSFUL_SUMMON:
-                    message = "Summoning was unsuccessful!";
-                    break;
-                case UNNECESSARY_SPELL_ATTACK:
-                    message = "Unnecessary use of attack spell!";
-                    break;
-                case WEAPON_SHIELD_MISMATCH:
-                    message = "Shield cannot be used with a two-handed weapon!";
-                    break;
-                case NO_ENEMY:
-                    message = "Combat without an enemy.";
-                    break;
-                default:
-                    throw new UnsupportedOperationException("Unknown warning report cause!");
-            }
-            return message;
+            return switch (cause) {
+                case OCCUPIED_SOULS -> "Soul chips are occupied!";
+                case UNSUCCESSFUL_SUMMON -> "Summoning was unsuccessful!";
+                case UNNECESSARY_SPELL_ATTACK -> "Unnecessary use of attack spell!";
+                case WEAPON_SHIELD_MISMATCH -> "Shield cannot be used with a two-handed weapon!";
+                case NO_ENEMY -> "Combat without an enemy.";
+                case DUPLICATED_BLESSING -> "Blessing already used.";
+                default -> throw new UnsupportedOperationException("Unknown warning report cause!");
+            };
         }
     }
 }

@@ -15,7 +15,8 @@ public abstract class AbstractMagicService {
         List<SoulChip> unusedSouls = new ArrayList<>(character.getSoulChips());
         List<String> companionReferences = character.getCompanions().stream().map(Companion::getReference).collect(toList());
         for (SoulChip soulChip : character.getSoulChips()) {
-            if (companionReferences.contains(soulChip.getReference())) {
+            if (companionReferences.contains(soulChip.getReference())
+                    || character.getBlessings().contains(soulChip.getShape().name())) {
                 unusedSouls.remove(soulChip);
             }
         }

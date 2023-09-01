@@ -12,12 +12,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-import static com.asgames.ataliasflame.domain.MockConstants.BOOSTERS;
 import static com.asgames.ataliasflame.domain.model.enums.MagicType.BLESSING;
 import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.SOUL;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.BlessingEvent.blessing;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.CharacterReportCause.BLESSING_EXPIRY;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.characterReport;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasted;
+import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.WarningReportCause.DUPLICATED_BLESSING;
 import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.WarningReportCause.OCCUPIED_SOULS;
 import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.warningReport;
 
@@ -35,15 +36,28 @@ public class BlessingMagicService extends AbstractMagicService {
         if (!spell.getType().equals(BLESSING)) {
             throw new IllegalArgumentException("Blessing spell expected!");
         }
+        Optional<String> boosterName = getBooster(character, spell);
+        if (boosterName.isEmpty()) {
+            return;
+        }
+        String booster = boosterName.get();
+        if (character.getBlessings().contains(booster)) {
+            storyLineLogger.event(warningReport(DUPLICATED_BLESSING));
+            return;
+        }
+
+        character.getMagic().use(spell.getCost());
+        storyLineLogger.event(spellCasted(character, spell));
+        enforceBoosterEffect(character, booster);
+        storyLineLogger.event(blessing(character, booster));
+    }
+
+    private Optional<String> getBooster(Character character, Spell spell) {
         Optional<String> boosterName = Optional.of(spell.getName().name());
         if (spell.getGroup().equals(SOUL)) {
             boosterName = getSoulBooster(character);
         }
-        boosterName.ifPresent(booster -> {
-            character.getMagic().use(spell.getCost());
-            storyLineLogger.event(spellCasted(character, spell));
-            enforceBoosterEffect(character, booster);
-        });
+        return boosterName;
     }
 
     private Optional<String> getSoulBooster(Character character) {
@@ -58,7 +72,8 @@ public class BlessingMagicService extends AbstractMagicService {
 
     private void enforceBoosterEffect(Character character, String booster) {
         int originalHealth = character.getHealth().totalValue();
-        characterCalculationService.recalculateProperties(character, BOOSTERS.get(booster));
+        character.getBlessings().add(booster);
+        characterCalculationService.recalculateProperties(character);
         int blessedHealth = character.getHealth().totalValue();
         if (blessedHealth > originalHealth) {
             character.getHealth().replenish(blessedHealth - originalHealth);
@@ -66,6 +81,7 @@ public class BlessingMagicService extends AbstractMagicService {
     }
 
     public void removeBlessingMagic(Character character) {
+        character.setBlessings(null);
         characterCalculationService.recalculateProperties(character);
         if (character.getHealth().isEmpty()) {
             storyLineLogger.event(characterReport(character, BLESSING_EXPIRY));

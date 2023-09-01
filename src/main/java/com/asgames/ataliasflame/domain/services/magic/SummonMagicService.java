@@ -36,26 +36,14 @@ public class SummonMagicService extends AbstractMagicService {
         if (!spell.getType().equals(SUMMON)) {
             throw new IllegalArgumentException("Summoning spell expected!");
         }
-        Optional<Companion> summoning;
-        switch (spell.getGroup()) {
-            case SOUL:
-                summoning = summonSoulChip(character);
-                break;
-            case NATURE:
-                summoning = summonAnimal(character);
-                break;
-            case GENERAL:
-                summoning = summonGuardianWarrior(character);
-                break;
-            case ENERGY:
-                summoning = summonEnergy(character);
-                break;
-            case DIVINE:
-                summoning = summonDivineGuardian(character);
-                break;
-            default:
-                throw new UnsupportedOperationException(spell.getGroup() + " summoning is not supported!");
-        }
+        Optional<Companion> summoning = switch (spell.getGroup()) {
+            case SOUL -> summonSoulChip(character);
+            case NATURE -> summonAnimal(character);
+            case GENERAL -> summonGuardianWarrior(character);
+            case ENERGY -> summonEnergy(character);
+            case DIVINE -> summonDivineGuardian(character);
+            default -> throw new UnsupportedOperationException(spell.getGroup() + " summoning is not supported!");
+        };
         if (summoning.isEmpty()) {
             storyLineLogger.event(warningReport(UNSUCCESSFUL_SUMMON));
             return;

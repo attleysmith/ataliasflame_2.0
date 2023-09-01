@@ -75,8 +75,8 @@ public abstract class EnduranceTestBase {
 
         do {
             summon();
-            putOnBlessing();
             enterLocation();
+            putOnBlessings();
             castAttackMagic();
             closeCombat();
             if (character.isAlive()) {
@@ -112,14 +112,34 @@ public abstract class EnduranceTestBase {
         }
     }
 
-    private void putOnBlessing() {
-        boolean hasAvailableSoul = !listUnusedSouls().isEmpty();
-        usableSpells.get(BLESSING).stream()
-                .filter(spell -> character.getMagic().has(spell.getCost()))
-                .filter(spell -> hasAvailableSoul || !spell.getGroup().equals(SOUL))
-                .max(comparing(Spell::getCost))
-                .ifPresent(spell ->
-                        character = characterMagicService.castSpell(character.getReference(), spell.getName()));
+    private void putOnBlessings() {
+        int maxNumberOfBlessings =
+                switch (location.getMonsters().size()) {
+                    case 1, 2 -> 1;
+                    case 3, 4 -> 2;
+                    case 5, 6 -> 3;
+                    case 7, 8 -> 4;
+                    default -> 5;
+                };
+
+        int previousNumberOfBlessings = -1;
+        int actualNumberOfBlessings = character.getBlessings().size();
+        while (previousNumberOfBlessings < actualNumberOfBlessings
+                && actualNumberOfBlessings < maxNumberOfBlessings) {
+            previousNumberOfBlessings = actualNumberOfBlessings;
+
+            usableSpells.get(BLESSING).stream()
+                    .filter(spell -> character.getMagic().has(spell.getCost()))
+                    .sorted(comparing(Spell::getCost).reversed())
+                    .forEach(spell -> {
+                        if (character.getMagic().has(spell.getCost())
+                                && character.getBlessings().size() < maxNumberOfBlessings) {
+                            character = characterMagicService.castSpell(character.getReference(), spell.getName());
+                        }
+                    });
+
+            actualNumberOfBlessings = character.getBlessings().size();
+        }
     }
 
     private void enterLocation() {
@@ -225,7 +245,8 @@ public abstract class EnduranceTestBase {
         List<SoulChip> unusedSouls = new ArrayList<>(character.getSoulChips());
         List<String> companionReferences = character.getCompanions().stream().map(Companion::getReference).collect(toList());
         for (SoulChip soulChip : character.getSoulChips()) {
-            if (companionReferences.contains(soulChip.getReference())) {
+            if (companionReferences.contains(soulChip.getReference())
+                    || character.getBlessings().contains(soulChip.getShape().name())) {
                 unusedSouls.remove(soulChip);
             }
         }

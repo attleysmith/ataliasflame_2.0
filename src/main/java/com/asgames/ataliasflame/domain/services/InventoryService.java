@@ -45,21 +45,14 @@ public class InventoryService {
 
     public void use(Character character, Item item) {
         switch (item.getType()) {
-            case FOOD:
+            case FOOD -> {
                 healingService.eat(character, item);
                 magicService.eat(character, item);
-                break;
-            case WEAPON:
-                changeWeapon(character, item);
-                break;
-            case SHIELD:
-                changeShield(character, item);
-                break;
-            case ARMOR:
-                changeArmor(character, item);
-                break;
-            default:
-                throw new UnsupportedOperationException("Not supported item usage: " + item.getType());
+            }
+            case WEAPON -> changeWeapon(character, item);
+            case SHIELD -> changeShield(character, item);
+            case ARMOR -> changeArmor(character, item);
+            default -> throw new UnsupportedOperationException("Not supported item usage: " + item.getType());
         }
     }
 

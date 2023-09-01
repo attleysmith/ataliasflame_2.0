@@ -45,30 +45,15 @@ public final class CharacterEvents {
 
         @Override
         public String message() {
-            String message;
-            switch (cause) {
-                case INIT:
-                    message = "Character initialized: " + character;
-                    break;
-                case LEVEL_UP:
-                    message = "Leveling up -> " + character.getLevel() + " | Attribute points: " + character.getAttributePoints();
-                    break;
-                case WIN:
-                    message = "You are the winner! Remaining health: " + character.getHealth().actualValue();
-                    break;
-                case DEFEAT:
-                    message = "You are defeated!";
-                    break;
-                case TRAUMA:
-                    message = "You died of trauma!";
-                    break;
-                case BLESSING_EXPIRY:
-                    message = "You died of an expired bless effect!";
-                    break;
-                default:
-                    throw new UnsupportedOperationException("Unknown character report cause!");
-            }
-            return message;
+            return switch (cause) {
+                case INIT -> "Character initialized: " + character;
+                case LEVEL_UP -> "Leveling up -> " + character.getLevel() + " | Attribute points: " + character.getAttributePoints();
+                case WIN -> "You are the winner! Remaining health: " + character.getHealth().actualValue();
+                case DEFEAT -> "You are defeated!";
+                case TRAUMA -> "You died of trauma!";
+                case BLESSING_EXPIRY -> "You died of an expired bless effect!";
+                default -> throw new UnsupportedOperationException("Unknown character report cause!");
+            };
         }
     }
 
@@ -246,6 +231,24 @@ public final class CharacterEvents {
         @Override
         public String message() {
             return spell.getType() + " spell casted: " + spell.getName() + " | Remaining magic: " + character.getMagic().actualValue();
+        }
+    }
+
+    public static class BlessingEvent extends CharacterEvent {
+        private final String blessing;
+
+        private BlessingEvent(Character character, String blessing) {
+            super(INFO, character);
+            this.blessing = blessing;
+        }
+
+        public static BlessingEvent blessing(Character character, String blessing) {
+            return new BlessingEvent(character, blessing);
+        }
+
+        @Override
+        public String message() {
+            return blessing + " blessing activated.";
         }
     }
 

@@ -1,6 +1,5 @@
 package com.asgames.ataliasflame.domain.services;
 
-import com.asgames.ataliasflame.domain.model.dtos.Booster;
 import com.asgames.ataliasflame.domain.model.dtos.Modifier;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
@@ -20,12 +19,12 @@ import static java.util.stream.Collectors.toList;
 @Service
 public class CharacterCalculationService {
 
-    public Character recalculateProperties(Character character, Booster blessing) {
-        recalculateAttack(character, blessing);
-        recalculateDefense(character, blessing);
-        recalculateDamage(character, blessing);
-        recalculateHealth(character, blessing);
-        recalculateMagic(character, blessing);
+    public Character recalculateProperties(Character character) {
+        recalculateAttack(character);
+        recalculateDefense(character);
+        recalculateDamage(character);
+        recalculateHealth(character);
+        recalculateMagic(character);
 
         character.setMinDamage(calculate(character.getWeapon().getMinDamage(), character.getDamageMultiplier()));
         character.setMaxDamage(calculate(character.getWeapon().getMaxDamage(), character.getDamageMultiplier()));
@@ -34,42 +33,38 @@ public class CharacterCalculationService {
         return character;
     }
 
-    public Character recalculateProperties(Character character) {
-        return recalculateProperties(character, null);
-    }
-
-    private void recalculateAttack(Character character, Booster blessing) {
+    private void recalculateAttack(Character character) {
         List<Integer> attackMultipliers = stream(Attribute.values())
-                .map(attribute -> PropertyCalculator.of(character, attribute, blessing).getAttackMultiplier())
+                .map(attribute -> PropertyCalculator.of(character, attribute).getAttackMultiplier())
                 .collect(toList());
         character.setAttack(calculate(BASE_ATTACK, attackMultipliers));
     }
 
-    private void recalculateDefense(Character character, Booster blessing) {
+    private void recalculateDefense(Character character) {
         List<Integer> defenseMultipliers = stream(Attribute.values())
-                .map(attribute -> PropertyCalculator.of(character, attribute, blessing).getDefenseMultiplier())
+                .map(attribute -> PropertyCalculator.of(character, attribute).getDefenseMultiplier())
                 .collect(toList());
         character.setDefense(calculate(actualDefense(character), defenseMultipliers));
     }
 
-    private void recalculateDamage(Character character, Booster blessing) {
+    private void recalculateDamage(Character character) {
         Integer damageMultiplier = stream(Attribute.values())
-                .map(attribute -> PropertyCalculator.of(character, attribute, blessing).getDamageMultiplier())
+                .map(attribute -> PropertyCalculator.of(character, attribute).getDamageMultiplier())
                 .reduce(BASE_DAMAGE_MULTIPLIER, Integer::sum);
         character.setDamageMultiplier(damageMultiplier);
     }
 
-    private void recalculateHealth(Character character, Booster blessing) {
+    private void recalculateHealth(Character character) {
         List<Integer> healthMultipliers = stream(Attribute.values())
-                .map(attribute -> PropertyCalculator.of(character, attribute, blessing).getHealthMultiplier())
+                .map(attribute -> PropertyCalculator.of(character, attribute).getHealthMultiplier())
                 .collect(toList());
         int healthValue = calculate(BASE_HEALTH, healthMultipliers);
         character.getHealth().set(healthValue);
     }
 
-    private void recalculateMagic(Character character, Booster blessing) {
+    private void recalculateMagic(Character character) {
         Integer magicPoint = stream(Attribute.values())
-                .map(attribute -> PropertyCalculator.of(character, attribute, blessing).getMagicPoint())
+                .map(attribute -> PropertyCalculator.of(character, attribute).getMagicPoint())
                 .reduce(BASE_MAGIC_POINT, Integer::sum);
         character.getMagic().set(magicPoint);
     }
@@ -86,13 +81,13 @@ public class CharacterCalculationService {
         private final Modifier attributeModifier;
         private final int calculatedAttributeValue;
 
-        private PropertyCalculator(Character character, Attribute attribute, Booster blessing) {
+        private PropertyCalculator(Character character, Attribute attribute) {
             this.attributeModifier = MODIFIERS.get(attribute.name());
-            this.calculatedAttributeValue = AttributeCalculator.of(character, attribute, blessing).calculate();
+            this.calculatedAttributeValue = AttributeCalculator.of(character, attribute).calculate();
         }
 
-        public static PropertyCalculator of(Character character, Attribute attribute, Booster blessing) {
-            return new PropertyCalculator(character, attribute, blessing);
+        public static PropertyCalculator of(Character character, Attribute attribute) {
+            return new PropertyCalculator(character, attribute);
         }
 
         public int getAttackMultiplier() {
@@ -121,20 +116,19 @@ public class CharacterCalculationService {
         private final Integer baseValue;
         private final List<Integer> multipliers = new ArrayList<>();
 
-        private AttributeCalculator(Character character, Attribute attribute, Booster blessing) {
+        private AttributeCalculator(Character character, Attribute attribute) {
             this.baseValue = character.getAttributes().get(attribute);
             this.multipliers.add(BOOSTERS.get(character.getRace().name()).getEffects().get(attribute));
             this.multipliers.add(BOOSTERS.get(character.getDefensiveGod().name()).getEffects().get(attribute));
             if (character.getCaste().equals(ATALIAS_PRIEST)) {
                 this.multipliers.add(BOOSTERS.get(ATALIA.name()).getEffects().get(attribute));
             }
-            if (blessing != null) {
-                this.multipliers.add(blessing.getEffects().get(attribute));
-            }
+            character.getBlessings().forEach(
+                    blessing -> this.multipliers.add(BOOSTERS.get(blessing).getEffects().get(attribute)));
         }
 
-        public static AttributeCalculator of(Character character, Attribute attribute, Booster blessing) {
-            return new AttributeCalculator(character, attribute, blessing);
+        public static AttributeCalculator of(Character character, Attribute attribute) {
+            return new AttributeCalculator(character, attribute);
         }
 
         public int calculate() {

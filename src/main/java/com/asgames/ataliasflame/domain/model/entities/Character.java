@@ -84,6 +84,12 @@ public class Character implements Combatant {
     @Column(name = "attributeValue")
     private Map<Attribute, Integer> attributes;
 
+    @ElementCollection(fetch = EAGER)
+    @CollectionTable(name = "CharacterBlessing",
+            joinColumns = {@JoinColumn(name = "characterId")})
+    @Column(name = "blessing")
+    private Set<String> blessings;
+
     @OneToMany(mappedBy = "owner", cascade = ALL, fetch = EAGER)
     private Set<SoulChip> soulChips;
 
@@ -136,6 +142,13 @@ public class Character implements Combatant {
             attributes = new HashMap<>();
         }
         return attributes;
+    }
+
+    public Set<String> getBlessings() {
+        if (blessings == null) {
+            blessings = new HashSet<>();
+        }
+        return blessings;
     }
 
     public Set<SoulChip> getSoulChips() {

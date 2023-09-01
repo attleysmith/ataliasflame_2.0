@@ -59,18 +59,10 @@ public class MagicService {
             throw new IllegalArgumentException("Character does not have enough magic to cast spell!");
         }
         switch (spell.getType()) {
-            case SUMMON:
-                summonMagicService.castSummoningSpell(character, spell);
-                break;
-            case BLESSING:
-                blessingMagicService.castBlessingSpell(character, spell);
-                break;
-            case HEALING:
-                healingMagicService.castHealingSpell(character, spell);
-                break;
-            case ATTACK:
-            default:
-                throw new UnsupportedOperationException("Spell type is not supported: " + spell.getType());
+            case SUMMON -> summonMagicService.castSummoningSpell(character, spell);
+            case BLESSING -> blessingMagicService.castBlessingSpell(character, spell);
+            case HEALING -> healingMagicService.castHealingSpell(character, spell);
+            default -> throw new UnsupportedOperationException("Spell type is not supported: " + spell.getType());
         }
     }
 
@@ -79,14 +71,8 @@ public class MagicService {
             throw new IllegalArgumentException("Character does not have enough magic to cast spell!");
         }
         switch (spell.getType()) {
-            case ATTACK:
-                attackMagicService.castAttackSpell(character, spell, monster);
-                break;
-            case SUMMON:
-            case BLESSING:
-            case HEALING:
-            default:
-                throw new UnsupportedOperationException("Spell type is not supported: " + spell.getType());
+            case ATTACK -> attackMagicService.castAttackSpell(character, spell, monster);
+            default -> throw new UnsupportedOperationException("Spell type is not supported: " + spell.getType());
         }
     }
 

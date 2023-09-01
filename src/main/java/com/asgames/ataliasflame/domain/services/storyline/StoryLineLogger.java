@@ -14,17 +14,10 @@ public class StoryLineLogger {
 
     private void event(EventType eventType, String text) {
         switch (eventType) {
-            case INFO:
-                log.info(text);
-                break;
-            case DEBUG:
-                log.debug(text);
-                break;
-            case WARN:
-                log.warn(text);
-                break;
-            default:
-                throw new UnsupportedOperationException("Unsupported event type: " + eventType);
+            case INFO -> log.info(text);
+            case DEBUG -> log.debug(text);
+            case WARN -> log.warn(text);
+            default -> throw new UnsupportedOperationException("Unsupported event type: " + eventType);
         }
     }
 }

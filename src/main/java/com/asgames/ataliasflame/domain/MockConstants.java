@@ -1494,8 +1494,8 @@ public final class MockConstants {
     // Summonings
     //// Animals
     public static final Map<String, CompanionTemplate> ANIMALS = Map.of(
-            "FALCON", CompanionTemplate.builder()
-                    .code("FALCON")
+            "TAMED_FALCON", CompanionTemplate.builder()
+                    .code("TAMED_FALCON")
                     .type(ANIMAL)
                     .attack(75)
                     .defense(0)
@@ -1504,8 +1504,8 @@ public final class MockConstants {
                     .health(10)
                     .initiative(-6)
                     .build(),
-            "DOG", CompanionTemplate.builder()
-                    .code("DOG")
+            "TAMED_DOG", CompanionTemplate.builder()
+                    .code("TAMED_DOG")
                     .type(ANIMAL)
                     .attack(70)
                     .defense(5)
@@ -1514,8 +1514,8 @@ public final class MockConstants {
                     .health(20)
                     .initiative(-3)
                     .build(),
-            "WOLF", CompanionTemplate.builder()
-                    .code("WOLF")
+            "TAMED_WOLF", CompanionTemplate.builder()
+                    .code("TAMED_WOLF")
                     .type(ANIMAL)
                     .attack(70)
                     .defense(5)
@@ -1524,8 +1524,8 @@ public final class MockConstants {
                     .health(25)
                     .initiative(-3)
                     .build(),
-            "BEAR", CompanionTemplate.builder()
-                    .code("BEAR")
+            "TAMED_BEAR", CompanionTemplate.builder()
+                    .code("TAMED_BEAR")
                     .type(ANIMAL)
                     .attack(80)
                     .defense(10)
@@ -1537,10 +1537,10 @@ public final class MockConstants {
     );
 
     public static final List<SelectionValue<Optional<CompanionTemplate>>> ANIMAL_SELECTOR = List.of(
-            new SelectionValue<>(10, Optional.of(ANIMALS.get("FALCON"))),
-            new SelectionValue<>(50, Optional.of(ANIMALS.get("DOG"))),
-            new SelectionValue<>(35, Optional.of(ANIMALS.get("WOLF"))),
-            new SelectionValue<>(5, Optional.of(ANIMALS.get("BEAR")))
+            new SelectionValue<>(10, Optional.of(ANIMALS.get("TAMED_FALCON"))),
+            new SelectionValue<>(50, Optional.of(ANIMALS.get("TAMED_DOG"))),
+            new SelectionValue<>(35, Optional.of(ANIMALS.get("TAMED_WOLF"))),
+            new SelectionValue<>(5, Optional.of(ANIMALS.get("TAMED_BEAR")))
     );
 
     //// Guardian warriors

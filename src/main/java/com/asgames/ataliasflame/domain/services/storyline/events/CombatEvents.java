@@ -1,5 +1,6 @@
 package com.asgames.ataliasflame.domain.services.storyline.events;
 
+import com.asgames.ataliasflame.domain.model.interfaces.AbsorptionDefense;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
 import com.asgames.ataliasflame.domain.services.storyline.EventType;
 
@@ -38,6 +39,50 @@ public final class CombatEvents {
             return "-- " + attacker.getCode() +
                     " (" + attacker.getReference() + ") deals " + damage + " damage to " + defender.getCode() +
                     " (" + defender.getReference() + ") | Remaining health: " + defender.getHealth().actualValue();
+        }
+    }
+
+    public static class MissedAttackEvent extends CombatEvent {
+
+        private MissedAttackEvent(Combatant attacker, Combatant defender) {
+            super(DEBUG, attacker, defender);
+        }
+
+        public static MissedAttackEvent missedAttack(Combatant attacker, Combatant defender) {
+            return new MissedAttackEvent(attacker, defender);
+        }
+
+        @Override
+        public String message() {
+            return "-- " + attacker.getCode() +
+                    " (" + attacker.getReference() + ") missed " + defender.getCode() +
+                    " (" + defender.getReference() + ") | Remaining health: " + defender.getHealth().actualValue();
+        }
+    }
+
+    public static class DamageAbsorptionEvent extends StoryLineEvent {
+        private final AbsorptionDefense defense;
+        private final int originalDamage;
+        private final int absorbedDamage;
+        private final int penetration;
+
+        private DamageAbsorptionEvent(AbsorptionDefense defense, int originalDamage, int absorbedDamage, int penetration) {
+            super(DEBUG);
+            this.defense = defense;
+            this.originalDamage = originalDamage;
+            this.absorbedDamage = absorbedDamage;
+            this.penetration = penetration;
+        }
+
+        public static DamageAbsorptionEvent damageAbsorption(AbsorptionDefense defense, int originalDamage, int absorbedDamage, int penetration) {
+            return new DamageAbsorptionEvent(defense, originalDamage, absorbedDamage, penetration);
+        }
+
+        @Override
+        public String message() {
+            return "-- " + defense.getCode() +
+                    " absorbed " + absorbedDamage + " damage from " + originalDamage +
+                    " with " + penetration + " penetration. | Remaining defense: " + defense.getDurability().actualValue();
         }
     }
 }

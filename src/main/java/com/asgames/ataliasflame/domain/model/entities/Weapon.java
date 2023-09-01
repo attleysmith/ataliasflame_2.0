@@ -38,7 +38,7 @@ public class Weapon {
         character.setWeapon(this);
     }
 
-    private int averageDamage() {
+    public int averageDamage() {
         return (minDamage + maxDamage) / 2;
     }
 }

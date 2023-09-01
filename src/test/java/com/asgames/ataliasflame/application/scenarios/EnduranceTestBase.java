@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.asgames.ataliasflame.domain.model.enums.MagicType.*;
 import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.SOUL;
@@ -128,6 +127,9 @@ public abstract class EnduranceTestBase {
     }
 
     private void castAttackMagic() {
+        if (location.getMonsters().size() <= 1) {
+            return;
+        }
         location.getMonsters().stream()
                 .filter(Combatant::isAlive)
                 .sorted((monster1, monster2) -> {
@@ -143,19 +145,19 @@ public abstract class EnduranceTestBase {
         Monster targetMonster = monster;
 
         boolean hasAvailableSoul = !listUnusedSouls().isEmpty();
-        AtomicBoolean tryToAttack = new AtomicBoolean(true);
-        while (tryToAttack.get() && targetMonster.isAlive()) {
+        boolean tryToAttack = true;
+        while (tryToAttack && targetMonster.isAlive()) {
             Optional<Spell> attackSpell = usableSpells.get(ATTACK).stream()
                     .filter(spell -> character.getMagic().has(spell.getCost()))
                     .filter(spell -> hasAvailableSoul || !spell.getGroup().equals(SOUL))
-                    .max(comparing(Spell::getCost));
-            if (attackSpell.isPresent()) {
+                    .max(comparing(Spell::averageDamage));
+            if (attackSpell.isPresent() && targetMonster.getHealth().actualValue() >= attackSpell.get().averageDamage()) {
                 AttackContext attackContext = characterMagicService.castAttackSpell(character.getReference(), attackSpell.get().getName(), targetMonster.getReference());
 
                 character = attackContext.getCharacter();
                 targetMonster = attackContext.getMonster();
             } else {
-                tryToAttack.set(false);
+                tryToAttack = false;
             }
         }
     }

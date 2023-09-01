@@ -1231,7 +1231,7 @@ public final class MockConstants {
                     .group(NATURE)
                     .cost(10)
                     .prohibitedCastes(List.of(ROGUE, WIZARD, MAGE, FIGHTER, PALADIN, GRANDMASTER, TITAN, MONK, PRIEST, HIERARCH, ARCHANGEL))
-                    .prohibitedRaces(List.of(ORC, MINOTAUR))
+                    .prohibitedRaces(List.of(MINOTAUR))
                     .build()),
             Map.entry(SUMMON_GUARDIAN, Spell.builder()
                     .name(SUMMON_GUARDIAN)
@@ -1239,7 +1239,7 @@ public final class MockConstants {
                     .group(GENERAL)
                     .cost(20)
                     .prohibitedCastes(List.of(ROGUE, FIGHTER, PALADIN, TRACKER, RANGER, PILGRIM, HERMIT, DRUID))
-                    .prohibitedRaces(List.of(DWARF, ORC, MINOTAUR))
+                    .prohibitedRaces(List.of(ORC))
                     .build()),
             Map.entry(PROJECTION_OF_ENERGY, Spell.builder()
                     .name(PROJECTION_OF_ENERGY)
@@ -1255,7 +1255,7 @@ public final class MockConstants {
                     .group(DIVINE)
                     .cost(15)
                     .prohibitedCastes(List.of(ROGUE, WIZARD, MAGE, FIGHTER, PALADIN, GRANDMASTER, TITAN, TRACKER, RANGER, PILGRIM, FREE_SOUL, HERMIT))
-                    .prohibitedRaces(List.of(DWARF, ORC, MINOTAUR))
+                    .prohibitedRaces(List.of(ORC))
                     .build())
     );
 
@@ -1584,7 +1584,7 @@ public final class MockConstants {
     );
 
     //// Energy
-    public static final int ENERGY_PROJECTION_PERCENT = 80;
+    public static final int ENERGY_PROJECTION_PERCENT = 50;
 
     //// Divine guardians
     public static final Map<String, CompanionTemplate> DIVINE_GUARDIANS = Map.of(

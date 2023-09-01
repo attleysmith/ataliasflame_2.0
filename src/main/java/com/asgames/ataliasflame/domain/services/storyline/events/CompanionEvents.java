@@ -31,7 +31,7 @@ public final class CompanionEvents {
 
         @Override
         public String message() {
-            return companion.getName() + " summoned as companion.";
+            return companion.getName() + " (" + companion.getReference() + ") summoned as companion.";
         }
     }
 

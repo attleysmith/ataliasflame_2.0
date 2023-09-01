@@ -21,4 +21,8 @@ public class Spell {
 
     private final List<Caste> prohibitedCastes;
     private final List<Race> prohibitedRaces;
+
+    public int averageDamage() {
+        return (minDamage + maxDamage) / 2;
+    }
 }

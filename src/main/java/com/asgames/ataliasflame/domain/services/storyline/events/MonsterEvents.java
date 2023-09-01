@@ -34,7 +34,7 @@ public final class MonsterEvents {
 
         @Override
         public String message() {
-            return monster.getCode() + " dropped " + item.getCode();
+            return monster.getCode() + " (" + monster.getReference() + ") dropped " + item.getCode();
         }
     }
 }

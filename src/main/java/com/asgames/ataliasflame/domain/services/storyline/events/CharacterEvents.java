@@ -199,7 +199,8 @@ public final class CharacterEvents {
         public String message() {
             String oldShieldCode = oldShield == null ? MISSING_ITEM : oldShield.getCode();
             if (character.getShield().isPresent()) {
-                return "Shield changed: " + oldShieldCode + " -> " + character.getShield().get().getCode();
+                Shield shield = character.getShield().get();
+                return "Shield changed: " + oldShieldCode + " -> " + shield.getCode() + " (" + shield.getDurability().actualValue() + ")";
             } else {
                 return "Shield dropped: " + oldShieldCode;
             }
@@ -222,7 +223,8 @@ public final class CharacterEvents {
         public String message() {
             String oldArmorCode = oldArmor == null ? MISSING_ITEM : oldArmor.getCode();
             if (character.getArmor().isPresent()) {
-                return "Armor changed: " + oldArmorCode + " -> " + character.getArmor().get().getCode();
+                Armor armor = character.getArmor().get();
+                return "Armor changed: " + oldArmorCode + " -> " + armor.getCode() + " (" + armor.getDurability().actualValue() + ")";
             } else {
                 return "Armor dropped: " + oldArmorCode;
             }

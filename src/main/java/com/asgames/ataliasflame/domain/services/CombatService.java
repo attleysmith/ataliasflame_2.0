@@ -15,6 +15,8 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.asgames.ataliasflame.domain.services.storyline.events.CombatEvents.CombatDamageEvent.combatDamage;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CombatEvents.DamageAbsorptionEvent.damageAbsorption;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CombatEvents.MissedAttackEvent.missedAttack;
 import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.DebugEvent.DebugReportCause.*;
 import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.DebugEvent.debugReport;
 import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.WarningReportCause.NO_ENEMY;
@@ -91,15 +93,15 @@ public class CombatService {
     }
 
     private void attack(Combatant attacker, Combatant defender) {
-        int damage = 0;
         if (attacker.isAlive()) {
             int chance = attacker.getAttack() - defender.getDefense();
             if (successX(chance)) {
-                damage = pointOut(attacker.getMinDamage(), attacker.getMaxDamage());
-                doDamage(defender, damage);
+                int damage = pointOut(attacker.getMinDamage(), attacker.getMaxDamage());
+                doDamage(attacker, defender, damage);
+            } else {
+                storyLineLogger.event(missedAttack(attacker, defender));
             }
         }
-        storyLineLogger.event(combatDamage(attacker, defender, damage));
     }
 
     private List<TeamMember> getCombatOrder(List<TeamMember> naturalOrder, boolean initiate) {
@@ -116,13 +118,14 @@ public class CombatService {
                 .collect(toList());
     }
 
-    private void doDamage(Combatant defender, int damage) {
+    private void doDamage(Combatant attacker, Combatant defender, int damage) {
         AtomicInteger remainingDamage = new AtomicInteger(damage);
         defender.getShield().ifPresent(
                 shield -> absorption(shield, remainingDamage));
         defender.getArmor().ifPresent(
                 armor -> absorption(armor, remainingDamage));
         defender.getHealth().damage(remainingDamage.get());
+        storyLineLogger.event(combatDamage(attacker, defender, remainingDamage.get()));
     }
 
     private void absorption(AbsorptionDefense defense, AtomicInteger damage) {
@@ -130,5 +133,6 @@ public class CombatService {
         int absorbedDamage = percent(originalDamage, defense.getAbsorption());
         int penetration = defense.getDurability().penetrate(absorbedDamage);
         damage.set(originalDamage - absorbedDamage + penetration);
+        storyLineLogger.event(damageAbsorption(defense, originalDamage, absorbedDamage, penetration));
     }
 }

@@ -4,12 +4,8 @@ import com.asgames.ataliasflame.domain.model.dtos.Spell;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Item;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
-import com.asgames.ataliasflame.domain.services.magic.AttackMagicService;
-import com.asgames.ataliasflame.domain.services.magic.BlessingMagicService;
-import com.asgames.ataliasflame.domain.services.magic.HealingMagicService;
-import com.asgames.ataliasflame.domain.services.magic.SummonMagicService;
+import com.asgames.ataliasflame.domain.services.magic.*;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +13,6 @@ import static com.asgames.ataliasflame.domain.MockConstants.MAGIC_RECOVERY_EFFEC
 import static com.asgames.ataliasflame.domain.model.enums.ItemType.FOOD;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.MagicRecoveryEvent.magicRecovery;
 
-@Slf4j
 @Service
 public class MagicService {
 
@@ -32,6 +27,8 @@ public class MagicService {
     private BlessingMagicService blessingMagicService;
     @Autowired
     private HealingMagicService healingMagicService;
+    @Autowired
+    private CurseMagicService curseMagicService;
 
     public void sleep(Character character) {
         recover(character, MAGIC_RECOVERY_EFFECT_OF_SLEEP);
@@ -72,6 +69,7 @@ public class MagicService {
         }
         switch (spell.getType()) {
             case ATTACK -> attackMagicService.castAttackSpell(character, spell, monster);
+            case CURSE -> curseMagicService.castCurseSpell(character, spell, monster);
             default -> throw new UnsupportedOperationException("Spell type is not supported: " + spell.getType());
         }
     }

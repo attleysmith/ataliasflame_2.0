@@ -8,7 +8,6 @@ import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
 import com.asgames.ataliasflame.domain.utils.SelectionValue;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +22,6 @@ import static com.asgames.ataliasflame.domain.services.storyline.events.MonsterE
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.choose;
 import static com.asgames.ataliasflame.domain.utils.DiceUtils.successX;
 
-@Slf4j
 @Service
 public class MonsterService {
 

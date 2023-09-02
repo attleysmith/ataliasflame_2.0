@@ -6,7 +6,6 @@ import com.asgames.ataliasflame.domain.model.entities.SoulChip;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +17,6 @@ import static com.asgames.ataliasflame.domain.services.storyline.events.Characte
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SoulChipEvent.newSoulChip;
 import static com.asgames.ataliasflame.domain.utils.DiceUtils.roll100;
 
-@Slf4j
 @Service
 public class CasteService {
 

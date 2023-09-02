@@ -9,12 +9,10 @@ import com.asgames.ataliasflame.domain.services.InventoryService;
 import com.asgames.ataliasflame.domain.services.LocationService;
 import com.asgames.ataliasflame.infrastructure.repositories.CharacterRepository;
 import com.asgames.ataliasflame.infrastructure.repositories.LocationRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Slf4j
 @Service
 public class CharacterLocationService {
 

@@ -2,5 +2,5 @@ package com.asgames.ataliasflame.domain.model.enums;
 
 public enum MagicType {
 
-    ATTACK, HEALING, BLESSING, SUMMON
+    ATTACK, HEALING, BLESSING, CURSE, SUMMON
 }

@@ -9,7 +9,6 @@ import com.asgames.ataliasflame.domain.services.MagicService;
 import com.asgames.ataliasflame.domain.services.SpellService;
 import com.asgames.ataliasflame.infrastructure.repositories.CharacterRepository;
 import com.asgames.ataliasflame.infrastructure.repositories.MonsterRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +17,6 @@ import java.util.List;
 
 import static com.asgames.ataliasflame.domain.MockConstants.SPELLS;
 
-@Slf4j
 @Service
 public class CharacterMagicService {
 

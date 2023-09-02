@@ -6,7 +6,6 @@ import com.asgames.ataliasflame.domain.model.entities.Companion;
 import com.asgames.ataliasflame.domain.model.entities.SoulChip;
 import com.asgames.ataliasflame.domain.model.vos.Energy;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +24,6 @@ import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEv
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.choose;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.percent;
 
-@Slf4j
 @Service
 public class SummonMagicService extends AbstractMagicService {
 

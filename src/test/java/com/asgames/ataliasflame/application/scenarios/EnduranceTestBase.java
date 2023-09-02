@@ -30,6 +30,7 @@ public abstract class EnduranceTestBase {
     private static final int TOLERATED_INJURY_TO_HEAL = 80;
     private static final int TOLERATED_INJURY_TO_SLEEP = 40;
     private static final int MAX_NUMBER_OF_COMPANIONS = 5;
+    private static final int MIN_HEALTH_TO_CURSE = 20;
 
     @Autowired
     protected CharacterMaintenanceService characterMaintenanceService;
@@ -78,6 +79,7 @@ public abstract class EnduranceTestBase {
             enterLocation();
             putOnBlessings();
             castAttackMagic();
+            castCurseMagic();
             closeCombat();
             if (character.isAlive()) {
                 lootLocation();
@@ -180,6 +182,30 @@ public abstract class EnduranceTestBase {
                 tryToAttack = false;
             }
         }
+    }
+
+    private void castCurseMagic() {
+        location.getMonsters().stream()
+                .filter(monster -> monster.getHealth().has(MIN_HEALTH_TO_CURSE))
+                .sorted((monster1, monster2) -> {
+                    Integer monster1Health = monster1.getHealth().actualValue();
+                    Integer monster2Health = monster2.getHealth().actualValue();
+                    return monster2Health.compareTo(monster1Health);
+                })
+                .forEach(this::castCurseMagic);
+        location = locationAdventureService.getLocation(location.getReference());
+    }
+
+    private void castCurseMagic(Monster monster) {
+        boolean hasAvailableSoul = !listUnusedSouls().isEmpty();
+        usableSpells.get(CURSE).stream()
+                .filter(spell -> character.getMagic().has(spell.getCost()))
+                .filter(spell -> hasAvailableSoul || !spell.getGroup().equals(SOUL))
+                .max(comparing(Spell::getCost))
+                .ifPresent(spell -> {
+                    AttackContext attackContext = characterMagicService.castAttackSpell(character.getReference(), spell.getName(), monster.getReference());
+                    character = attackContext.getCharacter();
+                });
     }
 
     private void closeCombat() {

@@ -109,15 +109,60 @@ public final class MockConstants {
             .magicPoint(1)
             .build();
 
-    public static final Map<String, Modifier> MODIFIERS = Map.of(
-            STRENGTH.name(), STRENGTH_MODIFIER,
-            DEXTERITY.name(), DEXTERITY_MODIFIER,
-            CONSTITUTION.name(), CONSTITUTION_MODIFIER,
-            AGILITY.name(), AGILITY_MODIFIER,
-            INTELLIGENCE.name(), INTELLIGENCE_MODIFIER,
-            LORE.name(), LORE_MODIFIER,
-            MENTAL_POWER.name(), MENTAL_POWER_MODIFIER,
-            SPIRITUAL_POWER.name(), SPIRITUAL_POWER_MODIFIER
+    public static final Modifier SOUL_STRIKE_MODIFIER = Modifier.builder()
+            .attackMultiplier(-10)
+            .defenseMultiplier(-10)
+            .damageMultiplier(-10)
+            .healthMultiplier(-2)
+            .magicPoint(0)
+            .build();
+
+    public static final Modifier WEAKENING_MODIFIER = Modifier.builder()
+            .attackMultiplier(-5)
+            .defenseMultiplier(-5)
+            .damageMultiplier(-5)
+            .healthMultiplier(0)
+            .magicPoint(0)
+            .build();
+
+    public static final Modifier SHACKLE_MODIFIER = Modifier.builder()
+            .attackMultiplier(-10)
+            .defenseMultiplier(-5)
+            .damageMultiplier(-5)
+            .healthMultiplier(0)
+            .magicPoint(0)
+            .build();
+
+    public static final Modifier ENERGY_BLOCKING_MODIFIER = Modifier.builder()
+            .attackMultiplier(-25)
+            .defenseMultiplier(-10)
+            .damageMultiplier(-10)
+            .healthMultiplier(0)
+            .magicPoint(0)
+            .build();
+
+    public static final Modifier POWER_DRAIN_MODIFIER = Modifier.builder()
+            .attackMultiplier(-8)
+            .defenseMultiplier(-8)
+            .damageMultiplier(-8)
+            .healthMultiplier(-1)
+            .magicPoint(0)
+            .build();
+
+    public static final Map<String, Modifier> MODIFIERS = Map.ofEntries(
+            Map.entry(STRENGTH.name(), STRENGTH_MODIFIER),
+            Map.entry(DEXTERITY.name(), DEXTERITY_MODIFIER),
+            Map.entry(CONSTITUTION.name(), CONSTITUTION_MODIFIER),
+            Map.entry(AGILITY.name(), AGILITY_MODIFIER),
+            Map.entry(INTELLIGENCE.name(), INTELLIGENCE_MODIFIER),
+            Map.entry(LORE.name(), LORE_MODIFIER),
+            Map.entry(MENTAL_POWER.name(), MENTAL_POWER_MODIFIER),
+            Map.entry(SPIRITUAL_POWER.name(), SPIRITUAL_POWER_MODIFIER),
+            Map.entry(SOUL_STRIKE.name(), SOUL_STRIKE_MODIFIER),
+            Map.entry(WEAKENING.name(), WEAKENING_MODIFIER),
+            Map.entry(SHACKLE.name(), SHACKLE_MODIFIER),
+            Map.entry(ENERGY_BLOCKING.name(), ENERGY_BLOCKING_MODIFIER),
+            Map.entry(POWER_DRAIN.name(), POWER_DRAIN_MODIFIER)
     );
 
     // Attribute boosters
@@ -1216,6 +1261,46 @@ public final class MockConstants {
                     .cost(8)
                     .prohibitedCastes(List.of(ROGUE, WIZARD, FIGHTER, TRACKER, RANGER, HERMIT, DRUID, MONK, PRIEST))
                     .prohibitedRaces(List.of(ORC))
+                    .build()),
+            Map.entry(SOUL_STRIKE, Spell.builder()
+                    .name(SOUL_STRIKE)
+                    .type(CURSE)
+                    .group(SOUL)
+                    .cost(15)
+                    .prohibitedCastes(List.of(ROGUE, WIZARD, MAGE, WITCHMASTER, AVATAR, FIGHTER, PALADIN, GRANDMASTER, TITAN, TRACKER, RANGER, HERMIT, DRUID, ARCHDRUID, ATALIAS_PRIEST, MONK, PRIEST, HIERARCH, ARCHANGEL))
+                    .prohibitedRaces(List.of())
+                    .build()),
+            Map.entry(WEAKENING, Spell.builder()
+                    .name(WEAKENING)
+                    .type(CURSE)
+                    .group(GENERAL)
+                    .cost(5)
+                    .prohibitedCastes(List.of(ROGUE, TRACKER, RANGER, PILGRIM, HERMIT))
+                    .prohibitedRaces(List.of(DWARF))
+                    .build()),
+            Map.entry(SHACKLE, Spell.builder()
+                    .name(SHACKLE)
+                    .type(CURSE)
+                    .group(NATURE)
+                    .cost(8)
+                    .prohibitedCastes(List.of(ROGUE, FIGHTER, PALADIN))
+                    .prohibitedRaces(List.of())
+                    .build()),
+            Map.entry(ENERGY_BLOCKING, Spell.builder()
+                    .name(ENERGY_BLOCKING)
+                    .type(CURSE)
+                    .group(ENERGY)
+                    .cost(20)
+                    .prohibitedCastes(List.of(ROGUE, WIZARD, FIGHTER, PALADIN, TRACKER, RANGER, PILGRIM, FREE_SOUL, HERMIT, DRUID, ARCHDRUID, MONK, PRIEST, HIERARCH))
+                    .prohibitedRaces(List.of(DWARF, ORC))
+                    .build()),
+            Map.entry(POWER_DRAIN, Spell.builder()
+                    .name(POWER_DRAIN)
+                    .type(CURSE)
+                    .group(GENERAL)
+                    .cost(10)
+                    .prohibitedCastes(List.of(ROGUE, FIGHTER, PALADIN, TRACKER, RANGER, PILGRIM, HERMIT, DRUID))
+                    .prohibitedRaces(List.of(DWARF, ORC, MINOTAUR))
                     .build()),
             Map.entry(CALLING_THE_SOULS, Spell.builder()
                     .name(CALLING_THE_SOULS)

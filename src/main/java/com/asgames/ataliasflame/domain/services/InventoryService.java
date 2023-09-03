@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import static com.asgames.ataliasflame.domain.MockConstants.*;
 import static com.asgames.ataliasflame.domain.model.enums.ItemType.*;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.ArmorChangeEvent.newArmor;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.EatingEvent.eating;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.ShieldChangeEvent.newShield;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.WeaponChangeEvent.newWeapon;
 import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.WarningReportCause.WEAPON_SHIELD_MISMATCH;
@@ -44,6 +45,7 @@ public class InventoryService {
     public void use(Character character, Item item) {
         switch (item.getType()) {
             case FOOD -> {
+                storyLineLogger.event(eating(character, item));
                 healingService.eat(character, item);
                 magicService.eat(character, item);
             }

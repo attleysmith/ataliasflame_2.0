@@ -223,16 +223,20 @@ public abstract class EnduranceTestBase {
     }
 
     private void heal() {
-        if (character.getHealth().tolerateLoss(TOLERATED_INJURY_TO_HEAL)) {
-            return;
-        }
         boolean hasAvailableSoul = !listUnusedSouls().isEmpty();
-        usableSpells.get(HEALING).stream()
-                .filter(spell -> character.getMagic().has(spell.getCost()))
-                .filter(spell -> hasAvailableSoul || !spell.getGroup().equals(SOUL))
-                .max(comparing(Spell::getHealingEffect))
-                .ifPresent(spell ->
-                        character = characterMagicService.castSpell(character.getReference(), spell.getName()));
+        boolean readyToGo = character.getHealth().tolerateLoss(TOLERATED_INJURY_TO_HEAL);
+        while (!readyToGo) {
+            Optional<Spell> healingSpell = usableSpells.get(HEALING).stream()
+                    .filter(spell -> character.getMagic().has(spell.getCost()))
+                    .filter(spell -> hasAvailableSoul || !spell.getGroup().equals(SOUL))
+                    .max(comparing(Spell::getHealingEffect));
+            if (healingSpell.isPresent()) {
+                character = characterMagicService.castSpell(character.getReference(), healingSpell.get().getName());
+                readyToGo = character.getHealth().tolerateLoss(TOLERATED_INJURY_TO_HEAL);
+            } else {
+                readyToGo = true;
+            }
+        }
     }
 
     private void finishEncounter() {

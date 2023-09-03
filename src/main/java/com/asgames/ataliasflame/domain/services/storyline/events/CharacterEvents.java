@@ -7,6 +7,7 @@ import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
 import com.asgames.ataliasflame.domain.services.storyline.EventType;
 
+import static com.asgames.ataliasflame.domain.model.enums.ItemType.FOOD;
 import static com.asgames.ataliasflame.domain.services.storyline.EventType.DEBUG;
 import static com.asgames.ataliasflame.domain.services.storyline.EventType.INFO;
 
@@ -110,6 +111,27 @@ public final class CharacterEvents {
         @Override
         public String message() {
             return attribute.name() + ": " + oldValue + " -> " + character.getAttributes().get(attribute);
+        }
+    }
+
+    public static class EatingEvent extends CharacterEvent {
+        private final Item item;
+
+        private EatingEvent(Character character, Item item) {
+            super(INFO, character);
+            if (item.getType() != FOOD) {
+                throw new IllegalArgumentException("Wrong item type in eating event! " + item.getType());
+            }
+            this.item = item;
+        }
+
+        public static EatingEvent eating(Character character, Item item) {
+            return new EatingEvent(character, item);
+        }
+
+        @Override
+        public String message() {
+            return "Eating/Drinking " + item.getCode();
         }
     }
 

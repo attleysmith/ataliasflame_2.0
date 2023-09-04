@@ -3,23 +3,21 @@ package com.asgames.ataliasflame.domain.model.entities;
 import com.asgames.ataliasflame.domain.model.interfaces.AbsorptionDefense;
 import com.asgames.ataliasflame.domain.model.vos.Energy;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.SuperBuilder;
 
 @Entity
-@Builder
+@SuperBuilder
 @Data
+@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor // Builder needs it
-public class Armor implements AbsorptionDefense {
+public class Armor extends Item implements AbsorptionDefense {
 
     // JPA needs it
     public Armor() {
     }
-
-    @Id
-    @Column(name = "reference")
-    private String reference;
-    @Column(name = "code")
-    private String code;
 
     @Column(name = "defense")
     private int defense;

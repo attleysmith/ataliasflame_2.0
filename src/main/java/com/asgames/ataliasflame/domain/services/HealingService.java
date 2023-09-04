@@ -2,13 +2,12 @@ package com.asgames.ataliasflame.domain.services;
 
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Companion;
-import com.asgames.ataliasflame.domain.model.entities.Item;
+import com.asgames.ataliasflame.domain.model.entities.Food;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import static com.asgames.ataliasflame.domain.MockConstants.HEALING_EFFECT_OF_SLEEP;
-import static com.asgames.ataliasflame.domain.model.enums.ItemType.FOOD;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.HealthRecoveryEvent.healthRecovery;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CompanionEvents.CompanionHealingEvent.companionHealing;
 
@@ -22,11 +21,8 @@ public class HealingService {
         heal(character, HEALING_EFFECT_OF_SLEEP);
     }
 
-    public void eat(Character character, Item item) {
-        if (!item.getType().equals(FOOD)) {
-            throw new IllegalArgumentException("Only food can be eaten!");
-        }
-        heal(character, item.getHealingEffect());
+    public void eat(Character character, Food food) {
+        heal(character, food.getHealingEffect());
     }
 
     public void heal(Character character, int healingEffect) {

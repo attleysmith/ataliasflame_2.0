@@ -1,8 +1,6 @@
 package com.asgames.ataliasflame.domain.services;
 
-import com.asgames.ataliasflame.domain.model.dtos.ArmorTemplate;
-import com.asgames.ataliasflame.domain.model.dtos.ShieldTemplate;
-import com.asgames.ataliasflame.domain.model.dtos.WeaponTemplate;
+import com.asgames.ataliasflame.domain.model.dtos.*;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.*;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
@@ -15,8 +13,6 @@ import static com.asgames.ataliasflame.domain.services.storyline.events.Characte
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.EatingEvent.eating;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.ShieldChangeEvent.newShield;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.WeaponChangeEvent.newWeapon;
-import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.WarningReportCause.WEAPON_SHIELD_MISMATCH;
-import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.warningReport;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.choose;
 import static com.asgames.ataliasflame.domain.utils.DiceUtils.roll100;
 
@@ -42,93 +38,107 @@ public class InventoryService {
                 takeArmor(character, startingArmor.instance()));
     }
 
-    public void use(Character character, Item item) {
-        switch (item.getType()) {
-            case FOOD -> {
-                storyLineLogger.event(eating(character, item));
-                healingService.eat(character, item);
-                magicService.eat(character, item);
+    public Item produce(ItemTemplate drop) {
+        return switch (drop.getType()) {
+            case FOOD -> produceFood(drop);
+            case WEAPON -> produceWeapon(drop);
+            case SHIELD -> produceShield(drop);
+            case ARMOR -> produceArmor(drop);
+            default -> throw new UnsupportedOperationException("Not supported item usage: " + drop.getType());
+        };
+    }
+
+    private Food produceFood(ItemTemplate template) {
+        if (!template.getType().equals(FOOD)) {
+            throw new IllegalArgumentException("Only FOOD can be produced as food!");
+        }
+
+        FoodTemplate foodTemplate = FOODS.get(template.getCode());
+        if (foodTemplate == null) {
+            throw new IllegalStateException("Food not recognized as real food: " + template.getCode());
+        }
+
+        return foodTemplate.instance();
+    }
+
+    private Weapon produceWeapon(ItemTemplate template) {
+        if (!template.getType().equals(WEAPON)) {
+            throw new IllegalArgumentException("Only WEAPON can be produced as weapon!");
+        }
+
+        WeaponTemplate weaponTemplate = WEAPONS.get(template.getCode());
+        if (weaponTemplate == null) {
+            throw new IllegalStateException("Weapon not recognized as real weapon: " + template.getCode());
+        }
+
+        return weaponTemplate.instance();
+    }
+
+    private Shield produceShield(ItemTemplate template) {
+        if (!template.getType().equals(SHIELD)) {
+            throw new IllegalArgumentException("Only SHIELD can be produced as shield!");
+        }
+
+        ShieldTemplate shieldTemplate = SHIELDS.get(template.getCode());
+        if (shieldTemplate == null) {
+            throw new IllegalStateException("Shield not recognized as real shield: " + template.getCode());
+        }
+
+        Shield shield = shieldTemplate.instance();
+        shield.getDurability().trauma(roll100());
+        return shield;
+    }
+
+    private Armor produceArmor(ItemTemplate template) {
+        if (!template.getType().equals(ARMOR)) {
+            throw new IllegalArgumentException("Only ARMOR can be produced as armor!");
+        }
+
+        ArmorTemplate armorTemplate = ARMORS.get(template.getCode());
+        if (armorTemplate == null) {
+            throw new IllegalStateException("Armor not recognized as real armor: " + template.getCode());
+        }
+
+        Armor armor = armorTemplate.instance();
+        armor.getDurability().trauma(roll100());
+        return armor;
+    }
+
+    public void eatFood(Character character, Food food) {
+        storyLineLogger.event(eating(character, food));
+        healingService.eat(character, food);
+        magicService.eat(character, food);
+    }
+
+    public void takeWeapon(Character character, Weapon newWeapon) {
+        character.getShield().ifPresent(oldShield -> {
+            if (!newWeapon.isOneHanded()) {
+                character.setShield(null);
+                storyLineLogger.event(newShield(character, oldShield));
             }
-            case WEAPON -> changeWeapon(character, item);
-            case SHIELD -> changeShield(character, item);
-            case ARMOR -> changeArmor(character, item);
-            default -> throw new UnsupportedOperationException("Not supported item usage: " + item.getType());
-        }
+        });
+
+        Weapon oldWeapon = character.getWeapon();
+        newWeapon.belongsTo(character);
+        characterCalculationService.recalculateProperties(character);
+        storyLineLogger.event(newWeapon(character, oldWeapon));
     }
 
-    public void changeWeapon(Character character, Item item) {
-        if (!item.getType().equals(WEAPON)) {
-            throw new IllegalArgumentException("Only weapon can be used as weapon!");
-        }
-
-        WeaponTemplate newWeaponTemplate = WEAPONS.get(item.getCode());
-        if (newWeaponTemplate == null) {
-            throw new IllegalStateException("New weapon not recognized as real weapon: " + item.getCode());
-        }
-
-        Weapon newWeapon = newWeaponTemplate.instance();
-        if (newWeapon.isBetterThan(character.getWeapon())) {
-            takeWeapon(character, newWeapon);
-        }
-    }
-
-    public void changeShield(Character character, Item item) {
-        if (!item.getType().equals(SHIELD)) {
-            throw new IllegalArgumentException("Only shield can be used as shield!");
-        }
-
-        ShieldTemplate newShieldTemplate = SHIELDS.get(item.getCode());
-        if (newShieldTemplate == null) {
-            throw new IllegalStateException("New shield not recognized as real shield: " + item.getCode());
-        }
-
-        Shield newShield = newShieldTemplate.instance();
-        newShield.getDurability().trauma(roll100());
-        if (character.getShield().isEmpty() || newShield.isBetterThan(character.getShield().get())) {
-            takeShield(character, newShield);
-        }
-    }
-
-    public void changeArmor(Character character, Item item) {
-        if (!item.getType().equals(ARMOR)) {
-            throw new IllegalArgumentException("Only armor can be used as armor!");
-        }
-
-        ArmorTemplate newArmorTemplate = ARMORS.get(item.getCode());
-        if (newArmorTemplate == null) {
-            throw new IllegalStateException("New armor not recognized as real armor: " + item.getCode());
-        }
-
-        Armor newArmor = newArmorTemplate.instance();
-        newArmor.getDurability().trauma(roll100());
-        if (character.getArmor().isEmpty() || newArmor.isBetterThan(character.getArmor().get())) {
-            takeArmor(character, newArmor);
-        }
-    }
-
-    private void takeWeapon(Character character, Weapon weapon) {
-        if (weapon.isOneHanded() || character.getShield().isEmpty()) {
-            Weapon oldWeapon = character.getWeapon();
-            weapon.belongsTo(character);
-            characterCalculationService.recalculateProperties(character);
+    public void takeShield(Character character, Shield shield) {
+        Weapon oldWeapon = character.getWeapon();
+        if (!oldWeapon.isOneHanded()) {
+            Weapon newWeapon = WEAPONS.get("FIST").instance();
+            newWeapon.belongsTo(character);
             storyLineLogger.event(newWeapon(character, oldWeapon));
-        } else {
-            storyLineLogger.event(warningReport(WEAPON_SHIELD_MISMATCH));
         }
+
+        Shield oldShield = character.getShield().orElse(null);
+        shield.belongsTo(character);
+        characterCalculationService.recalculateProperties(character);
+        storyLineLogger.event(newShield(character, oldShield));
     }
 
-    private void takeShield(Character character, Shield shield) {
-        if (character.getWeapon().isOneHanded()) {
-            Shield oldShield = character.getShield().orElse(null);
-            shield.belongsTo(character);
-            characterCalculationService.recalculateProperties(character);
-            storyLineLogger.event(newShield(character, oldShield));
-        } else {
-            storyLineLogger.event(warningReport(WEAPON_SHIELD_MISMATCH));
-        }
-    }
-
-    private void takeArmor(Character character, Armor armor) {
+    public void takeArmor(Character character, Armor armor) {
         Armor oldArmor = character.getArmor().orElse(null);
         armor.belongsTo(character);
         characterCalculationService.recalculateProperties(character);

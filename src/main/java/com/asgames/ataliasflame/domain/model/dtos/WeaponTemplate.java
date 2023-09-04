@@ -6,6 +6,8 @@ import lombok.Data;
 
 import java.util.UUID;
 
+import static com.asgames.ataliasflame.domain.model.enums.ItemType.WEAPON;
+
 @Builder
 @Data
 public class WeaponTemplate {
@@ -21,6 +23,7 @@ public class WeaponTemplate {
         return Weapon.builder()
                 .reference(UUID.randomUUID().toString())
                 .code(code)
+                .type(WEAPON)
                 .minDamage(minDamage)
                 .maxDamage(maxDamage)
                 .defense(defense)

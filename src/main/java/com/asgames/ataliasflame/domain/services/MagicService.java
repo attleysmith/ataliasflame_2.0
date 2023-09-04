@@ -2,7 +2,7 @@ package com.asgames.ataliasflame.domain.services;
 
 import com.asgames.ataliasflame.domain.model.dtos.Spell;
 import com.asgames.ataliasflame.domain.model.entities.Character;
-import com.asgames.ataliasflame.domain.model.entities.Item;
+import com.asgames.ataliasflame.domain.model.entities.Food;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.services.magic.*;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import static com.asgames.ataliasflame.domain.MockConstants.MAGIC_RECOVERY_EFFECT_OF_SLEEP;
-import static com.asgames.ataliasflame.domain.model.enums.ItemType.FOOD;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.MagicRecoveryEvent.magicRecovery;
 
 @Service
@@ -34,11 +33,8 @@ public class MagicService {
         recover(character, MAGIC_RECOVERY_EFFECT_OF_SLEEP);
     }
 
-    public void eat(Character character, Item item) {
-        if (!item.getType().equals(FOOD)) {
-            throw new IllegalArgumentException("Only food can be eaten!");
-        }
-        recover(character, item.getMagicEffect());
+    public void eat(Character character, Food food) {
+        recover(character, food.getMagicEffect());
     }
 
     private void recover(Character character, int recoveryEffect) {

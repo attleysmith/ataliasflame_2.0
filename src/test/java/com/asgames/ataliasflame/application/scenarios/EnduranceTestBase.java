@@ -9,6 +9,7 @@ import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.*;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
+import com.asgames.ataliasflame.domain.model.enums.ItemType;
 import com.asgames.ataliasflame.domain.model.enums.MagicType;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
 import org.junit.jupiter.api.AfterEach;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static com.asgames.ataliasflame.domain.model.enums.ItemType.*;
 import static com.asgames.ataliasflame.domain.model.enums.MagicType.*;
 import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.SOUL;
 import static java.util.Comparator.comparing;
@@ -215,11 +217,49 @@ public abstract class EnduranceTestBase {
     }
 
     private void lootLocation() {
-        location.getItems().forEach(item -> {
-            LocationContext locationContext = characterLocationService.useItem(character.getReference(), location.getReference(), item.getReference());
-            character = locationContext.getCharacter();
-            location = locationContext.getLocation();
-        });
+        Map<ItemType, Integer> lootingOrder = Map.of(
+                FOOD, 1,
+                WEAPON, 2,
+                SHIELD, 3,
+                ARMOR, 4
+        );
+
+        location.getItems().stream()
+                .sorted(comparing(item -> lootingOrder.getOrDefault(item.getType(), 0)))
+                .forEach(item -> {
+                    LocationContext neverMind = LocationContext.builder().character(character).location(location).build();
+                    LocationContext locationContext = switch (item.getType()) {
+                        case FOOD ->
+                                characterLocationService.useItem(character.getReference(), location.getReference(), item.getReference());
+                        case WEAPON -> {
+                            Weapon newWeapon = characterLocationService.getWeapon(item.getReference());
+                            if (newWeapon.isBetterThan(character.getWeapon())) {
+                                yield characterLocationService.useItem(character.getReference(), location.getReference(), newWeapon.getReference());
+                            } else {
+                                yield neverMind;
+                            }
+                        }
+                        case SHIELD -> {
+                            Shield newShield = characterLocationService.getShield(item.getReference());
+                            if (character.getWeapon().isOneHanded()
+                                    && (character.getShield().isEmpty() || newShield.isBetterThan(character.getShield().get()))) {
+                                yield characterLocationService.useItem(character.getReference(), location.getReference(), newShield.getReference());
+                            } else {
+                                yield neverMind;
+                            }
+                        }
+                        case ARMOR -> {
+                            Armor newArmor = characterLocationService.getArmor(item.getReference());
+                            if (character.getArmor().isEmpty() || newArmor.isBetterThan(character.getArmor().get())) {
+                                yield characterLocationService.useItem(character.getReference(), location.getReference(), newArmor.getReference());
+                            } else {
+                                yield neverMind;
+                            }
+                        }
+                    };
+                    character = locationContext.getCharacter();
+                    location = locationContext.getLocation();
+                });
     }
 
     private void heal() {

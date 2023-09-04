@@ -940,36 +940,53 @@ public final class MockConstants {
     );
 
     // Items
+    public static final Map<String, FoodTemplate> FOODS = Map.of(
+            "WATER", FoodTemplate.builder()
+                    .code("WATER")
+                    .healingEffect(3)
+                    .magicEffect(0)
+                    .build(),
+            "BREAD", FoodTemplate.builder()
+                    .code("BREAD")
+                    .healingEffect(5)
+                    .magicEffect(0)
+                    .build(),
+            "FRUIT", FoodTemplate.builder()
+                    .code("FRUIT")
+                    .healingEffect(8)
+                    .magicEffect(2)
+                    .build(),
+            "MEAT", FoodTemplate.builder()
+                    .code("MEAT")
+                    .healingEffect(10)
+                    .magicEffect(1)
+                    .build(),
+            "HEALING_HERB", FoodTemplate.builder()
+                    .code("HEALING_HERB")
+                    .healingEffect(20)
+                    .magicEffect(10)
+                    .build()
+    );
     public static final Map<String, ItemTemplate> ITEMS = Map.ofEntries(
             Map.entry("WATER", ItemTemplate.builder()
                     .type(FOOD)
                     .code("WATER")
-                    .healingEffect(3)
-                    .magicEffect(0)
                     .build()),
             Map.entry("BREAD", ItemTemplate.builder()
                     .type(FOOD)
                     .code("BREAD")
-                    .healingEffect(5)
-                    .magicEffect(0)
                     .build()),
             Map.entry("FRUIT", ItemTemplate.builder()
                     .type(FOOD)
                     .code("FRUIT")
-                    .healingEffect(8)
-                    .magicEffect(2)
                     .build()),
             Map.entry("MEAT", ItemTemplate.builder()
                     .type(FOOD)
                     .code("MEAT")
-                    .healingEffect(10)
-                    .magicEffect(1)
                     .build()),
             Map.entry("HEALING_HERB", ItemTemplate.builder()
                     .type(FOOD)
                     .code("HEALING_HERB")
-                    .healingEffect(20)
-                    .magicEffect(10)
                     .build()),
             Map.entry("STAFF", ItemTemplate.builder()
                     .type(WEAPON)

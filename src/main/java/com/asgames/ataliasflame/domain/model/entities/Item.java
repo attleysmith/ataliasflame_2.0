@@ -1,18 +1,17 @@
 package com.asgames.ataliasflame.domain.model.entities;
 
 import com.asgames.ataliasflame.domain.model.enums.ItemType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.SuperBuilder;
 
 import static jakarta.persistence.EnumType.STRING;
+import static jakarta.persistence.InheritanceType.SINGLE_TABLE;
 
+@Inheritance(strategy = SINGLE_TABLE)
 @Entity
-@Builder
+@SuperBuilder
 @Data
 @AllArgsConstructor // Builder needs it
 public class Item {
@@ -29,8 +28,4 @@ public class Item {
     @Column(name = "type")
     @Enumerated(STRING)
     private ItemType type;
-    @Column(name = "healingEffect")
-    private int healingEffect;
-    @Column(name = "magicEffect")
-    private int magicEffect;
 }

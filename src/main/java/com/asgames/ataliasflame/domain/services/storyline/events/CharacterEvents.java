@@ -7,7 +7,6 @@ import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
 import com.asgames.ataliasflame.domain.services.storyline.EventType;
 
-import static com.asgames.ataliasflame.domain.model.enums.ItemType.FOOD;
 import static com.asgames.ataliasflame.domain.services.storyline.EventType.DEBUG;
 import static com.asgames.ataliasflame.domain.services.storyline.EventType.INFO;
 
@@ -48,7 +47,8 @@ public final class CharacterEvents {
         public String message() {
             return switch (cause) {
                 case INIT -> "Character initialized: " + character;
-                case LEVEL_UP -> "Leveling up -> " + character.getLevel() + " | Attribute points: " + character.getAttributePoints();
+                case LEVEL_UP ->
+                        "Leveling up -> " + character.getLevel() + " | Attribute points: " + character.getAttributePoints();
                 case WIN -> "You are the winner! Remaining health: " + character.getHealth().actualValue();
                 case DEFEAT -> "You are defeated!";
                 case TRAUMA -> "You died of trauma!";
@@ -115,23 +115,20 @@ public final class CharacterEvents {
     }
 
     public static class EatingEvent extends CharacterEvent {
-        private final Item item;
+        private final Food food;
 
-        private EatingEvent(Character character, Item item) {
+        private EatingEvent(Character character, Food food) {
             super(INFO, character);
-            if (item.getType() != FOOD) {
-                throw new IllegalArgumentException("Wrong item type in eating event! " + item.getType());
-            }
-            this.item = item;
+            this.food = food;
         }
 
-        public static EatingEvent eating(Character character, Item item) {
-            return new EatingEvent(character, item);
+        public static EatingEvent eating(Character character, Food food) {
+            return new EatingEvent(character, food);
         }
 
         @Override
         public String message() {
-            return "Eating/Drinking " + item.getCode();
+            return "Eating/Drinking " + food.getCode();
         }
     }
 

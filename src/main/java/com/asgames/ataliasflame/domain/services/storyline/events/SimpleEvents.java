@@ -48,7 +48,7 @@ public class SimpleEvents {
     public static class WarningEvent extends SimpleEvent {
 
         public enum WarningReportCause {
-            OCCUPIED_SOULS, UNSUCCESSFUL_SUMMON, UNNECESSARY_SPELL_ATTACK, UNNECESSARY_CURSE_ATTACK, WEAPON_SHIELD_MISMATCH, NO_ENEMY, DUPLICATED_BLESSING
+            OCCUPIED_SOULS, UNSUCCESSFUL_SUMMON, UNNECESSARY_SPELL_ATTACK, UNNECESSARY_CURSE_ATTACK, NO_ENEMY, DUPLICATED_BLESSING
         }
 
         private final WarningReportCause cause;
@@ -69,7 +69,6 @@ public class SimpleEvents {
                 case UNSUCCESSFUL_SUMMON -> "Summoning was unsuccessful!";
                 case UNNECESSARY_SPELL_ATTACK -> "Unnecessary use of attack spell!";
                 case UNNECESSARY_CURSE_ATTACK -> "Unnecessary use of curse spell!";
-                case WEAPON_SHIELD_MISMATCH -> "Shield cannot be used with a two-handed weapon!";
                 case NO_ENEMY -> "Combat without an enemy.";
                 case DUPLICATED_BLESSING -> "Blessing already used.";
                 default -> throw new UnsupportedOperationException("Unknown warning report cause!");

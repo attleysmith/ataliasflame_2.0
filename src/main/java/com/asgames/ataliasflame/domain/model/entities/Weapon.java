@@ -1,23 +1,22 @@
 package com.asgames.ataliasflame.domain.model.entities;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.SuperBuilder;
 
 @Entity
-@Builder
+@SuperBuilder
 @Data
+@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor // Builder needs it
-public class Weapon {
+public class Weapon extends Item {
 
     // JPA needs it
     public Weapon() {
     }
-
-    @Id
-    @Column(name = "reference")
-    private String reference;
-    @Column(name = "code")
-    private String code;
 
     @Column(name = "minDamage")
     private int minDamage;

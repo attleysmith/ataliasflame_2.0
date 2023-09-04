@@ -2,12 +2,12 @@ package com.asgames.ataliasflame.application;
 
 import com.asgames.ataliasflame.application.model.LocationContext;
 import com.asgames.ataliasflame.domain.model.entities.Character;
-import com.asgames.ataliasflame.domain.model.entities.Item;
-import com.asgames.ataliasflame.domain.model.entities.Location;
+import com.asgames.ataliasflame.domain.model.entities.*;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
 import com.asgames.ataliasflame.domain.services.InventoryService;
 import com.asgames.ataliasflame.domain.services.LocationService;
 import com.asgames.ataliasflame.infrastructure.repositories.CharacterRepository;
+import com.asgames.ataliasflame.infrastructure.repositories.ItemRepository;
 import com.asgames.ataliasflame.infrastructure.repositories.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +20,8 @@ public class CharacterLocationService {
     private CharacterRepository characterRepository;
     @Autowired
     private LocationRepository locationRepository;
+    @Autowired
+    private ItemRepository itemRepository;
 
     @Autowired
     private CharacterMaintenanceService characterMaintenanceService;
@@ -55,15 +57,39 @@ public class CharacterLocationService {
 
         Item item = location.getItems().stream()
                 .filter(locationItem -> locationItem.getReference().equals(itemReference))
-                .findFirst().orElseThrow(
-                        () -> new IllegalArgumentException("Referenced item is not at the location!"));
-
-        inventoryService.use(character, item);
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Referenced item is not at the location!"));
         location.getItems().remove(item);
+
+        switch (item.getType()) {
+            case FOOD -> {
+                inventoryService.eatFood(character, (Food) item);
+                itemRepository.delete(item);
+            }
+            case WEAPON -> inventoryService.takeWeapon(character, (Weapon) item);
+            case SHIELD -> inventoryService.takeShield(character, (Shield) item);
+            case ARMOR -> inventoryService.takeArmor(character, (Armor) item);
+            default -> throw new UnsupportedOperationException("Not supported item usage: " + item.getType());
+        }
 
         return LocationContext.builder()
                 .character(characterRepository.save(character))
                 .location(locationRepository.save(location))
                 .build();
+    }
+
+    @Transactional(readOnly = true)
+    public Weapon getWeapon(String itemReference) {
+        return itemRepository.getWeaponByReference(itemReference);
+    }
+
+    @Transactional(readOnly = true)
+    public Shield getShield(String itemReference) {
+        return itemRepository.getShieldByReference(itemReference);
+    }
+
+    @Transactional(readOnly = true)
+    public Armor getArmor(String itemReference) {
+        return itemRepository.getArmorByReference(itemReference);
     }
 }

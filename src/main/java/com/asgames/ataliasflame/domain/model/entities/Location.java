@@ -36,7 +36,7 @@ public class Location {
             joinColumns = @JoinColumn(name = "LocationId", referencedColumnName = "reference"),
             inverseJoinColumns = @JoinColumn(name = "ItemId", referencedColumnName = "reference")
     )
-    @OneToMany(cascade = ALL, fetch = EAGER, orphanRemoval = true)
+    @OneToMany(cascade = ALL, fetch = EAGER)
     private List<Item> items;
 
     public static Location build(int level) {

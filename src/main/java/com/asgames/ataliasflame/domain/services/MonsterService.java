@@ -28,6 +28,9 @@ public class MonsterService {
     @Autowired
     private StoryLineLogger storyLineLogger;
 
+    @Autowired
+    private InventoryService inventoryService;
+
     public List<Monster> populateMonsters(Location location) {
         List<Monster> monsters = new ArrayList<>();
         List<SelectionValue<MonsterTemplate>> monsterSelector = MONSTERS.values().stream()
@@ -57,7 +60,7 @@ public class MonsterService {
         }
         for (List<SelectionValue<Optional<ItemTemplate>>> dropGroup : dropGroups) {
             choose(dropGroup).ifPresent(drop -> {
-                Item item = drop.instance();
+                Item item = inventoryService.produce(drop);
                 monster.getLocation().getItems().add(item);
                 storyLineLogger.event(drop(monster, item));
             });

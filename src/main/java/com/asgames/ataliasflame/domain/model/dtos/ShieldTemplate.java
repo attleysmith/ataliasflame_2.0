@@ -7,6 +7,8 @@ import lombok.Data;
 
 import java.util.UUID;
 
+import static com.asgames.ataliasflame.domain.model.enums.ItemType.SHIELD;
+
 @Builder
 @Data
 public class ShieldTemplate {
@@ -20,6 +22,7 @@ public class ShieldTemplate {
         return Shield.builder()
                 .reference(UUID.randomUUID().toString())
                 .code(code)
+                .type(SHIELD)
                 .defense(defense)
                 .absorption(absorption)
                 .durability(Energy.withTotal(durability))

@@ -32,8 +32,11 @@ public class InventoryService {
     public void setStartingInventory(Character character) {
         takeWeapon(character, choose(STARTING_WEAPON_SELECTOR).instance());
 
-        choose(STARTING_SHIELD_SELECTOR).ifPresent(startingShield ->
-                takeShield(character, startingShield.instance()));
+        if (character.getWeapon().isOneHanded()) {
+            choose(STARTING_SHIELD_SELECTOR).ifPresent(startingShield ->
+                    takeShield(character, startingShield.instance()));
+        }
+
         choose(STARTING_ARMOR_SELECTOR).ifPresent(startingArmor ->
                 takeArmor(character, startingArmor.instance()));
     }

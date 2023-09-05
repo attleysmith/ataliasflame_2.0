@@ -20,7 +20,7 @@ public class SimpleEvents {
     public static class DebugEvent extends SimpleEvent {
 
         public enum DebugReportCause {
-            ELIMINATED_TEAM, DEAD_ATTACKER, COMBAT_START
+            ELIMINATED_TEAM, DEAD_ATTACKER, COMBAT_START, SLEEPING
         }
 
         private final DebugReportCause cause;
@@ -40,6 +40,7 @@ public class SimpleEvents {
                 case ELIMINATED_TEAM -> "Stop fighting. One of the teams is eliminated.";
                 case DEAD_ATTACKER -> "Skipping attack. Attacker is already dead.";
                 case COMBAT_START -> "Combat started.";
+                case SLEEPING -> "Sleeping.";
                 default -> throw new UnsupportedOperationException("Unknown debug report cause!");
             };
         }

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import static com.asgames.ataliasflame.domain.MockConstants.CASTE_DETAILS;
 import static com.asgames.ataliasflame.domain.model.enums.CasteGroup.WANDERER;
-import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.CharacterReportCause.TRAUMA;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.CharacterReportCause.DIED_OF_TRAUMA;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.characterReport;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.NewCasteEvent.newCaste;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SoulChipEvent.newSoulChip;
@@ -81,7 +81,7 @@ public class CasteService {
 
             storyLineLogger.event(newSoulChip(character, soulChip));
             if (character.isDead()) {
-                storyLineLogger.event(characterReport(character, TRAUMA));
+                storyLineLogger.event(characterReport(character, DIED_OF_TRAUMA));
             }
         }
     }

@@ -14,7 +14,7 @@ import java.util.Optional;
 import static com.asgames.ataliasflame.domain.model.enums.MagicType.BLESSING;
 import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.SOUL;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.BlessingEvent.blessing;
-import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.CharacterReportCause.BLESSING_EXPIRY;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.CharacterReportCause.DIED_OF_BLESSING_EXPIRY;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.characterReport;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasted;
 import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.WarningReportCause.DUPLICATED_BLESSING;
@@ -69,12 +69,11 @@ public class BlessingMagicService extends AbstractMagicService {
 
     private void enforceBlessingEffect(Character character, String blessing) {
         int originalHealth = character.getHealth().totalValue();
+        int originalMagic = character.getMagic().totalValue();
         character.getBlessings().add(blessing);
         characterCalculationService.recalculateProperties(character);
-        int blessedHealth = character.getHealth().totalValue();
-        if (blessedHealth > originalHealth) {
-            character.getHealth().replenish(blessedHealth - originalHealth);
-        }
+        character.getHealth().uplift(originalHealth);
+        character.getMagic().uplift(originalMagic);
         storyLineLogger.event(blessing(character, blessing));
     }
 
@@ -82,7 +81,7 @@ public class BlessingMagicService extends AbstractMagicService {
         character.setBlessings(null);
         characterCalculationService.recalculateProperties(character);
         if (character.getHealth().isEmpty()) {
-            storyLineLogger.event(characterReport(character, BLESSING_EXPIRY));
+            storyLineLogger.event(characterReport(character, DIED_OF_BLESSING_EXPIRY));
         }
     }
 }

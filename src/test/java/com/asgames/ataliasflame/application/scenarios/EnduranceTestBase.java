@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static com.asgames.ataliasflame.application.scenarios.Decisions.*;
 import static com.asgames.ataliasflame.domain.model.enums.ItemType.*;
 import static com.asgames.ataliasflame.domain.model.enums.MagicType.*;
 import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.SOUL;
@@ -31,7 +32,6 @@ public abstract class EnduranceTestBase {
 
     private static final int TOLERATED_INJURY_TO_HEAL = 80;
     private static final int TOLERATED_INJURY_TO_SLEEP = 40;
-    private static final int MAX_NUMBER_OF_COMPANIONS = 5;
     private static final int MIN_HEALTH_TO_CURSE = 20;
 
     @Autowired
@@ -94,55 +94,37 @@ public abstract class EnduranceTestBase {
     }
 
     private void summon() {
-        if (character.getCompanions().size() >= MAX_NUMBER_OF_COMPANIONS) {
+        if (noNeedToSummon(character)) {
             return;
         }
+        summonOrder(usableSpells.get(SUMMON))
+                .forEach(this::doSummon);
+    }
 
+    private void doSummon(Spell spell) {
         int previousNumberOfCompanions = -1;
-        int actualNumberOfCompanions = character.getCompanions().size();
-        while (previousNumberOfCompanions < actualNumberOfCompanions
-                && actualNumberOfCompanions < MAX_NUMBER_OF_COMPANIONS) {
-            previousNumberOfCompanions = actualNumberOfCompanions;
+        while (repeatSummon(character, previousNumberOfCompanions)) {
+            previousNumberOfCompanions = character.getCompanions().size();
 
-            usableSpells.get(SUMMON).stream()
-                    .sorted(comparing(Spell::getCost).reversed())
-                    .forEach(spell -> {
-                        if (character.getMagic().has(spell.getCost())) {
-                            character = characterMagicService.castSpell(character.getReference(), spell.getName());
-                        }
-                    });
-
-            actualNumberOfCompanions = character.getCompanions().size();
+            if (character.getMagic().has(spell.getCost())) {
+                character = characterMagicService.castSpell(character.getReference(), spell.getName());
+            }
         }
     }
 
     private void putOnBlessings() {
-        int maxNumberOfBlessings =
-                switch (location.getMonsters().size()) {
-                    case 1, 2 -> 1;
-                    case 3, 4 -> 2;
-                    case 5, 6 -> 3;
-                    case 7, 8 -> 4;
-                    default -> 5;
-                };
+        blessingOrder(usableSpells.get(BLESSING))
+                .forEach(this::doBlessing);
+    }
 
+    private void doBlessing(Spell spell) {
         int previousNumberOfBlessings = -1;
-        int actualNumberOfBlessings = character.getBlessings().size();
-        while (previousNumberOfBlessings < actualNumberOfBlessings
-                && actualNumberOfBlessings < maxNumberOfBlessings) {
-            previousNumberOfBlessings = actualNumberOfBlessings;
+        while (repeatBlessing(character, location.getMonsters(), spell, previousNumberOfBlessings)) {
+            previousNumberOfBlessings = character.getBlessings().size();
 
-            usableSpells.get(BLESSING).stream()
-                    .filter(spell -> character.getMagic().has(spell.getCost()))
-                    .sorted(comparing(Spell::getCost).reversed())
-                    .forEach(spell -> {
-                        if (character.getMagic().has(spell.getCost())
-                                && character.getBlessings().size() < maxNumberOfBlessings) {
-                            character = characterMagicService.castSpell(character.getReference(), spell.getName());
-                        }
-                    });
-
-            actualNumberOfBlessings = character.getBlessings().size();
+            if (character.getMagic().has(spell.getCost())) {
+                character = characterMagicService.castSpell(character.getReference(), spell.getName());
+            }
         }
     }
 

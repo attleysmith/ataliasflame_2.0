@@ -1,7 +1,7 @@
 #logging:
 #  file:
 #    name: storyline.log
-#    max-size: 200MB
+#    max-size: 300MB
 #  level:
 #    com.asgames.ataliasflame:
 #      domain.services:

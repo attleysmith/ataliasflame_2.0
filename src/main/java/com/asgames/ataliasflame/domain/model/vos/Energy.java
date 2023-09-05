@@ -107,4 +107,10 @@ public class Energy {
     public void replenish(int replenishValue) {
         usedEnergy = max(0, usedEnergy - replenishValue);
     }
+
+    public void uplift(int originalValue) {
+        if (totalEnergy > originalValue) {
+            replenish(totalEnergy - originalValue);
+        }
+    }
 }

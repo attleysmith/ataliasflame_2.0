@@ -29,7 +29,7 @@ public final class CharacterEvents {
     public static class CharacterReportEvent extends CharacterEvent {
 
         public enum CharacterReportCause {
-            INIT, LEVEL_UP, WIN, DEFEAT, TRAUMA, BLESSING_EXPIRY
+            INIT, LEVEL_UP, WIN, DIED_OF_DEFEAT, DIED_OF_TRAUMA, DIED_OF_BLESSING_EXPIRY
         }
 
         private final CharacterReportCause cause;
@@ -50,9 +50,9 @@ public final class CharacterEvents {
                 case LEVEL_UP ->
                         "Leveling up -> " + character.getLevel() + " | Attribute points: " + character.getAttributePoints();
                 case WIN -> "You are the winner! Remaining health: " + character.getHealth().actualValue();
-                case DEFEAT -> "You are defeated!";
-                case TRAUMA -> "You died of trauma!";
-                case BLESSING_EXPIRY -> "You died of an expired bless effect!";
+                case DIED_OF_DEFEAT -> "You are defeated!";
+                case DIED_OF_TRAUMA -> "You died of trauma!";
+                case DIED_OF_BLESSING_EXPIRY -> "You died of an expired bless effect!";
                 default -> throw new UnsupportedOperationException("Unknown character report cause!");
             };
         }
@@ -202,11 +202,12 @@ public final class CharacterEvents {
         @Override
         public String message() {
             String oldShieldCode = oldShield == null ? MISSING_ITEM : oldShield.getCode();
+            int oldDurability = oldShield == null ? 0 : oldShield.getDurability().actualValue();
             if (character.getShield().isPresent()) {
                 Shield shield = character.getShield().get();
-                return "Shield changed: " + oldShieldCode + " -> " + shield.getCode() + " (" + shield.getDurability().actualValue() + ")";
+                return "Shield changed: " + oldShieldCode + " (" + oldDurability + ") -> " + shield.getCode() + " (" + shield.getDurability().actualValue() + ")";
             } else {
-                return "Shield dropped: " + oldShieldCode;
+                return "Shield dropped: " + oldShieldCode + " (" + oldDurability + ")";
             }
         }
     }
@@ -226,11 +227,12 @@ public final class CharacterEvents {
         @Override
         public String message() {
             String oldArmorCode = oldArmor == null ? MISSING_ITEM : oldArmor.getCode();
+            int oldDurability = oldArmor == null ? 0 : oldArmor.getDurability().actualValue();
             if (character.getArmor().isPresent()) {
                 Armor armor = character.getArmor().get();
-                return "Armor changed: " + oldArmorCode + " -> " + armor.getCode() + " (" + armor.getDurability().actualValue() + ")";
+                return "Armor changed: " + oldArmorCode + " (" + oldDurability + ") -> " + armor.getCode() + " (" + armor.getDurability().actualValue() + ")";
             } else {
-                return "Armor dropped: " + oldArmorCode;
+                return "Armor dropped: " + oldArmorCode + " (" + oldDurability + ")";
             }
         }
     }

@@ -1,7 +1,9 @@
 package com.asgames.ataliasflame.domain.services.storyline.events;
 
+import com.asgames.ataliasflame.domain.model.entities.Armor;
 import com.asgames.ataliasflame.domain.model.entities.Item;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
+import com.asgames.ataliasflame.domain.model.entities.Shield;
 import com.asgames.ataliasflame.domain.services.storyline.EventType;
 
 import static com.asgames.ataliasflame.domain.services.storyline.EventType.DEBUG;
@@ -35,7 +37,18 @@ public final class MonsterEvents {
 
         @Override
         public String message() {
-            return monster.getCode() + " (" + monster.getReference() + ") dropped " + item.getCode();
+            String durabilitySuffix = switch (item.getType()) {
+                case SHIELD -> {
+                    Shield shield = (Shield) item;
+                    yield " (" + shield.getDurability().actualValue() + ")";
+                }
+                case ARMOR -> {
+                    Armor armor = (Armor) item;
+                    yield " (" + armor.getDurability().actualValue() + ")";
+                }
+                default -> "";
+            };
+            return monster.getCode() + " (" + monster.getReference() + ") dropped " + item.getCode() + durabilitySuffix;
         }
     }
 

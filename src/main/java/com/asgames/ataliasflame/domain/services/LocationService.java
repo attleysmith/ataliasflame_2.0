@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.CharacterReportCause.DEFEAT;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.CharacterReportCause.DIED_OF_DEFEAT;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.CharacterReportCause.WIN;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.characterReport;
 import static com.asgames.ataliasflame.domain.services.storyline.events.LocationEvents.MonstersAppearEvent.monstersAppear;
@@ -52,7 +52,7 @@ public class LocationService {
             experienceService.gainExperience(character, monsters);
             storyLineLogger.event(characterReport(character, WIN));
         } else {
-            storyLineLogger.event(characterReport(character, DEFEAT));
+            storyLineLogger.event(characterReport(character, DIED_OF_DEFEAT));
         }
     }
 }

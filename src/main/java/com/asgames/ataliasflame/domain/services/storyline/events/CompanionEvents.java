@@ -49,7 +49,8 @@ public final class CompanionEvents {
 
         @Override
         public String message() {
-            return "Healing companion (" + companion.getName() + "): " + oldHealth + " -> " + companion.getHealth().actualValue();
+            return "Healing " + companion.getName() + " (" + companion.getReference() + "): "
+                    + oldHealth + " -> " + companion.getHealth().actualValue();
         }
     }
 }

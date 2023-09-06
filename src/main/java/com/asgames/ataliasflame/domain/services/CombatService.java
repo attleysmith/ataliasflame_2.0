@@ -58,7 +58,7 @@ public class CombatService {
     private void teamCombat(List<TeamMember> team1, List<TeamMember> team2) {
         List<TeamMember> remainingTeam1 = new ArrayList<>(team1);
         List<TeamMember> remainingTeam2 = new ArrayList<>(team2);
-        while (remainingTeam1.size() > 0 && remainingTeam2.size() > 0) {
+        while (!remainingTeam1.isEmpty() && !remainingTeam2.isEmpty()) {
             List<TeamMember> combatOrder = getCombatOrder(union(remainingTeam1, remainingTeam2), true);
 
             for (TeamMember attacker : combatOrder) {

@@ -9,9 +9,7 @@ import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.*;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
-import com.asgames.ataliasflame.domain.model.enums.ItemType;
 import com.asgames.ataliasflame.domain.model.enums.MagicType;
-import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
 import org.junit.jupiter.api.AfterEach;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,18 +19,11 @@ import java.util.Map;
 import java.util.Optional;
 
 import static com.asgames.ataliasflame.application.scenarios.Decisions.*;
-import static com.asgames.ataliasflame.domain.model.enums.ItemType.*;
 import static com.asgames.ataliasflame.domain.model.enums.MagicType.*;
-import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.SOUL;
-import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 
 public abstract class EnduranceTestBase {
-
-    private static final int TOLERATED_INJURY_TO_HEAL = 80;
-    private static final int TOLERATED_INJURY_TO_SLEEP = 40;
-    private static final int MIN_HEALTH_TO_CURSE = 20;
 
     @Autowired
     protected CharacterMaintenanceService characterMaintenanceService;
@@ -85,9 +76,8 @@ public abstract class EnduranceTestBase {
             closeCombat();
             if (character.isAlive()) {
                 lootLocation();
-                heal();
+                castHealingMagic();
                 finishEncounter();
-                prepareToSummon();
                 sleep();
             }
         } while (character.isAlive() && character.getLevel() == actualLevel);
@@ -119,7 +109,7 @@ public abstract class EnduranceTestBase {
 
     private void doBlessing(Spell spell) {
         int previousNumberOfBlessings = -1;
-        while (repeatBlessing(character, location.getMonsters(), spell, previousNumberOfBlessings)) {
+        while (repeatBlessing(character, location, spell, previousNumberOfBlessings)) {
             previousNumberOfBlessings = character.getBlessings().size();
 
             if (character.getMagic().has(spell.getCost())) {
@@ -133,17 +123,12 @@ public abstract class EnduranceTestBase {
     }
 
     private void castAttackMagic() {
-        if (location.getMonsters().size() <= 1) {
+        if (noNeedToCastAttackMagic(location)) {
             return;
         }
-        location.getMonsters().stream()
-                .filter(Combatant::isAlive)
-                .sorted((monster1, monster2) -> {
-                    Integer monster1Health = monster1.getHealth().actualValue();
-                    Integer monster2Health = monster2.getHealth().actualValue();
-                    return monster2Health.compareTo(monster1Health);
-                })
+        targetMonsterOrder(location, ATTACK)
                 .forEach(this::castAttackMagic);
+
         location = locationAdventureService.getLocation(location.getReference());
     }
 
@@ -153,11 +138,8 @@ public abstract class EnduranceTestBase {
         boolean hasAvailableSoul = !listUnusedSouls().isEmpty();
         boolean tryToAttack = true;
         while (tryToAttack && targetMonster.isAlive()) {
-            Optional<Spell> attackSpell = usableSpells.get(ATTACK).stream()
-                    .filter(spell -> character.getMagic().has(spell.getCost()))
-                    .filter(spell -> hasAvailableSoul || !spell.getGroup().equals(SOUL))
-                    .max(comparing(Spell::averageDamage));
-            if (attackSpell.isPresent() && targetMonster.getHealth().actualValue() >= attackSpell.get().averageDamage()) {
+            Optional<Spell> attackSpell = chooseAttackSpell(usableSpells.get(ATTACK), character, hasAvailableSoul);
+            if (attackSpell.isPresent() && worthyTarget(targetMonster, attackSpell.get())) {
                 AttackContext attackContext = characterMagicService.castAttackSpell(character.getReference(), attackSpell.get().getName(), targetMonster.getReference());
 
                 character = attackContext.getCharacter();
@@ -169,25 +151,18 @@ public abstract class EnduranceTestBase {
     }
 
     private void castCurseMagic() {
-        location.getMonsters().stream()
-                .filter(monster -> monster.getHealth().has(MIN_HEALTH_TO_CURSE))
-                .sorted((monster1, monster2) -> {
-                    Integer monster1Health = monster1.getHealth().actualValue();
-                    Integer monster2Health = monster2.getHealth().actualValue();
-                    return monster2Health.compareTo(monster1Health);
-                })
+        targetMonsterOrder(location, CURSE)
                 .forEach(this::castCurseMagic);
+
         location = locationAdventureService.getLocation(location.getReference());
     }
 
     private void castCurseMagic(Monster monster) {
         boolean hasAvailableSoul = !listUnusedSouls().isEmpty();
-        usableSpells.get(CURSE).stream()
-                .filter(spell -> character.getMagic().has(spell.getCost()))
-                .filter(spell -> hasAvailableSoul || !spell.getGroup().equals(SOUL))
-                .max(comparing(Spell::getCost))
+        chooseCurseSpell(usableSpells.get(CURSE), character, hasAvailableSoul)
                 .ifPresent(spell -> {
                     AttackContext attackContext = characterMagicService.castAttackSpell(character.getReference(), spell.getName(), monster.getReference());
+
                     character = attackContext.getCharacter();
                 });
     }
@@ -199,15 +174,7 @@ public abstract class EnduranceTestBase {
     }
 
     private void lootLocation() {
-        Map<ItemType, Integer> lootingOrder = Map.of(
-                FOOD, 1,
-                WEAPON, 2,
-                SHIELD, 3,
-                ARMOR, 4
-        );
-
-        location.getItems().stream()
-                .sorted(comparing(item -> lootingOrder.getOrDefault(item.getType(), 0)))
+        lootingOrder(location)
                 .forEach(item -> {
                     LocationContext neverMind = LocationContext.builder().character(character).location(location).build();
                     LocationContext locationContext = switch (item.getType()) {
@@ -215,7 +182,7 @@ public abstract class EnduranceTestBase {
                                 characterLocationService.useItem(character.getReference(), location.getReference(), item.getReference());
                         case WEAPON -> {
                             Weapon newWeapon = characterLocationService.getWeapon(item.getReference());
-                            if (newWeapon.isBetterThan(character.getWeapon())) {
+                            if (needToChangeWeapon(character, newWeapon)) {
                                 yield characterLocationService.useItem(character.getReference(), location.getReference(), newWeapon.getReference());
                             } else {
                                 yield neverMind;
@@ -223,8 +190,7 @@ public abstract class EnduranceTestBase {
                         }
                         case SHIELD -> {
                             Shield newShield = characterLocationService.getShield(item.getReference());
-                            if (character.getWeapon().isOneHanded()
-                                    && (character.getShield().isEmpty() || newShield.isBetterThan(character.getShield().get()))) {
+                            if (needToChangeShield(character, newShield)) {
                                 yield characterLocationService.useItem(character.getReference(), location.getReference(), newShield.getReference());
                             } else {
                                 yield neverMind;
@@ -232,7 +198,7 @@ public abstract class EnduranceTestBase {
                         }
                         case ARMOR -> {
                             Armor newArmor = characterLocationService.getArmor(item.getReference());
-                            if (character.getArmor().isEmpty() || newArmor.isBetterThan(character.getArmor().get())) {
+                            if (needToChangeArmor(character, newArmor)) {
                                 yield characterLocationService.useItem(character.getReference(), location.getReference(), newArmor.getReference());
                             } else {
                                 yield neverMind;
@@ -244,17 +210,15 @@ public abstract class EnduranceTestBase {
                 });
     }
 
-    private void heal() {
+    private void castHealingMagic() {
         boolean hasAvailableSoul = !listUnusedSouls().isEmpty();
-        boolean readyToGo = character.getHealth().tolerateLoss(TOLERATED_INJURY_TO_HEAL);
+        boolean readyToGo = noNeedToCastHealingMagic(character);
         while (!readyToGo) {
-            Optional<Spell> healingSpell = usableSpells.get(HEALING).stream()
-                    .filter(spell -> character.getMagic().has(spell.getCost()))
-                    .filter(spell -> hasAvailableSoul || !spell.getGroup().equals(SOUL))
-                    .max(comparing(Spell::getHealingEffect));
+            Optional<Spell> healingSpell = chooseHealingSpell(usableSpells.get(HEALING), character, hasAvailableSoul);
             if (healingSpell.isPresent()) {
                 character = characterMagicService.castSpell(character.getReference(), healingSpell.get().getName());
-                readyToGo = character.getHealth().tolerateLoss(TOLERATED_INJURY_TO_HEAL);
+
+                readyToGo = noNeedToCastHealingMagic(character);
             } else {
                 readyToGo = true;
             }
@@ -265,20 +229,9 @@ public abstract class EnduranceTestBase {
         character = characterMagicService.removeBlessingMagic(character.getReference());
     }
 
-    private void prepareToSummon() {
-        if (!character.getCompanions().isEmpty()) {
-            return;
-        }
-        List<Spell> summoningSpells = usableSpells.get(SUMMON);
-        boolean hasSpell = !summoningSpells.isEmpty();
-        boolean lowMagic = summoningSpells.stream().noneMatch(spell -> character.getMagic().has(spell.getCost()));
-        if (hasSpell && lowMagic) {
-            character = characterAdventureService.sleep(character.getReference());
-        }
-    }
-
     private void sleep() {
-        if (character.getHealth().tolerateLoss(TOLERATED_INJURY_TO_SLEEP)) {
+        if (noNeedToPrepareToSummon(usableSpells.get(SUMMON), character)
+                && noNeedToRecover(character)) {
             return;
         }
         character = characterAdventureService.sleep(character.getReference());

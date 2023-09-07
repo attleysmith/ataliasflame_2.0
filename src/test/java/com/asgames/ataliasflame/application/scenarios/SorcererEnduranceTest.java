@@ -52,6 +52,12 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
             assertThat(character.getAttributePoints(), is(0));
 
         } while (character.isAlive() && character.getLevel() < 100);
+
+        // then do some more adventuring
+        for (int i = 0; i < 1000; i++) {
+            doCombat();
+            if (character.isDead()) break;
+        }
     }
 
     private void level1Upgrade() {

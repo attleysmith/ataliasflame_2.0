@@ -157,7 +157,7 @@ public final class Decisions {
         return usableSpells.stream()
                 .filter(spell -> character.getMagic().has(spell.getCost()))
                 .filter(spell -> hasAvailableSoul || !spell.getGroup().equals(SOUL))
-                .max(comparing(spell -> CURSE_PREFERENCES.getOrDefault(spell.getName(), 0)));
+                .min(comparing(spell -> CURSE_PREFERENCES.getOrDefault(spell.getName(), 0)));
     }
 
     public static Optional<Spell> chooseHealingSpell(List<Spell> usableSpells, Character character, boolean hasAvailableSoul) {

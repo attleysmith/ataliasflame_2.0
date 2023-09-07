@@ -63,23 +63,26 @@ public abstract class EnduranceTestBase {
         refreshUsableSpells();
     }
 
+    protected void doCombat() {
+        summon();
+        enterLocation();
+        putOnBlessings();
+        castAttackMagic();
+        castCurseMagic();
+        closeCombat();
+        if (character.isAlive()) {
+            lootLocation();
+            castHealingMagic();
+            finishEncounter();
+            sleep();
+        }
+    }
 
     protected void combatUntilNextLevel() {
         int actualLevel = character.getLevel();
 
         do {
-            summon();
-            enterLocation();
-            putOnBlessings();
-            castAttackMagic();
-            castCurseMagic();
-            closeCombat();
-            if (character.isAlive()) {
-                lootLocation();
-                castHealingMagic();
-                finishEncounter();
-                sleep();
-            }
+            doCombat();
         } while (character.isAlive() && character.getLevel() == actualLevel);
     }
 

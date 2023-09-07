@@ -1112,7 +1112,7 @@ public final class MockConstants {
                     .name(SOUL_OUTBURST)
                     .type(ATTACK)
                     .group(SOUL)
-                    .cost(25)
+                    .cost(16)
                     .minDamage(15)
                     .maxDamage(30)
                     .prohibitedCastes(List.of())
@@ -1189,7 +1189,7 @@ public final class MockConstants {
                     .type(HEALING)
                     .group(DIVINE)
                     .cost(7)
-                    .healingEffect(15)
+                    .healingEffect(18)
                     .prohibitedCastes(List.of(MONK))
                     .prohibitedRaces(List.of())
                     .build()),
@@ -1259,7 +1259,7 @@ public final class MockConstants {
                     .name(SOUL_CONNECTION)
                     .type(BLESSING)
                     .group(SOUL)
-                    .cost(10)
+                    .cost(5)
                     .prohibitedCastes(List.of(RANGER, PILGRIM))
                     .prohibitedRaces(List.of())
                     .build()),
@@ -1283,7 +1283,7 @@ public final class MockConstants {
                     .name(SOUL_STRIKE)
                     .type(CURSE)
                     .group(SOUL)
-                    .cost(15)
+                    .cost(10)
                     .prohibitedCastes(List.of(RANGER))
                     .prohibitedRaces(List.of())
                     .build()),
@@ -1323,7 +1323,7 @@ public final class MockConstants {
                     .name(CALLING_THE_SOULS)
                     .type(SUMMON)
                     .group(SOUL)
-                    .cost(25)
+                    .cost(18)
                     .prohibitedCastes(List.of())
                     .prohibitedRaces(List.of())
                     .build()),
@@ -1339,7 +1339,7 @@ public final class MockConstants {
                     .name(SUMMON_GUARDIAN)
                     .type(SUMMON)
                     .group(GENERAL)
-                    .cost(20)
+                    .cost(15)
                     .prohibitedCastes(List.of(WIZARD, FIGHTER, PALADIN, TRACKER, RANGER, PILGRIM, HERMIT, DRUID, MONK, PRIEST))
                     .prohibitedRaces(List.of(ORC))
                     .build()),
@@ -1594,6 +1594,9 @@ public final class MockConstants {
     public static final int SOUL_CHIP_INITIATIVE = -1;
 
     // Summonings
+    //// Energy
+    public static final int ENERGY_PROJECTION_PERCENT = 50;
+
     //// Animals
     public static final Map<String, CompanionTemplate> ANIMALS = Map.of(
             "TAMED_FALCON", CompanionTemplate.builder()
@@ -1684,9 +1687,6 @@ public final class MockConstants {
             new SelectionValue<>(35, Optional.of(GUARDIAN_WARRIORS.get("MILITIA"))),
             new SelectionValue<>(15, Optional.of(GUARDIAN_WARRIORS.get("SWORDSMAN")))
     );
-
-    //// Energy
-    public static final int ENERGY_PROJECTION_PERCENT = 50;
 
     //// Divine guardians
     public static final Map<String, CompanionTemplate> DIVINE_GUARDIANS = Map.of(

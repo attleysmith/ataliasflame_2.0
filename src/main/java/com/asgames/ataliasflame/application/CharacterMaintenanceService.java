@@ -59,14 +59,14 @@ public class CharacterMaintenanceService {
     @Transactional
     public Character addAttributePoints(String characterReference, Attribute attribute, int points) {
         Character character = getCharacter(characterReference);
-        character = attributeService.addAttributePoints(character, attribute, points);
+        attributeService.addAttributePoints(character, attribute, points);
         return characterRepository.save(character);
     }
 
     @Transactional
     public Character upgradeCaste(String characterReference, Caste newCaste) {
         Character character = getCharacter(characterReference);
-        character = casteService.upgradeCaste(character, newCaste);
+        casteService.upgradeCaste(character, newCaste);
         return characterRepository.save(character);
     }
 

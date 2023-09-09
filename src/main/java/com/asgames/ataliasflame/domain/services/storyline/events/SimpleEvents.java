@@ -5,7 +5,7 @@ import com.asgames.ataliasflame.domain.services.storyline.EventType;
 import static com.asgames.ataliasflame.domain.services.storyline.EventType.DEBUG;
 import static com.asgames.ataliasflame.domain.services.storyline.EventType.WARN;
 
-public class SimpleEvents {
+public final class SimpleEvents {
 
     private SimpleEvents() {
     }

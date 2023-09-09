@@ -43,7 +43,8 @@ class AttributeServiceTest {
                 .defensiveGod(ALATE)
                 .name("Hugo")
                 .build();
-        character = addDagger(characterMaintenanceService.createCharacter(characterInput));
+        character = characterMaintenanceService.createCharacter(characterInput);
+        addDagger();
 
         // and
         character.setAttributePoints(4);
@@ -218,12 +219,12 @@ class AttributeServiceTest {
                 () -> attributeService.addAttributePoints(character, STRENGTH, 1));
     }
 
-    private Character addDagger(Character character) {
+    private void addDagger() {
         WEAPONS.get("DAGGER").instance().belongsTo(character);
         character.setArmor(null);
         character.setShield(null);
 
-        return characterCalculationService.recalculateProperties(character);
+        characterCalculationService.recalculateProperties(character);
     }
 
 }

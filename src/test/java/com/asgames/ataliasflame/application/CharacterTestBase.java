@@ -49,8 +49,7 @@ public abstract class CharacterTestBase {
         character.getAttributes().put(MENTAL_POWER, targetAttributes.get(MENTAL_POWER));
         character.getAttributes().put(SPIRITUAL_POWER, targetAttributes.get(SPIRITUAL_POWER));
 
-        characterRepository.save(
-                characterCalculationService.recalculateProperties(character)
-        );
+        characterCalculationService.recalculateProperties(character);
+        characterRepository.save(character);
     }
 }

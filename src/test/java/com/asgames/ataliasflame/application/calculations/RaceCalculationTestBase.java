@@ -13,8 +13,7 @@ public abstract class RaceCalculationTestBase extends CharacterTestBase {
         character.setShield(null);
         character.setArmor(null);
 
-        characterRepository.save(
-                characterCalculationService.recalculateProperties(character)
-        );
+        characterCalculationService.recalculateProperties(character);
+        characterRepository.save(character);
     }
 }

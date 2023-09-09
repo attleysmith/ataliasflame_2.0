@@ -14,7 +14,7 @@ import static com.asgames.ataliasflame.domain.model.enums.CasteGroup.WANDERER;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.CharacterReportCause.DIED_OF_TRAUMA;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.characterReport;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.NewCasteEvent.newCaste;
-import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SoulChipEvent.newSoulChip;
+import static com.asgames.ataliasflame.domain.services.storyline.events.SoulChipEvents.NewSoulChipEvent.newSoulChip;
 import static com.asgames.ataliasflame.domain.utils.DiceUtils.roll100;
 
 @Service
@@ -25,8 +25,10 @@ public class CasteService {
 
     @Autowired
     private CharacterCalculationService characterCalculationService;
+    @Autowired
+    private SoulChipService soulChipService;
 
-    public Character upgradeCaste(Character character, Caste newCaste) {
+    public void upgradeCaste(Character character, Caste newCaste) {
         validateConstraints(character, newCaste);
         validateAvailability(character, newCaste);
         validateAttributes(character, newCaste);
@@ -37,7 +39,7 @@ public class CasteService {
         character.setCaste(newCaste);
         storyLineLogger.event(newCaste(character, oldCaste));
 
-        return characterCalculationService.recalculateProperties(character);
+        characterCalculationService.recalculateProperties(character);
     }
 
     private void validateConstraints(Character character, Caste newCaste) {
@@ -75,11 +77,11 @@ public class CasteService {
         if (casteDetails.getGroup().equals(WANDERER)) {
             int percent = roll100();
 
-            SoulChip soulChip = SoulChipFactory.getSoulChip(character, percent);
+            SoulChip soulChip = soulChipService.getSoulChip(character, percent);
             character.getHealth().trauma(percent);
             character.getSoulChips().add(soulChip);
 
-            storyLineLogger.event(newSoulChip(character, soulChip));
+            storyLineLogger.event(newSoulChip(soulChip));
             if (character.isDead()) {
                 storyLineLogger.event(characterReport(character, DIED_OF_TRAUMA));
             }

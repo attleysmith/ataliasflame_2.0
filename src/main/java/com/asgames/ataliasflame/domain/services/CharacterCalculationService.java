@@ -19,7 +19,7 @@ import static java.util.stream.Collectors.toList;
 @Service
 public class CharacterCalculationService {
 
-    public Character recalculateProperties(Character character) {
+    public void recalculateProperties(Character character) {
         recalculateAttack(character);
         recalculateDefense(character);
         recalculateDamage(character);
@@ -29,8 +29,6 @@ public class CharacterCalculationService {
         character.setMinDamage(calculate(character.getWeapon().getMinDamage(), character.getDamageMultiplier()));
         character.setMaxDamage(calculate(character.getWeapon().getMaxDamage(), character.getDamageMultiplier()));
         character.setInitiative(character.getWeapon().getInitiative());
-
-        return character;
     }
 
     private void recalculateAttack(Character character) {

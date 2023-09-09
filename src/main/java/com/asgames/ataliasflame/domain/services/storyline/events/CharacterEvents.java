@@ -272,22 +272,4 @@ public final class CharacterEvents {
             return blessing + " blessing activated.";
         }
     }
-
-    public static class SoulChipEvent extends CharacterEvent {
-        private final SoulChip soulChip;
-
-        private SoulChipEvent(Character character, SoulChip soulChip) {
-            super(INFO, character);
-            this.soulChip = soulChip;
-        }
-
-        public static SoulChipEvent newSoulChip(Character character, SoulChip soulChip) {
-            return new SoulChipEvent(character, soulChip);
-        }
-
-        @Override
-        public String message() {
-            return "Ripping out a soul chip (" + soulChip.getUpgradePercent() + "%) -> " + soulChip.getName();
-        }
-    }
 }

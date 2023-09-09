@@ -3,16 +3,24 @@ package com.asgames.ataliasflame.domain.services;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.SoulChip;
 import com.asgames.ataliasflame.domain.model.enums.SoulChipShape;
+import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
 import static com.asgames.ataliasflame.domain.MockConstants.*;
 import static com.asgames.ataliasflame.domain.model.enums.SoulChipShape.valueByOrder;
+import static com.asgames.ataliasflame.domain.services.storyline.events.SoulChipEvents.SoulChipUpgradeEvent.soulChipUpgrade;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.percent;
 
-public class SoulChipFactory {
+@Service
+public class SoulChipService {
 
-    public static SoulChip getSoulChip(Character character, int percent) {
+    @Autowired
+    private StoryLineLogger storyLineLogger;
+
+    public SoulChip getSoulChip(Character character, int percent) {
         SoulChipShape shape = valueByOrder(character.getSoulChips().size());
         return SoulChip.builder()
                 .owner(character)
@@ -28,5 +36,13 @@ public class SoulChipFactory {
                 .upgradedCaste(character.getCaste())
                 .upgradePercent(percent)
                 .build();
+    }
+
+    public void upgradeSoulChips(Character character) {
+        character.getSoulChips().forEach(soulChip -> {
+            int oldHealth = soulChip.getHealth();
+            soulChip.setHealth(percent(character.getHealth().totalValue(), soulChip.getUpgradePercent()));
+            storyLineLogger.event(soulChipUpgrade(soulChip, oldHealth));
+        });
     }
 }

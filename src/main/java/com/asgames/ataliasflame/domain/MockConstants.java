@@ -1226,7 +1226,6 @@ public final class MockConstants {
                     .group(GENERAL)
                     .cost(15)
                     .healingEffect(20)
-                    .area(true)
                     .prohibitedCastes(List.of(WIZARD, FIGHTER, PALADIN, TRACKER, RANGER, HERMIT, DRUID))
                     .prohibitedRaces(List.of(ORC))
                     .build()),

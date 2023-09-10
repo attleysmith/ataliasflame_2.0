@@ -17,7 +17,6 @@ public class Spell {
     private final int minDamage;
     private final int maxDamage;
     private final int healingEffect;
-    private final boolean area;
 
     private final List<Caste> prohibitedCastes;
     private final List<Race> prohibitedRaces;

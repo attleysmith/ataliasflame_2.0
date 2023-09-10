@@ -12,6 +12,10 @@ import static java.util.stream.Collectors.toList;
 @Service
 public class SpellService {
 
+    public boolean unknownSpell(Character character, Spell spell) {
+        return !listSpells(character).contains(spell);
+    }
+
     public List<Spell> listSpells(Character character) {
         return SPELLS.values().stream()
                 .filter(spell -> !spell.getProhibitedCastes().contains(character.getCaste()))

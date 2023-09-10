@@ -20,7 +20,7 @@ public final class SimpleEvents {
     public static class DebugEvent extends SimpleEvent {
 
         public enum DebugReportCause {
-            ELIMINATED_TEAM, DEAD_ATTACKER, COMBAT_START, SLEEPING
+            ELIMINATED_TEAM, DEAD_ATTACKER, COMBAT_START, SLEEPING, NO_ANIMAL_APPEARED, NO_GUARDIAN_WARRIOR_APPEARED, NO_DIVINE_GUARDIAN_APPEARED
         }
 
         private final DebugReportCause cause;
@@ -41,6 +41,9 @@ public final class SimpleEvents {
                 case DEAD_ATTACKER -> "Skipping attack. Attacker is already dead.";
                 case COMBAT_START -> "Combat started.";
                 case SLEEPING -> "Sleeping.";
+                case NO_ANIMAL_APPEARED -> "Animals didn't answer the call.";
+                case NO_GUARDIAN_WARRIOR_APPEARED -> "No guardian warrior appeared.";
+                case NO_DIVINE_GUARDIAN_APPEARED -> "None of the divine guardians appeared.";
                 default -> throw new UnsupportedOperationException("Unknown debug report cause!");
             };
         }

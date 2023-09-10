@@ -40,9 +40,12 @@ public class CharacterMagicService {
         Character character = characterMaintenanceService.getCharacter(characterReference);
         Spell spell = SPELLS.get(spellName);
         if (spell == null) {
-            throw new IllegalStateException("Unknown spell: " + spellName);
+            throw new IllegalStateException("Spell not recognized: " + spellName);
         }
-        magicService.castSpell(character, spell);
+        if (spellService.unknownSpell(character, spell)) {
+            throw new IllegalArgumentException("The character is not familiar with the spell!");
+        }
+        magicService.castSpell(character, spell, null);
         return characterRepository.save(character);
     }
 
@@ -51,10 +54,13 @@ public class CharacterMagicService {
         Character character = characterMaintenanceService.getCharacter(characterReference);
         Spell spell = SPELLS.get(spellName);
         if (spell == null) {
-            throw new IllegalStateException("Unknown spell: " + spellName);
+            throw new IllegalStateException("Spell not recognized: " + spellName);
+        }
+        if (spellService.unknownSpell(character, spell)) {
+            throw new IllegalArgumentException("The character is not familiar with the spell!");
         }
         Monster monster = locationAdventureService.getMonster(monsterReference);
-        magicService.castAttackSpell(character, spell, monster);
+        magicService.castSpell(character, spell, monster);
 
         return AttackContext.builder()
                 .character(characterRepository.save(character))

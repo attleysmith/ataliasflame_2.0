@@ -52,7 +52,7 @@ public final class SimpleEvents {
     public static class WarningEvent extends SimpleEvent {
 
         public enum WarningReportCause {
-            OCCUPIED_SOULS, UNSUCCESSFUL_SUMMON, UNNECESSARY_SPELL_ATTACK, UNNECESSARY_CURSE_ATTACK, NO_ENEMY, DUPLICATED_BLESSING
+            OCCUPIED_SOULS, UNSUCCESSFUL_SUMMON, UNNECESSARY_CURSE_ATTACK, NO_ENEMY, DUPLICATED_BLESSING
         }
 
         private final WarningReportCause cause;
@@ -71,7 +71,6 @@ public final class SimpleEvents {
             return switch (cause) {
                 case OCCUPIED_SOULS -> "Soul chips are occupied!";
                 case UNSUCCESSFUL_SUMMON -> "Summoning was unsuccessful!";
-                case UNNECESSARY_SPELL_ATTACK -> "Unnecessary use of attack spell!";
                 case UNNECESSARY_CURSE_ATTACK -> "Unnecessary use of curse spell!";
                 case NO_ENEMY -> "Combat without an enemy.";
                 case DUPLICATED_BLESSING -> "Blessing already used.";

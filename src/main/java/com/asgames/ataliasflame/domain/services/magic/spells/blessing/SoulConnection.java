@@ -33,7 +33,7 @@ public class SoulConnection extends SpellEffect {
     }
 
     @Override
-    public void enforce(Character character, @Nullable Monster monster) {
+    public void enforce(Character character, @Nullable Monster targetMonster) {
         List<SoulChip> unusedSouls = listUnusedSouls(character);
         if (unusedSouls.isEmpty()) {
             storyLineLogger.event(warningReport(OCCUPIED_SOULS));

@@ -149,6 +149,14 @@ public final class MockConstants {
             .magicPoint(0)
             .build();
 
+    public static final Modifier INTIMIDATION_MODIFIER = Modifier.builder()
+            .attackMultiplier(-30)
+            .defenseMultiplier(-20)
+            .damageMultiplier(0)
+            .healthMultiplier(0)
+            .magicPoint(0)
+            .build();
+
     public static final Map<String, Modifier> MODIFIERS = Map.ofEntries(
             Map.entry(STRENGTH.name(), STRENGTH_MODIFIER),
             Map.entry(DEXTERITY.name(), DEXTERITY_MODIFIER),
@@ -162,7 +170,8 @@ public final class MockConstants {
             Map.entry(WEAKENING.name(), WEAKENING_MODIFIER),
             Map.entry(SHACKLE.name(), SHACKLE_MODIFIER),
             Map.entry(ENERGY_BLOCKING.name(), ENERGY_BLOCKING_MODIFIER),
-            Map.entry(POWER_DRAIN.name(), POWER_DRAIN_MODIFIER)
+            Map.entry(POWER_DRAIN.name(), POWER_DRAIN_MODIFIER),
+            Map.entry("INTIMIDATION", INTIMIDATION_MODIFIER)
     );
 
     // Attribute boosters
@@ -1055,8 +1064,6 @@ public final class MockConstants {
                     .cost(10)
                     .minDamage(2)
                     .maxDamage(12)
-                    .prohibitedCastes(List.of(FIGHTER, TRACKER, HERMIT, MONK))
-                    .prohibitedRaces(List.of())
                     .build()),
             Map.entry(LIGHTNING_STRIKE, Spell.builder()
                     .name(LIGHTNING_STRIKE)
@@ -1065,8 +1072,6 @@ public final class MockConstants {
                     .cost(10)
                     .minDamage(1)
                     .maxDamage(15)
-                    .prohibitedCastes(List.of(WIZARD, FIGHTER, PALADIN, TRACKER, RANGER, HERMIT, DRUID, MONK, PRIEST))
-                    .prohibitedRaces(List.of())
                     .build()),
             Map.entry(INFERNO, Spell.builder()
                     .name(INFERNO)
@@ -1075,8 +1080,6 @@ public final class MockConstants {
                     .cost(20)
                     .minDamage(12)
                     .maxDamage(28)
-                    .prohibitedCastes(List.of(WIZARD, MAGE, FIGHTER, PALADIN, GRANDMASTER, TITAN, TRACKER, RANGER, PILGRIM, HERMIT, DRUID, ARCHDRUID, MONK, PRIEST, HIERARCH))
-                    .prohibitedRaces(List.of())
                     .build()),
             Map.entry(BLADES_OF_JUDGEMENT, Spell.builder()
                     .name(BLADES_OF_JUDGEMENT)
@@ -1085,8 +1088,6 @@ public final class MockConstants {
                     .cost(25)
                     .minDamage(10)
                     .maxDamage(30)
-                    .prohibitedCastes(List.of(WIZARD, MAGE, WITCHMASTER, FIGHTER, PALADIN, TRACKER, RANGER, PILGRIM, HERMIT, DRUID, ARCHDRUID, ATALIAS_PRIEST, MONK, PRIEST))
-                    .prohibitedRaces(List.of(HALFLING))
                     .build()),
             Map.entry(GLACIAL_BLOW, Spell.builder()
                     .name(GLACIAL_BLOW)
@@ -1095,8 +1096,6 @@ public final class MockConstants {
                     .cost(18)
                     .minDamage(10)
                     .maxDamage(25)
-                    .prohibitedCastes(List.of(WIZARD, FIGHTER, PALADIN, GRANDMASTER, TITAN, TRACKER, RANGER, PILGRIM, FREE_SOUL, HERMIT, DRUID, MONK, PRIEST, HIERARCH))
-                    .prohibitedRaces(List.of())
                     .build()),
             Map.entry(BALL_OF_ENERGY, Spell.builder()
                     .name(BALL_OF_ENERGY)
@@ -1105,8 +1104,6 @@ public final class MockConstants {
                     .cost(3)
                     .minDamage(1)
                     .maxDamage(5)
-                    .prohibitedCastes(List.of(FIGHTER, HERMIT, MONK))
-                    .prohibitedRaces(List.of())
                     .build()),
             Map.entry(SOUL_OUTBURST, Spell.builder()
                     .name(SOUL_OUTBURST)
@@ -1115,8 +1112,6 @@ public final class MockConstants {
                     .cost(16)
                     .minDamage(15)
                     .maxDamage(30)
-                    .prohibitedCastes(List.of())
-                    .prohibitedRaces(List.of())
                     .build()),
             Map.entry(WRATH_OF_NATURE, Spell.builder()
                     .name(WRATH_OF_NATURE)
@@ -1125,8 +1120,6 @@ public final class MockConstants {
                     .cost(12)
                     .minDamage(5)
                     .maxDamage(20)
-                    .prohibitedCastes(List.of(WIZARD, MAGE, WITCHMASTER, FIGHTER, PALADIN, GRANDMASTER, TITAN, TRACKER, RANGER, PILGRIM, HERMIT, DRUID, MONK, PRIEST, HIERARCH))
-                    .prohibitedRaces(List.of())
                     .build()),
             Map.entry(SPLITTING_WIND, Spell.builder()
                     .name(SPLITTING_WIND)
@@ -1135,8 +1128,6 @@ public final class MockConstants {
                     .cost(8)
                     .minDamage(1)
                     .maxDamage(10)
-                    .prohibitedCastes(List.of(FIGHTER, PALADIN, GRANDMASTER, TRACKER, RANGER, HERMIT, MONK))
-                    .prohibitedRaces(List.of())
                     .build()),
             Map.entry(DIVINE_HAMMER, Spell.builder()
                     .name(DIVINE_HAMMER)
@@ -1145,8 +1136,6 @@ public final class MockConstants {
                     .cost(10)
                     .minDamage(6)
                     .maxDamage(18)
-                    .prohibitedCastes(List.of(MONK))
-                    .prohibitedRaces(List.of(HALFLING))
                     .build()),
             Map.entry(WOUND_HEALING, Spell.builder()
                     .name(WOUND_HEALING)
@@ -1154,8 +1143,6 @@ public final class MockConstants {
                     .group(GENERAL)
                     .cost(1)
                     .healingEffect(1)
-                    .prohibitedCastes(List.of())
-                    .prohibitedRaces(List.of())
                     .build()),
             Map.entry(HEALING_WORD, Spell.builder()
                     .name(HEALING_WORD)
@@ -1163,8 +1150,6 @@ public final class MockConstants {
                     .group(DIVINE)
                     .cost(5)
                     .healingEffect(12)
-                    .prohibitedCastes(List.of(AVATAR))
-                    .prohibitedRaces(List.of())
                     .build()),
             Map.entry(CURE, Spell.builder()
                     .name(CURE)
@@ -1172,8 +1157,6 @@ public final class MockConstants {
                     .group(GENERAL)
                     .cost(5)
                     .healingEffect(8)
-                    .prohibitedCastes(List.of(WIZARD, FIGHTER, TRACKER, RANGER, HERMIT, MONK))
-                    .prohibitedRaces(List.of())
                     .build()),
             Map.entry(REGENERATION, Spell.builder()
                     .name(REGENERATION)
@@ -1181,8 +1164,6 @@ public final class MockConstants {
                     .group(GENERAL)
                     .cost(10)
                     .healingEffect(30)
-                    .prohibitedCastes(List.of(FIGHTER, TRACKER, MONK))
-                    .prohibitedRaces(List.of())
                     .build()),
             Map.entry(BREATH_OF_GOD, Spell.builder()
                     .name(BREATH_OF_GOD)
@@ -1190,8 +1171,6 @@ public final class MockConstants {
                     .group(DIVINE)
                     .cost(7)
                     .healingEffect(18)
-                    .prohibitedCastes(List.of(MONK))
-                    .prohibitedRaces(List.of())
                     .build()),
             Map.entry(POWER_OF_NATURE, Spell.builder()
                     .name(POWER_OF_NATURE)
@@ -1199,8 +1178,6 @@ public final class MockConstants {
                     .group(NATURE)
                     .cost(5)
                     .healingEffect(10)
-                    .prohibitedCastes(List.of(WIZARD, MAGE, FIGHTER, PALADIN, GRANDMASTER, TITAN, MONK))
-                    .prohibitedRaces(List.of())
                     .build()),
             Map.entry(SOUL_POWER, Spell.builder()
                     .name(SOUL_POWER)
@@ -1208,8 +1185,6 @@ public final class MockConstants {
                     .group(SOUL)
                     .cost(10)
                     .healingEffect(40)
-                    .prohibitedCastes(List.of())
-                    .prohibitedRaces(List.of())
                     .build()),
             Map.entry(RECHARGING, Spell.builder()
                     .name(RECHARGING)
@@ -1217,8 +1192,6 @@ public final class MockConstants {
                     .group(ENERGY)
                     .cost(8)
                     .healingEffect(20)
-                    .prohibitedCastes(List.of(WIZARD, FIGHTER, PALADIN, HERMIT, MONK, PRIEST))
-                    .prohibitedRaces(List.of())
                     .build()),
             Map.entry(HEALING_WAVE, Spell.builder()
                     .name(HEALING_WAVE)
@@ -1226,8 +1199,6 @@ public final class MockConstants {
                     .group(GENERAL)
                     .cost(15)
                     .healingEffect(20)
-                    .prohibitedCastes(List.of(WIZARD, FIGHTER, PALADIN, TRACKER, RANGER, HERMIT, DRUID))
-                    .prohibitedRaces(List.of(ORC))
                     .build()),
             Map.entry(ENERGY_ABSORPTION, Spell.builder()
                     .name(ENERGY_ABSORPTION)
@@ -1235,128 +1206,96 @@ public final class MockConstants {
                     .group(ENERGY)
                     .cost(10)
                     .healingEffect(28)
-                    .prohibitedCastes(List.of(WIZARD, MAGE, FIGHTER, PALADIN, GRANDMASTER, HERMIT, DRUID, MONK, PRIEST, HIERARCH, ARCHANGEL))
-                    .prohibitedRaces(List.of())
                     .build()),
             Map.entry(DIVINE_PROTECTION, Spell.builder()
                     .name(DIVINE_PROTECTION)
                     .type(BLESSING)
                     .group(DIVINE)
                     .cost(10)
-                    .prohibitedCastes(List.of())
-                    .prohibitedRaces(List.of())
                     .build()),
             Map.entry(STRENGTHENING, Spell.builder()
                     .name(STRENGTHENING)
                     .type(BLESSING)
                     .group(GENERAL)
                     .cost(5)
-                    .prohibitedCastes(List.of(WIZARD, TRACKER, RANGER, HERMIT, DRUID, ARCHDRUID, MONK))
-                    .prohibitedRaces(List.of())
                     .build()),
             Map.entry(SOUL_CONNECTION, Spell.builder()
                     .name(SOUL_CONNECTION)
                     .type(BLESSING)
                     .group(SOUL)
                     .cost(5)
-                    .prohibitedCastes(List.of(RANGER, PILGRIM))
-                    .prohibitedRaces(List.of())
                     .build()),
             Map.entry(PROTECTIVE_HAND_OF_NATURE, Spell.builder()
                     .name(PROTECTIVE_HAND_OF_NATURE)
                     .type(BLESSING)
                     .group(NATURE)
                     .cost(5)
-                    .prohibitedCastes(List.of(WIZARD, MAGE, WITCHMASTER, AVATAR, FIGHTER, PALADIN, GRANDMASTER, TITAN, TRACKER, MONK, PRIEST))
-                    .prohibitedRaces(List.of())
                     .build()),
             Map.entry(ENERGY_SHIELD, Spell.builder()
                     .name(ENERGY_SHIELD)
                     .type(BLESSING)
                     .group(ENERGY)
                     .cost(8)
-                    .prohibitedCastes(List.of(HERMIT, MONK))
-                    .prohibitedRaces(List.of())
                     .build()),
             Map.entry(SOUL_STRIKE, Spell.builder()
                     .name(SOUL_STRIKE)
                     .type(CURSE)
                     .group(SOUL)
                     .cost(10)
-                    .prohibitedCastes(List.of(RANGER))
-                    .prohibitedRaces(List.of())
                     .build()),
             Map.entry(WEAKENING, Spell.builder()
                     .name(WEAKENING)
                     .type(CURSE)
                     .group(GENERAL)
                     .cost(5)
-                    .prohibitedCastes(List.of(FIGHTER, PALADIN, TRACKER, RANGER, PILGRIM, FREE_SOUL, HERMIT, MONK, PRIEST))
-                    .prohibitedRaces(List.of())
                     .build()),
             Map.entry(SHACKLE, Spell.builder()
                     .name(SHACKLE)
                     .type(CURSE)
                     .group(NATURE)
                     .cost(8)
-                    .prohibitedCastes(List.of(WIZARD, MAGE, FIGHTER, PALADIN, GRANDMASTER, TRACKER, RANGER, HERMIT, MONK))
-                    .prohibitedRaces(List.of())
                     .build()),
             Map.entry(ENERGY_BLOCKING, Spell.builder()
                     .name(ENERGY_BLOCKING)
                     .type(CURSE)
                     .group(ENERGY)
                     .cost(20)
-                    .prohibitedCastes(List.of(WIZARD, FIGHTER, PALADIN, GRANDMASTER, HERMIT, DRUID, ARCHDRUID, MONK, PRIEST, HIERARCH))
-                    .prohibitedRaces(List.of())
                     .build()),
             Map.entry(POWER_DRAIN, Spell.builder()
                     .name(POWER_DRAIN)
                     .type(CURSE)
                     .group(GENERAL)
                     .cost(10)
-                    .prohibitedCastes(List.of(WIZARD, MAGE, FIGHTER, PALADIN, GRANDMASTER, TITAN, TRACKER, RANGER, PILGRIM, FREE_SOUL, HERMIT, DRUID, MONK, PRIEST, HIERARCH, ARCHANGEL))
-                    .prohibitedRaces(List.of())
                     .build()),
             Map.entry(CALLING_THE_SOULS, Spell.builder()
                     .name(CALLING_THE_SOULS)
                     .type(SUMMON)
                     .group(SOUL)
                     .cost(18)
-                    .prohibitedCastes(List.of())
-                    .prohibitedRaces(List.of())
                     .build()),
             Map.entry(CALLING_ANIMALS, Spell.builder()
                     .name(CALLING_ANIMALS)
                     .type(SUMMON)
                     .group(NATURE)
                     .cost(10)
-                    .prohibitedCastes(List.of(WIZARD, FIGHTER, PALADIN, MONK))
-                    .prohibitedRaces(List.of(MINOTAUR))
                     .build()),
             Map.entry(SUMMON_GUARDIAN, Spell.builder()
                     .name(SUMMON_GUARDIAN)
                     .type(SUMMON)
                     .group(GENERAL)
                     .cost(15)
-                    .prohibitedCastes(List.of(WIZARD, FIGHTER, PALADIN, TRACKER, RANGER, PILGRIM, HERMIT, DRUID, MONK, PRIEST))
-                    .prohibitedRaces(List.of(ORC))
                     .build()),
             Map.entry(PROJECTION_OF_ENERGY, Spell.builder()
                     .name(PROJECTION_OF_ENERGY)
                     .type(SUMMON)
                     .group(ENERGY)
                     .cost(30)
-                    .prohibitedCastes(List.of(WIZARD, FIGHTER, PALADIN, HERMIT, DRUID, MONK, PRIEST))
-                    .prohibitedRaces(List.of())
                     .build()),
             Map.entry(FRIEND_IN_NEED, Spell.builder()
                     .name(FRIEND_IN_NEED)
                     .type(SUMMON)
                     .group(DIVINE)
                     .cost(15)
-                    .prohibitedCastes(List.of(AVATAR, ATALIAS_PRIEST))
-                    .prohibitedRaces(List.of())
                     .build())
     );
 

@@ -5,6 +5,7 @@ import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
 import com.asgames.ataliasflame.domain.services.storyline.EventType;
 
 import static com.asgames.ataliasflame.domain.services.storyline.EventType.DEBUG;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CombatEvents.CombatDamageEvent.DamageType.DIRECT;
 
 public final class CombatEvents {
 
@@ -23,21 +24,32 @@ public final class CombatEvents {
     }
 
     public static class CombatDamageEvent extends CombatEvent {
-        private final int damage;
 
-        private CombatDamageEvent(Combatant attacker, Combatant defender, int damage) {
+        public enum DamageType {
+            DIRECT, AREA, BLAST, CHAINING, CROSSFIRE, NOVA
+        }
+
+        private final int damage;
+        private final DamageType damageType;
+
+        private CombatDamageEvent(Combatant attacker, Combatant defender, int damage, DamageType damageType) {
             super(DEBUG, attacker, defender);
             this.damage = damage;
+            this.damageType = damageType;
+        }
+
+        public static CombatDamageEvent combatDamage(Combatant attacker, Combatant defender, int damage, DamageType damageType) {
+            return new CombatDamageEvent(attacker, defender, damage, damageType);
         }
 
         public static CombatDamageEvent combatDamage(Combatant attacker, Combatant defender, int damage) {
-            return new CombatDamageEvent(attacker, defender, damage);
+            return new CombatDamageEvent(attacker, defender, damage, DIRECT);
         }
 
         @Override
         public String message() {
             return "-- " + attacker.getCode() +
-                    " (" + attacker.getReference() + ") deals " + damage + " damage to " + defender.getCode() +
+                    " (" + attacker.getReference() + ") deals " + damage + " " + damageType + " damage to " + defender.getCode() +
                     " (" + defender.getReference() + ") | Remaining health: " + defender.getHealth().actualValue();
         }
     }

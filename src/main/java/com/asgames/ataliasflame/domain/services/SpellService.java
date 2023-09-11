@@ -18,8 +18,8 @@ public class SpellService {
 
     public List<Spell> listSpells(Character character) {
         return SPELLS.values().stream()
-                .filter(spell -> !spell.getProhibitedCastes().contains(character.getCaste()))
-                .filter(spell -> !spell.getProhibitedRaces().contains(character.getRace()))
+                .filter(spell -> !spell.getName().prohibitedCastes.contains(character.getCaste()))
+                .filter(spell -> !spell.getName().prohibitedRaces.contains(character.getRace()))
                 .filter(spell -> !spell.getGroup().prohibitedCastes.contains(character.getCaste()))
                 .filter(spell -> !spell.getGroup().prohibitedRaces.contains(character.getRace()))
                 .collect(toList());

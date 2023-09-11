@@ -9,9 +9,8 @@ import org.springframework.stereotype.Component;
 import static com.asgames.ataliasflame.domain.MockConstants.SPELLS;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.BALL_OF_ENERGY;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasted;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CombatEvents.CombatDamageEvent.DamageType.DIRECT;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CombatEvents.CombatDamageEvent.combatDamage;
-import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.WarningReportCause.UNNECESSARY_SPELL_ATTACK;
-import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.warningReport;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.pointOut;
 
 @Component
@@ -24,17 +23,14 @@ public class BallOfEnergy extends SpellEffect {
     }
 
     @Override
-    public void enforce(Character character, Monster monster) {
+    public void enforce(Character character, Monster targetMonster) {
         character.getMagic().use(spell.getCost());
         storyLineLogger.event(spellCasted(character, spell));
 
-        if (monster.isDead()) {
-            storyLineLogger.event(warningReport(UNNECESSARY_SPELL_ATTACK));
-            return;
+        if (targetMonster.isAlive()) {
+            int damage = pointOut(spell.getMinDamage(), spell.getMaxDamage());
+            targetMonster.getHealth().damage(damage);
+            storyLineLogger.event(combatDamage(character, targetMonster, damage, DIRECT));
         }
-
-        int damage = pointOut(spell.getMinDamage(), spell.getMaxDamage());
-        monster.getHealth().damage(damage);
-        storyLineLogger.event(combatDamage(character, monster, damage));
     }
 }

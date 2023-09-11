@@ -24,7 +24,7 @@ public abstract class SpellEffect {
         this.spellName = spellName;
     }
 
-    public abstract void enforce(Character character, Monster monster);
+    public abstract void enforce(Character character, Monster targetMonster);
 
     public SpellName getSpellName() {
         return spellName;

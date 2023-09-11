@@ -29,7 +29,7 @@ public class Strengthening extends SpellEffect {
     }
 
     @Override
-    public void enforce(Character character, @Nullable Monster monster) {
+    public void enforce(Character character, @Nullable Monster targetMonster) {
         character.getMagic().use(spell.getCost());
         storyLineLogger.event(spellCasted(character, spell));
 

@@ -28,7 +28,7 @@ public class SoulPower extends SpellEffect {
     }
 
     @Override
-    public void enforce(Character character, @Nullable Monster monster) {
+    public void enforce(Character character, @Nullable Monster targetMonster) {
         if (listUnusedSouls(character).isEmpty()) {
             storyLineLogger.event(warningReport(OCCUPIED_SOULS));
         } else {

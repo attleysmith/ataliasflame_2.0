@@ -82,4 +82,33 @@ public final class MonsterEvents {
                     "; DMG: " + oldMinDamage + "-" + oldMaxDamage + " -> " + monster.getMinDamage() + "-" + monster.getMaxDamage();
         }
     }
+
+    public static class IntimidationEvent extends MonsterEvent {
+        private final int oldAttack;
+        private final int oldDefense;
+        private final int oldMinDamage;
+        private final int oldMaxDamage;
+        private final int oldHealth;
+
+        private IntimidationEvent(Monster monster, int oldAttack, int oldDefense, int oldMinDamage, int oldMaxDamage, int oldHealth) {
+            super(INFO, monster);
+            this.oldAttack = oldAttack;
+            this.oldDefense = oldDefense;
+            this.oldMinDamage = oldMinDamage;
+            this.oldMaxDamage = oldMaxDamage;
+            this.oldHealth = oldHealth;
+        }
+
+        public static IntimidationEvent intimidation(Monster monster, int oldAttack, int oldDefense, int oldMinDamage, int oldMaxDamage, int oldHealth) {
+            return new IntimidationEvent(monster, oldAttack, oldDefense, oldMinDamage, oldMaxDamage, oldHealth);
+        }
+
+        @Override
+        public String message() {
+            return "Intimidated enemy: " + monster.getCode() +
+                    " (" + monster.getReference() + ") | AP: " + oldAttack + " -> " + monster.getAttack() +
+                    "; DP: " + oldDefense + " -> " + monster.getDefense() + "; HP: " + oldHealth + " -> " + monster.getHealth().actualValue() +
+                    "; DMG: " + oldMinDamage + "-" + oldMaxDamage + " -> " + monster.getMinDamage() + "-" + monster.getMaxDamage();
+        }
+    }
 }

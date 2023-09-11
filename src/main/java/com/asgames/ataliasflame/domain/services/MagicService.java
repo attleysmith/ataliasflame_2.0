@@ -45,14 +45,14 @@ public class MagicService {
         storyLineLogger.event(magicRecovery(character, oldMagic));
     }
 
-    public void castSpell(Character character, Spell spell, @Nullable Monster monster) {
+    public void castSpell(Character character, Spell spell, @Nullable Monster targetMonster) {
         if (!character.getMagic().has(spell.getCost())) {
             throw new IllegalArgumentException("Character does not have enough magic to cast spell!");
         }
 
         spellRegistry
                 .get(spell.getName())
-                .enforce(character, monster);
+                .enforce(character, targetMonster);
     }
 
     public void removeBlessingMagic(Character character) {

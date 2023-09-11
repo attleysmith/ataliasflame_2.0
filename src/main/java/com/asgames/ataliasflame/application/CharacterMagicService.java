@@ -59,12 +59,12 @@ public class CharacterMagicService {
         if (spellService.unknownSpell(character, spell)) {
             throw new IllegalArgumentException("The character is not familiar with the spell!");
         }
-        Monster monster = locationAdventureService.getMonster(monsterReference);
-        magicService.castSpell(character, spell, monster);
+        Monster targetMonster = locationAdventureService.getMonster(monsterReference);
+        magicService.castSpell(character, spell, targetMonster);
 
         return AttackContext.builder()
                 .character(characterRepository.save(character))
-                .monster(monsterRepository.save(monster))
+                .monster(monsterRepository.save(targetMonster))
                 .build();
     }
 

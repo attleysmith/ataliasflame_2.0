@@ -1,10 +1,10 @@
 package com.asgames.ataliasflame.domain.model.dtos;
 
-import com.asgames.ataliasflame.domain.model.enums.*;
+import com.asgames.ataliasflame.domain.model.enums.MagicType;
+import com.asgames.ataliasflame.domain.model.enums.SpellGroup;
+import com.asgames.ataliasflame.domain.model.enums.SpellName;
 import lombok.Builder;
 import lombok.Data;
-
-import java.util.List;
 
 @Builder
 @Data
@@ -17,9 +17,6 @@ public class Spell {
     private final int minDamage;
     private final int maxDamage;
     private final int healingEffect;
-
-    private final List<Caste> prohibitedCastes;
-    private final List<Race> prohibitedRaces;
 
     public int averageDamage() {
         return (minDamage + maxDamage) / 2;

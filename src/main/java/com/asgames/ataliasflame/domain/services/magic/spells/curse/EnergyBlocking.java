@@ -26,29 +26,29 @@ public class EnergyBlocking extends SpellEffect {
     }
 
     @Override
-    public void enforce(Character character, Monster monster) {
+    public void enforce(Character character, Monster targetMonster) {
         character.getMagic().use(spell.getCost());
         storyLineLogger.event(spellCasted(character, spell));
 
-        if (monster.isDead()) {
+        if (targetMonster.isDead()) {
             storyLineLogger.event(warningReport(UNNECESSARY_CURSE_ATTACK));
             return;
         }
 
-        int oldAttack = monster.getAttack();
-        int oldDefense = monster.getDefense();
-        int oldMinDamage = monster.getMinDamage();
-        int oldMaxDamage = monster.getMaxDamage();
-        int oldHealth = monster.getHealth().totalValue();
+        int oldAttack = targetMonster.getAttack();
+        int oldDefense = targetMonster.getDefense();
+        int oldMinDamage = targetMonster.getMinDamage();
+        int oldMaxDamage = targetMonster.getMaxDamage();
+        int oldHealth = targetMonster.getHealth().totalValue();
 
         String curse = spellName.name();
         Modifier modifier = MODIFIERS.get(curse);
-        monster.setAttack(calculate(oldAttack, modifier.getAttackMultiplier()));
-        monster.setDefense(calculate(oldDefense, modifier.getDefenseMultiplier()));
-        monster.setMinDamage(calculate(oldMinDamage, modifier.getDamageMultiplier()));
-        monster.setMaxDamage(calculate(oldMaxDamage, modifier.getDamageMultiplier()));
-        monster.getHealth().set(calculate(oldHealth, modifier.getHealthMultiplier()));
+        targetMonster.setAttack(calculate(oldAttack, modifier.getAttackMultiplier()));
+        targetMonster.setDefense(calculate(oldDefense, modifier.getDefenseMultiplier()));
+        targetMonster.setMinDamage(calculate(oldMinDamage, modifier.getDamageMultiplier()));
+        targetMonster.setMaxDamage(calculate(oldMaxDamage, modifier.getDamageMultiplier()));
+        targetMonster.getHealth().set(calculate(oldHealth, modifier.getHealthMultiplier()));
 
-        storyLineLogger.event(curseCasting(monster, curse, oldAttack, oldDefense, oldMinDamage, oldMaxDamage, oldHealth));
+        storyLineLogger.event(curseCasting(targetMonster, curse, oldAttack, oldDefense, oldMinDamage, oldMaxDamage, oldHealth));
     }
 }

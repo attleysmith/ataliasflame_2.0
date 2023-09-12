@@ -9,5 +9,4 @@ public enum Attribute {
     LORE,
     MENTAL_POWER,
     SPIRITUAL_POWER
-
 }

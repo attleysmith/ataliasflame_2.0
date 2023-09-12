@@ -11,12 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static com.asgames.ataliasflame.domain.MockConstants.MAX_ATTRIBUTE_POINTS;
-import static com.asgames.ataliasflame.domain.MockConstants.WEAPONS;
 import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
 import static com.asgames.ataliasflame.domain.model.enums.Gender.MALE;
 import static com.asgames.ataliasflame.domain.model.enums.God.ALATE;
-import static com.asgames.ataliasflame.domain.model.enums.ItemCode.DAGGER;
 import static com.asgames.ataliasflame.domain.model.enums.Race.HUMAN;
+import static com.asgames.ataliasflame.domain.model.enums.WeaponTemplate.DAGGER;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -221,7 +220,7 @@ class AttributeServiceTest {
     }
 
     private void addDagger() {
-        WEAPONS.get(DAGGER).instance().belongsTo(character);
+        DAGGER.instance().belongsTo(character);
         character.setArmor(null);
         character.setShield(null);
 

@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
+import static com.asgames.ataliasflame.domain.utils.DiceUtils.roll100;
+
 @Entity
 @SuperBuilder
 @Data
@@ -37,5 +39,10 @@ public class Shield extends Item implements AbsorptionDefense {
 
     public void belongsTo(Character character) {
         character.setShield(this);
+    }
+
+    public Shield butDamaged() {
+        getDurability().trauma(roll100());
+        return this;
     }
 }

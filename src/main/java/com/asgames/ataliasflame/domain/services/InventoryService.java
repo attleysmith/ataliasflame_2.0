@@ -1,24 +1,56 @@
 package com.asgames.ataliasflame.domain.services;
 
-import com.asgames.ataliasflame.domain.model.dtos.*;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.*;
+import com.asgames.ataliasflame.domain.model.enums.ArmorTemplate;
+import com.asgames.ataliasflame.domain.model.enums.FoodTemplate;
+import com.asgames.ataliasflame.domain.model.enums.ShieldTemplate;
+import com.asgames.ataliasflame.domain.model.enums.WeaponTemplate;
+import com.asgames.ataliasflame.domain.model.interfaces.ItemTemplate;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
+import com.asgames.ataliasflame.domain.utils.SelectionValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static com.asgames.ataliasflame.domain.MockConstants.*;
-import static com.asgames.ataliasflame.domain.model.enums.ItemCode.FIST;
+import java.util.List;
+import java.util.Optional;
+
+import static com.asgames.ataliasflame.domain.model.enums.ArmorTemplate.*;
 import static com.asgames.ataliasflame.domain.model.enums.ItemType.*;
+import static com.asgames.ataliasflame.domain.model.enums.ShieldTemplate.*;
+import static com.asgames.ataliasflame.domain.model.enums.WeaponTemplate.*;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.ArmorChangeEvent.newArmor;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.EatingEvent.eating;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.ShieldChangeEvent.newShield;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.WeaponChangeEvent.newWeapon;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.choose;
-import static com.asgames.ataliasflame.domain.utils.DiceUtils.roll100;
 
 @Service
 public class InventoryService {
+
+    private static final List<SelectionValue<WeaponTemplate>> STARTING_WEAPON_SELECTOR = List.of(
+            new SelectionValue<>(5, FIST),
+            new SelectionValue<>(30, STAFF),
+            new SelectionValue<>(30, DAGGER),
+            new SelectionValue<>(20, SPEAR),
+            new SelectionValue<>(15, SWORD)
+    );
+    private static final List<SelectionValue<Optional<ShieldTemplate>>> STARTING_SHIELD_SELECTOR = List.of(
+            new SelectionValue<>(60, Optional.empty()),
+            new SelectionValue<>(10, Optional.of(BUCKLER)),
+            new SelectionValue<>(15, Optional.of(ROUND_SHIELD)),
+            new SelectionValue<>(10, Optional.of(KITE_SHIELD)),
+            new SelectionValue<>(5, Optional.of(TOWER_SHIELD))
+    );
+    public static final List<SelectionValue<Optional<ArmorTemplate>>> STARTING_ARMOR_SELECTOR = List.of(
+            new SelectionValue<>(50, Optional.empty()),
+            new SelectionValue<>(15, Optional.of(LINEN_ARMOR)),
+            new SelectionValue<>(10, Optional.of(LEATHER_ARMOR)),
+            new SelectionValue<>(10, Optional.of(STUDDED_LEATHER_ARMOR)),
+            new SelectionValue<>(5, Optional.of(CHAIN_MAIL)),
+            new SelectionValue<>(5, Optional.of(PLATE_MAIL)),
+            new SelectionValue<>(5, Optional.of(FULL_PLATE_MAIL))
+    );
 
     @Autowired
     private StoryLineLogger storyLineLogger;
@@ -56,56 +88,28 @@ public class InventoryService {
         if (!template.getType().equals(FOOD)) {
             throw new IllegalArgumentException("Only FOOD can be produced as food!");
         }
-
-        FoodTemplate foodTemplate = FOODS.get(template.getCode());
-        if (foodTemplate == null) {
-            throw new IllegalStateException("Food not recognized as real food: " + template.getCode());
-        }
-
-        return foodTemplate.instance();
+        return ((FoodTemplate) template).instance();
     }
 
     private Weapon produceWeapon(ItemTemplate template) {
         if (!template.getType().equals(WEAPON)) {
             throw new IllegalArgumentException("Only WEAPON can be produced as weapon!");
         }
-
-        WeaponTemplate weaponTemplate = WEAPONS.get(template.getCode());
-        if (weaponTemplate == null) {
-            throw new IllegalStateException("Weapon not recognized as real weapon: " + template.getCode());
-        }
-
-        return weaponTemplate.instance();
+        return ((WeaponTemplate) template).instance();
     }
 
     private Shield produceShield(ItemTemplate template) {
         if (!template.getType().equals(SHIELD)) {
             throw new IllegalArgumentException("Only SHIELD can be produced as shield!");
         }
-
-        ShieldTemplate shieldTemplate = SHIELDS.get(template.getCode());
-        if (shieldTemplate == null) {
-            throw new IllegalStateException("Shield not recognized as real shield: " + template.getCode());
-        }
-
-        Shield shield = shieldTemplate.instance();
-        shield.getDurability().trauma(roll100());
-        return shield;
+        return ((ShieldTemplate) template).instance().butDamaged();
     }
 
     private Armor produceArmor(ItemTemplate template) {
         if (!template.getType().equals(ARMOR)) {
             throw new IllegalArgumentException("Only ARMOR can be produced as armor!");
         }
-
-        ArmorTemplate armorTemplate = ARMORS.get(template.getCode());
-        if (armorTemplate == null) {
-            throw new IllegalStateException("Armor not recognized as real armor: " + template.getCode());
-        }
-
-        Armor armor = armorTemplate.instance();
-        armor.getDurability().trauma(roll100());
-        return armor;
+        return ((ArmorTemplate) template).instance().butDamaged();
     }
 
     public void eatFood(Character character, Food food) {
@@ -131,7 +135,7 @@ public class InventoryService {
     public void takeShield(Character character, Shield shield) {
         Weapon oldWeapon = character.getWeapon();
         if (!oldWeapon.isOneHanded()) {
-            Weapon newWeapon = WEAPONS.get(FIST).instance();
+            Weapon newWeapon = FIST.instance();
             newWeapon.belongsTo(character);
             storyLineLogger.event(newWeapon(character, oldWeapon));
         }

@@ -9,7 +9,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.asgames.ataliasflame.domain.MockConstants.*;
+import static com.asgames.ataliasflame.domain.MockConstants.BOOSTERS;
+import static com.asgames.ataliasflame.domain.MockConstants.MODIFIERS;
 import static com.asgames.ataliasflame.domain.model.enums.Caste.ATALIAS_PRIEST;
 import static com.asgames.ataliasflame.domain.model.enums.God.ATALIA;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.calculate;
@@ -18,6 +19,12 @@ import static java.util.stream.Collectors.toList;
 
 @Service
 public class CharacterCalculationService {
+
+    private static final int BASE_HEALTH = 100;
+    private static final int BASE_ATTACK = 80;
+    private static final int BASE_DEFENSE = 20;
+    private static final int BASE_DAMAGE_MULTIPLIER = 0;
+    private static final int BASE_MAGIC_POINT = 0;
 
     public void recalculateProperties(Character character) {
         recalculateAttack(character);

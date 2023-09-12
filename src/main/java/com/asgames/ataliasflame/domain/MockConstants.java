@@ -2,6 +2,8 @@ package com.asgames.ataliasflame.domain;
 
 import com.asgames.ataliasflame.domain.model.dtos.*;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
+import com.asgames.ataliasflame.domain.model.enums.ItemCode;
+import com.asgames.ataliasflame.domain.model.enums.MonsterCode;
 import com.asgames.ataliasflame.domain.model.enums.SpellName;
 import com.asgames.ataliasflame.domain.utils.SelectionValue;
 
@@ -12,10 +14,11 @@ import java.util.Optional;
 import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
 import static com.asgames.ataliasflame.domain.model.enums.Caste.*;
 import static com.asgames.ataliasflame.domain.model.enums.CasteGroup.*;
-import static com.asgames.ataliasflame.domain.model.enums.CompanionType.*;
 import static com.asgames.ataliasflame.domain.model.enums.God.*;
+import static com.asgames.ataliasflame.domain.model.enums.ItemCode.*;
 import static com.asgames.ataliasflame.domain.model.enums.ItemType.*;
 import static com.asgames.ataliasflame.domain.model.enums.MagicType.*;
+import static com.asgames.ataliasflame.domain.model.enums.MonsterCode.*;
 import static com.asgames.ataliasflame.domain.model.enums.Race.*;
 import static com.asgames.ataliasflame.domain.model.enums.SoulChipShape.*;
 import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.*;
@@ -29,20 +32,8 @@ public final class MockConstants {
     }
 
     // Character development rules
-    public static final Caste STARTING_CASTE = ROGUE;
     public static final int LEVEL_ATTRIBUTE_POINTS = 5;
     public static final int MAX_ATTRIBUTE_POINTS = 100;
-
-    // Base character values
-    public static final int BASE_HEALTH = 100;
-    public static final int BASE_ATTACK = 80;
-    public static final int BASE_DEFENSE = 20;
-    public static final int BASE_DAMAGE_MULTIPLIER = 0;
-    public static final int BASE_MAGIC_POINT = 0;
-
-    // Action settings
-    public static final int HEALING_EFFECT_OF_SLEEP = 20;
-    public static final int MAGIC_RECOVERY_EFFECT_OF_SLEEP = 50;
 
     // Attribute modifiers
     public static final Modifier STRENGTH_MODIFIER = Modifier.builder()
@@ -109,54 +100,6 @@ public final class MockConstants {
             .magicPoint(1)
             .build();
 
-    public static final Modifier SOUL_STRIKE_MODIFIER = Modifier.builder()
-            .attackMultiplier(-10)
-            .defenseMultiplier(-10)
-            .damageMultiplier(-10)
-            .healthMultiplier(-2)
-            .magicPoint(0)
-            .build();
-
-    public static final Modifier WEAKENING_MODIFIER = Modifier.builder()
-            .attackMultiplier(-5)
-            .defenseMultiplier(-5)
-            .damageMultiplier(-5)
-            .healthMultiplier(0)
-            .magicPoint(0)
-            .build();
-
-    public static final Modifier SHACKLE_MODIFIER = Modifier.builder()
-            .attackMultiplier(-10)
-            .defenseMultiplier(-5)
-            .damageMultiplier(-5)
-            .healthMultiplier(0)
-            .magicPoint(0)
-            .build();
-
-    public static final Modifier ENERGY_BLOCKING_MODIFIER = Modifier.builder()
-            .attackMultiplier(-25)
-            .defenseMultiplier(-10)
-            .damageMultiplier(-10)
-            .healthMultiplier(0)
-            .magicPoint(0)
-            .build();
-
-    public static final Modifier POWER_DRAIN_MODIFIER = Modifier.builder()
-            .attackMultiplier(-8)
-            .defenseMultiplier(-8)
-            .damageMultiplier(-8)
-            .healthMultiplier(-1)
-            .magicPoint(0)
-            .build();
-
-    public static final Modifier INTIMIDATION_MODIFIER = Modifier.builder()
-            .attackMultiplier(-30)
-            .defenseMultiplier(-20)
-            .damageMultiplier(0)
-            .healthMultiplier(0)
-            .magicPoint(0)
-            .build();
-
     public static final Map<String, Modifier> MODIFIERS = Map.ofEntries(
             Map.entry(STRENGTH.name(), STRENGTH_MODIFIER),
             Map.entry(DEXTERITY.name(), DEXTERITY_MODIFIER),
@@ -165,13 +108,7 @@ public final class MockConstants {
             Map.entry(INTELLIGENCE.name(), INTELLIGENCE_MODIFIER),
             Map.entry(LORE.name(), LORE_MODIFIER),
             Map.entry(MENTAL_POWER.name(), MENTAL_POWER_MODIFIER),
-            Map.entry(SPIRITUAL_POWER.name(), SPIRITUAL_POWER_MODIFIER),
-            Map.entry(SOUL_STRIKE.name(), SOUL_STRIKE_MODIFIER),
-            Map.entry(WEAKENING.name(), WEAKENING_MODIFIER),
-            Map.entry(SHACKLE.name(), SHACKLE_MODIFIER),
-            Map.entry(ENERGY_BLOCKING.name(), ENERGY_BLOCKING_MODIFIER),
-            Map.entry(POWER_DRAIN.name(), POWER_DRAIN_MODIFIER),
-            Map.entry("INTIMIDATION", INTIMIDATION_MODIFIER)
+            Map.entry(SPIRITUAL_POWER.name(), SPIRITUAL_POWER_MODIFIER)
     );
 
     // Attribute boosters
@@ -813,41 +750,41 @@ public final class MockConstants {
     );
 
     // Armory
-    public static final Map<String, WeaponTemplate> WEAPONS = Map.of(
-            "FIST", WeaponTemplate.builder()
-                    .code("FIST")
+    public static final Map<ItemCode, WeaponTemplate> WEAPONS = Map.of(
+            FIST, WeaponTemplate.builder()
+                    .code(FIST.name())
                     .minDamage(1)
                     .maxDamage(2)
                     .defense(0)
                     .initiative(1)
                     .oneHanded(true)
                     .build(),
-            "STAFF", WeaponTemplate.builder()
-                    .code("STAFF")
+            STAFF, WeaponTemplate.builder()
+                    .code(STAFF.name())
                     .minDamage(1)
                     .maxDamage(5)
                     .defense(5)
                     .initiative(-5)
                     .oneHanded(false)
                     .build(),
-            "DAGGER", WeaponTemplate.builder()
-                    .code("DAGGER")
+            DAGGER, WeaponTemplate.builder()
+                    .code(DAGGER.name())
                     .minDamage(2)
                     .maxDamage(6)
                     .defense(1)
                     .initiative(0)
                     .oneHanded(true)
                     .build(),
-            "SPEAR", WeaponTemplate.builder()
-                    .code("SPEAR")
+            SPEAR, WeaponTemplate.builder()
+                    .code(SPEAR.name())
                     .minDamage(2)
                     .maxDamage(12)
                     .defense(5)
                     .initiative(-6)
                     .oneHanded(false)
                     .build(),
-            "SWORD", WeaponTemplate.builder()
-                    .code("SWORD")
+            SWORD, WeaponTemplate.builder()
+                    .code(SWORD.name())
                     .minDamage(2)
                     .maxDamage(18)
                     .defense(3)
@@ -856,66 +793,66 @@ public final class MockConstants {
                     .build()
     );
 
-    public static final Map<String, ShieldTemplate> SHIELDS = Map.of(
-            "BUCKLER", ShieldTemplate.builder()
-                    .code("BUCKLER")
+    public static final Map<ItemCode, ShieldTemplate> SHIELDS = Map.of(
+            BUCKLER, ShieldTemplate.builder()
+                    .code(BUCKLER.name())
                     .defense(3)
                     .absorption(25)
                     .durability(30)
                     .build(),
-            "ROUND_SHIELD", ShieldTemplate.builder()
-                    .code("ROUND_SHIELD")
+            ROUND_SHIELD, ShieldTemplate.builder()
+                    .code(ROUND_SHIELD.name())
                     .defense(5)
                     .absorption(30)
                     .durability(50)
                     .build(),
-            "KITE_SHIELD", ShieldTemplate.builder()
-                    .code("KITE_SHIELD")
+            KITE_SHIELD, ShieldTemplate.builder()
+                    .code(KITE_SHIELD.name())
                     .defense(8)
                     .absorption(35)
                     .durability(70)
                     .build(),
-            "TOWER_SHIELD", ShieldTemplate.builder()
-                    .code("TOWER_SHIELD")
+            TOWER_SHIELD, ShieldTemplate.builder()
+                    .code(TOWER_SHIELD.name())
                     .defense(10)
                     .absorption(50)
                     .durability(100)
                     .build()
     );
 
-    public static final Map<String, ArmorTemplate> ARMORS = Map.of(
-            "LINEN_ARMOR", ArmorTemplate.builder()
-                    .code("LINEN_ARMOR")
+    public static final Map<ItemCode, ArmorTemplate> ARMORS = Map.of(
+            LINEN_ARMOR, ArmorTemplate.builder()
+                    .code(LINEN_ARMOR.name())
                     .defense(0)
                     .absorption(10)
                     .durability(50)
                     .build(),
-            "LEATHER_ARMOR", ArmorTemplate.builder()
-                    .code("LEATHER_ARMOR")
+            LEATHER_ARMOR, ArmorTemplate.builder()
+                    .code(LEATHER_ARMOR.name())
                     .defense(3)
                     .absorption(25)
                     .durability(60)
                     .build(),
-            "STUDDED_LEATHER_ARMOR", ArmorTemplate.builder()
-                    .code("STUDDED_LEATHER_ARMOR")
+            STUDDED_LEATHER_ARMOR, ArmorTemplate.builder()
+                    .code(STUDDED_LEATHER_ARMOR.name())
                     .defense(5)
                     .absorption(30)
                     .durability(80)
                     .build(),
-            "CHAIN_MAIL", ArmorTemplate.builder()
-                    .code("CHAIN_MAIL")
+            CHAIN_MAIL, ArmorTemplate.builder()
+                    .code(CHAIN_MAIL.name())
                     .defense(6)
                     .absorption(40)
                     .durability(100)
                     .build(),
-            "PLATE_MAIL", ArmorTemplate.builder()
-                    .code("PLATE_MAIL")
+            PLATE_MAIL, ArmorTemplate.builder()
+                    .code(PLATE_MAIL.name())
                     .defense(8)
                     .absorption(50)
                     .durability(100)
                     .build(),
-            "FULL_PLATE_MAIL", ArmorTemplate.builder()
-                    .code("FULL_PLATE_MAIL")
+            FULL_PLATE_MAIL, ArmorTemplate.builder()
+                    .code(FULL_PLATE_MAIL.name())
                     .defense(10)
                     .absorption(60)
                     .durability(120)
@@ -923,135 +860,135 @@ public final class MockConstants {
     );
 
     public static final List<SelectionValue<WeaponTemplate>> STARTING_WEAPON_SELECTOR = List.of(
-            new SelectionValue<>(5, WEAPONS.get("FIST")),
-            new SelectionValue<>(30, WEAPONS.get("STAFF")),
-            new SelectionValue<>(30, WEAPONS.get("DAGGER")),
-            new SelectionValue<>(20, WEAPONS.get("SPEAR")),
-            new SelectionValue<>(15, WEAPONS.get("SWORD"))
+            new SelectionValue<>(5, WEAPONS.get(FIST)),
+            new SelectionValue<>(30, WEAPONS.get(STAFF)),
+            new SelectionValue<>(30, WEAPONS.get(DAGGER)),
+            new SelectionValue<>(20, WEAPONS.get(SPEAR)),
+            new SelectionValue<>(15, WEAPONS.get(SWORD))
     );
 
     public static final List<SelectionValue<Optional<ShieldTemplate>>> STARTING_SHIELD_SELECTOR = List.of(
             new SelectionValue<>(60, Optional.empty()),
-            new SelectionValue<>(10, Optional.of(SHIELDS.get("BUCKLER"))),
-            new SelectionValue<>(15, Optional.of(SHIELDS.get("ROUND_SHIELD"))),
-            new SelectionValue<>(10, Optional.of(SHIELDS.get("KITE_SHIELD"))),
-            new SelectionValue<>(5, Optional.of(SHIELDS.get("TOWER_SHIELD")))
+            new SelectionValue<>(10, Optional.of(SHIELDS.get(BUCKLER))),
+            new SelectionValue<>(15, Optional.of(SHIELDS.get(ROUND_SHIELD))),
+            new SelectionValue<>(10, Optional.of(SHIELDS.get(KITE_SHIELD))),
+            new SelectionValue<>(5, Optional.of(SHIELDS.get(TOWER_SHIELD)))
     );
 
     public static final List<SelectionValue<Optional<ArmorTemplate>>> STARTING_ARMOR_SELECTOR = List.of(
             new SelectionValue<>(50, Optional.empty()),
-            new SelectionValue<>(15, Optional.of(ARMORS.get("LINEN_ARMOR"))),
-            new SelectionValue<>(10, Optional.of(ARMORS.get("LEATHER_ARMOR"))),
-            new SelectionValue<>(10, Optional.of(ARMORS.get("STUDDED_LEATHER_ARMOR"))),
-            new SelectionValue<>(5, Optional.of(ARMORS.get("CHAIN_MAIL"))),
-            new SelectionValue<>(5, Optional.of(ARMORS.get("PLATE_MAIL"))),
-            new SelectionValue<>(5, Optional.of(ARMORS.get("FULL_PLATE_MAIL")))
+            new SelectionValue<>(15, Optional.of(ARMORS.get(LINEN_ARMOR))),
+            new SelectionValue<>(10, Optional.of(ARMORS.get(LEATHER_ARMOR))),
+            new SelectionValue<>(10, Optional.of(ARMORS.get(STUDDED_LEATHER_ARMOR))),
+            new SelectionValue<>(5, Optional.of(ARMORS.get(CHAIN_MAIL))),
+            new SelectionValue<>(5, Optional.of(ARMORS.get(PLATE_MAIL))),
+            new SelectionValue<>(5, Optional.of(ARMORS.get(FULL_PLATE_MAIL)))
     );
 
     // Items
-    public static final Map<String, FoodTemplate> FOODS = Map.of(
-            "WATER", FoodTemplate.builder()
-                    .code("WATER")
+    public static final Map<ItemCode, FoodTemplate> FOODS = Map.of(
+            WATER, FoodTemplate.builder()
+                    .code(WATER.name())
                     .healingEffect(3)
                     .magicEffect(0)
                     .build(),
-            "BREAD", FoodTemplate.builder()
-                    .code("BREAD")
+            BREAD, FoodTemplate.builder()
+                    .code(BREAD.name())
                     .healingEffect(5)
                     .magicEffect(0)
                     .build(),
-            "FRUIT", FoodTemplate.builder()
-                    .code("FRUIT")
+            FRUIT, FoodTemplate.builder()
+                    .code(FRUIT.name())
                     .healingEffect(8)
                     .magicEffect(2)
                     .build(),
-            "MEAT", FoodTemplate.builder()
-                    .code("MEAT")
+            MEAT, FoodTemplate.builder()
+                    .code(MEAT.name())
                     .healingEffect(10)
                     .magicEffect(1)
                     .build(),
-            "HEALING_HERB", FoodTemplate.builder()
-                    .code("HEALING_HERB")
+            HEALING_HERB, FoodTemplate.builder()
+                    .code(HEALING_HERB.name())
                     .healingEffect(20)
                     .magicEffect(10)
                     .build()
     );
-    public static final Map<String, ItemTemplate> ITEMS = Map.ofEntries(
-            Map.entry("WATER", ItemTemplate.builder()
+    public static final Map<ItemCode, ItemTemplate> ITEMS = Map.ofEntries(
+            Map.entry(WATER, ItemTemplate.builder()
                     .type(FOOD)
-                    .code("WATER")
+                    .code(WATER)
                     .build()),
-            Map.entry("BREAD", ItemTemplate.builder()
+            Map.entry(BREAD, ItemTemplate.builder()
                     .type(FOOD)
-                    .code("BREAD")
+                    .code(BREAD)
                     .build()),
-            Map.entry("FRUIT", ItemTemplate.builder()
+            Map.entry(FRUIT, ItemTemplate.builder()
                     .type(FOOD)
-                    .code("FRUIT")
+                    .code(FRUIT)
                     .build()),
-            Map.entry("MEAT", ItemTemplate.builder()
+            Map.entry(MEAT, ItemTemplate.builder()
                     .type(FOOD)
-                    .code("MEAT")
+                    .code(MEAT)
                     .build()),
-            Map.entry("HEALING_HERB", ItemTemplate.builder()
+            Map.entry(HEALING_HERB, ItemTemplate.builder()
                     .type(FOOD)
-                    .code("HEALING_HERB")
+                    .code(HEALING_HERB)
                     .build()),
-            Map.entry("STAFF", ItemTemplate.builder()
+            Map.entry(STAFF, ItemTemplate.builder()
                     .type(WEAPON)
-                    .code("STAFF")
+                    .code(STAFF)
                     .build()),
-            Map.entry("DAGGER", ItemTemplate.builder()
+            Map.entry(DAGGER, ItemTemplate.builder()
                     .type(WEAPON)
-                    .code("DAGGER")
+                    .code(DAGGER)
                     .build()),
-            Map.entry("SPEAR", ItemTemplate.builder()
+            Map.entry(SPEAR, ItemTemplate.builder()
                     .type(WEAPON)
-                    .code("SPEAR")
+                    .code(SPEAR)
                     .build()),
-            Map.entry("SWORD", ItemTemplate.builder()
+            Map.entry(SWORD, ItemTemplate.builder()
                     .type(WEAPON)
-                    .code("SWORD")
+                    .code(SWORD)
                     .build()),
-            Map.entry("BUCKLER", ItemTemplate.builder()
+            Map.entry(BUCKLER, ItemTemplate.builder()
                     .type(SHIELD)
-                    .code("BUCKLER")
+                    .code(BUCKLER)
                     .build()),
-            Map.entry("ROUND_SHIELD", ItemTemplate.builder()
+            Map.entry(ROUND_SHIELD, ItemTemplate.builder()
                     .type(SHIELD)
-                    .code("ROUND_SHIELD")
+                    .code(ROUND_SHIELD)
                     .build()),
-            Map.entry("KITE_SHIELD", ItemTemplate.builder()
+            Map.entry(KITE_SHIELD, ItemTemplate.builder()
                     .type(SHIELD)
-                    .code("KITE_SHIELD")
+                    .code(KITE_SHIELD)
                     .build()),
-            Map.entry("TOWER_SHIELD", ItemTemplate.builder()
+            Map.entry(TOWER_SHIELD, ItemTemplate.builder()
                     .type(SHIELD)
-                    .code("TOWER_SHIELD")
+                    .code(TOWER_SHIELD)
                     .build()),
-            Map.entry("LINEN_ARMOR", ItemTemplate.builder()
+            Map.entry(LINEN_ARMOR, ItemTemplate.builder()
                     .type(ARMOR)
-                    .code("LINEN_ARMOR")
+                    .code(LINEN_ARMOR)
                     .build()),
-            Map.entry("LEATHER_ARMOR", ItemTemplate.builder()
+            Map.entry(LEATHER_ARMOR, ItemTemplate.builder()
                     .type(ARMOR)
-                    .code("LEATHER_ARMOR")
+                    .code(LEATHER_ARMOR)
                     .build()),
-            Map.entry("STUDDED_LEATHER_ARMOR", ItemTemplate.builder()
+            Map.entry(STUDDED_LEATHER_ARMOR, ItemTemplate.builder()
                     .type(ARMOR)
-                    .code("STUDDED_LEATHER_ARMOR")
+                    .code(STUDDED_LEATHER_ARMOR)
                     .build()),
-            Map.entry("CHAIN_MAIL", ItemTemplate.builder()
+            Map.entry(CHAIN_MAIL, ItemTemplate.builder()
                     .type(ARMOR)
-                    .code("CHAIN_MAIL")
+                    .code(CHAIN_MAIL)
                     .build()),
-            Map.entry("PLATE_MAIL", ItemTemplate.builder()
+            Map.entry(PLATE_MAIL, ItemTemplate.builder()
                     .type(ARMOR)
-                    .code("PLATE_MAIL")
+                    .code(PLATE_MAIL)
                     .build()),
-            Map.entry("FULL_PLATE_MAIL", ItemTemplate.builder()
+            Map.entry(FULL_PLATE_MAIL, ItemTemplate.builder()
                     .type(ARMOR)
-                    .code("FULL_PLATE_MAIL")
+                    .code(FULL_PLATE_MAIL)
                     .build())
     );
 
@@ -1300,9 +1237,9 @@ public final class MockConstants {
     );
 
     // Monsters
-    public static final Map<String, MonsterTemplate> MONSTERS = Map.of(
-            "RAT", MonsterTemplate.builder()
-                    .code("RAT")
+    public static final Map<MonsterCode, MonsterTemplate> MONSTERS = Map.of(
+            RAT, MonsterTemplate.builder()
+                    .code(RAT.name())
                     .attack(40)
                     .defense(0)
                     .minDamage(1)
@@ -1314,8 +1251,8 @@ public final class MockConstants {
                     .chance(20)
                     .spawn(70)
                     .build(),
-            "BOAR", MonsterTemplate.builder()
-                    .code("BOAR")
+            BOAR, MonsterTemplate.builder()
+                    .code(BOAR.name())
                     .attack(60)
                     .defense(5)
                     .minDamage(1)
@@ -1327,8 +1264,8 @@ public final class MockConstants {
                     .chance(15)
                     .spawn(25)
                     .build(),
-            "WOLF", MonsterTemplate.builder()
-                    .code("WOLF")
+            WOLF, MonsterTemplate.builder()
+                    .code(WOLF.name())
                     .attack(70)
                     .defense(5)
                     .minDamage(1)
@@ -1340,8 +1277,8 @@ public final class MockConstants {
                     .chance(25)
                     .spawn(50)
                     .build(),
-            "BANDIT", MonsterTemplate.builder()
-                    .code("BANDIT")
+            BANDIT, MonsterTemplate.builder()
+                    .code(BANDIT.name())
                     .attack(75)
                     .defense(5)
                     .minDamage(1)
@@ -1353,8 +1290,8 @@ public final class MockConstants {
                     .chance(35)
                     .spawn(40)
                     .build(),
-            "WEREWOLF", MonsterTemplate.builder()
-                    .code("WEREWOLF")
+            WEREWOLF, MonsterTemplate.builder()
+                    .code(WEREWOLF.name())
                     .attack(75)
                     .defense(10)
                     .minDamage(1)
@@ -1366,8 +1303,8 @@ public final class MockConstants {
                     .chance(5)
                     .spawn(15)
                     .build(),
-            "NAGA", MonsterTemplate.builder()
-                    .code("NAGA")
+            NAGA, MonsterTemplate.builder()
+                    .code(NAGA.name())
                     .attack(80)
                     .defense(10)
                     .minDamage(2)
@@ -1379,8 +1316,8 @@ public final class MockConstants {
                     .chance(5)
                     .spawn(10)
                     .build(),
-            "OGRE", MonsterTemplate.builder()
-                    .code("OGRE")
+            OGRE, MonsterTemplate.builder()
+                    .code(OGRE.name())
                     .attack(85)
                     .defense(15)
                     .minDamage(2)
@@ -1392,8 +1329,8 @@ public final class MockConstants {
                     .chance(5)
                     .spawn(5)
                     .build(),
-            "GHOUL", MonsterTemplate.builder()
-                    .code("GHOUL")
+            GHOUL, MonsterTemplate.builder()
+                    .code(GHOUL.name())
                     .attack(90)
                     .defense(10)
                     .minDamage(3)
@@ -1405,8 +1342,8 @@ public final class MockConstants {
                     .chance(5)
                     .spawn(5)
                     .build(),
-            "GRIFFIN", MonsterTemplate.builder()
-                    .code("GRIFFIN")
+            GRIFFIN, MonsterTemplate.builder()
+                    .code(GRIFFIN.name())
                     .attack(100)
                     .defense(20)
                     .minDamage(5)
@@ -1418,8 +1355,8 @@ public final class MockConstants {
                     .chance(5)
                     .spawn(10)
                     .build(),
-            "DRAGON", MonsterTemplate.builder()
-                    .code("DRAGON")
+            DRAGON, MonsterTemplate.builder()
+                    .code(DRAGON.name())
                     .attack(160)
                     .defense(50)
                     .minDamage(10)
@@ -1434,226 +1371,90 @@ public final class MockConstants {
     );
 
     public static final Map<String, List<List<SelectionValue<Optional<ItemTemplate>>>>> MONSTER_DROPS = Map.of(
-            "BOAR", List.of(
+            BOAR.name(), List.of(
                     List.of(
                             new SelectionValue<>(10, Optional.empty()),
-                            new SelectionValue<>(90, Optional.of(ITEMS.get("MEAT")))
+                            new SelectionValue<>(90, Optional.of(ITEMS.get(MEAT)))
                     )),
-            "BANDIT", List.of(
+            BANDIT.name(), List.of(
                     List.of(
                             new SelectionValue<>(90, Optional.empty()),
-                            new SelectionValue<>(10, Optional.of(ITEMS.get("WATER")))),
+                            new SelectionValue<>(10, Optional.of(ITEMS.get(WATER)))),
                     List.of(
                             new SelectionValue<>(85, Optional.empty()),
-                            new SelectionValue<>(15, Optional.of(ITEMS.get("BREAD")))),
+                            new SelectionValue<>(15, Optional.of(ITEMS.get(BREAD)))),
                     List.of(
                             new SelectionValue<>(90, Optional.empty()),
-                            new SelectionValue<>(10, Optional.of(ITEMS.get("FRUIT")))),
+                            new SelectionValue<>(10, Optional.of(ITEMS.get(FRUIT)))),
                     List.of(
                             new SelectionValue<>(85, Optional.empty()),
-                            new SelectionValue<>(15, Optional.of(ITEMS.get("MEAT")))),
+                            new SelectionValue<>(15, Optional.of(ITEMS.get(MEAT)))),
                     List.of(
                             new SelectionValue<>(95, Optional.empty()),
-                            new SelectionValue<>(5, Optional.of(ITEMS.get("HEALING_HERB")))),
+                            new SelectionValue<>(5, Optional.of(ITEMS.get(HEALING_HERB)))),
                     List.of(
                             new SelectionValue<>(5, Optional.empty()),
-                            new SelectionValue<>(15, Optional.of(ITEMS.get("STAFF"))),
-                            new SelectionValue<>(25, Optional.of(ITEMS.get("DAGGER"))),
-                            new SelectionValue<>(25, Optional.of(ITEMS.get("SPEAR"))),
-                            new SelectionValue<>(30, Optional.of(ITEMS.get("SWORD")))),
+                            new SelectionValue<>(15, Optional.of(ITEMS.get(STAFF))),
+                            new SelectionValue<>(25, Optional.of(ITEMS.get(DAGGER))),
+                            new SelectionValue<>(25, Optional.of(ITEMS.get(SPEAR))),
+                            new SelectionValue<>(30, Optional.of(ITEMS.get(SWORD)))),
                     List.of(
                             new SelectionValue<>(40, Optional.empty()),
-                            new SelectionValue<>(15, Optional.of(ITEMS.get("BUCKLER"))),
-                            new SelectionValue<>(25, Optional.of(ITEMS.get("ROUND_SHIELD"))),
-                            new SelectionValue<>(15, Optional.of(ITEMS.get("KITE_SHIELD"))),
-                            new SelectionValue<>(5, Optional.of(ITEMS.get("TOWER_SHIELD")))),
+                            new SelectionValue<>(15, Optional.of(ITEMS.get(BUCKLER))),
+                            new SelectionValue<>(25, Optional.of(ITEMS.get(ROUND_SHIELD))),
+                            new SelectionValue<>(15, Optional.of(ITEMS.get(KITE_SHIELD))),
+                            new SelectionValue<>(5, Optional.of(ITEMS.get(TOWER_SHIELD)))),
                     List.of(
                             new SelectionValue<>(10, Optional.empty()),
-                            new SelectionValue<>(15, Optional.of(ITEMS.get("LINEN_ARMOR"))),
-                            new SelectionValue<>(20, Optional.of(ITEMS.get("LEATHER_ARMOR"))),
-                            new SelectionValue<>(25, Optional.of(ITEMS.get("STUDDED_LEATHER_ARMOR"))),
-                            new SelectionValue<>(15, Optional.of(ITEMS.get("CHAIN_MAIL"))),
-                            new SelectionValue<>(10, Optional.of(ITEMS.get("PLATE_MAIL"))),
-                            new SelectionValue<>(5, Optional.of(ITEMS.get("FULL_PLATE_MAIL")))
+                            new SelectionValue<>(15, Optional.of(ITEMS.get(LINEN_ARMOR))),
+                            new SelectionValue<>(20, Optional.of(ITEMS.get(LEATHER_ARMOR))),
+                            new SelectionValue<>(25, Optional.of(ITEMS.get(STUDDED_LEATHER_ARMOR))),
+                            new SelectionValue<>(15, Optional.of(ITEMS.get(CHAIN_MAIL))),
+                            new SelectionValue<>(10, Optional.of(ITEMS.get(PLATE_MAIL))),
+                            new SelectionValue<>(5, Optional.of(ITEMS.get(FULL_PLATE_MAIL)))
                     )),
-            "WEREWOLF", List.of(
+            WEREWOLF.name(), List.of(
                     List.of(
                             new SelectionValue<>(65, Optional.empty()),
-                            new SelectionValue<>(15, Optional.of(ITEMS.get("WATER"))),
-                            new SelectionValue<>(15, Optional.of(ITEMS.get("MEAT"))),
-                            new SelectionValue<>(5, Optional.of(ITEMS.get("HEALING_HERB")))),
+                            new SelectionValue<>(15, Optional.of(ITEMS.get(WATER))),
+                            new SelectionValue<>(15, Optional.of(ITEMS.get(MEAT))),
+                            new SelectionValue<>(5, Optional.of(ITEMS.get(HEALING_HERB)))),
                     List.of(
                             new SelectionValue<>(85, Optional.empty()),
-                            new SelectionValue<>(10, Optional.of(ITEMS.get("DAGGER"))),
-                            new SelectionValue<>(5, Optional.of(ITEMS.get("SWORD")))
+                            new SelectionValue<>(10, Optional.of(ITEMS.get(DAGGER))),
+                            new SelectionValue<>(5, Optional.of(ITEMS.get(SWORD)))
                     )),
-            "NAGA", List.of(
+            NAGA.name(), List.of(
                     List.of(
                             new SelectionValue<>(60, Optional.empty()),
-                            new SelectionValue<>(15, Optional.of(ITEMS.get("WATER"))),
-                            new SelectionValue<>(15, Optional.of(ITEMS.get("MEAT"))),
-                            new SelectionValue<>(10, Optional.of(ITEMS.get("HEALING_HERB")))),
+                            new SelectionValue<>(15, Optional.of(ITEMS.get(WATER))),
+                            new SelectionValue<>(15, Optional.of(ITEMS.get(MEAT))),
+                            new SelectionValue<>(10, Optional.of(ITEMS.get(HEALING_HERB)))),
                     List.of(
                             new SelectionValue<>(50, Optional.empty()),
-                            new SelectionValue<>(25, Optional.of(ITEMS.get("DAGGER"))),
-                            new SelectionValue<>(15, Optional.of(ITEMS.get("SPEAR"))),
-                            new SelectionValue<>(10, Optional.of(ITEMS.get("SWORD")))),
+                            new SelectionValue<>(25, Optional.of(ITEMS.get(DAGGER))),
+                            new SelectionValue<>(15, Optional.of(ITEMS.get(SPEAR))),
+                            new SelectionValue<>(10, Optional.of(ITEMS.get(SWORD)))),
                     List.of(
                             new SelectionValue<>(90, Optional.empty()),
-                            new SelectionValue<>(10, Optional.of(ITEMS.get("LEATHER_ARMOR")))
+                            new SelectionValue<>(10, Optional.of(ITEMS.get(LEATHER_ARMOR)))
                     )),
-            "OGRE", List.of(
+            OGRE.name(), List.of(
                     List.of(
                             new SelectionValue<>(60, Optional.empty()),
-                            new SelectionValue<>(15, Optional.of(ITEMS.get("WATER"))),
-                            new SelectionValue<>(20, Optional.of(ITEMS.get("MEAT"))),
-                            new SelectionValue<>(5, Optional.of(ITEMS.get("HEALING_HERB")))),
+                            new SelectionValue<>(15, Optional.of(ITEMS.get(WATER))),
+                            new SelectionValue<>(20, Optional.of(ITEMS.get(MEAT))),
+                            new SelectionValue<>(5, Optional.of(ITEMS.get(HEALING_HERB)))),
                     List.of(
                             new SelectionValue<>(65, Optional.empty()),
-                            new SelectionValue<>(15, Optional.of(ITEMS.get("DAGGER"))),
-                            new SelectionValue<>(20, Optional.of(ITEMS.get("SPEAR")))
+                            new SelectionValue<>(15, Optional.of(ITEMS.get(DAGGER))),
+                            new SelectionValue<>(20, Optional.of(ITEMS.get(SPEAR)))
                     )),
-            "GHOUL", List.of(
+            GHOUL.name(), List.of(
                     List.of(
                             new SelectionValue<>(80, Optional.empty()),
-                            new SelectionValue<>(20, Optional.of(ITEMS.get("DAGGER")))
+                            new SelectionValue<>(20, Optional.of(ITEMS.get(DAGGER)))
                     ))
-    );
-
-    // Soul chips
-    public static final int SOUL_CHIP_ATTACK_BASE = 50;
-    public static final int SOUL_CHIP_ATTACK_BONUS = 100;
-    public static final int SOUL_CHIP_DEFENSE_BASE = 0;
-    public static final int SOUL_CHIP_DEFENSE_BONUS = 50;
-    public static final int SOUL_CHIP_MIN_DAMAGE_BASE = 1;
-    public static final int SOUL_CHIP_MIN_DAMAGE_BONUS = 1;
-    public static final int SOUL_CHIP_MAX_DAMAGE_BASE = 5;
-    public static final int SOUL_CHIP_MAX_DAMAGE_BONUS = 10;
-    public static final int SOUL_CHIP_INITIATIVE = -1;
-
-    // Summonings
-    //// Energy
-    public static final int ENERGY_PROJECTION_PERCENT = 50;
-
-    //// Animals
-    public static final Map<String, CompanionTemplate> ANIMALS = Map.of(
-            "TAMED_FALCON", CompanionTemplate.builder()
-                    .code("TAMED_FALCON")
-                    .type(ANIMAL)
-                    .attack(75)
-                    .defense(0)
-                    .minDamage(1)
-                    .maxDamage(2)
-                    .health(10)
-                    .initiative(-6)
-                    .build(),
-            "TAMED_DOG", CompanionTemplate.builder()
-                    .code("TAMED_DOG")
-                    .type(ANIMAL)
-                    .attack(70)
-                    .defense(5)
-                    .minDamage(1)
-                    .maxDamage(3)
-                    .health(20)
-                    .initiative(-3)
-                    .build(),
-            "TAMED_WOLF", CompanionTemplate.builder()
-                    .code("TAMED_WOLF")
-                    .type(ANIMAL)
-                    .attack(70)
-                    .defense(5)
-                    .minDamage(1)
-                    .maxDamage(3)
-                    .health(25)
-                    .initiative(-3)
-                    .build(),
-            "TAMED_BEAR", CompanionTemplate.builder()
-                    .code("TAMED_BEAR")
-                    .type(ANIMAL)
-                    .attack(80)
-                    .defense(10)
-                    .minDamage(1)
-                    .maxDamage(5)
-                    .health(40)
-                    .initiative(-2)
-                    .build()
-    );
-
-    public static final List<SelectionValue<Optional<CompanionTemplate>>> ANIMAL_SELECTOR = List.of(
-            new SelectionValue<>(10, Optional.of(ANIMALS.get("TAMED_FALCON"))),
-            new SelectionValue<>(50, Optional.of(ANIMALS.get("TAMED_DOG"))),
-            new SelectionValue<>(35, Optional.of(ANIMALS.get("TAMED_WOLF"))),
-            new SelectionValue<>(5, Optional.of(ANIMALS.get("TAMED_BEAR")))
-    );
-
-    //// Guardian warriors
-    public static final Map<String, CompanionTemplate> GUARDIAN_WARRIORS = Map.of(
-            "HUNTER", CompanionTemplate.builder()
-                    .code("HUNTER")
-                    .type(GUARDIAN_WARRIOR)
-                    .attack(85)
-                    .defense(5)
-                    .minDamage(2)
-                    .maxDamage(6)
-                    .health(75)
-                    .initiative(-9)
-                    .build(),
-            "MILITIA", CompanionTemplate.builder()
-                    .code("MILITIA")
-                    .type(GUARDIAN_WARRIOR)
-                    .attack(85)
-                    .defense(10)
-                    .minDamage(3)
-                    .maxDamage(15)
-                    .health(80)
-                    .initiative(-3)
-                    .build(),
-            "SWORDSMAN", CompanionTemplate.builder()
-                    .code("SWORDSMAN")
-                    .type(GUARDIAN_WARRIOR)
-                    .attack(90)
-                    .defense(25)
-                    .minDamage(5)
-                    .maxDamage(15)
-                    .health(90)
-                    .initiative(-3)
-                    .build()
-    );
-
-    public static final List<SelectionValue<Optional<CompanionTemplate>>> GUARDIAN_WARRIOR_SELECTOR = List.of(
-            new SelectionValue<>(50, Optional.of(GUARDIAN_WARRIORS.get("HUNTER"))),
-            new SelectionValue<>(35, Optional.of(GUARDIAN_WARRIORS.get("MILITIA"))),
-            new SelectionValue<>(15, Optional.of(GUARDIAN_WARRIORS.get("SWORDSMAN")))
-    );
-
-    //// Divine guardians
-    public static final Map<String, CompanionTemplate> DIVINE_GUARDIANS = Map.of(
-            "KNIGHT", CompanionTemplate.builder()
-                    .code("KNIGHT")
-                    .type(DIVINE_GUARDIAN)
-                    .attack(90)
-                    .defense(25)
-                    .minDamage(5)
-                    .maxDamage(20)
-                    .health(100)
-                    .initiative(-4)
-                    .build(),
-            "COMMANDER", CompanionTemplate.builder()
-                    .code("COMMANDER")
-                    .type(DIVINE_GUARDIAN)
-                    .attack(100)
-                    .defense(40)
-                    .minDamage(6)
-                    .maxDamage(24)
-                    .health(120)
-                    .initiative(-5)
-                    .build()
-    );
-
-    public static final List<SelectionValue<Optional<CompanionTemplate>>> DIVINE_GUARDIAN_SELECTOR = List.of(
-            new SelectionValue<>(1, Optional.empty()),
-            new SelectionValue<>(96, Optional.of(DIVINE_GUARDIANS.get("KNIGHT"))),
-            new SelectionValue<>(3, Optional.of(DIVINE_GUARDIANS.get("COMMANDER")))
     );
 
 }

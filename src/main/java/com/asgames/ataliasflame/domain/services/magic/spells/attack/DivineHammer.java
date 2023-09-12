@@ -20,8 +20,8 @@ import static com.asgames.ataliasflame.domain.utils.DiceUtils.successX;
 @Component
 public class DivineHammer extends SpellEffect {
 
-    public static final int CROSSFIRE_EFFECT_CHANCE = 10;
-    public static final int CROSSFIRE_EFFECT_RATIO = 50;
+    private static final int CROSSFIRE_EFFECT_CHANCE = 10;
+    private static final int CROSSFIRE_EFFECT_RATIO = 50;
 
     private final Spell spell = SPELLS.get(spellName);
 

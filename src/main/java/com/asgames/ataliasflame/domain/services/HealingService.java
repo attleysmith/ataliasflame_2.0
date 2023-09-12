@@ -7,12 +7,13 @@ import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static com.asgames.ataliasflame.domain.MockConstants.HEALING_EFFECT_OF_SLEEP;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.HealthRecoveryEvent.healthRecovery;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CompanionEvents.CompanionHealingEvent.companionHealing;
 
 @Service
 public class HealingService {
+
+    private static final int HEALING_EFFECT_OF_SLEEP = 20;
 
     @Autowired
     private StoryLineLogger storyLineLogger;

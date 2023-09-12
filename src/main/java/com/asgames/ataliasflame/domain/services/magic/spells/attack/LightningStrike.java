@@ -24,8 +24,9 @@ import static java.util.stream.Collectors.toList;
 @Component
 public class LightningStrike extends SpellEffect {
 
-    public static final int CHAINING_EFFECT_CHANCE = 25;
-    public static final int CHAINING_EFFECT_RATIO = 49;
+    private static final int CHAINING_EFFECT_CHANCE = 25;
+    private static final int CHAINING_EFFECT_RATIO = 49;
+
     private final Spell spell = SPELLS.get(spellName);
 
     public LightningStrike() {

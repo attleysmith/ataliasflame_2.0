@@ -1,24 +1,26 @@
 package com.asgames.ataliasflame.domain.services.magic.spells.curse;
 
-import com.asgames.ataliasflame.domain.model.dtos.Modifier;
 import com.asgames.ataliasflame.domain.model.dtos.Spell;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.services.magic.spells.SpellEffect;
 import org.springframework.stereotype.Component;
 
-import static com.asgames.ataliasflame.domain.MockConstants.MODIFIERS;
 import static com.asgames.ataliasflame.domain.MockConstants.SPELLS;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.SOUL_STRIKE;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasted;
 import static com.asgames.ataliasflame.domain.services.storyline.events.MonsterEvents.CurseCastingEvent.curseCasting;
 import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.WarningReportCause.OCCUPIED_SOULS;
-import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.WarningReportCause.UNNECESSARY_CURSE_ATTACK;
 import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.warningReport;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.calculate;
 
 @Component
 public class SoulStrike extends SpellEffect {
+
+    private static final int ATTACK_MULTIPLIER = -10;
+    private static final int DEFENSE_MULTIPLIER = -10;
+    private static final int DAMAGE_MULTIPLIER = -10;
+    private static final int HEALTH_MULTIPLIER = -2;
 
     private final Spell spell = SPELLS.get(spellName);
 
@@ -34,26 +36,21 @@ public class SoulStrike extends SpellEffect {
             character.getMagic().use(spell.getCost());
             storyLineLogger.event(spellCasted(character, spell));
 
-            if (targetMonster.isDead()) {
-                storyLineLogger.event(warningReport(UNNECESSARY_CURSE_ATTACK));
-                return;
+            if (targetMonster.isAlive()) {
+                int oldAttack = targetMonster.getAttack();
+                int oldDefense = targetMonster.getDefense();
+                int oldMinDamage = targetMonster.getMinDamage();
+                int oldMaxDamage = targetMonster.getMaxDamage();
+                int oldHealth = targetMonster.getHealth().totalValue();
+
+                targetMonster.setAttack(calculate(oldAttack, ATTACK_MULTIPLIER));
+                targetMonster.setDefense(calculate(oldDefense, DEFENSE_MULTIPLIER));
+                targetMonster.setMinDamage(calculate(oldMinDamage, DAMAGE_MULTIPLIER));
+                targetMonster.setMaxDamage(calculate(oldMaxDamage, DAMAGE_MULTIPLIER));
+                targetMonster.getHealth().set(calculate(oldHealth, HEALTH_MULTIPLIER));
+
+                storyLineLogger.event(curseCasting(targetMonster, spellName.name(), oldAttack, oldDefense, oldMinDamage, oldMaxDamage, oldHealth));
             }
-
-            int oldAttack = targetMonster.getAttack();
-            int oldDefense = targetMonster.getDefense();
-            int oldMinDamage = targetMonster.getMinDamage();
-            int oldMaxDamage = targetMonster.getMaxDamage();
-            int oldHealth = targetMonster.getHealth().totalValue();
-
-            String curse = spellName.name();
-            Modifier modifier = MODIFIERS.get(curse);
-            targetMonster.setAttack(calculate(oldAttack, modifier.getAttackMultiplier()));
-            targetMonster.setDefense(calculate(oldDefense, modifier.getDefenseMultiplier()));
-            targetMonster.setMinDamage(calculate(oldMinDamage, modifier.getDamageMultiplier()));
-            targetMonster.setMaxDamage(calculate(oldMaxDamage, modifier.getDamageMultiplier()));
-            targetMonster.getHealth().set(calculate(oldHealth, modifier.getHealthMultiplier()));
-
-            storyLineLogger.event(curseCasting(targetMonster, curse, oldAttack, oldDefense, oldMinDamage, oldMaxDamage, oldHealth));
         }
     }
 }

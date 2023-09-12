@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import static com.asgames.ataliasflame.domain.MockConstants.*;
+import static com.asgames.ataliasflame.domain.model.enums.ItemCode.FIST;
 import static com.asgames.ataliasflame.domain.model.enums.ItemType.*;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.ArmorChangeEvent.newArmor;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.EatingEvent.eating;
@@ -130,7 +131,7 @@ public class InventoryService {
     public void takeShield(Character character, Shield shield) {
         Weapon oldWeapon = character.getWeapon();
         if (!oldWeapon.isOneHanded()) {
-            Weapon newWeapon = WEAPONS.get("FIST").instance();
+            Weapon newWeapon = WEAPONS.get(FIST).instance();
             newWeapon.belongsTo(character);
             storyLineLogger.event(newWeapon(character, oldWeapon));
         }

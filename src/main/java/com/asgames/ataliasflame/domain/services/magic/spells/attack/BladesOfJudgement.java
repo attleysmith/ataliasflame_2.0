@@ -1,6 +1,5 @@
 package com.asgames.ataliasflame.domain.services.magic.spells.attack;
 
-import com.asgames.ataliasflame.domain.model.dtos.Modifier;
 import com.asgames.ataliasflame.domain.model.dtos.Spell;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
@@ -8,7 +7,6 @@ import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
 import com.asgames.ataliasflame.domain.services.magic.spells.SpellEffect;
 import org.springframework.stereotype.Component;
 
-import static com.asgames.ataliasflame.domain.MockConstants.MODIFIERS;
 import static com.asgames.ataliasflame.domain.MockConstants.SPELLS;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.BLADES_OF_JUDGEMENT;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasted;
@@ -22,7 +20,10 @@ import static com.asgames.ataliasflame.domain.utils.DiceUtils.successX;
 @Component
 public class BladesOfJudgement extends SpellEffect {
 
-    public static final int INTIMIDATION_EFFECT_CHANCE = 60;
+    private static final int INTIMIDATION_EFFECT_CHANCE = 60;
+    private static final int INTIMIDATION_ATTACK_MULTIPLIER = -30;
+    private static final int INTIMIDATION_DEFENSE_MULTIPLIER = -20;
+
     private final Spell spell = SPELLS.get(spellName);
 
     public BladesOfJudgement() {
@@ -58,12 +59,8 @@ public class BladesOfJudgement extends SpellEffect {
         int oldMaxDamage = monster.getMaxDamage();
         int oldHealth = monster.getHealth().totalValue();
 
-        Modifier modifier = MODIFIERS.get("INTIMIDATION");
-        monster.setAttack(calculate(oldAttack, modifier.getAttackMultiplier()));
-        monster.setDefense(calculate(oldDefense, modifier.getDefenseMultiplier()));
-        monster.setMinDamage(calculate(oldMinDamage, modifier.getDamageMultiplier()));
-        monster.setMaxDamage(calculate(oldMaxDamage, modifier.getDamageMultiplier()));
-        monster.getHealth().set(calculate(oldHealth, modifier.getHealthMultiplier()));
+        monster.setAttack(calculate(oldAttack, INTIMIDATION_ATTACK_MULTIPLIER));
+        monster.setDefense(calculate(oldDefense, INTIMIDATION_DEFENSE_MULTIPLIER));
 
         storyLineLogger.event(intimidation(monster, oldAttack, oldDefense, oldMinDamage, oldMaxDamage, oldHealth));
     }

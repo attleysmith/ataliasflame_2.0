@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
-import static com.asgames.ataliasflame.domain.MockConstants.*;
+import static com.asgames.ataliasflame.domain.MockConstants.CASTE_DETAILS;
+import static com.asgames.ataliasflame.domain.MockConstants.LEVEL_ATTRIBUTE_POINTS;
+import static com.asgames.ataliasflame.domain.model.enums.Caste.ROGUE;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.CharacterReportCause.INIT;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.characterReport;
 
@@ -66,7 +68,7 @@ public class CharacterInitializer {
     }
 
     private void setStartingCaste(Character character) {
-        character.setCaste(STARTING_CASTE);
+        character.setCaste(ROGUE);
     }
 
     private void setStartingAttributes(Character character) {

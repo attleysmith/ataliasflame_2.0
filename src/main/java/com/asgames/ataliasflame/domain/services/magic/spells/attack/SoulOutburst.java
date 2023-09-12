@@ -21,7 +21,8 @@ import static com.asgames.ataliasflame.domain.utils.DiceUtils.successX;
 @Component
 public class SoulOutburst extends SpellEffect {
 
-    public static final int NOVA_EFFECT_CHANCE = 5;
+    private static final int NOVA_EFFECT_CHANCE = 5;
+
     private final Spell spell = SPELLS.get(spellName);
 
     public SoulOutburst() {

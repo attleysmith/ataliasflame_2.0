@@ -15,6 +15,7 @@ import static com.asgames.ataliasflame.domain.MockConstants.WEAPONS;
 import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
 import static com.asgames.ataliasflame.domain.model.enums.Gender.MALE;
 import static com.asgames.ataliasflame.domain.model.enums.God.ALATE;
+import static com.asgames.ataliasflame.domain.model.enums.ItemCode.DAGGER;
 import static com.asgames.ataliasflame.domain.model.enums.Race.HUMAN;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -220,7 +221,7 @@ class AttributeServiceTest {
     }
 
     private void addDagger() {
-        WEAPONS.get("DAGGER").instance().belongsTo(character);
+        WEAPONS.get(DAGGER).instance().belongsTo(character);
         character.setArmor(null);
         character.setShield(null);
 

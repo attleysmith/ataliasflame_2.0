@@ -19,10 +19,11 @@ import static com.asgames.ataliasflame.domain.utils.DiceUtils.successX;
 @Component
 public class Fireball extends SpellEffect {
 
-    public static final int AREA_EFFECT_CHANCE = 30;
-    public static final int AREA_EFFECT_RATIO = 60;
-    public static final int BLAST_EFFECT_CHANCE = 60;
-    public static final int BLAST_EFFECT_RATIO = 20;
+    private static final int AREA_EFFECT_CHANCE = 30;
+    private static final int AREA_EFFECT_RATIO = 60;
+    private static final int BLAST_EFFECT_CHANCE = 60;
+    private static final int BLAST_EFFECT_RATIO = 20;
+
     private final Spell spell = SPELLS.get(spellName);
 
     public Fireball() {

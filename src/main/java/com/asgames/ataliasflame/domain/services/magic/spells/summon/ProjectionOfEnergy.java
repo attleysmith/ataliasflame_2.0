@@ -21,7 +21,8 @@ import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.percent;
 @Component
 public class ProjectionOfEnergy extends SpellEffect {
 
-    public static final int ENERGY_PROJECTION_PERCENT = 50;
+    private static final int ENERGY_PROJECTION_PERCENT = 50;
+
     private final Spell spell = SPELLS.get(spellName);
 
     public ProjectionOfEnergy() {

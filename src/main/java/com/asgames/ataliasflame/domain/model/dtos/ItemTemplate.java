@@ -1,5 +1,6 @@
 package com.asgames.ataliasflame.domain.model.dtos;
 
+import com.asgames.ataliasflame.domain.model.enums.ItemCode;
 import com.asgames.ataliasflame.domain.model.enums.ItemType;
 import lombok.Builder;
 import lombok.Data;
@@ -8,6 +9,6 @@ import lombok.Data;
 @Data
 public class ItemTemplate {
 
-    private final String code;
+    private final ItemCode code;
     private final ItemType type;
 }

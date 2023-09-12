@@ -9,13 +9,22 @@ import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
-import static com.asgames.ataliasflame.domain.MockConstants.*;
 import static com.asgames.ataliasflame.domain.model.enums.SoulChipShape.valueByOrder;
 import static com.asgames.ataliasflame.domain.services.storyline.events.SoulChipEvents.SoulChipUpgradeEvent.soulChipUpgrade;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.percent;
 
 @Service
 public class SoulChipService {
+
+    private static final int SOUL_CHIP_ATTACK_BASE = 50;
+    private static final int SOUL_CHIP_ATTACK_BONUS = 100;
+    private static final int SOUL_CHIP_DEFENSE_BASE = 0;
+    private static final int SOUL_CHIP_DEFENSE_BONUS = 50;
+    private static final int SOUL_CHIP_MIN_DAMAGE_BASE = 1;
+    private static final int SOUL_CHIP_MIN_DAMAGE_BONUS = 1;
+    private static final int SOUL_CHIP_MAX_DAMAGE_BASE = 5;
+    private static final int SOUL_CHIP_MAX_DAMAGE_BONUS = 10;
+    private static final int SOUL_CHIP_INITIATIVE = -1;
 
     @Autowired
     private StoryLineLogger storyLineLogger;

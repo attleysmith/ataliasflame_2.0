@@ -20,8 +20,9 @@ import static com.asgames.ataliasflame.domain.utils.DiceUtils.successX;
 @Component
 public class Inferno extends SpellEffect {
 
-    public static final int AREA_EFFECT_CHANCE = 60;
-    public static final int AREA_EFFECT_RATIO = 80;
+    private static final int AREA_EFFECT_CHANCE = 60;
+    private static final int AREA_EFFECT_RATIO = 80;
+
     private final Spell spell = SPELLS.get(spellName);
 
     public Inferno() {

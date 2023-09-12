@@ -20,8 +20,9 @@ import static com.asgames.ataliasflame.domain.utils.DiceUtils.successX;
 @Component
 public class GlacialBlow extends SpellEffect {
 
-    public static final int CROSSFIRE_EFFECT_CHANCE = 15;
-    public static final int CROSSFIRE_EFFECT_RATIO = 80;
+    private static final int CROSSFIRE_EFFECT_CHANCE = 15;
+    private static final int CROSSFIRE_EFFECT_RATIO = 80;
+
     private final Spell spell = SPELLS.get(spellName);
 
     public GlacialBlow() {

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 import static com.asgames.ataliasflame.domain.MockConstants.SPELLS;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.HEALING_WAVE;
-import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasted;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 
 @Component
 public class HealingWave extends SpellEffect {
@@ -29,7 +29,7 @@ public class HealingWave extends SpellEffect {
     @Override
     public void enforce(Character character, @Nullable Monster targetMonster) {
         character.getMagic().use(spell.getCost());
-        storyLineLogger.event(spellCasted(character, spell));
+        storyLineLogger.event(spellCasting(character, spell));
 
         healingService.heal(character, spell.getHealingEffect());
         character.getCompanions().stream()

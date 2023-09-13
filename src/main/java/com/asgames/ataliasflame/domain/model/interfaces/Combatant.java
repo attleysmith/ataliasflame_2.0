@@ -39,4 +39,8 @@ public interface Combatant {
     default Optional<Armor> getArmor() {
         return Optional.empty();
     }
+
+    default String shortRef() {
+        return getReference().substring(0, 8);
+    }
 }

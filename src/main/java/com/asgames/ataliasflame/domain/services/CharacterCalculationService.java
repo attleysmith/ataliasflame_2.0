@@ -1,7 +1,9 @@
 package com.asgames.ataliasflame.domain.services;
 
 import com.asgames.ataliasflame.domain.model.dtos.Modifier;
+import com.asgames.ataliasflame.domain.model.entities.Armor;
 import com.asgames.ataliasflame.domain.model.entities.Character;
+import com.asgames.ataliasflame.domain.model.entities.Shield;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.utils.CalculatorUtils;
 import org.springframework.stereotype.Service;
@@ -77,8 +79,8 @@ public class CharacterCalculationService {
     private int actualDefense(Character character) {
         return BASE_DEFENSE
                 + character.getWeapon().getDefense()
-                + (character.getShield().isEmpty() ? 0 : character.getShield().get().getDefense())
-                + (character.getArmor().isEmpty() ? 0 : character.getArmor().get().getDefense());
+                + character.getShield().map(Shield::getDefense).orElse(0)
+                + character.getArmor().map(Armor::getDefense).orElse(0);
     }
 
     private static class PropertyCalculator {

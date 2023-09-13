@@ -102,16 +102,21 @@ public final class Decisions {
     }
 
     public static boolean needToChangeWeapon(Character character, Weapon newWeapon) {
-        return newWeapon.isBetterThan(character.getWeapon());
+        return newWeapon.averageDamage() > character.getWeapon().averageDamage();
     }
 
     public static boolean needToChangeShield(Character character, Shield newShield) {
-        return (character.getShield().isEmpty() || newShield.isBetterThan(character.getShield().get()))
-                && character.getWeapon().isOneHanded();
+        return character.getWeapon().isOneHanded() && character.getShield()
+                .map(oldShield -> newShield.lastsLonger(oldShield)
+                        || (newShield.sameDurable(oldShield) && newShield.getDefense() > oldShield.getDefense()))
+                .orElse(true);
     }
 
     public static boolean needToChangeArmor(Character character, Armor newArmor) {
-        return character.getArmor().isEmpty() || newArmor.isBetterThan(character.getArmor().get());
+        return character.getArmor()
+                .map(oldArmor -> newArmor.lastsLonger(oldArmor)
+                        || (newArmor.sameDurable(oldArmor) && newArmor.getDefense() > oldArmor.getDefense()))
+                .orElse(true);
     }
 
     public static boolean noNeedToRecover(Character character) {

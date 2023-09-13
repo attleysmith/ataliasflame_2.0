@@ -33,10 +33,6 @@ public class Shield extends Item implements AbsorptionDefense {
     })
     private Energy durability;
 
-    public boolean isBetterThan(Shield otherShield) {
-        return this.getDurability().actualValue() > otherShield.getDurability().actualValue();
-    }
-
     public void belongsTo(Character character) {
         character.setShield(this);
     }

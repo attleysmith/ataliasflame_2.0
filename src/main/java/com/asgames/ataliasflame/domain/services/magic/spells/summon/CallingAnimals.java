@@ -15,7 +15,7 @@ import java.util.Optional;
 import static com.asgames.ataliasflame.domain.MockConstants.SPELLS;
 import static com.asgames.ataliasflame.domain.model.enums.AnimalTemplate.*;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.CALLING_ANIMALS;
-import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasted;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CompanionEvents.CompanionSummoningEvent.summoning;
 import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.DebugEvent.DebugReportCause.NO_ANIMAL_APPEARED;
 import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.DebugEvent.debugReport;
@@ -41,7 +41,7 @@ public class CallingAnimals extends SpellEffect {
     @Override
     public void enforce(Character character, @Nullable Monster targetMonster) {
         character.getMagic().use(spell.getCost());
-        storyLineLogger.event(spellCasted(character, spell));
+        storyLineLogger.event(spellCasting(character, spell));
 
         choose(ANIMAL_SELECTOR)
                 .map(animalSummoned -> animalSummoned.instance(character))

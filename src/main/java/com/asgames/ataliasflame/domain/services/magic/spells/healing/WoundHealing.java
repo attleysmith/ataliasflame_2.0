@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 import static com.asgames.ataliasflame.domain.MockConstants.SPELLS;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.WOUND_HEALING;
-import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasted;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 
 @Component
 public class WoundHealing extends SpellEffect {
@@ -28,7 +28,7 @@ public class WoundHealing extends SpellEffect {
     @Override
     public void enforce(Character character, @Nullable Monster targetMonster) {
         character.getMagic().use(spell.getCost());
-        storyLineLogger.event(spellCasted(character, spell));
+        storyLineLogger.event(spellCasting(character, spell));
 
         healingService.heal(character, spell.getHealingEffect());
     }

@@ -14,7 +14,7 @@ import java.util.UUID;
 import static com.asgames.ataliasflame.domain.MockConstants.SPELLS;
 import static com.asgames.ataliasflame.domain.model.enums.CompanionType.ENERGY_PROJECTION;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.PROJECTION_OF_ENERGY;
-import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasted;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CompanionEvents.CompanionSummoningEvent.summoning;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.percent;
 
@@ -32,7 +32,7 @@ public class ProjectionOfEnergy extends SpellEffect {
     @Override
     public void enforce(Character character, @Nullable Monster targetMonster) {
         character.getMagic().use(spell.getCost());
-        storyLineLogger.event(spellCasted(character, spell));
+        storyLineLogger.event(spellCasting(character, spell));
 
         Companion companion = Companion.builder()
                 .reference(UUID.randomUUID().toString())

@@ -15,7 +15,7 @@ import java.util.List;
 import static com.asgames.ataliasflame.domain.MockConstants.SPELLS;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.SOUL_CONNECTION;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.BlessingEvent.blessing;
-import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasted;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.WarningReportCause.OCCUPIED_SOULS;
 import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.warningReport;
 
@@ -38,7 +38,7 @@ public class SoulConnection extends SpellEffect {
             storyLineLogger.event(warningReport(OCCUPIED_SOULS));
         } else {
             character.getMagic().use(spell.getCost());
-            storyLineLogger.event(spellCasted(character, spell));
+            storyLineLogger.event(spellCasting(character, spell));
 
             String blessing = unusedSouls.get(0).getShape().name();
             if (!character.getBlessings().contains(blessing)) {

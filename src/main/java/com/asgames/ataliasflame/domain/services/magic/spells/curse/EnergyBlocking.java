@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import static com.asgames.ataliasflame.domain.MockConstants.SPELLS;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.ENERGY_BLOCKING;
-import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasted;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 import static com.asgames.ataliasflame.domain.services.storyline.events.MonsterEvents.CurseCastingEvent.curseCasting;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.calculate;
 
@@ -28,7 +28,7 @@ public class EnergyBlocking extends SpellEffect {
     @Override
     public void enforce(Character character, Monster targetMonster) {
         character.getMagic().use(spell.getCost());
-        storyLineLogger.event(spellCasted(character, spell));
+        storyLineLogger.event(spellCasting(character, spell));
 
         if (targetMonster.isAlive()) {
             int oldAttack = targetMonster.getAttack();

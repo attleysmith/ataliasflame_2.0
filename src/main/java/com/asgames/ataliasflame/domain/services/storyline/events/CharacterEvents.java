@@ -176,7 +176,7 @@ public final class CharacterEvents {
             this.oldWeapon = oldWeapon;
         }
 
-        public static WeaponChangeEvent newWeapon(Character character, Weapon oldWeapon) {
+        public static WeaponChangeEvent weaponChange(Character character, Weapon oldWeapon) {
             return new WeaponChangeEvent(character, oldWeapon);
         }
 
@@ -195,7 +195,7 @@ public final class CharacterEvents {
             this.oldShield = oldShield;
         }
 
-        public static ShieldChangeEvent newShield(Character character, Shield oldShield) {
+        public static ShieldChangeEvent shieldChange(Character character, Shield oldShield) {
             return new ShieldChangeEvent(character, oldShield);
         }
 
@@ -220,7 +220,7 @@ public final class CharacterEvents {
             this.oldArmor = oldArmor;
         }
 
-        public static ArmorChangeEvent newArmor(Character character, Armor oldArmor) {
+        public static ArmorChangeEvent armorChange(Character character, Armor oldArmor) {
             return new ArmorChangeEvent(character, oldArmor);
         }
 
@@ -245,7 +245,7 @@ public final class CharacterEvents {
             this.spell = spell;
         }
 
-        public static SpellCastingEvent spellCasted(Character character, Spell spell) {
+        public static SpellCastingEvent spellCasting(Character character, Spell spell) {
             return new SpellCastingEvent(character, spell);
         }
 

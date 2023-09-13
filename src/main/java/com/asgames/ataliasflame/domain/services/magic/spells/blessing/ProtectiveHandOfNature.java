@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import static com.asgames.ataliasflame.domain.MockConstants.SPELLS;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.PROTECTIVE_HAND_OF_NATURE;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.BlessingEvent.blessing;
-import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasted;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 
 @Component
 public class ProtectiveHandOfNature extends SpellEffect {
@@ -29,7 +29,7 @@ public class ProtectiveHandOfNature extends SpellEffect {
     @Override
     public void enforce(Character character, @Nullable Monster targetMonster) {
         character.getMagic().use(spell.getCost());
-        storyLineLogger.event(spellCasted(character, spell));
+        storyLineLogger.event(spellCasting(character, spell));
 
         String blessing = spellName.name();
         if (!character.getBlessings().contains(blessing)) {

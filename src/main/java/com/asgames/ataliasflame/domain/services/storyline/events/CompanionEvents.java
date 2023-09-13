@@ -31,7 +31,7 @@ public final class CompanionEvents {
 
         @Override
         public String message() {
-            return companion.getName() + " (" + companion.getReference() + ") summoned as companion.";
+            return companion.getName() + " (" + companion.shortRef() + ") summoned as companion.";
         }
     }
 
@@ -49,7 +49,7 @@ public final class CompanionEvents {
 
         @Override
         public String message() {
-            return "Healing " + companion.getName() + " (" + companion.getReference() + "): "
+            return "Healing " + companion.getName() + " (" + companion.shortRef() + "): "
                     + oldHealth + " -> " + companion.getHealth().actualValue();
         }
     }

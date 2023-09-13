@@ -16,7 +16,7 @@ import static com.asgames.ataliasflame.domain.MockConstants.SPELLS;
 import static com.asgames.ataliasflame.domain.model.enums.DivineGuardianTemplate.COMMANDER;
 import static com.asgames.ataliasflame.domain.model.enums.DivineGuardianTemplate.KNIGHT;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.FRIEND_IN_NEED;
-import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasted;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CompanionEvents.CompanionSummoningEvent.summoning;
 import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.DebugEvent.DebugReportCause.NO_DIVINE_GUARDIAN_APPEARED;
 import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.DebugEvent.debugReport;
@@ -40,7 +40,7 @@ public class FriendInNeed extends SpellEffect {
     @Override
     public void enforce(Character character, @Nullable Monster targetMonster) {
         character.getMagic().use(spell.getCost());
-        storyLineLogger.event(spellCasted(character, spell));
+        storyLineLogger.event(spellCasting(character, spell));
 
         choose(DIVINE_GUARDIAN_SELECTOR)
                 .map(guardianSummoned -> guardianSummoned.instance(character))

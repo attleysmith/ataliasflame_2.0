@@ -33,10 +33,6 @@ public class Armor extends Item implements AbsorptionDefense {
     })
     private Energy durability;
 
-    public boolean isBetterThan(Armor otherArmor) {
-        return this.getDurability().actualValue() > otherArmor.getDurability().actualValue();
-    }
-
     public void belongsTo(Character character) {
         character.setArmor(this);
     }

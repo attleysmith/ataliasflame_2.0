@@ -47,6 +47,8 @@ public class CharacterAdventureService {
         storyLineLogger.event(debugReport(SLEEPING));
         healingService.sleep(character);
         magicService.sleep(character);
+        character.getCompanions().forEach(companion ->
+                healingService.companionSleep(companion));
         return characterRepository.save(character);
     }
 

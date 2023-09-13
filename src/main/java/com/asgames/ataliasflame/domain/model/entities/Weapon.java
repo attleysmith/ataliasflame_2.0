@@ -29,10 +29,6 @@ public class Weapon extends Item {
     @Column(name = "oneHanded")
     private boolean oneHanded;
 
-    public boolean isBetterThan(Weapon otherWeapon) {
-        return this.averageDamage() > otherWeapon.averageDamage();
-    }
-
     public void belongsTo(Character character) {
         character.setWeapon(this);
     }

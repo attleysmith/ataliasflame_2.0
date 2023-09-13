@@ -19,10 +19,10 @@ import static com.asgames.ataliasflame.domain.model.enums.ArmorTemplate.*;
 import static com.asgames.ataliasflame.domain.model.enums.ItemType.*;
 import static com.asgames.ataliasflame.domain.model.enums.ShieldTemplate.*;
 import static com.asgames.ataliasflame.domain.model.enums.WeaponTemplate.*;
-import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.ArmorChangeEvent.newArmor;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.ArmorChangeEvent.armorChange;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.EatingEvent.eating;
-import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.ShieldChangeEvent.newShield;
-import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.WeaponChangeEvent.newWeapon;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.ShieldChangeEvent.shieldChange;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.WeaponChangeEvent.weaponChange;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.choose;
 
 @Service
@@ -122,14 +122,14 @@ public class InventoryService {
         character.getShield().ifPresent(oldShield -> {
             if (!newWeapon.isOneHanded()) {
                 character.setShield(null);
-                storyLineLogger.event(newShield(character, oldShield));
+                storyLineLogger.event(shieldChange(character, oldShield));
             }
         });
 
         Weapon oldWeapon = character.getWeapon();
         newWeapon.belongsTo(character);
         characterCalculationService.recalculateProperties(character);
-        storyLineLogger.event(newWeapon(character, oldWeapon));
+        storyLineLogger.event(weaponChange(character, oldWeapon));
     }
 
     public void takeShield(Character character, Shield shield) {
@@ -137,19 +137,19 @@ public class InventoryService {
         if (!oldWeapon.isOneHanded()) {
             Weapon newWeapon = FIST.instance();
             newWeapon.belongsTo(character);
-            storyLineLogger.event(newWeapon(character, oldWeapon));
+            storyLineLogger.event(weaponChange(character, oldWeapon));
         }
 
         Shield oldShield = character.getShield().orElse(null);
         shield.belongsTo(character);
         characterCalculationService.recalculateProperties(character);
-        storyLineLogger.event(newShield(character, oldShield));
+        storyLineLogger.event(shieldChange(character, oldShield));
     }
 
     public void takeArmor(Character character, Armor armor) {
         Armor oldArmor = character.getArmor().orElse(null);
         armor.belongsTo(character);
         characterCalculationService.recalculateProperties(character);
-        storyLineLogger.event(newArmor(character, oldArmor));
+        storyLineLogger.event(armorChange(character, oldArmor));
     }
 }

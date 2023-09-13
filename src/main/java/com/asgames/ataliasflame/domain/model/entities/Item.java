@@ -22,10 +22,10 @@ public class Item {
 
     @Id
     @Column(name = "reference")
-    private String reference;
+    protected String reference;
     @Column(name = "code")
-    private String code;
+    protected String code;
     @Column(name = "type")
     @Enumerated(STRING)
-    private ItemType type;
+    protected ItemType type;
 }

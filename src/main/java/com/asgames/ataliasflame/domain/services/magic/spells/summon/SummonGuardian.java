@@ -15,7 +15,7 @@ import java.util.Optional;
 import static com.asgames.ataliasflame.domain.MockConstants.SPELLS;
 import static com.asgames.ataliasflame.domain.model.enums.GuardianWarriorTemplate.*;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.SUMMON_GUARDIAN;
-import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasted;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CompanionEvents.CompanionSummoningEvent.summoning;
 import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.DebugEvent.DebugReportCause.NO_GUARDIAN_WARRIOR_APPEARED;
 import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.DebugEvent.debugReport;
@@ -41,7 +41,7 @@ public class SummonGuardian extends SpellEffect {
     @Override
     public void enforce(Character character, @Nullable Monster targetMonster) {
         character.getMagic().use(spell.getCost());
-        storyLineLogger.event(spellCasted(character, spell));
+        storyLineLogger.event(spellCasting(character, spell));
 
         choose(GUARDIAN_WARRIOR_SELECTOR)
                 .map(guardianSummoned -> guardianSummoned.instance(character))

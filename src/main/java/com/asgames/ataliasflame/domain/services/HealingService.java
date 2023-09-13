@@ -22,6 +22,10 @@ public class HealingService {
         heal(character, HEALING_EFFECT_OF_SLEEP);
     }
 
+    public void companionSleep(Companion companion) {
+        healCompanion(companion, HEALING_EFFECT_OF_SLEEP);
+    }
+
     public void eat(Character character, Food food) {
         heal(character, food.getHealingEffect());
     }

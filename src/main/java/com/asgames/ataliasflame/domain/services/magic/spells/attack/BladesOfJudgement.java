@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import static com.asgames.ataliasflame.domain.MockConstants.SPELLS;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.BLADES_OF_JUDGEMENT;
-import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasted;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CombatEvents.CombatDamageEvent.DamageType.DIRECT;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CombatEvents.CombatDamageEvent.combatDamage;
 import static com.asgames.ataliasflame.domain.services.storyline.events.MonsterEvents.IntimidationEvent.intimidation;
@@ -33,7 +33,7 @@ public class BladesOfJudgement extends SpellEffect {
     @Override
     public void enforce(Character character, Monster targetMonster) {
         character.getMagic().use(spell.getCost());
-        storyLineLogger.event(spellCasted(character, spell));
+        storyLineLogger.event(spellCasting(character, spell));
 
         if (targetMonster.isAlive()) {
             int damage = pointOut(spell.getMinDamage(), spell.getMaxDamage());

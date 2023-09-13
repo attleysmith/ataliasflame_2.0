@@ -61,6 +61,7 @@ public abstract class EnduranceTestBase {
 
         character = characterMaintenanceService.upgradeCaste(character.getReference(), newCaste);
         refreshUsableSpells();
+        castHealingMagic();
     }
 
     protected void doCombat() {

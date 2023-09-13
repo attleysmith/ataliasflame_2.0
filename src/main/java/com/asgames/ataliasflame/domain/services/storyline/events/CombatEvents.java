@@ -49,8 +49,8 @@ public final class CombatEvents {
         @Override
         public String message() {
             return "-- " + attacker.getCode() +
-                    " (" + attacker.getReference() + ") deals " + damage + " " + damageType + " damage to " + defender.getCode() +
-                    " (" + defender.getReference() + ") | Remaining health: " + defender.getHealth().actualValue();
+                    " (" + attacker.shortRef() + ") deals " + damage + " " + damageType + " damage to " + defender.getCode() +
+                    " (" + defender.shortRef() + ") | Remaining health: " + defender.getHealth().actualValue();
         }
     }
 
@@ -67,8 +67,8 @@ public final class CombatEvents {
         @Override
         public String message() {
             return "-- " + attacker.getCode() +
-                    " (" + attacker.getReference() + ") missed " + defender.getCode() +
-                    " (" + defender.getReference() + ") | Remaining health: " + defender.getHealth().actualValue();
+                    " (" + attacker.shortRef() + ") missed " + defender.getCode() +
+                    " (" + defender.shortRef() + ") | Remaining health: " + defender.getHealth().actualValue();
         }
     }
 

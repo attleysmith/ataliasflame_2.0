@@ -5,7 +5,9 @@ import com.asgames.ataliasflame.domain.model.entities.Armor;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.vos.Energy;
+import com.asgames.ataliasflame.domain.services.CharacterCalculationService;
 import com.asgames.ataliasflame.domain.services.magic.spells.SpellEffect;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +22,9 @@ import static com.asgames.ataliasflame.domain.services.storyline.events.Characte
 
 @Component
 public class EnergyShield extends SpellEffect {
+
+    @Autowired
+    private CharacterCalculationService characterCalculationService;
 
     private static final int DEFENSE = 5;
     private static final int ABSORPTION = 100;
@@ -50,6 +55,18 @@ public class EnergyShield extends SpellEffect {
                                 .build()
                                 .belongsTo(character)
                 );
-        storyLineLogger.event(blessing(character, spellName.name()));
+
+        String blessing = spellName.name();
+        if (!character.getBlessings().contains(blessing)) {
+            int originalHealth = character.getHealth().totalValue();
+            int originalMagic = character.getMagic().totalValue();
+            character.getBlessings().add(blessing);
+            characterCalculationService.recalculateProperties(character);
+            character.getHealth().uplift(originalHealth);
+            character.getMagic().uplift(originalMagic);
+        } else {
+            characterCalculationService.recalculateProperties(character);
+        }
+        storyLineLogger.event(blessing(character, blessing));
     }
 }

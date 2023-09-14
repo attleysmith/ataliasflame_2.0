@@ -331,10 +331,10 @@ public final class MockConstants {
 
     public static final Booster DIVINE_PROTECTION_BOOSTER = Booster.builder()
             .effects(Map.of(
-                    STRENGTH, 10,
+                    STRENGTH, 6,
                     DEXTERITY, 0,
-                    CONSTITUTION, 5,
-                    AGILITY, 10,
+                    CONSTITUTION, 0,
+                    AGILITY, 6,
                     INTELLIGENCE, 0,
                     LORE, 0,
                     MENTAL_POWER, 0,
@@ -345,9 +345,9 @@ public final class MockConstants {
     public static final Booster STRENGTHENING_BOOSTER = Booster.builder()
             .effects(Map.of(
                     STRENGTH, 5,
-                    DEXTERITY, 2,
-                    CONSTITUTION, 1,
-                    AGILITY, 2,
+                    DEXTERITY, 0,
+                    CONSTITUTION, 0,
+                    AGILITY, 4,
                     INTELLIGENCE, 0,
                     LORE, 0,
                     MENTAL_POWER, 0,
@@ -397,9 +397,9 @@ public final class MockConstants {
     public static final Booster PROTECTIVE_HAND_OF_NATURE_BOOSTER = Booster.builder()
             .effects(Map.of(
                     STRENGTH, 5,
-                    DEXTERITY, 2,
-                    CONSTITUTION, 1,
-                    AGILITY, 2,
+                    DEXTERITY, 0,
+                    CONSTITUTION, 0,
+                    AGILITY, 4,
                     INTELLIGENCE, 0,
                     LORE, 0,
                     MENTAL_POWER, 0,
@@ -887,7 +887,7 @@ public final class MockConstants {
                     .name(DIVINE_PROTECTION)
                     .type(BLESSING)
                     .group(DIVINE)
-                    .cost(10)
+                    .cost(8)
                     .build()),
             Map.entry(STRENGTHENING, Spell.builder()
                     .name(STRENGTHENING)
@@ -905,13 +905,13 @@ public final class MockConstants {
                     .name(PROTECTIVE_HAND_OF_NATURE)
                     .type(BLESSING)
                     .group(NATURE)
-                    .cost(5)
+                    .cost(3)
                     .build()),
             Map.entry(ENERGY_SHIELD, Spell.builder()
                     .name(ENERGY_SHIELD)
                     .type(BLESSING)
                     .group(ENERGY)
-                    .cost(8)
+                    .cost(6)
                     .build()),
             Map.entry(SOUL_STRIKE, Spell.builder()
                     .name(SOUL_STRIKE)

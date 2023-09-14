@@ -128,6 +128,9 @@ public class CombatService {
         defender.getCover().getPhysicalArmor()
                 .filter(armor -> armor.getDurability().hasOne())
                 .ifPresent(armor -> absorption(armor, remainingDamage));
+        defender.getCover().getDivineArmor()
+                .filter(armor -> armor.getDurability().hasOne())
+                .ifPresent(armor -> absorption(armor, remainingDamage));
         defender.getHealth().damage(remainingDamage.get());
         storyLineLogger.event(combatDamage(attacker, defender, remainingDamage.get()));
     }

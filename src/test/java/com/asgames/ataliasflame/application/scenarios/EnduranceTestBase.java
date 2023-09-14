@@ -142,7 +142,7 @@ public abstract class EnduranceTestBase {
         boolean tryToAttack = true;
         while (tryToAttack && targetMonster.isAlive()) {
             Optional<Spell> attackSpell = chooseAttackSpell(usableSpells.get(ATTACK), character, hasAvailableSoul);
-            if (attackSpell.isPresent() && worthyTarget(targetMonster, attackSpell.get())) {
+            if (attackSpell.isPresent() && worthyTargetOfAttackSpell(targetMonster, attackSpell.get())) {
                 AttackContext attackContext = characterMagicService.castAttackSpell(character.getReference(), attackSpell.get().getName(), targetMonster.getReference());
 
                 character = attackContext.getCharacter();
@@ -162,12 +162,12 @@ public abstract class EnduranceTestBase {
 
     private void castCurseMagic(Monster monster) {
         boolean hasAvailableSoul = !listUnusedSouls().isEmpty();
-        chooseCurseSpell(usableSpells.get(CURSE), character, hasAvailableSoul)
-                .ifPresent(spell -> {
-                    AttackContext attackContext = characterMagicService.castAttackSpell(character.getReference(), spell.getName(), monster.getReference());
+        Optional<Spell> curseSpell = chooseCurseSpell(usableSpells.get(CURSE), character, hasAvailableSoul);
+        if (curseSpell.isPresent() && worthyTargetOfCurseSpell(monster, character)) {
+            AttackContext attackContext = characterMagicService.castAttackSpell(character.getReference(), curseSpell.get().getName(), monster.getReference());
 
-                    character = attackContext.getCharacter();
-                });
+            character = attackContext.getCharacter();
+        }
     }
 
     private void closeCombat() {

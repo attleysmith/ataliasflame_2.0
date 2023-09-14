@@ -43,8 +43,8 @@ public final class Decisions {
 
     public static final Map<SpellName, Integer> BLESSING_PREFERENCES = Map.of(
             DIVINE_PROTECTION, 1,
-            STRENGTHENING, 2,
-            PROTECTIVE_HAND_OF_NATURE, 3,
+            PROTECTIVE_HAND_OF_NATURE, 2,
+            STRENGTHENING, 3,
             SOUL_CONNECTION, 4,
             ENERGY_SHIELD, 5);
 
@@ -74,11 +74,11 @@ public final class Decisions {
                         .map(monster -> monster.getHealth().actualValue())
                         .reduce(0, Integer::sum);
 
-        if (overpowering < -150) return 5;
-        else if (overpowering < -50) return 4;
-        else if (overpowering < 50) return 3;
-        else if (overpowering < 100) return 2;
-        else if (overpowering < 150) return 1;
+        if (overpowering < 0) return 5;
+        else if (overpowering < 50) return 4;
+        else if (overpowering < 150) return 3;
+        else if (overpowering < 300) return 2;
+        else if (overpowering < 500) return 1;
         else return 0;
     }
 
@@ -183,7 +183,11 @@ public final class Decisions {
                 });
     }
 
-    public static boolean worthyTarget(Monster monster, Spell spell) {
+    public static boolean worthyTargetOfAttackSpell(Monster monster, Spell spell) {
         return monster.getHealth().actualValue() >= spell.averageDamage();
+    }
+
+    public static boolean worthyTargetOfCurseSpell(Monster monster, Character character) {
+        return monster.getAttack() > character.getDefense();
     }
 }

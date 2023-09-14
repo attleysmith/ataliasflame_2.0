@@ -26,11 +26,19 @@ public class Cover {
     @OneToOne(cascade = ALL, fetch = EAGER, orphanRemoval = true)
     private Armor energyArmor;
 
+    @JoinColumn(name = "divineArmorId")
+    @OneToOne(cascade = ALL, fetch = EAGER, orphanRemoval = true)
+    private Armor divineArmor;
+
     public Optional<Armor> getPhysicalArmor() {
         return Optional.ofNullable(physicalArmor);
     }
 
     public Optional<Armor> getEnergyArmor() {
         return Optional.ofNullable(energyArmor);
+    }
+
+    public Optional<Armor> getDivineArmor() {
+        return Optional.ofNullable(divineArmor);
     }
 }

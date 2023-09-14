@@ -1,5 +1,6 @@
 package com.asgames.ataliasflame.domain.services;
 
+import com.asgames.ataliasflame.domain.model.dtos.Booster;
 import com.asgames.ataliasflame.domain.model.dtos.Modifier;
 import com.asgames.ataliasflame.domain.model.entities.Armor;
 import com.asgames.ataliasflame.domain.model.entities.Character;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static com.asgames.ataliasflame.domain.MockConstants.BOOSTERS;
 import static com.asgames.ataliasflame.domain.MockConstants.MODIFIERS;
@@ -80,7 +82,8 @@ public class CharacterCalculationService {
                 + character.getWeapon().getDefense()
                 + character.getShield().map(Shield::getDefense).orElse(0)
                 + character.getCover().getEnergyArmor().map(Armor::getDefense).orElse(0)
-                + character.getCover().getPhysicalArmor().map(Armor::getDefense).orElse(0);
+                + character.getCover().getPhysicalArmor().map(Armor::getDefense).orElse(0)
+                + character.getCover().getDivineArmor().map(Armor::getDefense).orElse(0);
     }
 
     private static class PropertyCalculator {
@@ -131,7 +134,11 @@ public class CharacterCalculationService {
                 this.multipliers.add(BOOSTERS.get(ATALIA.name()).getEffects().get(attribute));
             }
             character.getBlessings().forEach(
-                    blessing -> this.multipliers.add(BOOSTERS.get(blessing).getEffects().get(attribute)));
+                    blessing -> this.multipliers.add(
+                            Optional.ofNullable(BOOSTERS.get(blessing))
+                                    .map(Booster::getEffects)
+                                    .map(effect -> effect.get(attribute))
+                                    .orElse(0)));
         }
 
         public static AttributeCalculator of(Character character, Attribute attribute) {

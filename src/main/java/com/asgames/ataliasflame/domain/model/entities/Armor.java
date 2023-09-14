@@ -43,6 +43,7 @@ public class Armor extends Item implements AbsorptionDefense {
         switch (this.armorType) {
             case PHYSICAL -> combatant.getCover().setPhysicalArmor(this);
             case ENERGY -> combatant.getCover().setEnergyArmor(this);
+            case DIVINE -> combatant.getCover().setDivineArmor(this);
             default -> throw new UnsupportedOperationException("Armor type not supported: " + armorType);
         }
     }

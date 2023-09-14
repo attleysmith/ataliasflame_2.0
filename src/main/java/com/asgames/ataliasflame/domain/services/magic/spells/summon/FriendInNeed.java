@@ -21,6 +21,7 @@ import static com.asgames.ataliasflame.domain.services.storyline.events.Companio
 import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.DebugEvent.DebugReportCause.NO_DIVINE_GUARDIAN_APPEARED;
 import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.DebugEvent.debugReport;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.choose;
+import static com.asgames.ataliasflame.domain.utils.DiceUtils.successX;
 
 @Component
 public class FriendInNeed extends SpellEffect {
@@ -30,6 +31,7 @@ public class FriendInNeed extends SpellEffect {
             new SelectionValue<>(96, Optional.of(KNIGHT)),
             new SelectionValue<>(3, Optional.of(COMMANDER))
     );
+    private static final int CHANCE_OF_MORE = 1;
 
     private final Spell spell = SPELLS.get(spellName);
 
@@ -42,12 +44,14 @@ public class FriendInNeed extends SpellEffect {
         character.getMagic().use(spell.getCost());
         storyLineLogger.event(spellCasting(character, spell));
 
-        choose(DIVINE_GUARDIAN_SELECTOR)
-                .map(guardianSummoned -> guardianSummoned.instance(character))
-                .ifPresentOrElse(companion -> {
-                            character.getCompanions().add(companion);
-                            storyLineLogger.event(summoning(companion));
-                        },
-                        () -> storyLineLogger.event(debugReport(NO_DIVINE_GUARDIAN_APPEARED)));
+        do {
+            choose(DIVINE_GUARDIAN_SELECTOR)
+                    .map(guardianSummoned -> guardianSummoned.instance(character))
+                    .ifPresentOrElse(companion -> {
+                                character.getCompanions().add(companion);
+                                storyLineLogger.event(summoning(companion));
+                            },
+                            () -> storyLineLogger.event(debugReport(NO_DIVINE_GUARDIAN_APPEARED)));
+        } while (successX(CHANCE_OF_MORE));
     }
 }

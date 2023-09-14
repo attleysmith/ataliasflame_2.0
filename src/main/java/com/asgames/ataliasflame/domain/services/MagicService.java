@@ -58,6 +58,8 @@ public class MagicService {
 
     public void removeBlessingMagic(Character character) {
         character.setBlessings(null);
+        character.getCover().setEnergyArmor(null);
+        character.getCover().setDivineArmor(null);
         characterCalculationService.recalculateProperties(character);
         if (character.getHealth().isEmpty()) {
             storyLineLogger.event(characterReport(character, DIED_OF_BLESSING_EXPIRY));

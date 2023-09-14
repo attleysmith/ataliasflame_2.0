@@ -13,7 +13,7 @@ public final class DiceUtils {
             return false;
         }
         int hit = roll100();
-        return hit < chance;
+        return hit <= chance;
     }
 
     public static int roll10() {
@@ -27,11 +27,5 @@ public final class DiceUtils {
     public static int roll(int possibilities) {
         Random random = new Random();
         return random.nextInt(possibilities) + 1;
-    }
-
-    public static int diceDuel() {
-        int rollA = roll10();
-        int rollB = roll10();
-        return (rollA < rollB) ? -1 : ((rollA == rollB) ? diceDuel() : 1);
     }
 }

@@ -1,7 +1,6 @@
 package com.asgames.ataliasflame.domain.services;
 
 import com.asgames.ataliasflame.domain.model.dtos.TeamMember;
-import com.asgames.ataliasflame.domain.model.entities.Armor;
 import com.asgames.ataliasflame.domain.model.interfaces.AbsorptionDefense;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
@@ -24,7 +23,6 @@ import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEv
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.percent;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.pointOut;
 import static com.asgames.ataliasflame.domain.utils.DiceUtils.*;
-import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.groupingBy;
 import static org.apache.commons.collections4.ListUtils.union;
 
@@ -124,10 +122,12 @@ public class CombatService {
         defender.getShield()
                 .filter(shield -> shield.getDurability().hasOne())
                 .ifPresent(shield -> absorption(shield, remainingDamage));
-        defender.getArmors().stream()
+        defender.getCover().getEnergyArmor()
                 .filter(armor -> armor.getDurability().hasOne())
-                .sorted(comparing(Armor::getArmorType).reversed())
-                .forEach(armor -> absorption(armor, remainingDamage));
+                .ifPresent(armor -> absorption(armor, remainingDamage));
+        defender.getCover().getPhysicalArmor()
+                .filter(armor -> armor.getDurability().hasOne())
+                .ifPresent(armor -> absorption(armor, remainingDamage));
         defender.getHealth().damage(remainingDamage.get());
         storyLineLogger.event(combatDamage(attacker, defender, remainingDamage.get()));
     }

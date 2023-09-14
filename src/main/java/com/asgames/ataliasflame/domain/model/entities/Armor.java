@@ -8,10 +8,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
-import static com.asgames.ataliasflame.domain.model.enums.ArmorType.PHYSICAL;
 import static com.asgames.ataliasflame.domain.utils.DiceUtils.roll100;
 import static jakarta.persistence.EnumType.STRING;
 
@@ -41,24 +39,12 @@ public class Armor extends Item implements AbsorptionDefense {
     })
     private Energy durability;
 
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    @ManyToOne
-    @JoinColumn(name = "ownerId")
-    private Character owner;
-
-    public void belongsTo(Character character) {
-        this.owner = character;
-        character.getArmors().add(this);
-    }
-
-    public void droppedBy(Combatant combatant) {
-        this.owner = null;
-        combatant.getArmors().removeIf(armor -> armor.getArmorType().equals(this.armorType));
-    }
-
-    public boolean isPhysical() {
-        return armorType.equals(PHYSICAL);
+    public void belongsTo(Combatant combatant) {
+        switch (this.armorType) {
+            case PHYSICAL -> combatant.getCover().setPhysicalArmor(this);
+            case ENERGY -> combatant.getCover().setEnergyArmor(this);
+            default -> throw new UnsupportedOperationException("Armor type not supported: " + armorType);
+        }
     }
 
     public Armor butDamaged() {

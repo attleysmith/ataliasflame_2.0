@@ -79,7 +79,8 @@ public class CharacterCalculationService {
         return BASE_DEFENSE
                 + character.getWeapon().getDefense()
                 + character.getShield().map(Shield::getDefense).orElse(0)
-                + character.getArmors().stream().map(Armor::getDefense).reduce(0, Integer::sum);
+                + character.getCover().getEnergyArmor().map(Armor::getDefense).orElse(0)
+                + character.getCover().getPhysicalArmor().map(Armor::getDefense).orElse(0);
     }
 
     private static class PropertyCalculator {

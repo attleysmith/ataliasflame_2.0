@@ -104,12 +104,20 @@ public class Character implements Combatant {
     @OneToOne(cascade = ALL, fetch = EAGER, orphanRemoval = true)
     private Shield shield;
 
-    @OneToMany(mappedBy = "owner", cascade = ALL, fetch = EAGER, orphanRemoval = true)
-    private Set<Armor> armors;
+    @Embedded
+    private Cover cover;
 
     @Override
     public Optional<Shield> getShield() {
         return Optional.ofNullable(shield);
+    }
+
+    @Override
+    public Cover getCover() {
+        if (cover == null) {
+            cover = new Cover();
+        }
+        return cover;
     }
 
     @Override
@@ -157,12 +165,5 @@ public class Character implements Combatant {
             companions = new HashSet<>();
         }
         return companions;
-    }
-
-    public Set<Armor> getArmors() {
-        if (armors == null) {
-            armors = new HashSet<>();
-        }
-        return armors;
     }
 }

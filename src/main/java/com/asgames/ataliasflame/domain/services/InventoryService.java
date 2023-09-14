@@ -147,10 +147,7 @@ public class InventoryService {
     }
 
     public void takeArmor(Character character, Armor newArmor) {
-        Armor oldArmor = character.getArmors().stream()
-                .filter(Armor::isPhysical)
-                .peek(armor -> armor.droppedBy(character))
-                .findAny().orElse(null);
+        Armor oldArmor = character.getCover().getPhysicalArmor().orElse(null);
         newArmor.belongsTo(character);
         characterCalculationService.recalculateProperties(character);
         storyLineLogger.event(armorChange(character, oldArmor, newArmor));

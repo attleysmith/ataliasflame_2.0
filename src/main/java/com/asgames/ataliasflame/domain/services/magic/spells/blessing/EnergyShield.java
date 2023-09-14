@@ -5,9 +5,7 @@ import com.asgames.ataliasflame.domain.model.entities.Armor;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.vos.Energy;
-import com.asgames.ataliasflame.domain.services.CharacterCalculationService;
 import com.asgames.ataliasflame.domain.services.magic.spells.SpellEffect;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
@@ -22,9 +20,6 @@ import static com.asgames.ataliasflame.domain.services.storyline.events.Characte
 
 @Component
 public class EnergyShield extends SpellEffect {
-
-    @Autowired
-    private CharacterCalculationService characterCalculationService;
 
     private static final int DEFENSE = 5;
     private static final int ABSORPTION = 100;
@@ -41,9 +36,7 @@ public class EnergyShield extends SpellEffect {
         character.getMagic().use(spell.getCost());
         storyLineLogger.event(spellCasting(character, spell));
 
-        character.getArmors().stream()
-                .filter(armor -> armor.getArmorType().equals(ENERGY))
-                .findAny()
+        character.getCover().getEnergyArmor()
                 .ifPresentOrElse(
                         armor -> armor.getDurability().fullRecover(),
                         () -> Armor.builder()

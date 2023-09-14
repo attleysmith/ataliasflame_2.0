@@ -214,26 +214,23 @@ public final class CharacterEvents {
 
     public static class ArmorChangeEvent extends CharacterEvent {
         private final Armor oldArmor;
+        private final Armor newArmor;
 
-        private ArmorChangeEvent(Character character, Armor oldArmor) {
+        private ArmorChangeEvent(Character character, Armor oldArmor, Armor newArmor) {
             super(INFO, character);
             this.oldArmor = oldArmor;
+            this.newArmor = newArmor;
         }
 
-        public static ArmorChangeEvent armorChange(Character character, Armor oldArmor) {
-            return new ArmorChangeEvent(character, oldArmor);
+        public static ArmorChangeEvent armorChange(Character character, Armor oldArmor, Armor newArmor) {
+            return new ArmorChangeEvent(character, oldArmor, newArmor);
         }
 
         @Override
         public String message() {
             String oldArmorCode = oldArmor == null ? MISSING_ITEM : oldArmor.getCode();
             int oldDurability = oldArmor == null ? 0 : oldArmor.getDurability().actualValue();
-            if (character.getArmor().isPresent()) {
-                Armor armor = character.getArmor().get();
-                return "Armor changed: " + oldArmorCode + " (" + oldDurability + ") -> " + armor.getCode() + " (" + armor.getDurability().actualValue() + ")";
-            } else {
-                return "Armor dropped: " + oldArmorCode + " (" + oldDurability + ")";
-            }
+            return "Armor changed: " + oldArmorCode + " (" + oldDurability + ") -> " + newArmor.getCode() + " (" + newArmor.getDurability().actualValue() + ")";
         }
     }
 

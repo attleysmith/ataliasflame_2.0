@@ -1,6 +1,7 @@
 package com.asgames.ataliasflame.domain.services;
 
 import com.asgames.ataliasflame.domain.model.dtos.TeamMember;
+import com.asgames.ataliasflame.domain.model.entities.Armor;
 import com.asgames.ataliasflame.domain.model.interfaces.AbsorptionDefense;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
@@ -23,8 +24,8 @@ import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEv
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.percent;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.pointOut;
 import static com.asgames.ataliasflame.domain.utils.DiceUtils.*;
+import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.toList;
 import static org.apache.commons.collections4.ListUtils.union;
 
 @Service
@@ -46,13 +47,15 @@ public class CombatService {
                         .map(combatant -> TeamMember.builder()
                                 .team(1)
                                 .combatant(combatant)
-                                .build()).collect(toList()),
+                                .build())
+                        .toList(),
                 team2.stream()
                         .filter(Combatant::isAlive)
                         .map(combatant -> TeamMember.builder()
                                 .team(2)
                                 .combatant(combatant)
-                                .build()).collect(toList()));
+                                .build())
+                        .toList());
     }
 
     private void teamCombat(List<TeamMember> team1, List<TeamMember> team2) {
@@ -113,15 +116,18 @@ public class CombatService {
                 .sorted(Map.Entry.comparingByKey())
                 .map(ties -> getCombatOrder(ties.getValue(), false))
                 .flatMap(Collection::stream)
-                .collect(toList());
+                .toList();
     }
 
     private void doDamage(Combatant attacker, Combatant defender, int damage) {
         AtomicInteger remainingDamage = new AtomicInteger(damage);
-        defender.getShield().ifPresent(
-                shield -> absorption(shield, remainingDamage));
-        defender.getArmor().ifPresent(
-                armor -> absorption(armor, remainingDamage));
+        defender.getShield()
+                .filter(shield -> shield.getDurability().hasOne())
+                .ifPresent(shield -> absorption(shield, remainingDamage));
+        defender.getArmors().stream()
+                .filter(armor -> armor.getDurability().hasOne())
+                .sorted(comparing(Armor::getArmorType).reversed())
+                .forEach(armor -> absorption(armor, remainingDamage));
         defender.getHealth().damage(remainingDamage.get());
         storyLineLogger.event(combatDamage(attacker, defender, remainingDamage.get()));
     }

@@ -17,7 +17,6 @@ import static com.asgames.ataliasflame.domain.model.enums.Caste.ATALIAS_PRIEST;
 import static com.asgames.ataliasflame.domain.model.enums.God.ATALIA;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.calculate;
 import static java.util.Arrays.stream;
-import static java.util.stream.Collectors.toList;
 
 @Service
 public class CharacterCalculationService {
@@ -43,14 +42,14 @@ public class CharacterCalculationService {
     private void recalculateAttack(Character character) {
         List<Integer> attackMultipliers = stream(Attribute.values())
                 .map(attribute -> PropertyCalculator.of(character, attribute).getAttackMultiplier())
-                .collect(toList());
+                .toList();
         character.setAttack(calculate(BASE_ATTACK, attackMultipliers));
     }
 
     private void recalculateDefense(Character character) {
         List<Integer> defenseMultipliers = stream(Attribute.values())
                 .map(attribute -> PropertyCalculator.of(character, attribute).getDefenseMultiplier())
-                .collect(toList());
+                .toList();
         character.setDefense(calculate(actualDefense(character), defenseMultipliers));
     }
 
@@ -64,7 +63,7 @@ public class CharacterCalculationService {
     private void recalculateHealth(Character character) {
         List<Integer> healthMultipliers = stream(Attribute.values())
                 .map(attribute -> PropertyCalculator.of(character, attribute).getHealthMultiplier())
-                .collect(toList());
+                .toList();
         int healthValue = calculate(BASE_HEALTH, healthMultipliers);
         character.getHealth().set(healthValue);
     }
@@ -80,7 +79,7 @@ public class CharacterCalculationService {
         return BASE_DEFENSE
                 + character.getWeapon().getDefense()
                 + character.getShield().map(Shield::getDefense).orElse(0)
-                + character.getArmor().map(Armor::getDefense).orElse(0);
+                + character.getArmors().stream().map(Armor::getDefense).reduce(0, Integer::sum);
     }
 
     private static class PropertyCalculator {

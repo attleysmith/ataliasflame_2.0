@@ -132,7 +132,7 @@ public class InventoryService {
         storyLineLogger.event(weaponChange(character, oldWeapon));
     }
 
-    public void takeShield(Character character, Shield shield) {
+    public void takeShield(Character character, Shield newShield) {
         Weapon oldWeapon = character.getWeapon();
         if (!oldWeapon.isOneHanded()) {
             Weapon newWeapon = FIST.instance();
@@ -141,15 +141,18 @@ public class InventoryService {
         }
 
         Shield oldShield = character.getShield().orElse(null);
-        shield.belongsTo(character);
+        newShield.belongsTo(character);
         characterCalculationService.recalculateProperties(character);
         storyLineLogger.event(shieldChange(character, oldShield));
     }
 
-    public void takeArmor(Character character, Armor armor) {
-        Armor oldArmor = character.getArmor().orElse(null);
-        armor.belongsTo(character);
+    public void takeArmor(Character character, Armor newArmor) {
+        Armor oldArmor = character.getArmors().stream()
+                .filter(Armor::isPhysical)
+                .peek(armor -> armor.droppedBy(character))
+                .findAny().orElse(null);
+        newArmor.belongsTo(character);
         characterCalculationService.recalculateProperties(character);
-        storyLineLogger.event(armorChange(character, oldArmor));
+        storyLineLogger.event(armorChange(character, oldArmor, newArmor));
     }
 }

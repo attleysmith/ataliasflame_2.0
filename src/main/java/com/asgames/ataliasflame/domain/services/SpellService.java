@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import static com.asgames.ataliasflame.domain.MockConstants.SPELLS;
-import static java.util.stream.Collectors.toList;
 
 @Service
 public class SpellService {
@@ -22,6 +21,6 @@ public class SpellService {
                 .filter(spell -> !spell.getName().prohibitedRaces.contains(character.getRace()))
                 .filter(spell -> !spell.getGroup().prohibitedCastes.contains(character.getCaste()))
                 .filter(spell -> !spell.getGroup().prohibitedRaces.contains(character.getRace()))
-                .collect(toList());
+                .toList();
     }
 }

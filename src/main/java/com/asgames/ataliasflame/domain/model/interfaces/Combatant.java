@@ -5,6 +5,7 @@ import com.asgames.ataliasflame.domain.model.entities.Shield;
 import com.asgames.ataliasflame.domain.model.vos.Energy;
 
 import java.util.Optional;
+import java.util.Set;
 
 public interface Combatant {
 
@@ -36,8 +37,8 @@ public interface Combatant {
         return Optional.empty();
     }
 
-    default Optional<Armor> getArmor() {
-        return Optional.empty();
+    default Set<Armor> getArmors() {
+        return Set.of();
     }
 
     default String shortRef() {

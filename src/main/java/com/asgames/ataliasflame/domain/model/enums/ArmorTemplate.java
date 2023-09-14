@@ -6,6 +6,7 @@ import com.asgames.ataliasflame.domain.model.vos.Energy;
 
 import java.util.UUID;
 
+import static com.asgames.ataliasflame.domain.model.enums.ArmorType.PHYSICAL;
 import static com.asgames.ataliasflame.domain.model.enums.ItemType.ARMOR;
 
 public enum ArmorTemplate implements ItemTemplate {
@@ -36,6 +37,7 @@ public enum ArmorTemplate implements ItemTemplate {
                 .reference(UUID.randomUUID().toString())
                 .code(name())
                 .type(getType())
+                .armorType(PHYSICAL)
                 .defense(defense)
                 .absorption(absorption)
                 .durability(Energy.withTotal(durability))

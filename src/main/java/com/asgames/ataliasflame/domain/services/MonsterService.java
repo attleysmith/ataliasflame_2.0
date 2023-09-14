@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.asgames.ataliasflame.domain.services.MonsterDrops.getDrops;
@@ -34,7 +33,7 @@ public class MonsterService {
         List<SelectionValue<MonsterTemplate>> monsterSelector = Stream.of(MonsterTemplate.values())
                 .filter(monsterTemplate -> monsterTemplate.getLevel() <= location.getLevel())
                 .map(monsterTemplate -> new SelectionValue<>(monsterTemplate.getChance(), monsterTemplate))
-                .collect(Collectors.toList());
+                .toList();
 
         MonsterTemplate monsterAppeared = choose(monsterSelector);
         do {

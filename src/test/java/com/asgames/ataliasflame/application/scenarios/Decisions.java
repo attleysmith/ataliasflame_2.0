@@ -113,7 +113,9 @@ public final class Decisions {
     }
 
     public static boolean needToChangeArmor(Character character, Armor newArmor) {
-        return character.getArmor()
+        return character.getArmors().stream()
+                .filter(Armor::isPhysical)
+                .findAny()
                 .map(oldArmor -> newArmor.lastsLonger(oldArmor)
                         || (newArmor.sameDurable(oldArmor) && newArmor.getDefense() > oldArmor.getDefense()))
                 .orElse(true);

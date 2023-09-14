@@ -407,19 +407,6 @@ public final class MockConstants {
             ))
             .build();
 
-    public static final Booster ENERGY_SHIELD_BOOSTER = Booster.builder()
-            .effects(Map.of(
-                    STRENGTH, 0,
-                    DEXTERITY, 0,
-                    CONSTITUTION, 15,
-                    AGILITY, 0,
-                    INTELLIGENCE, 0,
-                    LORE, 0,
-                    MENTAL_POWER, 0,
-                    SPIRITUAL_POWER, 0
-            ))
-            .build();
-
     public static final Map<String, Booster> BOOSTERS = Map.ofEntries(
             Map.entry(HORA.name(), HORA_BOOSTER),
             Map.entry(SIFER.name(), SIFER_BOOSTER),
@@ -443,8 +430,7 @@ public final class MockConstants {
             Map.entry(CANINE.name(), CANINE_SOUL_CHIP_BOOSTER),
             Map.entry(APE_LIKE.name(), APE_LIKE_SOUL_CHIP_BOOSTER),
             Map.entry(BIRD_OF_PREY.name(), BIRD_OF_PREY_SOUL_CHIP_BOOSTER),
-            Map.entry(PROTECTIVE_HAND_OF_NATURE.name(), PROTECTIVE_HAND_OF_NATURE_BOOSTER),
-            Map.entry(ENERGY_SHIELD.name(), ENERGY_SHIELD_BOOSTER)
+            Map.entry(PROTECTIVE_HAND_OF_NATURE.name(), PROTECTIVE_HAND_OF_NATURE_BOOSTER)
     );
 
     // Caste details

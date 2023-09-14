@@ -21,7 +21,6 @@ import java.util.Optional;
 import static com.asgames.ataliasflame.application.scenarios.Decisions.*;
 import static com.asgames.ataliasflame.domain.model.enums.MagicType.*;
 import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.toList;
 
 public abstract class EnduranceTestBase {
 
@@ -252,7 +251,7 @@ public abstract class EnduranceTestBase {
 
     private List<SoulChip> listUnusedSouls() {
         List<SoulChip> unusedSouls = new ArrayList<>(character.getSoulChips());
-        List<String> companionReferences = character.getCompanions().stream().map(Companion::getReference).collect(toList());
+        List<String> companionReferences = character.getCompanions().stream().map(Companion::getReference).toList();
         for (SoulChip soulChip : character.getSoulChips()) {
             if (companionReferences.contains(soulChip.getReference())
                     || character.getBlessings().contains(soulChip.getShape().name())) {

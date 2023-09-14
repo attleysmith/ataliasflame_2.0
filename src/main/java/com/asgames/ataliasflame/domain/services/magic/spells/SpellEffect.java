@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
-
 public abstract class SpellEffect {
 
     @Autowired
@@ -32,7 +30,7 @@ public abstract class SpellEffect {
 
     protected List<SoulChip> listUnusedSouls(Character character) {
         List<SoulChip> unusedSouls = new ArrayList<>(character.getSoulChips());
-        List<String> companionReferences = character.getCompanions().stream().map(Companion::getReference).collect(toList());
+        List<String> companionReferences = character.getCompanions().stream().map(Companion::getReference).toList();
         for (SoulChip soulChip : character.getSoulChips()) {
             if (companionReferences.contains(soulChip.getReference())
                     || character.getBlessings().contains(soulChip.getShape().name())) {

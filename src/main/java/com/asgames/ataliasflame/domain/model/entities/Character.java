@@ -104,18 +104,12 @@ public class Character implements Combatant {
     @OneToOne(cascade = ALL, fetch = EAGER, orphanRemoval = true)
     private Shield shield;
 
-    @JoinColumn(name = "armorId")
-    @OneToOne(cascade = ALL, fetch = EAGER, orphanRemoval = true)
-    private Armor armor;
+    @OneToMany(mappedBy = "owner", cascade = ALL, fetch = EAGER, orphanRemoval = true)
+    private Set<Armor> armors;
 
     @Override
     public Optional<Shield> getShield() {
         return Optional.ofNullable(shield);
-    }
-
-    @Override
-    public Optional<Armor> getArmor() {
-        return Optional.ofNullable(armor);
     }
 
     @Override
@@ -163,5 +157,12 @@ public class Character implements Combatant {
             companions = new HashSet<>();
         }
         return companions;
+    }
+
+    public Set<Armor> getArmors() {
+        if (armors == null) {
+            armors = new HashSet<>();
+        }
+        return armors;
     }
 }

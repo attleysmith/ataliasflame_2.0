@@ -19,7 +19,7 @@ public class HealingService {
     private StoryLineLogger storyLineLogger;
 
     public void sleep(Character character) {
-        heal(character, HEALING_EFFECT_OF_SLEEP);
+        recoverHealth(character, HEALING_EFFECT_OF_SLEEP);
     }
 
     public void companionSleep(Companion companion) {
@@ -27,16 +27,24 @@ public class HealingService {
     }
 
     public void eat(Character character, Food food) {
-        heal(character, food.getHealingEffect());
+        recoverHealth(character, food.getHealingEffect());
     }
 
-    public void heal(Character character, int healingEffect) {
+    public void recoverHealth(Character character, int healingEffect) {
+        heal(character, () -> character.getHealth().recover(healingEffect));
+    }
+
+    public void replenishHealth(Character character, int healingValue) {
+        heal(character, () -> character.getHealth().replenish(healingValue));
+    }
+
+    private void heal(Character character, Runnable healingMethod) {
         if (character.getHealth().isFull()) {
             return;
         }
 
         int oldHealth = character.getHealth().actualValue();
-        character.getHealth().recover(healingEffect);
+        healingMethod.run();
         storyLineLogger.event(healthRecovery(character, oldHealth));
     }
 

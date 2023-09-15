@@ -39,14 +39,29 @@ public final class Decisions {
             FRIEND_IN_NEED, 2,
             SUMMON_GUARDIAN, 3,
             CALLING_ANIMALS, 4,
-            CALLING_THE_SOULS, 5);
+            CALLING_THE_SOULS, 5
+    );
 
     public static final Map<SpellName, Integer> BLESSING_PREFERENCES = Map.of(
             DIVINE_PROTECTION, 1,
             PROTECTIVE_HAND_OF_NATURE, 2,
             STRENGTHENING, 3,
             SOUL_CONNECTION, 4,
-            ENERGY_SHIELD, 5);
+            ENERGY_SHIELD, 5
+    );
+
+    public static final Map<SpellName, Integer> ATTACK_PREFERENCES = Map.of(
+            SOUL_OUTBURST, 1,
+            INFERNO, 2,
+            BLADES_OF_JUDGEMENT, 3,
+            GLACIAL_BLOW, 4,
+            WRATH_OF_NATURE, 5,
+            DIVINE_HAMMER, 6,
+            LIGHTNING_STRIKE, 7,
+            FIREBALL, 8,
+            SPLITTING_WIND, 9,
+            BALL_OF_ENERGY, 10
+    );
 
     public static final Map<SpellName, Integer> CURSE_PREFERENCES = Map.of(
             ENERGY_BLOCKING, 1,
@@ -54,6 +69,19 @@ public final class Decisions {
             POWER_DRAIN, 3,
             WEAKENING, 4,
             SHACKLE, 5
+    );
+
+    public static final Map<SpellName, Integer> HEALING_PREFERENCES = Map.of(
+            ENERGY_ABSORPTION, 1,
+            SOUL_POWER, 2,
+            REGENERATION, 3,
+            HEALING_WAVE, 4,
+            RECHARGING, 5,
+            BREATH_OF_GOD, 6,
+            HEALING_WORD, 7,
+            POWER_OF_NATURE, 8,
+            CURE, 9,
+            WOUND_HEALING, 10
     );
 
     public static final Map<ItemType, Integer> LOOTING_PREFERENCES = Map.of(
@@ -155,7 +183,7 @@ public final class Decisions {
         return usableSpells.stream()
                 .filter(spell -> character.getMagic().has(spell.getCost()))
                 .filter(spell -> hasAvailableSoul || !spell.getGroup().equals(SOUL))
-                .max(comparing(Spell::averageDamage));
+                .min(comparing(spell -> ATTACK_PREFERENCES.getOrDefault(spell.getName(), 0)));
     }
 
     public static Optional<Spell> chooseCurseSpell(List<Spell> usableSpells, Character character, boolean hasAvailableSoul) {
@@ -165,11 +193,12 @@ public final class Decisions {
                 .min(comparing(spell -> CURSE_PREFERENCES.getOrDefault(spell.getName(), 0)));
     }
 
-    public static Optional<Spell> chooseHealingSpell(List<Spell> usableSpells, Character character, boolean hasAvailableSoul) {
+    public static Optional<Spell> chooseHealingSpell(List<Spell> usableSpells, Character character, boolean hasAvailableSoul, boolean reachDeadMonster) {
         return usableSpells.stream()
                 .filter(spell -> character.getMagic().has(spell.getCost()))
                 .filter(spell -> hasAvailableSoul || !spell.getGroup().equals(SOUL))
-                .max(comparing(Spell::getHealingEffect));
+                .filter(spell -> reachDeadMonster || !spell.getName().equals(ENERGY_ABSORPTION))
+                .min(comparing(spell -> HEALING_PREFERENCES.getOrDefault(spell.getName(), 0)));
     }
 
     public static Stream<Monster> targetMonsterOrder(Location location, MagicType magicType) {
@@ -189,5 +218,11 @@ public final class Decisions {
 
     public static boolean worthyTargetOfCurseSpell(Monster monster, Character character) {
         return monster.getAttack() > character.getDefense();
+    }
+
+    public static Optional<Monster> targetOfEnergyAbsorption(Location location) {
+        return location.getMonsters().stream()
+                .filter(Combatant::isDead)
+                .max(comparing(monster -> monster.getHealth().totalValue()));
     }
 }

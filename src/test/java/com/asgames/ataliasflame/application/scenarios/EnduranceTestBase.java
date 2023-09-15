@@ -1,15 +1,16 @@
 package com.asgames.ataliasflame.application.scenarios;
 
 import com.asgames.ataliasflame.application.*;
-import com.asgames.ataliasflame.application.model.AttackContext;
 import com.asgames.ataliasflame.application.model.CharacterInput;
 import com.asgames.ataliasflame.application.model.LocationContext;
+import com.asgames.ataliasflame.application.model.TargetContext;
 import com.asgames.ataliasflame.domain.model.dtos.Spell;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.*;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
 import com.asgames.ataliasflame.domain.model.enums.MagicType;
+import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
 import org.junit.jupiter.api.AfterEach;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -20,6 +21,7 @@ import java.util.Optional;
 
 import static com.asgames.ataliasflame.application.scenarios.Decisions.*;
 import static com.asgames.ataliasflame.domain.model.enums.MagicType.*;
+import static com.asgames.ataliasflame.domain.model.enums.SpellName.ENERGY_ABSORPTION;
 import static java.util.stream.Collectors.groupingBy;
 
 public abstract class EnduranceTestBase {
@@ -143,10 +145,10 @@ public abstract class EnduranceTestBase {
         while (tryToAttack && targetMonster.isAlive()) {
             Optional<Spell> attackSpell = chooseAttackSpell(usableSpells.get(ATTACK), character, hasAvailableSoul);
             if (attackSpell.isPresent() && worthyTargetOfAttackSpell(targetMonster, attackSpell.get())) {
-                AttackContext attackContext = characterMagicService.castAttackSpell(character.getReference(), attackSpell.get().getName(), targetMonster.getReference());
+                TargetContext targetContext = characterMagicService.castTargetingSpell(character.getReference(), attackSpell.get().getName(), targetMonster.getReference());
 
-                character = attackContext.getCharacter();
-                targetMonster = attackContext.getMonster();
+                character = targetContext.getCharacter();
+                targetMonster = targetContext.getMonster();
             } else {
                 tryToAttack = false;
             }
@@ -164,9 +166,9 @@ public abstract class EnduranceTestBase {
         boolean hasAvailableSoul = !listUnusedSouls().isEmpty();
         Optional<Spell> curseSpell = chooseCurseSpell(usableSpells.get(CURSE), character, hasAvailableSoul);
         if (curseSpell.isPresent() && worthyTargetOfCurseSpell(monster, character)) {
-            AttackContext attackContext = characterMagicService.castAttackSpell(character.getReference(), curseSpell.get().getName(), monster.getReference());
+            TargetContext targetContext = characterMagicService.castTargetingSpell(character.getReference(), curseSpell.get().getName(), monster.getReference());
 
-            character = attackContext.getCharacter();
+            character = targetContext.getCharacter();
         }
     }
 
@@ -215,11 +217,21 @@ public abstract class EnduranceTestBase {
 
     private void castHealingMagic() {
         boolean hasAvailableSoul = !listUnusedSouls().isEmpty();
+        boolean reachDeadMonster = location.getMonsters().stream().anyMatch(Combatant::isDead);
         boolean readyToGo = noNeedToCastHealingMagic(character);
         while (!readyToGo) {
-            Optional<Spell> healingSpell = chooseHealingSpell(usableSpells.get(HEALING), character, hasAvailableSoul);
+            Optional<Spell> healingSpell = chooseHealingSpell(usableSpells.get(HEALING), character, hasAvailableSoul, reachDeadMonster);
             if (healingSpell.isPresent()) {
-                character = characterMagicService.castSpell(character.getReference(), healingSpell.get().getName());
+                Spell spell = healingSpell.get();
+                if (spell.getName().equals(ENERGY_ABSORPTION)) {
+                    Monster targetMonster = targetOfEnergyAbsorption(location)
+                            .orElseThrow(() -> new IllegalStateException("Wrong healing spell chosen!"));
+                    TargetContext targetContext = characterMagicService.castTargetingSpell(character.getReference(), spell.getName(), targetMonster.getReference());
+
+                    character = targetContext.getCharacter();
+                } else {
+                    character = characterMagicService.castSpell(character.getReference(), spell.getName());
+                }
 
                 readyToGo = noNeedToCastHealingMagic(character);
             } else {

@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Builder
 @Data
-public class AttackContext {
+public class TargetContext {
 
     private Character character;
     private Monster monster;

@@ -20,6 +20,8 @@ public class HealingWave extends SpellEffect {
     @Autowired
     private HealingService healingService;
 
+    private static final int HEALING_EFFECT = 20;
+
     private final Spell spell = SPELLS.get(spellName);
 
     public HealingWave() {
@@ -31,10 +33,10 @@ public class HealingWave extends SpellEffect {
         character.getMagic().use(spell.getCost());
         storyLineLogger.event(spellCasting(character, spell));
 
-        healingService.heal(character, spell.getHealingEffect());
+        healingService.recoverHealth(character, HEALING_EFFECT);
         character.getCompanions().stream()
                 .filter(Combatant::isAlive)
                 .forEach(companion ->
-                        healingService.healCompanion(companion, spell.getHealingEffect()));
+                        healingService.healCompanion(companion, HEALING_EFFECT));
     }
 }

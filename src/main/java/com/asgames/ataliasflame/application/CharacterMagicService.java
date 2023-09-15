@@ -1,6 +1,6 @@
 package com.asgames.ataliasflame.application;
 
-import com.asgames.ataliasflame.application.model.AttackContext;
+import com.asgames.ataliasflame.application.model.TargetContext;
 import com.asgames.ataliasflame.domain.model.dtos.Spell;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
@@ -50,7 +50,7 @@ public class CharacterMagicService {
     }
 
     @Transactional
-    public AttackContext castAttackSpell(String characterReference, SpellName spellName, String monsterReference) {
+    public TargetContext castTargetingSpell(String characterReference, SpellName spellName, String monsterReference) {
         Character character = characterMaintenanceService.getCharacter(characterReference);
         Spell spell = SPELLS.get(spellName);
         if (spell == null) {
@@ -62,7 +62,7 @@ public class CharacterMagicService {
         Monster targetMonster = locationAdventureService.getMonster(monsterReference);
         magicService.castSpell(character, spell, targetMonster);
 
-        return AttackContext.builder()
+        return TargetContext.builder()
                 .character(characterRepository.save(character))
                 .monster(monsterRepository.save(targetMonster))
                 .build();

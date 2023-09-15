@@ -21,6 +21,8 @@ public class SoulPower extends SpellEffect {
     @Autowired
     private HealingService healingService;
 
+    private static final int HEALING_EFFECT = 40;
+
     private final Spell spell = SPELLS.get(spellName);
 
     public SoulPower() {
@@ -35,7 +37,7 @@ public class SoulPower extends SpellEffect {
             character.getMagic().use(spell.getCost());
             storyLineLogger.event(spellCasting(character, spell));
 
-            healingService.heal(character, spell.getHealingEffect());
+            healingService.recoverHealth(character, HEALING_EFFECT);
         }
     }
 }

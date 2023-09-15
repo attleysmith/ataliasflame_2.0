@@ -19,6 +19,8 @@ public class BreathOfGod extends SpellEffect {
     @Autowired
     private HealingService healingService;
 
+    private static final int HEALING_EFFECT = 18;
+
     private final Spell spell = SPELLS.get(spellName);
 
     public BreathOfGod() {
@@ -30,6 +32,6 @@ public class BreathOfGod extends SpellEffect {
         character.getMagic().use(spell.getCost());
         storyLineLogger.event(spellCasting(character, spell));
 
-        healingService.heal(character, spell.getHealingEffect());
+        healingService.recoverHealth(character, HEALING_EFFECT);
     }
 }

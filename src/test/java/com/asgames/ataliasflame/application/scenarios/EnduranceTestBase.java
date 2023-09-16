@@ -11,6 +11,7 @@ import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
 import com.asgames.ataliasflame.domain.model.enums.MagicType;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
+import com.asgames.ataliasflame.domain.services.magic.SpellRegistry;
 import org.junit.jupiter.api.AfterEach;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -36,6 +37,8 @@ public abstract class EnduranceTestBase {
     protected CharacterLocationService characterLocationService;
     @Autowired
     protected LocationAdventureService locationAdventureService;
+    @Autowired
+    protected SpellRegistry spellRegistry;
 
     protected Character character;
     protected Location location;
@@ -144,7 +147,7 @@ public abstract class EnduranceTestBase {
         boolean tryToAttack = true;
         while (tryToAttack && targetMonster.isAlive()) {
             Optional<Spell> attackSpell = chooseAttackSpell(usableSpells.get(ATTACK), character, hasAvailableSoul);
-            if (attackSpell.isPresent() && worthyTargetOfAttackSpell(targetMonster, attackSpell.get())) {
+            if (attackSpell.isPresent() && worthyTargetOfAttackSpell(targetMonster, spellRegistry.get(attackSpell.get().getName()))) {
                 TargetContext targetContext = characterMagicService.castTargetingSpell(character.getReference(), attackSpell.get().getName(), targetMonster.getReference());
 
                 character = targetContext.getCharacter();

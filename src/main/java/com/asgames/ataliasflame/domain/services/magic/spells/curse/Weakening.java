@@ -15,6 +15,7 @@ import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.calculate;
 @Component
 public class Weakening extends SpellEffect {
 
+    // debuff effect
     private static final int ATTACK_MULTIPLIER = -5;
     private static final int DEFENSE_MULTIPLIER = -5;
     private static final int DAMAGE_MULTIPLIER = -5;

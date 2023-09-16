@@ -26,7 +26,7 @@ public final class CombatEvents {
     public static class CombatDamageEvent extends CombatEvent {
 
         public enum DamageType {
-            DIRECT, AREA, BLAST, CHAINING, CROSSFIRE, NOVA
+            DIRECT, AREA, BLAST, CHAINING, CROSSFIRE, NOVA, STRESS
         }
 
         private final int damage;

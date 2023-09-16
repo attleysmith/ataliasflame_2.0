@@ -15,6 +15,7 @@ import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.calculate;
 @Component
 public class PowerDrain extends SpellEffect {
 
+    // debuff effect
     private static final int ATTACK_MULTIPLIER = -8;
     private static final int DEFENSE_MULTIPLIER = -8;
     private static final int DAMAGE_MULTIPLIER = -8;

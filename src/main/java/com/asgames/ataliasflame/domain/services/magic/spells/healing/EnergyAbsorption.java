@@ -21,7 +21,10 @@ public class EnergyAbsorption extends SpellEffect {
     @Autowired
     private HealingService healingService;
 
+    // healing effect
     private static final int HEALTH_ABSORBING_EFFECT = 20;
+
+    // area effect
     private static final int NEARBY_ABSORBING_CHANCE = 40;
 
     private final Spell spell = SPELLS.get(spellName);

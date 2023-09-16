@@ -14,10 +14,4 @@ public class Spell {
     private final MagicType type;
     private final SpellGroup group;
     private final Integer cost;
-    private final int minDamage;
-    private final int maxDamage;
-
-    public int averageDamage() {
-        return (minDamage + maxDamage) / 2;
-    }
 }

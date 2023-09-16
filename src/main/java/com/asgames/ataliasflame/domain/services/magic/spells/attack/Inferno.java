@@ -4,7 +4,6 @@ import com.asgames.ataliasflame.domain.model.dtos.Spell;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
-import com.asgames.ataliasflame.domain.services.magic.spells.SpellEffect;
 import org.springframework.stereotype.Component;
 
 import static com.asgames.ataliasflame.domain.MockConstants.SPELLS;
@@ -18,8 +17,13 @@ import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.pointOut;
 import static com.asgames.ataliasflame.domain.utils.DiceUtils.successX;
 
 @Component
-public class Inferno extends SpellEffect {
+public class Inferno extends AttackSpellEffect {
 
+    // damage effect
+    private static final int MIN_DAMAGE = 12;
+    private static final int MAX_DAMAGE = 28;
+
+    // area effect
     private static final int AREA_EFFECT_CHANCE = 60;
     private static final int AREA_EFFECT_RATIO = 80;
 
@@ -34,7 +38,7 @@ public class Inferno extends SpellEffect {
         character.getMagic().use(spell.getCost());
         storyLineLogger.event(spellCasting(character, spell));
 
-        int directDamage = pointOut(spell.getMinDamage(), spell.getMaxDamage());
+        int directDamage = pointOut(MIN_DAMAGE, MAX_DAMAGE);
         int areaDamage = percent(directDamage, AREA_EFFECT_RATIO);
         targetMonster.getLocation().getMonsters().stream()
                 .filter(Combatant::isAlive)
@@ -47,5 +51,15 @@ public class Inferno extends SpellEffect {
                         storyLineLogger.event(combatDamage(character, monster, areaDamage, AREA));
                     }
                 });
+    }
+
+    @Override
+    public int getMinDamage() {
+        return MIN_DAMAGE;
+    }
+
+    @Override
+    public int getMaxDamage() {
+        return MAX_DAMAGE;
     }
 }

@@ -19,6 +19,7 @@ public class Recharging extends SpellEffect {
     @Autowired
     private HealingService healingService;
 
+    // healing effect
     private static final int HEALING_EFFECT = 20;
 
     private final Spell spell = SPELLS.get(spellName);

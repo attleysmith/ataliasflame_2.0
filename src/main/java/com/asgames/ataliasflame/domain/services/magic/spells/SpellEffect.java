@@ -39,4 +39,8 @@ public abstract class SpellEffect {
         }
         return unusedSouls;
     }
+
+    public int averageDamage() {
+        return 0;
+    }
 }

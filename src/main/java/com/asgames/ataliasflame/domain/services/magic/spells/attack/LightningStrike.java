@@ -4,7 +4,6 @@ import com.asgames.ataliasflame.domain.model.dtos.Spell;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
-import com.asgames.ataliasflame.domain.services.magic.spells.SpellEffect;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -22,8 +21,13 @@ import static java.util.Collections.shuffle;
 import static java.util.stream.Collectors.toList;
 
 @Component
-public class LightningStrike extends SpellEffect {
+public class LightningStrike extends AttackSpellEffect {
 
+    // damage effect
+    private static final int MIN_DAMAGE = 1;
+    private static final int MAX_DAMAGE = 15;
+
+    // area effect
     private static final int CHAINING_EFFECT_CHANCE = 25;
     private static final int CHAINING_EFFECT_RATIO = 49;
 
@@ -38,7 +42,7 @@ public class LightningStrike extends SpellEffect {
         character.getMagic().use(spell.getCost());
         storyLineLogger.event(spellCasting(character, spell));
 
-        int directDamage = pointOut(spell.getMinDamage(), spell.getMaxDamage());
+        int directDamage = pointOut(MIN_DAMAGE, MAX_DAMAGE);
         if (targetMonster.isAlive()) {
             targetMonster.getHealth().damage(directDamage);
             storyLineLogger.event(combatDamage(character, targetMonster, directDamage, DIRECT));
@@ -61,5 +65,15 @@ public class LightningStrike extends SpellEffect {
             monster.getHealth().damage(chainingDamage);
             storyLineLogger.event(combatDamage(character, monster, chainingDamage, CHAINING));
         }
+    }
+
+    @Override
+    public int getMinDamage() {
+        return MIN_DAMAGE;
+    }
+
+    @Override
+    public int getMaxDamage() {
+        return MAX_DAMAGE;
     }
 }

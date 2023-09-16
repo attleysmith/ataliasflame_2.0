@@ -26,6 +26,7 @@ public class DivineProtection extends SpellEffect {
     @Autowired
     private CharacterCalculationService characterCalculationService;
 
+    // armor effect
     private static final int DEFENSE = 12;
     private static final int ABSORPTION = 0;
     private static final int DURABILITY = 0;

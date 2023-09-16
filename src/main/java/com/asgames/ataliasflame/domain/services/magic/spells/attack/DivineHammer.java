@@ -4,7 +4,6 @@ import com.asgames.ataliasflame.domain.model.dtos.Spell;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
-import com.asgames.ataliasflame.domain.services.magic.spells.SpellEffect;
 import org.springframework.stereotype.Component;
 
 import static com.asgames.ataliasflame.domain.MockConstants.SPELLS;
@@ -18,8 +17,13 @@ import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.pointOut;
 import static com.asgames.ataliasflame.domain.utils.DiceUtils.successX;
 
 @Component
-public class DivineHammer extends SpellEffect {
+public class DivineHammer extends AttackSpellEffect {
 
+    // damage effect
+    private static final int MIN_DAMAGE = 6;
+    private static final int MAX_DAMAGE = 18;
+
+    // area effect
     private static final int CROSSFIRE_EFFECT_CHANCE = 10;
     private static final int CROSSFIRE_EFFECT_RATIO = 50;
 
@@ -34,7 +38,7 @@ public class DivineHammer extends SpellEffect {
         character.getMagic().use(spell.getCost());
         storyLineLogger.event(spellCasting(character, spell));
 
-        int directDamage = pointOut(spell.getMinDamage(), spell.getMaxDamage());
+        int directDamage = pointOut(MIN_DAMAGE, MAX_DAMAGE);
         int crossfireDamage = percent(directDamage, CROSSFIRE_EFFECT_RATIO);
         targetMonster.getLocation().getMonsters().stream()
                 .filter(Combatant::isAlive)
@@ -47,5 +51,15 @@ public class DivineHammer extends SpellEffect {
                         storyLineLogger.event(combatDamage(character, monster, crossfireDamage, CROSSFIRE));
                     }
                 });
+    }
+
+    @Override
+    public int getMinDamage() {
+        return MIN_DAMAGE;
+    }
+
+    @Override
+    public int getMaxDamage() {
+        return MAX_DAMAGE;
     }
 }

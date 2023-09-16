@@ -17,6 +17,7 @@ import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.calculate;
 @Component
 public class SoulStrike extends SpellEffect {
 
+    // debuff effect
     private static final int ATTACK_MULTIPLIER = -10;
     private static final int DEFENSE_MULTIPLIER = -10;
     private static final int DAMAGE_MULTIPLIER = -10;

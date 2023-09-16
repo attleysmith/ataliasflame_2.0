@@ -26,6 +26,7 @@ public class EnergyShield extends SpellEffect {
     @Autowired
     private CharacterCalculationService characterCalculationService;
 
+    // armor effect
     private static final int DEFENSE = 5;
     private static final int ABSORPTION = 100;
     private static final int DURABILITY = 40;

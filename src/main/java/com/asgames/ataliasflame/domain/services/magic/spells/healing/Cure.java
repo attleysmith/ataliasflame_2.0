@@ -19,6 +19,7 @@ public class Cure extends SpellEffect {
     @Autowired
     private HealingService healingService;
 
+    // healing effect
     private static final int HEALING_EFFECT = 8;
 
     private final Spell spell = SPELLS.get(spellName);

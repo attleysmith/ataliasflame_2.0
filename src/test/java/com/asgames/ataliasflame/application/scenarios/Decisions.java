@@ -7,6 +7,7 @@ import com.asgames.ataliasflame.domain.model.enums.ItemType;
 import com.asgames.ataliasflame.domain.model.enums.MagicType;
 import com.asgames.ataliasflame.domain.model.enums.SpellName;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
+import com.asgames.ataliasflame.domain.services.magic.spells.SpellEffect;
 
 import java.util.List;
 import java.util.Map;
@@ -212,8 +213,8 @@ public final class Decisions {
                 });
     }
 
-    public static boolean worthyTargetOfAttackSpell(Monster monster, Spell spell) {
-        return monster.getHealth().actualValue() >= spell.averageDamage();
+    public static boolean worthyTargetOfAttackSpell(Monster monster, SpellEffect spellEffect) {
+        return monster.getHealth().actualValue() >= spellEffect.averageDamage();
     }
 
     public static boolean worthyTargetOfCurseSpell(Monster monster, Character character) {

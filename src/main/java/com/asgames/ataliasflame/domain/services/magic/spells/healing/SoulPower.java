@@ -21,6 +21,7 @@ public class SoulPower extends SpellEffect {
     @Autowired
     private HealingService healingService;
 
+    // healing effect
     private static final int HEALING_EFFECT = 40;
 
     private final Spell spell = SPELLS.get(spellName);

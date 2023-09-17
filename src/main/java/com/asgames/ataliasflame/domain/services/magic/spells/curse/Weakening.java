@@ -1,35 +1,33 @@
 package com.asgames.ataliasflame.domain.services.magic.spells.curse;
 
-import com.asgames.ataliasflame.domain.model.dtos.Spell;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
-import com.asgames.ataliasflame.domain.services.magic.spells.SpellEffect;
 import org.springframework.stereotype.Component;
 
-import static com.asgames.ataliasflame.domain.MockConstants.SPELLS;
+import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.GENERAL;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.WEAKENING;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 import static com.asgames.ataliasflame.domain.services.storyline.events.MonsterEvents.CurseCastingEvent.curseCasting;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.calculate;
 
 @Component
-public class Weakening extends SpellEffect {
+public class Weakening extends CurseSpell {
+
+    private static final int SPELL_COST = 5;
 
     // debuff effect
     private static final int ATTACK_MULTIPLIER = -5;
     private static final int DEFENSE_MULTIPLIER = -5;
     private static final int DAMAGE_MULTIPLIER = -5;
 
-    private final Spell spell = SPELLS.get(spellName);
-
     public Weakening() {
-        super(WEAKENING);
+        super(WEAKENING, GENERAL);
     }
 
     @Override
     public void enforce(Character character, Monster targetMonster) {
-        character.getMagic().use(spell.getCost());
-        storyLineLogger.event(spellCasting(character, spell));
+        character.getMagic().use(SPELL_COST);
+        storyLineLogger.event(spellCasting(character, this));
 
         if (targetMonster.isAlive()) {
             int oldAttack = targetMonster.getAttack();
@@ -43,7 +41,12 @@ public class Weakening extends SpellEffect {
             targetMonster.setMinDamage(calculate(oldMinDamage, DAMAGE_MULTIPLIER));
             targetMonster.setMaxDamage(calculate(oldMaxDamage, DAMAGE_MULTIPLIER));
 
-            storyLineLogger.event(curseCasting(targetMonster, spellName.name(), oldAttack, oldDefense, oldMinDamage, oldMaxDamage, oldHealth));
+            storyLineLogger.event(curseCasting(targetMonster, name.name(), oldAttack, oldDefense, oldMinDamage, oldMaxDamage, oldHealth));
         }
+    }
+
+    @Override
+    public int getCost() {
+        return SPELL_COST;
     }
 }

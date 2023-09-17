@@ -1,6 +1,5 @@
 package com.asgames.ataliasflame.domain.services.magic.spells.attack;
 
-import com.asgames.ataliasflame.domain.model.dtos.Spell;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
@@ -8,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static com.asgames.ataliasflame.domain.MockConstants.SPELLS;
+import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.ELEMENTAL;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.LIGHTNING_STRIKE;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CombatEvents.CombatDamageEvent.DamageType.CHAINING;
@@ -21,7 +20,9 @@ import static java.util.Collections.shuffle;
 import static java.util.stream.Collectors.toList;
 
 @Component
-public class LightningStrike extends AttackSpellEffect {
+public class LightningStrike extends AttackSpell {
+
+    private static final int SPELL_COST = 10;
 
     // damage effect
     private static final int MIN_DAMAGE = 1;
@@ -31,16 +32,14 @@ public class LightningStrike extends AttackSpellEffect {
     private static final int CHAINING_EFFECT_CHANCE = 25;
     private static final int CHAINING_EFFECT_RATIO = 49;
 
-    private final Spell spell = SPELLS.get(spellName);
-
     public LightningStrike() {
-        super(LIGHTNING_STRIKE);
+        super(LIGHTNING_STRIKE, ELEMENTAL);
     }
 
     @Override
     public void enforce(Character character, Monster targetMonster) {
-        character.getMagic().use(spell.getCost());
-        storyLineLogger.event(spellCasting(character, spell));
+        character.getMagic().use(SPELL_COST);
+        storyLineLogger.event(spellCasting(character, this));
 
         int directDamage = pointOut(MIN_DAMAGE, MAX_DAMAGE);
         if (targetMonster.isAlive()) {
@@ -65,6 +64,11 @@ public class LightningStrike extends AttackSpellEffect {
             monster.getHealth().damage(chainingDamage);
             storyLineLogger.event(combatDamage(character, monster, chainingDamage, CHAINING));
         }
+    }
+
+    @Override
+    public int getCost() {
+        return SPELL_COST;
     }
 
     @Override

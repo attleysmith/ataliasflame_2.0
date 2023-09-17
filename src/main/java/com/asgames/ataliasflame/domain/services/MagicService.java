@@ -1,10 +1,9 @@
 package com.asgames.ataliasflame.domain.services;
 
-import com.asgames.ataliasflame.domain.model.dtos.Spell;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Food;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
-import com.asgames.ataliasflame.domain.services.magic.SpellRegistry;
+import com.asgames.ataliasflame.domain.services.magic.spells.Spell;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
@@ -21,9 +20,6 @@ public class MagicService {
 
     @Autowired
     private StoryLineLogger storyLineLogger;
-
-    @Autowired
-    private SpellRegistry spellRegistry;
 
     @Autowired
     private CharacterCalculationService characterCalculationService;
@@ -51,9 +47,7 @@ public class MagicService {
             throw new IllegalArgumentException("Character does not have enough magic to cast spell!");
         }
 
-        spellRegistry
-                .get(spell.getName())
-                .enforce(character, targetMonster);
+        spell.enforce(character, targetMonster);
     }
 
     public void removeBlessingMagic(Character character) {

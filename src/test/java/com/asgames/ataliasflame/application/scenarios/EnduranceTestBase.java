@@ -4,7 +4,6 @@ import com.asgames.ataliasflame.application.*;
 import com.asgames.ataliasflame.application.model.CharacterInput;
 import com.asgames.ataliasflame.application.model.LocationContext;
 import com.asgames.ataliasflame.application.model.TargetContext;
-import com.asgames.ataliasflame.domain.model.dtos.Spell;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.*;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
@@ -12,6 +11,7 @@ import com.asgames.ataliasflame.domain.model.enums.Caste;
 import com.asgames.ataliasflame.domain.model.enums.MagicType;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
 import com.asgames.ataliasflame.domain.services.magic.SpellRegistry;
+import com.asgames.ataliasflame.domain.services.magic.spells.Spell;
 import org.junit.jupiter.api.AfterEach;
 import org.springframework.beans.factory.annotation.Autowired;
 

@@ -4,28 +4,40 @@ import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Companion;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.entities.SoulChip;
+import com.asgames.ataliasflame.domain.model.enums.MagicType;
+import com.asgames.ataliasflame.domain.model.enums.SpellGroup;
 import com.asgames.ataliasflame.domain.model.enums.SpellName;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class SpellEffect {
+public abstract class Spell {
 
     @Autowired
     protected StoryLineLogger storyLineLogger;
 
-    protected final SpellName spellName;
+    @Getter
+    protected final SpellName name;
+    @Getter
+    protected final SpellGroup group;
+    @Getter
+    protected final MagicType type;
 
-    public SpellEffect(SpellName spellName) {
-        this.spellName = spellName;
+    public Spell(SpellName name, SpellGroup group, MagicType type) {
+        this.name = name;
+        this.group = group;
+        this.type = type;
     }
 
     public abstract void enforce(Character character, Monster targetMonster);
 
-    public SpellName getSpellName() {
-        return spellName;
+    public abstract int getCost();
+
+    public int averageDamage() {
+        return 0;
     }
 
     protected List<SoulChip> listUnusedSouls(Character character) {
@@ -38,9 +50,5 @@ public abstract class SpellEffect {
             }
         }
         return unusedSouls;
-    }
-
-    public int averageDamage() {
-        return 0;
     }
 }

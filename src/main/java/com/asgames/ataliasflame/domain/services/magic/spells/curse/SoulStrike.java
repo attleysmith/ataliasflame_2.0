@@ -1,12 +1,10 @@
 package com.asgames.ataliasflame.domain.services.magic.spells.curse;
 
-import com.asgames.ataliasflame.domain.model.dtos.Spell;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
-import com.asgames.ataliasflame.domain.services.magic.spells.SpellEffect;
 import org.springframework.stereotype.Component;
 
-import static com.asgames.ataliasflame.domain.MockConstants.SPELLS;
+import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.SOUL;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.SOUL_STRIKE;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 import static com.asgames.ataliasflame.domain.services.storyline.events.MonsterEvents.CurseCastingEvent.curseCasting;
@@ -15,7 +13,9 @@ import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEv
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.calculate;
 
 @Component
-public class SoulStrike extends SpellEffect {
+public class SoulStrike extends CurseSpell {
+
+    private static final int SPELL_COST = 10;
 
     // debuff effect
     private static final int ATTACK_MULTIPLIER = -10;
@@ -23,10 +23,8 @@ public class SoulStrike extends SpellEffect {
     private static final int DAMAGE_MULTIPLIER = -10;
     private static final int HEALTH_MULTIPLIER = -2;
 
-    private final Spell spell = SPELLS.get(spellName);
-
     public SoulStrike() {
-        super(SOUL_STRIKE);
+        super(SOUL_STRIKE, SOUL);
     }
 
     @Override
@@ -34,8 +32,8 @@ public class SoulStrike extends SpellEffect {
         if (listUnusedSouls(character).isEmpty()) {
             storyLineLogger.event(warningReport(OCCUPIED_SOULS));
         } else {
-            character.getMagic().use(spell.getCost());
-            storyLineLogger.event(spellCasting(character, spell));
+            character.getMagic().use(SPELL_COST);
+            storyLineLogger.event(spellCasting(character, this));
 
             if (targetMonster.isAlive()) {
                 int oldAttack = targetMonster.getAttack();
@@ -50,8 +48,13 @@ public class SoulStrike extends SpellEffect {
                 targetMonster.setMaxDamage(calculate(oldMaxDamage, DAMAGE_MULTIPLIER));
                 targetMonster.getHealth().set(calculate(oldHealth, HEALTH_MULTIPLIER));
 
-                storyLineLogger.event(curseCasting(targetMonster, spellName.name(), oldAttack, oldDefense, oldMinDamage, oldMaxDamage, oldHealth));
+                storyLineLogger.event(curseCasting(targetMonster, name.name(), oldAttack, oldDefense, oldMinDamage, oldMaxDamage, oldHealth));
             }
         }
+    }
+
+    @Override
+    public int getCost() {
+        return SPELL_COST;
     }
 }

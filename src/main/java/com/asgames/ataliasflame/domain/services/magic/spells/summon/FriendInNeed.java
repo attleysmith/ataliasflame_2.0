@@ -1,10 +1,8 @@
 package com.asgames.ataliasflame.domain.services.magic.spells.summon;
 
-import com.asgames.ataliasflame.domain.model.dtos.Spell;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.enums.DivineGuardianTemplate;
-import com.asgames.ataliasflame.domain.services.magic.spells.SpellEffect;
 import com.asgames.ataliasflame.domain.utils.SelectionValue;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
@@ -12,9 +10,9 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Optional;
 
-import static com.asgames.ataliasflame.domain.MockConstants.SPELLS;
 import static com.asgames.ataliasflame.domain.model.enums.DivineGuardianTemplate.COMMANDER;
 import static com.asgames.ataliasflame.domain.model.enums.DivineGuardianTemplate.KNIGHT;
+import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.DIVINE;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.FRIEND_IN_NEED;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CompanionEvents.CompanionSummoningEvent.summoning;
@@ -24,7 +22,9 @@ import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.choose;
 import static com.asgames.ataliasflame.domain.utils.DiceUtils.successX;
 
 @Component
-public class FriendInNeed extends SpellEffect {
+public class FriendInNeed extends SummonSpell {
+
+    private static final int SPELL_COST = 15;
 
     public static final List<SelectionValue<Optional<DivineGuardianTemplate>>> DIVINE_GUARDIAN_SELECTOR = List.of(
             new SelectionValue<>(1, Optional.empty()),
@@ -33,16 +33,14 @@ public class FriendInNeed extends SpellEffect {
     );
     private static final int CHANCE_OF_MORE = 1;
 
-    private final Spell spell = SPELLS.get(spellName);
-
     public FriendInNeed() {
-        super(FRIEND_IN_NEED);
+        super(FRIEND_IN_NEED, DIVINE);
     }
 
     @Override
     public void enforce(Character character, @Nullable Monster targetMonster) {
-        character.getMagic().use(spell.getCost());
-        storyLineLogger.event(spellCasting(character, spell));
+        character.getMagic().use(SPELL_COST);
+        storyLineLogger.event(spellCasting(character, this));
 
         do {
             choose(DIVINE_GUARDIAN_SELECTOR)
@@ -53,5 +51,10 @@ public class FriendInNeed extends SpellEffect {
                             },
                             () -> storyLineLogger.event(debugReport(NO_DIVINE_GUARDIAN_APPEARED)));
         } while (successX(CHANCE_OF_MORE));
+    }
+
+    @Override
+    public int getCost() {
+        return SPELL_COST;
     }
 }

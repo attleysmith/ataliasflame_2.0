@@ -1,22 +1,22 @@
 package com.asgames.ataliasflame.domain.services.magic.spells.healing;
 
-import com.asgames.ataliasflame.domain.model.dtos.Spell;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.services.HealingService;
-import com.asgames.ataliasflame.domain.services.magic.spells.SpellEffect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
-import static com.asgames.ataliasflame.domain.MockConstants.SPELLS;
+import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.SOUL;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.SOUL_POWER;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.WarningReportCause.OCCUPIED_SOULS;
 import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.warningReport;
 
 @Component
-public class SoulPower extends SpellEffect {
+public class SoulPower extends HealingSpell {
+
+    private static final int SPELL_COST = 10;
 
     @Autowired
     private HealingService healingService;
@@ -24,10 +24,8 @@ public class SoulPower extends SpellEffect {
     // healing effect
     private static final int HEALING_EFFECT = 40;
 
-    private final Spell spell = SPELLS.get(spellName);
-
     public SoulPower() {
-        super(SOUL_POWER);
+        super(SOUL_POWER, SOUL);
     }
 
     @Override
@@ -35,10 +33,15 @@ public class SoulPower extends SpellEffect {
         if (listUnusedSouls(character).isEmpty()) {
             storyLineLogger.event(warningReport(OCCUPIED_SOULS));
         } else {
-            character.getMagic().use(spell.getCost());
-            storyLineLogger.event(spellCasting(character, spell));
+            character.getMagic().use(SPELL_COST);
+            storyLineLogger.event(spellCasting(character, this));
 
             healingService.recoverHealth(character, HEALING_EFFECT);
         }
+    }
+
+    @Override
+    public int getCost() {
+        return SPELL_COST;
     }
 }

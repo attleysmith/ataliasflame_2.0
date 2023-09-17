@@ -1,10 +1,10 @@
 package com.asgames.ataliasflame.domain.services.storyline.events;
 
-import com.asgames.ataliasflame.domain.model.dtos.Spell;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.*;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
+import com.asgames.ataliasflame.domain.services.magic.spells.Spell;
 import com.asgames.ataliasflame.domain.services.storyline.EventType;
 
 import static com.asgames.ataliasflame.domain.services.storyline.EventType.DEBUG;

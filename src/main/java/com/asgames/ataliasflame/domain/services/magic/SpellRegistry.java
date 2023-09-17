@@ -1,7 +1,7 @@
 package com.asgames.ataliasflame.domain.services.magic;
 
 import com.asgames.ataliasflame.domain.model.enums.SpellName;
-import com.asgames.ataliasflame.domain.services.magic.spells.SpellEffect;
+import com.asgames.ataliasflame.domain.services.magic.spells.Spell;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,25 +14,29 @@ import java.util.Map;
 public class SpellRegistry implements InitializingBean {
 
     @Autowired
-    private List<SpellEffect> spellEffects;
+    private List<Spell> spells;
 
-    private final Map<SpellName, SpellEffect> spellEffectMap = new HashMap<>();
+    private final Map<SpellName, Spell> spellMap = new HashMap<>();
 
     @Override
     public void afterPropertiesSet() {
-        spellEffects.forEach(spellEffect -> {
-            if (spellEffectMap.get(spellEffect.getSpellName()) != null) {
-                throw new IllegalStateException("Duplicated spell effect: " + spellEffect.getSpellName());
+        spells.forEach(spell -> {
+            if (spellMap.get(spell.getName()) != null) {
+                throw new IllegalStateException("Duplicated spell: " + spell.getName());
             }
-            spellEffectMap.put(spellEffect.getSpellName(), spellEffect);
+            spellMap.put(spell.getName(), spell);
         });
     }
 
-    public SpellEffect get(SpellName spellName) {
-        SpellEffect spellEffect = spellEffectMap.get(spellName);
-        if (spellEffect == null) {
+    public List<Spell> get() {
+        return spells;
+    }
+
+    public Spell get(SpellName spellName) {
+        Spell spell = spellMap.get(spellName);
+        if (spell == null) {
             throw new IllegalArgumentException("Spell not recognized: " + spellName);
         }
-        return spellEffect;
+        return spell;
     }
 }

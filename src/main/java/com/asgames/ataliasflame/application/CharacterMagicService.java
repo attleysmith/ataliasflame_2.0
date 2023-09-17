@@ -1,12 +1,13 @@
 package com.asgames.ataliasflame.application;
 
 import com.asgames.ataliasflame.application.model.TargetContext;
-import com.asgames.ataliasflame.domain.model.dtos.Spell;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.enums.SpellName;
 import com.asgames.ataliasflame.domain.services.MagicService;
 import com.asgames.ataliasflame.domain.services.SpellService;
+import com.asgames.ataliasflame.domain.services.magic.SpellRegistry;
+import com.asgames.ataliasflame.domain.services.magic.spells.Spell;
 import com.asgames.ataliasflame.infrastructure.repositories.CharacterRepository;
 import com.asgames.ataliasflame.infrastructure.repositories.MonsterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
-import static com.asgames.ataliasflame.domain.MockConstants.SPELLS;
 
 @Service
 public class CharacterMagicService {
@@ -35,13 +34,13 @@ public class CharacterMagicService {
     @Autowired
     private SpellService spellService;
 
+    @Autowired
+    private SpellRegistry spellRegistry;
+
     @Transactional
     public Character castSpell(String characterReference, SpellName spellName) {
         Character character = characterMaintenanceService.getCharacter(characterReference);
-        Spell spell = SPELLS.get(spellName);
-        if (spell == null) {
-            throw new IllegalStateException("Spell not recognized: " + spellName);
-        }
+        Spell spell = spellRegistry.get(spellName);
         if (spellService.unknownSpell(character, spell)) {
             throw new IllegalArgumentException("The character is not familiar with the spell!");
         }
@@ -52,10 +51,7 @@ public class CharacterMagicService {
     @Transactional
     public TargetContext castTargetingSpell(String characterReference, SpellName spellName, String monsterReference) {
         Character character = characterMaintenanceService.getCharacter(characterReference);
-        Spell spell = SPELLS.get(spellName);
-        if (spell == null) {
-            throw new IllegalStateException("Spell not recognized: " + spellName);
-        }
+        Spell spell = spellRegistry.get(spellName);
         if (spellService.unknownSpell(character, spell)) {
             throw new IllegalArgumentException("The character is not familiar with the spell!");
         }

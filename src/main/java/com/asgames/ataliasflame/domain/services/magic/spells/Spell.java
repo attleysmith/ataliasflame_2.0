@@ -7,6 +7,7 @@ import com.asgames.ataliasflame.domain.model.entities.SoulChip;
 import com.asgames.ataliasflame.domain.model.enums.MagicType;
 import com.asgames.ataliasflame.domain.model.enums.SpellGroup;
 import com.asgames.ataliasflame.domain.model.enums.SpellName;
+import com.asgames.ataliasflame.domain.services.magic.spells.blessing.SoulConnection;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,7 @@ public abstract class Spell {
         List<String> companionReferences = character.getCompanions().stream().map(Companion::getReference).toList();
         for (SoulChip soulChip : character.getSoulChips()) {
             if (companionReferences.contains(soulChip.getReference())
-                    || character.getBlessings().contains(soulChip.getShape().name())) {
+                    || character.getBlessings().contains(SoulConnection.BOOSTER_EFFECT_MAP.get(soulChip.getShape()).name())) {
                 unusedSouls.remove(soulChip);
             }
         }

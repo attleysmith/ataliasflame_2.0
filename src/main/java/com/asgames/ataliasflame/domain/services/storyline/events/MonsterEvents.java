@@ -3,6 +3,7 @@ package com.asgames.ataliasflame.domain.services.storyline.events;
 import com.asgames.ataliasflame.domain.model.entities.Item;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.interfaces.AbsorptionDefense;
+import com.asgames.ataliasflame.domain.services.magic.spells.Spell;
 import com.asgames.ataliasflame.domain.services.storyline.EventType;
 
 import static com.asgames.ataliasflame.domain.services.storyline.EventType.DEBUG;
@@ -45,14 +46,14 @@ public final class MonsterEvents {
     }
 
     public static class CurseCastingEvent extends MonsterEvent {
-        private final String curse;
+        private final Spell curse;
         private final int oldAttack;
         private final int oldDefense;
         private final int oldMinDamage;
         private final int oldMaxDamage;
         private final int oldHealth;
 
-        private CurseCastingEvent(Monster monster, String curse, int oldAttack, int oldDefense, int oldMinDamage, int oldMaxDamage, int oldHealth) {
+        private CurseCastingEvent(Monster monster, Spell curse, int oldAttack, int oldDefense, int oldMinDamage, int oldMaxDamage, int oldHealth) {
             super(INFO, monster);
             this.curse = curse;
             this.oldAttack = oldAttack;
@@ -62,13 +63,13 @@ public final class MonsterEvents {
             this.oldHealth = oldHealth;
         }
 
-        public static CurseCastingEvent curseCasting(Monster monster, String curse, int oldAttack, int oldDefense, int oldMinDamage, int oldMaxDamage, int oldHealth) {
+        public static CurseCastingEvent curseCasting(Monster monster, Spell curse, int oldAttack, int oldDefense, int oldMinDamage, int oldMaxDamage, int oldHealth) {
             return new CurseCastingEvent(monster, curse, oldAttack, oldDefense, oldMinDamage, oldMaxDamage, oldHealth);
         }
 
         @Override
         public String message() {
-            return curse + " casted on " + monster.getCode() +
+            return curse.getName() + " casted on " + monster.getCode() +
                     " (" + monster.shortRef() + ") | AP: " + oldAttack + " -> " + monster.getAttack() +
                     "; DP: " + oldDefense + " -> " + monster.getDefense() + "; HP: " + oldHealth + " -> " + monster.getHealth().actualValue() +
                     "; DMG: " + oldMinDamage + "-" + oldMaxDamage + " -> " + monster.getMinDamage() + "-" + monster.getMaxDamage();

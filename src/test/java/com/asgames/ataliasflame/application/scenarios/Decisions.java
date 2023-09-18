@@ -157,11 +157,9 @@ public final class Decisions {
                 && actualNumberOfCompanions < MAX_NUMBER_OF_COMPANIONS;
     }
 
-    public static boolean repeatBlessing(Character character, Location location, Spell spell, int previousNumberOfBlessings) {
+    public static boolean repeatBlessing(Character character, Location location) {
         int actualNumberOfBlessings = character.getBlessings().size();
-        return previousNumberOfBlessings < actualNumberOfBlessings
-                && actualNumberOfBlessings < maxNumberOfBlessings(character, location.getMonsters())
-                && !character.getBlessings().contains(spell.getName().name());
+        return actualNumberOfBlessings < maxNumberOfBlessings(character, location.getMonsters());
     }
 
     public static Stream<Spell> summonOrder(List<Spell> usableSpells) {

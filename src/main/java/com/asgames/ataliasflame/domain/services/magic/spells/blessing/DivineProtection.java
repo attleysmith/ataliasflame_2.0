@@ -3,6 +3,7 @@ package com.asgames.ataliasflame.domain.services.magic.spells.blessing;
 import com.asgames.ataliasflame.domain.model.entities.Armor;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
+import com.asgames.ataliasflame.domain.model.enums.Booster;
 import com.asgames.ataliasflame.domain.model.enums.SpellGroup;
 import com.asgames.ataliasflame.domain.model.vos.Energy;
 import com.asgames.ataliasflame.domain.services.CharacterCalculationService;
@@ -16,6 +17,7 @@ import static com.asgames.ataliasflame.domain.model.enums.ArmorType.DIVINE;
 import static com.asgames.ataliasflame.domain.model.enums.ItemType.ARMOR;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.DIVINE_PROTECTION;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.BlessingEvent.blessing;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellArmorEvent.spellArmor;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 
 @Component
@@ -54,8 +56,10 @@ public class DivineProtection extends BlessingSpell {
                                 .build()
                                 .belongsTo(character)
                 );
+        character.getCover().getDivineArmor().ifPresent(armor ->
+                storyLineLogger.event(spellArmor(character, armor)));
 
-        String blessing = name.name();
+        String blessing = Booster.DIVINE_PROTECTION.name();
         if (!character.getBlessings().contains(blessing)) {
             int originalHealth = character.getHealth().totalValue();
             int originalMagic = character.getMagic().totalValue();

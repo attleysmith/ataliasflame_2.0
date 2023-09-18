@@ -1,19 +1,17 @@
 package com.asgames.ataliasflame.domain.services;
 
-import com.asgames.ataliasflame.domain.model.dtos.Booster;
 import com.asgames.ataliasflame.domain.model.dtos.Modifier;
 import com.asgames.ataliasflame.domain.model.entities.Armor;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Shield;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
+import com.asgames.ataliasflame.domain.model.enums.Booster;
 import com.asgames.ataliasflame.domain.utils.CalculatorUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import static com.asgames.ataliasflame.domain.MockConstants.BOOSTERS;
 import static com.asgames.ataliasflame.domain.MockConstants.MODIFIERS;
 import static com.asgames.ataliasflame.domain.model.enums.Caste.ATALIAS_PRIEST;
 import static com.asgames.ataliasflame.domain.model.enums.God.ATALIA;
@@ -128,17 +126,16 @@ public class CharacterCalculationService {
 
         private AttributeCalculator(Character character, Attribute attribute) {
             this.baseValue = character.getAttributes().get(attribute);
-            this.multipliers.add(BOOSTERS.get(character.getRace().name()).getEffects().get(attribute));
-            this.multipliers.add(BOOSTERS.get(character.getDefensiveGod().name()).getEffects().get(attribute));
+            this.multipliers.add(character.getRace().booster.effects.get(attribute));
+            this.multipliers.add(character.getDefensiveGod().booster.effects.get(attribute));
             if (character.getCaste().equals(ATALIAS_PRIEST)) {
-                this.multipliers.add(BOOSTERS.get(ATALIA.name()).getEffects().get(attribute));
+                this.multipliers.add(ATALIA.booster.effects.get(attribute));
             }
             character.getBlessings().forEach(
                     blessing -> this.multipliers.add(
-                            Optional.ofNullable(BOOSTERS.get(blessing))
-                                    .map(Booster::getEffects)
-                                    .map(effect -> effect.get(attribute))
-                                    .orElse(0)));
+                            Booster.valueOf(blessing).effects.get(attribute)
+                    )
+            );
         }
 
         public static AttributeCalculator of(Character character, Attribute attribute) {

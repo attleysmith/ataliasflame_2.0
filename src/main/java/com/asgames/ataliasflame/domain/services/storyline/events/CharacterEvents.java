@@ -269,4 +269,23 @@ public final class CharacterEvents {
             return blessing + " blessing activated.";
         }
     }
+
+    public static class SpellArmorEvent extends CharacterEvent {
+        private final Armor armor;
+
+        private SpellArmorEvent(Character character, Armor armor) {
+            super(INFO, character);
+            this.armor = armor;
+        }
+
+        public static SpellArmorEvent spellArmor(Character character, Armor armor) {
+            return new SpellArmorEvent(character, armor);
+        }
+
+        @Override
+        public String message() {
+            return armor.getArmorType() + " armor activated: " + armor.getCode() +
+                    " (" + armor.getDurability().actualValue() + ") | DEF: " + armor.getDefense();
+        }
+    }
 }

@@ -41,7 +41,7 @@ public class Weakening extends CurseSpell {
             targetMonster.setMinDamage(calculate(oldMinDamage, DAMAGE_MULTIPLIER));
             targetMonster.setMaxDamage(calculate(oldMaxDamage, DAMAGE_MULTIPLIER));
 
-            storyLineLogger.event(curseCasting(targetMonster, name.name(), oldAttack, oldDefense, oldMinDamage, oldMaxDamage, oldHealth));
+            storyLineLogger.event(curseCasting(targetMonster, this, oldAttack, oldDefense, oldMinDamage, oldMaxDamage, oldHealth));
         }
     }
 

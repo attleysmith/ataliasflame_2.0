@@ -12,6 +12,7 @@ import com.asgames.ataliasflame.domain.model.enums.MagicType;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
 import com.asgames.ataliasflame.domain.services.magic.SpellRegistry;
 import com.asgames.ataliasflame.domain.services.magic.spells.Spell;
+import com.asgames.ataliasflame.domain.services.magic.spells.blessing.SoulConnection;
 import org.junit.jupiter.api.AfterEach;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -111,19 +112,11 @@ public abstract class EnduranceTestBase {
     }
 
     private void putOnBlessings() {
-        blessingOrder(usableSpells.get(BLESSING))
-                .forEach(this::doBlessing);
-    }
-
-    private void doBlessing(Spell spell) {
-        int previousNumberOfBlessings = -1;
-        while (repeatBlessing(character, location, spell, previousNumberOfBlessings)) {
-            previousNumberOfBlessings = character.getBlessings().size();
-
-            if (character.getMagic().has(spell.getCost())) {
+        blessingOrder(usableSpells.get(BLESSING)).forEach(spell -> {
+            if (repeatBlessing(character, location) && character.getMagic().has(spell.getCost())) {
                 character = characterMagicService.castSpell(character.getReference(), spell.getName());
             }
-        }
+        });
     }
 
     private void enterLocation() {
@@ -269,7 +262,7 @@ public abstract class EnduranceTestBase {
         List<String> companionReferences = character.getCompanions().stream().map(Companion::getReference).toList();
         for (SoulChip soulChip : character.getSoulChips()) {
             if (companionReferences.contains(soulChip.getReference())
-                    || character.getBlessings().contains(soulChip.getShape().name())) {
+                    || character.getBlessings().contains(SoulConnection.BOOSTER_EFFECT_MAP.get(soulChip.getShape()).name())) {
                 unusedSouls.remove(soulChip);
             }
         }

@@ -48,7 +48,7 @@ public class SoulStrike extends CurseSpell {
                 targetMonster.setMaxDamage(calculate(oldMaxDamage, DAMAGE_MULTIPLIER));
                 targetMonster.getHealth().set(calculate(oldHealth, HEALTH_MULTIPLIER));
 
-                storyLineLogger.event(curseCasting(targetMonster, name.name(), oldAttack, oldDefense, oldMinDamage, oldMaxDamage, oldHealth));
+                storyLineLogger.event(curseCasting(targetMonster, this, oldAttack, oldDefense, oldMinDamage, oldMaxDamage, oldHealth));
             }
         }
     }

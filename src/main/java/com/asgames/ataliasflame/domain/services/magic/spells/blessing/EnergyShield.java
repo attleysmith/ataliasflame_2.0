@@ -15,7 +15,7 @@ import java.util.UUID;
 
 import static com.asgames.ataliasflame.domain.model.enums.ItemType.ARMOR;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.ENERGY_SHIELD;
-import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.BlessingEvent.blessing;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellArmorEvent.spellArmor;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 
 @Component
@@ -54,19 +54,10 @@ public class EnergyShield extends BlessingSpell {
                                 .build()
                                 .belongsTo(character)
                 );
+        character.getCover().getEnergyArmor().ifPresent(armor ->
+                storyLineLogger.event(spellArmor(character, armor)));
 
-        String blessing = name.name();
-        if (!character.getBlessings().contains(blessing)) {
-            int originalHealth = character.getHealth().totalValue();
-            int originalMagic = character.getMagic().totalValue();
-            character.getBlessings().add(blessing);
-            characterCalculationService.recalculateProperties(character);
-            character.getHealth().uplift(originalHealth);
-            character.getMagic().uplift(originalMagic);
-        } else {
-            characterCalculationService.recalculateProperties(character);
-        }
-        storyLineLogger.event(blessing(character, blessing));
+        characterCalculationService.recalculateProperties(character);
     }
 
     @Override

@@ -3,13 +3,18 @@ package com.asgames.ataliasflame.domain.services.magic.spells.blessing;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.entities.SoulChip;
+import com.asgames.ataliasflame.domain.model.enums.Booster;
+import com.asgames.ataliasflame.domain.model.enums.SoulChipShape;
 import com.asgames.ataliasflame.domain.services.CharacterCalculationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
+import static com.asgames.ataliasflame.domain.model.enums.Booster.*;
+import static com.asgames.ataliasflame.domain.model.enums.SoulChipShape.*;
 import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.SOUL;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.SOUL_CONNECTION;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.BlessingEvent.blessing;
@@ -25,6 +30,13 @@ public class SoulConnection extends BlessingSpell {
 
     private static final int SPELL_COST = 5;
 
+    // buff effect
+    public static final Map<SoulChipShape, Booster> BOOSTER_EFFECT_MAP = Map.of(
+            CANINE, CANINE_SOUL_CONNECTION,
+            APE_LIKE, APE_LIKE_SOUL_CONNECTION,
+            BIRD_OF_PREY, BIRD_OF_PREY_SOUL_CONNECTION
+    );
+
     public SoulConnection() {
         super(SOUL_CONNECTION, SOUL);
     }
@@ -38,7 +50,7 @@ public class SoulConnection extends BlessingSpell {
             character.getMagic().use(SPELL_COST);
             storyLineLogger.event(spellCasting(character, this));
 
-            String blessing = unusedSouls.get(0).getShape().name();
+            String blessing = BOOSTER_EFFECT_MAP.get(unusedSouls.get(0).getShape()).name();
             if (!character.getBlessings().contains(blessing)) {
                 int originalHealth = character.getHealth().totalValue();
                 int originalMagic = character.getMagic().totalValue();

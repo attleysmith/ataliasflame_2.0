@@ -2,6 +2,7 @@ package com.asgames.ataliasflame.domain.services.magic.spells.blessing;
 
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
+import com.asgames.ataliasflame.domain.model.enums.Booster;
 import com.asgames.ataliasflame.domain.services.CharacterCalculationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
@@ -29,7 +30,7 @@ public class ProtectiveHandOfNature extends BlessingSpell {
         character.getMagic().use(SPELL_COST);
         storyLineLogger.event(spellCasting(character, this));
 
-        String blessing = name.name();
+        String blessing = Booster.PROTECTIVE_HAND_OF_NATURE.name();
         if (!character.getBlessings().contains(blessing)) {
             int originalHealth = character.getHealth().totalValue();
             int originalMagic = character.getMagic().totalValue();

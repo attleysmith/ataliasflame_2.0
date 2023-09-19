@@ -1,5 +1,6 @@
 package com.asgames.ataliasflame.domain.services.magic.spells.blessing;
 
+import com.asgames.ataliasflame.domain.model.entities.ActiveBlessing;
 import com.asgames.ataliasflame.domain.model.entities.Armor;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
@@ -45,32 +46,37 @@ public class DivineProtection extends BlessingSpell {
         character.getCover().getDivineArmor()
                 .ifPresentOrElse(
                         armor -> armor.getDurability().fullRecover(),
-                        () -> Armor.builder()
-                                .reference(UUID.randomUUID().toString())
-                                .code(name.name())
-                                .type(ARMOR)
-                                .armorType(DIVINE)
-                                .defense(DEFENSE)
-                                .absorption(ABSORPTION)
-                                .durability(Energy.withTotal(DURABILITY))
-                                .build()
-                                .belongsTo(character)
+                        () -> {
+                            Armor.builder()
+                                    .reference(UUID.randomUUID().toString())
+                                    .code(name.name())
+                                    .type(ARMOR)
+                                    .armorType(DIVINE)
+                                    .defense(DEFENSE)
+                                    .absorption(ABSORPTION)
+                                    .durability(Energy.withTotal(DURABILITY))
+                                    .build()
+                                    .belongsTo(character);
+                            characterCalculationService.recalculateProperties(character);
+                        }
                 );
         character.getCover().getDivineArmor().ifPresent(armor ->
                 storyLineLogger.event(spellArmor(character, armor)));
 
-        String blessing = Booster.DIVINE_PROTECTION.name();
-        if (!character.getBlessings().contains(blessing)) {
+        Booster booster = Booster.DIVINE_PROTECTION;
+        if (character.getBlessings().stream()
+                .noneMatch(blessing -> blessing.getBooster().equals(booster))) {
+            ActiveBlessing activeBlessing = ActiveBlessing.of(character, booster);
+            character.getBlessings().add(activeBlessing);
+
             int originalHealth = character.getHealth().totalValue();
             int originalMagic = character.getMagic().totalValue();
-            character.getBlessings().add(blessing);
             characterCalculationService.recalculateProperties(character);
             character.getHealth().uplift(originalHealth);
             character.getMagic().uplift(originalMagic);
-        } else {
-            characterCalculationService.recalculateProperties(character);
+
+            storyLineLogger.event(blessing(character, activeBlessing));
         }
-        storyLineLogger.event(blessing(character, blessing));
     }
 
     @Override

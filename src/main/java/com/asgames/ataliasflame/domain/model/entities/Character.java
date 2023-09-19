@@ -84,17 +84,14 @@ public class Character implements Combatant {
     @Column(name = "attributeValue")
     private Map<Attribute, Integer> attributes;
 
-    @ElementCollection(fetch = EAGER)
-    @CollectionTable(name = "CharacterBlessing",
-            joinColumns = {@JoinColumn(name = "characterId")})
-    @Column(name = "blessing")
-    private Set<String> blessings;
-
     @OneToMany(mappedBy = "owner", cascade = ALL, fetch = EAGER)
     private Set<SoulChip> soulChips;
 
     @OneToMany(mappedBy = "owner", cascade = ALL, fetch = EAGER, orphanRemoval = true)
     private Set<Companion> companions;
+
+    @OneToMany(mappedBy = "owner", cascade = ALL, fetch = EAGER, orphanRemoval = true)
+    private Set<ActiveBlessing> blessings;
 
     @JoinColumn(name = "weaponId", nullable = false)
     @OneToOne(cascade = ALL, fetch = EAGER, orphanRemoval = true)
@@ -146,13 +143,6 @@ public class Character implements Combatant {
         return attributes;
     }
 
-    public Set<String> getBlessings() {
-        if (blessings == null) {
-            blessings = new HashSet<>();
-        }
-        return blessings;
-    }
-
     public Set<SoulChip> getSoulChips() {
         if (soulChips == null) {
             soulChips = new HashSet<>();
@@ -165,5 +155,16 @@ public class Character implements Combatant {
             companions = new HashSet<>();
         }
         return companions;
+    }
+
+    public Set<ActiveBlessing> getBlessings() {
+        if (blessings == null) {
+            blessings = new HashSet<>();
+        }
+        return blessings;
+    }
+
+    public void removeBlessings() {
+        blessings.forEach(activeBlessing -> blessings.remove(activeBlessing));
     }
 }

@@ -1,5 +1,6 @@
 package com.asgames.ataliasflame.domain.services.magic.spells.blessing;
 
+import com.asgames.ataliasflame.domain.model.entities.ActiveBlessing;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.entities.SoulChip;
@@ -50,15 +51,20 @@ public class SoulConnection extends BlessingSpell {
             character.getMagic().use(SPELL_COST);
             storyLineLogger.event(spellCasting(character, this));
 
-            String blessing = BOOSTER_EFFECT_MAP.get(unusedSouls.get(0).getShape()).name();
-            if (!character.getBlessings().contains(blessing)) {
+            SoulChip soulChip = unusedSouls.get(0);
+            Booster booster = BOOSTER_EFFECT_MAP.get(soulChip.getShape());
+            if (character.getBlessings().stream()
+                    .noneMatch(blessing -> blessing.getBooster().equals(booster))) {
+                ActiveBlessing activeBlessing = ActiveBlessing.of(character, booster).withSource(soulChip);
+                character.getBlessings().add(activeBlessing);
+
                 int originalHealth = character.getHealth().totalValue();
                 int originalMagic = character.getMagic().totalValue();
-                character.getBlessings().add(blessing);
                 characterCalculationService.recalculateProperties(character);
                 character.getHealth().uplift(originalHealth);
                 character.getMagic().uplift(originalMagic);
-                storyLineLogger.event(blessing(character, blessing));
+
+                storyLineLogger.event(blessing(character, activeBlessing));
             }
         }
     }

@@ -1,9 +1,9 @@
 package com.asgames.ataliasflame.domain.services.magic.spells.summon;
 
 import com.asgames.ataliasflame.domain.model.entities.Character;
-import com.asgames.ataliasflame.domain.model.entities.Companion;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.entities.SoulChip;
+import com.asgames.ataliasflame.domain.model.entities.SummonedSoulChip;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
@@ -34,9 +34,9 @@ public class CallingTheSouls extends SummonSpell {
             character.getMagic().use(SPELL_COST);
             storyLineLogger.event(spellCasting(character, this));
 
-            Companion companion = unusedSouls.get(0).summon();
-            character.getCompanions().add(companion);
-            storyLineLogger.event(summoning(companion));
+            SummonedSoulChip summonedSoulChip = unusedSouls.get(0).summon();
+            character.getCompanions().add(summonedSoulChip);
+            storyLineLogger.event(summoning(summonedSoulChip));
         }
     }
 

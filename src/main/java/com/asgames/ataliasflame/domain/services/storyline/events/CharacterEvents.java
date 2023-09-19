@@ -253,20 +253,20 @@ public final class CharacterEvents {
     }
 
     public static class BlessingEvent extends CharacterEvent {
-        private final String blessing;
+        private final ActiveBlessing blessing;
 
-        private BlessingEvent(Character character, String blessing) {
+        private BlessingEvent(Character character, ActiveBlessing blessing) {
             super(INFO, character);
             this.blessing = blessing;
         }
 
-        public static BlessingEvent blessing(Character character, String blessing) {
+        public static BlessingEvent blessing(Character character, ActiveBlessing blessing) {
             return new BlessingEvent(character, blessing);
         }
 
         @Override
         public String message() {
-            return blessing + " blessing activated.";
+            return blessing.getBooster() + " blessing activated.";
         }
     }
 

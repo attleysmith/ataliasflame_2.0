@@ -43,21 +43,22 @@ public class EnergyShield extends BlessingSpell {
         character.getCover().getEnergyArmor()
                 .ifPresentOrElse(
                         armor -> armor.getDurability().fullRecover(),
-                        () -> Armor.builder()
-                                .reference(UUID.randomUUID().toString())
-                                .code(name.name())
-                                .type(ARMOR)
-                                .armorType(ArmorType.ENERGY)
-                                .defense(DEFENSE)
-                                .absorption(ABSORPTION)
-                                .durability(Energy.withTotal(DURABILITY))
-                                .build()
-                                .belongsTo(character)
+                        () -> {
+                            Armor.builder()
+                                    .reference(UUID.randomUUID().toString())
+                                    .code(name.name())
+                                    .type(ARMOR)
+                                    .armorType(ArmorType.ENERGY)
+                                    .defense(DEFENSE)
+                                    .absorption(ABSORPTION)
+                                    .durability(Energy.withTotal(DURABILITY))
+                                    .build()
+                                    .belongsTo(character);
+                            characterCalculationService.recalculateProperties(character);
+                        }
                 );
         character.getCover().getEnergyArmor().ifPresent(armor ->
                 storyLineLogger.event(spellArmor(character, armor)));
-
-        characterCalculationService.recalculateProperties(character);
     }
 
     @Override

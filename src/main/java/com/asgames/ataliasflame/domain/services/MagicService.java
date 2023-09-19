@@ -51,7 +51,7 @@ public class MagicService {
     }
 
     public void removeBlessingMagic(Character character) {
-        character.setBlessings(null);
+        character.removeBlessings();
         character.getCover().setEnergyArmor(null);
         character.getCover().setDivineArmor(null);
         characterCalculationService.recalculateProperties(character);

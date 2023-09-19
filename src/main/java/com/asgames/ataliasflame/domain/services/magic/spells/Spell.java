@@ -1,19 +1,19 @@
 package com.asgames.ataliasflame.domain.services.magic.spells;
 
 import com.asgames.ataliasflame.domain.model.entities.Character;
-import com.asgames.ataliasflame.domain.model.entities.Companion;
-import com.asgames.ataliasflame.domain.model.entities.Monster;
-import com.asgames.ataliasflame.domain.model.entities.SoulChip;
+import com.asgames.ataliasflame.domain.model.entities.*;
 import com.asgames.ataliasflame.domain.model.enums.MagicType;
 import com.asgames.ataliasflame.domain.model.enums.SpellGroup;
 import com.asgames.ataliasflame.domain.model.enums.SpellName;
-import com.asgames.ataliasflame.domain.services.magic.spells.blessing.SoulConnection;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import static com.asgames.ataliasflame.domain.model.enums.CompanionType.SOUL_CHIP;
 
 public abstract class Spell {
 
@@ -43,13 +43,14 @@ public abstract class Spell {
 
     protected List<SoulChip> listUnusedSouls(Character character) {
         List<SoulChip> unusedSouls = new ArrayList<>(character.getSoulChips());
-        List<String> companionReferences = character.getCompanions().stream().map(Companion::getReference).toList();
-        for (SoulChip soulChip : character.getSoulChips()) {
-            if (companionReferences.contains(soulChip.getReference())
-                    || character.getBlessings().contains(SoulConnection.BOOSTER_EFFECT_MAP.get(soulChip.getShape()).name())) {
-                unusedSouls.remove(soulChip);
-            }
-        }
+        character.getCompanions().stream()
+                .filter(companion -> companion.getType().equals(SOUL_CHIP))
+                .map(companion -> ((SummonedSoulChip) companion).getSource())
+                .forEach(unusedSouls::remove);
+        character.getBlessings().stream()
+                .map(ActiveBlessing::getSource)
+                .filter(Objects::nonNull)
+                .forEach(unusedSouls::remove);
         return unusedSouls;
     }
 }

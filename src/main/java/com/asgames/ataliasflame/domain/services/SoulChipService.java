@@ -32,10 +32,10 @@ public class SoulChipService {
     public SoulChip getSoulChip(Character character, int percent) {
         SoulChipShape shape = valueByOrder(character.getSoulChips().size());
         return SoulChip.builder()
-                .owner(character)
                 .reference(UUID.randomUUID().toString())
                 .name(shape.name)
                 .shape(shape)
+                .owner(character)
                 .attack(SOUL_CHIP_ATTACK_BASE + percent(SOUL_CHIP_ATTACK_BONUS, percent))
                 .defense(SOUL_CHIP_DEFENSE_BASE + percent(SOUL_CHIP_DEFENSE_BONUS, percent))
                 .minDamage(SOUL_CHIP_MIN_DAMAGE_BASE + percent(SOUL_CHIP_MIN_DAMAGE_BONUS, percent))

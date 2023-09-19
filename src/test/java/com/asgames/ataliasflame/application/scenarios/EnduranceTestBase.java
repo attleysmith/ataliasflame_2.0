@@ -12,16 +12,13 @@ import com.asgames.ataliasflame.domain.model.enums.MagicType;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
 import com.asgames.ataliasflame.domain.services.magic.SpellRegistry;
 import com.asgames.ataliasflame.domain.services.magic.spells.Spell;
-import com.asgames.ataliasflame.domain.services.magic.spells.blessing.SoulConnection;
 import org.junit.jupiter.api.AfterEach;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static com.asgames.ataliasflame.application.scenarios.Decisions.*;
+import static com.asgames.ataliasflame.domain.model.enums.CompanionType.SOUL_CHIP;
 import static com.asgames.ataliasflame.domain.model.enums.MagicType.*;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.ENERGY_ABSORPTION;
 import static java.util.stream.Collectors.groupingBy;
@@ -259,13 +256,14 @@ public abstract class EnduranceTestBase {
 
     private List<SoulChip> listUnusedSouls() {
         List<SoulChip> unusedSouls = new ArrayList<>(character.getSoulChips());
-        List<String> companionReferences = character.getCompanions().stream().map(Companion::getReference).toList();
-        for (SoulChip soulChip : character.getSoulChips()) {
-            if (companionReferences.contains(soulChip.getReference())
-                    || character.getBlessings().contains(SoulConnection.BOOSTER_EFFECT_MAP.get(soulChip.getShape()).name())) {
-                unusedSouls.remove(soulChip);
-            }
-        }
+        character.getCompanions().stream()
+                .filter(companion -> companion.getType().equals(SOUL_CHIP))
+                .map(companion -> ((SummonedSoulChip) companion).getSource())
+                .forEach(unusedSouls::remove);
+        character.getBlessings().stream()
+                .map(ActiveBlessing::getSource)
+                .filter(Objects::nonNull)
+                .forEach(unusedSouls::remove);
         return unusedSouls;
     }
 }

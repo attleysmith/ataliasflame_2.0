@@ -3,10 +3,11 @@ package com.asgames.ataliasflame.domain.model.enums;
 import java.util.Map;
 
 import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
+import static com.asgames.ataliasflame.domain.model.enums.BoosterType.*;
 
 public enum Booster {
 
-    HORA_EFFECT(Map.of(
+    HORA_EFFECT(GOD_EFFECT, Map.of(
             STRENGTH, 0,
             DEXTERITY, 0,
             CONSTITUTION, 0,
@@ -16,7 +17,7 @@ public enum Booster {
             MENTAL_POWER, 0,
             SPIRITUAL_POWER, 0
     )),
-    SIFER_EFFECT(Map.of(
+    SIFER_EFFECT(GOD_EFFECT, Map.of(
             STRENGTH, 0,
             DEXTERITY, 0,
             CONSTITUTION, 1,
@@ -26,7 +27,7 @@ public enum Booster {
             MENTAL_POWER, 0,
             SPIRITUAL_POWER, 0
     )),
-    GETON_EFFECT(Map.of(
+    GETON_EFFECT(GOD_EFFECT, Map.of(
             STRENGTH, 3,
             DEXTERITY, 0,
             CONSTITUTION, 0,
@@ -36,7 +37,7 @@ public enum Booster {
             MENTAL_POWER, 0,
             SPIRITUAL_POWER, 0
     )),
-    RUNID_EFFECT(Map.of(
+    RUNID_EFFECT(GOD_EFFECT, Map.of(
             STRENGTH, 0,
             DEXTERITY, 0,
             CONSTITUTION, 0,
@@ -46,7 +47,7 @@ public enum Booster {
             MENTAL_POWER, 0,
             SPIRITUAL_POWER, 0
     )),
-    ALATE_EFFECT(Map.of(
+    ALATE_EFFECT(GOD_EFFECT, Map.of(
             STRENGTH, 0,
             DEXTERITY, 3,
             CONSTITUTION, 0,
@@ -56,7 +57,7 @@ public enum Booster {
             MENTAL_POWER, 0,
             SPIRITUAL_POWER, 0
     )),
-    GINDON_EFFECT(Map.of(
+    GINDON_EFFECT(GOD_EFFECT, Map.of(
             STRENGTH, 0,
             DEXTERITY, 0,
             CONSTITUTION, 0,
@@ -66,7 +67,7 @@ public enum Booster {
             MENTAL_POWER, 1,
             SPIRITUAL_POWER, 0
     )),
-    ATALIA_EFFECT(Map.of(
+    ATALIA_EFFECT(GOD_EFFECT, Map.of(
             STRENGTH, 0,
             DEXTERITY, 0,
             CONSTITUTION, 0,
@@ -76,7 +77,7 @@ public enum Booster {
             MENTAL_POWER, 0,
             SPIRITUAL_POWER, 10
     )),
-    HUMAN_EFFECT(Map.of(
+    HUMAN_EFFECT(RACE_EFFECT, Map.of(
             STRENGTH, 0,
             DEXTERITY, 0,
             CONSTITUTION, 0,
@@ -86,7 +87,7 @@ public enum Booster {
             MENTAL_POWER, 0,
             SPIRITUAL_POWER, 0
     )),
-    ELF_EFFECT(Map.of(
+    ELF_EFFECT(RACE_EFFECT, Map.of(
             STRENGTH, -30,
             DEXTERITY, 20,
             CONSTITUTION, -10,
@@ -96,7 +97,7 @@ public enum Booster {
             MENTAL_POWER, 10,
             SPIRITUAL_POWER, 0
     )),
-    HALF_ELF_EFFECT(Map.of(
+    HALF_ELF_EFFECT(RACE_EFFECT, Map.of(
             STRENGTH, -15,
             DEXTERITY, 10,
             CONSTITUTION, -5,
@@ -106,7 +107,7 @@ public enum Booster {
             MENTAL_POWER, 5,
             SPIRITUAL_POWER, 0
     )),
-    NIGHT_ELF_EFFECT(Map.of(
+    NIGHT_ELF_EFFECT(RACE_EFFECT, Map.of(
             STRENGTH, 0,
             DEXTERITY, 10,
             CONSTITUTION, -1,
@@ -116,7 +117,7 @@ public enum Booster {
             MENTAL_POWER, -3,
             SPIRITUAL_POWER, 0
     )),
-    DWARF_EFFECT(Map.of(
+    DWARF_EFFECT(RACE_EFFECT, Map.of(
             STRENGTH, 10,
             DEXTERITY, -10,
             CONSTITUTION, 20,
@@ -126,7 +127,7 @@ public enum Booster {
             MENTAL_POWER, -15,
             SPIRITUAL_POWER, 0
     )),
-    ORC_EFFECT(Map.of(
+    ORC_EFFECT(RACE_EFFECT, Map.of(
             STRENGTH, 10,
             DEXTERITY, -5,
             CONSTITUTION, 20,
@@ -136,7 +137,7 @@ public enum Booster {
             MENTAL_POWER, -20,
             SPIRITUAL_POWER, 0
     )),
-    MINOTAUR_EFFECT(Map.of(
+    MINOTAUR_EFFECT(RACE_EFFECT, Map.of(
             STRENGTH, 20,
             DEXTERITY, -10,
             CONSTITUTION, 20,
@@ -146,7 +147,7 @@ public enum Booster {
             MENTAL_POWER, -20,
             SPIRITUAL_POWER, 0
     )),
-    ARIMASPI_EFFECT(Map.of(
+    ARIMASPI_EFFECT(RACE_EFFECT, Map.of(
             STRENGTH, 5,
             DEXTERITY, 5,
             CONSTITUTION, 5,
@@ -156,7 +157,7 @@ public enum Booster {
             MENTAL_POWER, -9,
             SPIRITUAL_POWER, 0
     )),
-    NYMPH_EFFECT(Map.of(
+    NYMPH_EFFECT(RACE_EFFECT, Map.of(
             STRENGTH, -10,
             DEXTERITY, 0,
             CONSTITUTION, -20,
@@ -166,7 +167,7 @@ public enum Booster {
             MENTAL_POWER, 20,
             SPIRITUAL_POWER, -30
     )),
-    HALFLING_EFFECT(Map.of(
+    HALFLING_EFFECT(RACE_EFFECT, Map.of(
             STRENGTH, -30,
             DEXTERITY, 50,
             CONSTITUTION, -10,
@@ -176,7 +177,7 @@ public enum Booster {
             MENTAL_POWER, 0,
             SPIRITUAL_POWER, 0
     )),
-    DIVINE_PROTECTION(Map.of(
+    DIVINE_PROTECTION(SPELL_EFFECT, Map.of(
             STRENGTH, 6,
             DEXTERITY, 0,
             CONSTITUTION, 0,
@@ -186,7 +187,7 @@ public enum Booster {
             MENTAL_POWER, 0,
             SPIRITUAL_POWER, 0
     )),
-    STRENGTHENING(Map.of(
+    STRENGTHENING(SPELL_EFFECT, Map.of(
             STRENGTH, 5,
             DEXTERITY, 0,
             CONSTITUTION, 0,
@@ -196,7 +197,7 @@ public enum Booster {
             MENTAL_POWER, 0,
             SPIRITUAL_POWER, 0
     )),
-    PROTECTIVE_HAND_OF_NATURE(Map.of(
+    PROTECTIVE_HAND_OF_NATURE(SPELL_EFFECT, Map.of(
             STRENGTH, 5,
             DEXTERITY, 0,
             CONSTITUTION, 0,
@@ -206,7 +207,7 @@ public enum Booster {
             MENTAL_POWER, 0,
             SPIRITUAL_POWER, 0
     )),
-    CANINE_SOUL_CONNECTION(Map.of(
+    CANINE_SOUL_CONNECTION(SPELL_EFFECT, Map.of(
             STRENGTH, 5,
             DEXTERITY, 5,
             CONSTITUTION, 2,
@@ -216,7 +217,7 @@ public enum Booster {
             MENTAL_POWER, 0,
             SPIRITUAL_POWER, 0
     )),
-    APE_LIKE_SOUL_CONNECTION(Map.of(
+    APE_LIKE_SOUL_CONNECTION(SPELL_EFFECT, Map.of(
             STRENGTH, 5,
             DEXTERITY, 2,
             CONSTITUTION, 5,
@@ -226,7 +227,7 @@ public enum Booster {
             MENTAL_POWER, 0,
             SPIRITUAL_POWER, 0
     )),
-    BIRD_OF_PREY_SOUL_CONNECTION(Map.of(
+    BIRD_OF_PREY_SOUL_CONNECTION(SPELL_EFFECT, Map.of(
             STRENGTH, 2,
             DEXTERITY, 5,
             CONSTITUTION, 2,
@@ -237,9 +238,11 @@ public enum Booster {
             SPIRITUAL_POWER, 0
     ));
 
-    Booster(Map<Attribute, Integer> effects) {
+    Booster(BoosterType type, Map<Attribute, Integer> effects) {
+        this.type = type;
         this.effects = effects;
     }
 
+    public final BoosterType type;
     public final Map<Attribute, Integer> effects;
 }

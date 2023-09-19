@@ -5,7 +5,6 @@ import com.asgames.ataliasflame.domain.model.entities.Armor;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Shield;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
-import com.asgames.ataliasflame.domain.model.enums.Booster;
 import com.asgames.ataliasflame.domain.utils.CalculatorUtils;
 import org.springframework.stereotype.Service;
 
@@ -133,7 +132,7 @@ public class CharacterCalculationService {
             }
             character.getBlessings().forEach(
                     blessing -> this.multipliers.add(
-                            Booster.valueOf(blessing).effects.get(attribute)
+                            blessing.getBooster().effects.get(attribute)
                     )
             );
         }

@@ -6,6 +6,8 @@ import com.asgames.ataliasflame.domain.model.vos.Energy;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.UUID;
+
 import static com.asgames.ataliasflame.domain.model.enums.CompanionType.SOUL_CHIP;
 import static jakarta.persistence.EnumType.STRING;
 
@@ -53,9 +55,9 @@ public class SoulChip {
     @Column(name = "upgradePercent")
     private int upgradePercent;
 
-    public Companion summon() {
-        return Companion.builder()
-                .reference(reference)
+    public SummonedSoulChip summon() {
+        return SummonedSoulChip.builder()
+                .reference(UUID.randomUUID().toString())
                 .name(name)
                 .type(SOUL_CHIP)
                 .owner(owner)
@@ -65,6 +67,7 @@ public class SoulChip {
                 .maxDamage(maxDamage)
                 .health(Energy.withTotal(health))
                 .initiative(initiative)
+                .source(this)
                 .build();
     }
 

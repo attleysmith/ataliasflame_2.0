@@ -1,5 +1,6 @@
 package com.asgames.ataliasflame.domain.services.magic.spells.blessing;
 
+import com.asgames.ataliasflame.domain.model.entities.ActiveBlessing;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.enums.Booster;
@@ -30,15 +31,19 @@ public class Strengthening extends BlessingSpell {
         character.getMagic().use(SPELL_COST);
         storyLineLogger.event(spellCasting(character, this));
 
-        String blessing = Booster.STRENGTHENING.name();
-        if (!character.getBlessings().contains(blessing)) {
+        Booster booster = Booster.STRENGTHENING;
+        if (character.getBlessings().stream()
+                .noneMatch(blessing -> blessing.getBooster().equals(booster))) {
+            ActiveBlessing activeBlessing = ActiveBlessing.of(character, booster);
+            character.getBlessings().add(activeBlessing);
+
             int originalHealth = character.getHealth().totalValue();
             int originalMagic = character.getMagic().totalValue();
-            character.getBlessings().add(blessing);
             characterCalculationService.recalculateProperties(character);
             character.getHealth().uplift(originalHealth);
             character.getMagic().uplift(originalMagic);
-            storyLineLogger.event(blessing(character, blessing));
+
+            storyLineLogger.event(blessing(character, activeBlessing));
         }
     }
 

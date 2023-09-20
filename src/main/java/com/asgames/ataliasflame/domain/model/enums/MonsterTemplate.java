@@ -56,6 +56,7 @@ public enum MonsterTemplate {
                 .minDamage(minDamage)
                 .maxDamage(maxDamage)
                 .health(Energy.withTotal(health))
+                .vitality(Energy.withTotal(health))
                 .initiative(initiative)
                 .experience(experience)
                 .level(level)

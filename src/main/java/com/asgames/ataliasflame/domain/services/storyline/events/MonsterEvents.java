@@ -104,4 +104,23 @@ public final class MonsterEvents {
                     "; DMG: " + oldMinDamage + "-" + oldMaxDamage + " -> " + monster.getMinDamage() + "-" + monster.getMaxDamage();
         }
     }
+
+    public static class VitalityAbsorptionEvent extends MonsterEvent {
+        private final int effectiveAbsorption;
+
+        private VitalityAbsorptionEvent(Monster monster, int effectiveAbsorption) {
+            super(DEBUG, monster);
+            this.effectiveAbsorption = effectiveAbsorption;
+        }
+
+        public static VitalityAbsorptionEvent vitalityAbsorption(Monster monster, int effectiveAbsorption) {
+            return new VitalityAbsorptionEvent(monster, effectiveAbsorption);
+        }
+
+        @Override
+        public String message() {
+            return "Absorbed " + effectiveAbsorption + " vitality of " + monster.getCode() +
+                    " (" + monster.shortRef() + ") | Remaining vitality: " + monster.getVitality().actualValue();
+        }
+    }
 }

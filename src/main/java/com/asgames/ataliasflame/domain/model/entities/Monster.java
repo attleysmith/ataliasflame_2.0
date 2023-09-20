@@ -50,6 +50,13 @@ public class Monster implements Combatant {
     })
     private Energy health;
 
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "totalEnergy", column = @Column(name = "totalVitality")),
+            @AttributeOverride(name = "usedEnergy", column = @Column(name = "lostVitality"))
+    })
+    private Energy vitality;
+
     public Energy getHealth() {
         if (health == null) {
             health = new Energy();

@@ -163,8 +163,4 @@ public class Character implements Combatant {
         }
         return blessings;
     }
-
-    public void removeBlessings() {
-        blessings.forEach(activeBlessing -> blessings.remove(activeBlessing));
-    }
 }

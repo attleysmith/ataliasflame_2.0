@@ -39,10 +39,6 @@ public class HealingService {
     }
 
     private void heal(Character character, Runnable healingMethod) {
-        if (character.getHealth().isFull()) {
-            return;
-        }
-
         int oldHealth = character.getHealth().actualValue();
         healingMethod.run();
         storyLineLogger.event(healthRecovery(character, oldHealth));

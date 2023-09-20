@@ -221,6 +221,6 @@ public final class Decisions {
     public static Optional<Monster> targetOfEnergyAbsorption(Location location) {
         return location.getMonsters().stream()
                 .filter(Combatant::isDead)
-                .max(comparing(monster -> monster.getHealth().totalValue()));
+                .max(comparing(monster -> monster.getVitality().actualValue()));
     }
 }

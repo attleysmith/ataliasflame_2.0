@@ -25,18 +25,14 @@ public class MagicService {
     private CharacterCalculationService characterCalculationService;
 
     public void sleep(Character character) {
-        recover(character, MAGIC_RECOVERY_EFFECT_OF_SLEEP);
+        recoverMagic(character, MAGIC_RECOVERY_EFFECT_OF_SLEEP);
     }
 
     public void eat(Character character, Food food) {
-        recover(character, food.getMagicEffect());
+        recoverMagic(character, food.getMagicEffect());
     }
 
-    private void recover(Character character, int recoveryEffect) {
-        if (character.getMagic().isFull()) {
-            return;
-        }
-
+    private void recoverMagic(Character character, int recoveryEffect) {
         int oldMagic = character.getMagic().actualValue();
         character.getMagic().recover(recoveryEffect);
         storyLineLogger.event(magicRecovery(character, oldMagic));
@@ -51,7 +47,7 @@ public class MagicService {
     }
 
     public void removeBlessingMagic(Character character) {
-        character.removeBlessings();
+        character.getBlessings().clear();
         character.getCover().setEnergyArmor(null);
         character.getCover().setDivineArmor(null);
         characterCalculationService.recalculateProperties(character);

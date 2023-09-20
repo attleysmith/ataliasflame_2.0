@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.ENERGY;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.ENERGY_ABSORPTION;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
+import static com.asgames.ataliasflame.domain.services.storyline.events.MonsterEvents.VitalityAbsorptionEvent.vitalityAbsorption;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.percent;
 import static com.asgames.ataliasflame.domain.utils.DiceUtils.successX;
 
@@ -22,7 +23,7 @@ public class EnergyAbsorption extends HealingSpell {
     private static final int SPELL_COST = 5;
 
     // healing effect
-    private static final int HEALTH_ABSORBING_EFFECT = 20;
+    private static final int VITALITY_ABSORBING_EFFECT = 20;
 
     // area effect
     private static final int NEARBY_ABSORBING_CHANCE = 40;
@@ -36,15 +37,21 @@ public class EnergyAbsorption extends HealingSpell {
         character.getMagic().use(SPELL_COST);
         storyLineLogger.event(spellCasting(character, this));
 
-        int absorbedHealth = targetMonster.getLocation().getMonsters().stream()
+        targetMonster.getLocation().getMonsters().stream()
                 .filter(Combatant::isDead)
+                .filter(monster -> monster.getVitality().hasOne())
                 .filter(monster ->
                         monster.getReference().equals(targetMonster.getReference())
                                 || successX(NEARBY_ABSORBING_CHANCE)
                 )
-                .map(monster -> percent(monster.getHealth().totalValue(), HEALTH_ABSORBING_EFFECT))
-                .reduce(0, Integer::sum);
-        healingService.replenishHealth(character, absorbedHealth);
+                .forEach(monster -> {
+                    int absorbedVitality = percent(monster.getVitality().totalValue(), VITALITY_ABSORBING_EFFECT);
+                    int excess = monster.getVitality().penetrate(absorbedVitality);
+                    int effectiveAbsorption = absorbedVitality - excess;
+                    storyLineLogger.event(vitalityAbsorption(monster, effectiveAbsorption));
+
+                    healingService.replenishHealth(character, effectiveAbsorption);
+                });
     }
 
     @Override

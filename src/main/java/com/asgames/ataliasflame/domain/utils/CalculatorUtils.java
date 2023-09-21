@@ -37,6 +37,11 @@ public final class CalculatorUtils {
         return roll(possibilities) + min - 1;
     }
 
+    public static <T> T pointOut(List<T> list) {
+        int pointer = roll(list.size()) - 1;
+        return list.get(pointer);
+    }
+
     public static <T> T choose(List<SelectionValue<T>> partitions) {
         int possibilities = partitions.stream()
                 .map(SelectionValue::getChance)

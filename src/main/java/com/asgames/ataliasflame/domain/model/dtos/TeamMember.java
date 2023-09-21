@@ -8,8 +8,9 @@ import lombok.Data;
 @Data
 public class TeamMember {
 
-    private final Combatant combatant;
     private final int team;
+    private final Combatant combatant;
+    private TeamMember swornEnemy;
 
     public String getReference() {
         return combatant.getReference();
@@ -17,6 +18,10 @@ public class TeamMember {
 
     public int getInitiative() {
         return combatant.getInitiative();
+    }
+
+    public boolean isAlive() {
+        return combatant.isAlive();
     }
 
     public boolean isDead() {

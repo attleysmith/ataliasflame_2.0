@@ -7,10 +7,7 @@ import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.asgames.ataliasflame.domain.services.storyline.events.CombatEvents.CombatDamageEvent.combatDamage;
@@ -22,7 +19,8 @@ import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEv
 import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.warningReport;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.percent;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.pointOut;
-import static com.asgames.ataliasflame.domain.utils.DiceUtils.*;
+import static com.asgames.ataliasflame.domain.utils.DiceUtils.roll10;
+import static com.asgames.ataliasflame.domain.utils.DiceUtils.successX;
 import static java.util.stream.Collectors.groupingBy;
 import static org.apache.commons.collections4.ListUtils.union;
 
@@ -31,6 +29,8 @@ public class CombatService {
 
     @Autowired
     private StoryLineLogger storyLineLogger;
+
+    private static final int FOCUS_ON_TARGET = 99;
 
     public void combat(List<? extends Combatant> team1, List<? extends Combatant> team2) {
         if (team1.isEmpty() || team2.isEmpty()) {
@@ -81,13 +81,18 @@ public class CombatService {
         if (attacker.isDead() || defenders.isEmpty()) {
             throw new IllegalArgumentException("Attacker is dead or combat should be ended with one of the teams eliminated!");
         }
-        int defenderPointer = roll(defenders.size()) - 1;
-
-        TeamMember defender = defenders.get(defenderPointer);
+        TeamMember defender = Optional.ofNullable(attacker.getSwornEnemy())
+                .filter(TeamMember::isAlive)
+                .filter(swornEnemy -> successX(FOCUS_ON_TARGET))
+                .orElseGet(() -> {
+                    TeamMember swornEnemy = pointOut(defenders);
+                    attacker.setSwornEnemy(swornEnemy);
+                    return swornEnemy;
+                });
         attack(attacker.getCombatant(), defender.getCombatant());
 
         if (defender.isDead()) {
-            defenders.remove(defenderPointer);
+            defenders.remove(defender);
         }
     }
 

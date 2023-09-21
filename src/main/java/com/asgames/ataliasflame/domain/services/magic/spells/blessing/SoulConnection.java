@@ -22,6 +22,8 @@ import static com.asgames.ataliasflame.domain.services.storyline.events.Characte
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.WarningReportCause.OCCUPIED_SOULS;
 import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.warningReport;
+import static com.asgames.ataliasflame.domain.services.storyline.events.SoulChipEvents.FatigueEvent.fatigue;
+import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.pointOut;
 
 @Component
 public class SoulConnection extends BlessingSpell {
@@ -30,6 +32,8 @@ public class SoulConnection extends BlessingSpell {
     private CharacterCalculationService characterCalculationService;
 
     private static final int SPELL_COST = 5;
+
+    private static final int FATIGUE_EFFECT = 5;
 
     // buff effect
     public static final Map<SoulChipShape, Booster> BOOSTER_EFFECT_MAP = Map.of(
@@ -44,14 +48,17 @@ public class SoulConnection extends BlessingSpell {
 
     @Override
     public void enforce(Character character, @Nullable Monster targetMonster) {
-        List<SoulChip> unusedSouls = listUnusedSouls(character);
-        if (unusedSouls.isEmpty()) {
+        List<SoulChip> readySouls = listReadySouls(character);
+        if (readySouls.isEmpty()) {
             storyLineLogger.event(warningReport(OCCUPIED_SOULS));
         } else {
             character.getMagic().use(SPELL_COST);
             storyLineLogger.event(spellCasting(character, this));
 
-            SoulChip soulChip = unusedSouls.get(0);
+            SoulChip soulChip = pointOut(readySouls);
+            soulChip.getHealth().trauma(FATIGUE_EFFECT);
+            storyLineLogger.event(fatigue(soulChip, FATIGUE_EFFECT));
+
             Booster booster = BOOSTER_EFFECT_MAP.get(soulChip.getShape());
             if (character.getBlessings().stream()
                     .noneMatch(blessing -> blessing.getBooster().equals(booster))) {

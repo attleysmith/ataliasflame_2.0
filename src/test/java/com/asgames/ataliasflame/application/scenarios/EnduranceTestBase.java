@@ -20,6 +20,7 @@ import java.util.*;
 import static com.asgames.ataliasflame.application.scenarios.Decisions.*;
 import static com.asgames.ataliasflame.domain.model.enums.CompanionType.SOUL_CHIP;
 import static com.asgames.ataliasflame.domain.model.enums.MagicType.*;
+import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.SOUL;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.ENERGY_ABSORPTION;
 import static java.util.stream.Collectors.groupingBy;
 
@@ -109,11 +110,17 @@ public abstract class EnduranceTestBase {
     }
 
     private void putOnBlessings() {
-        blessingOrder(usableSpells.get(BLESSING)).forEach(spell -> {
-            if (repeatBlessing(character, location) && character.getMagic().has(spell.getCost())) {
-                character = characterMagicService.castSpell(character.getReference(), spell.getName());
-            }
-        });
+        blessingOrder(usableSpells.get(BLESSING))
+                .forEach(this::doBlessing);
+    }
+
+    private void doBlessing(Spell spell) {
+        if (spell.getGroup().equals(SOUL) && listReadySouls().isEmpty()) {
+            return;
+        }
+        if (notEnoughBlessing(character, location) && character.getMagic().has(spell.getCost())) {
+            character = characterMagicService.castSpell(character.getReference(), spell.getName());
+        }
     }
 
     private void enterLocation() {
@@ -133,9 +140,9 @@ public abstract class EnduranceTestBase {
     private void castAttackMagic(Monster monster) {
         Monster targetMonster = monster;
 
-        boolean hasAvailableSoul = !listUnusedSouls().isEmpty();
         boolean tryToAttack = true;
         while (tryToAttack && targetMonster.isAlive()) {
+            boolean hasAvailableSoul = !listReadySouls().isEmpty();
             Optional<Spell> attackSpell = chooseAttackSpell(usableSpells.get(ATTACK), character, hasAvailableSoul);
             if (attackSpell.isPresent() && worthyTargetOfAttackSpell(targetMonster, spellRegistry.get(attackSpell.get().getName()))) {
                 TargetContext targetContext = characterMagicService.castTargetingSpell(character.getReference(), attackSpell.get().getName(), targetMonster.getReference());
@@ -156,7 +163,7 @@ public abstract class EnduranceTestBase {
     }
 
     private void castCurseMagic(Monster monster) {
-        boolean hasAvailableSoul = !listUnusedSouls().isEmpty();
+        boolean hasAvailableSoul = !listReadySouls().isEmpty();
         Optional<Spell> curseSpell = chooseCurseSpell(usableSpells.get(CURSE), character, hasAvailableSoul);
         if (curseSpell.isPresent() && worthyTargetOfCurseSpell(monster, character)) {
             TargetContext targetContext = characterMagicService.castTargetingSpell(character.getReference(), curseSpell.get().getName(), monster.getReference());
@@ -209,10 +216,10 @@ public abstract class EnduranceTestBase {
     }
 
     private void castHealingMagic() {
-        boolean hasAvailableSoul = !listUnusedSouls().isEmpty();
         boolean reachDeadMonster = location.getMonsters().stream().anyMatch(Combatant::isDead);
         boolean readyToGo = noNeedToCastHealingMagic(character);
         while (!readyToGo) {
+            boolean hasAvailableSoul = !listReadySouls().isEmpty();
             Optional<Spell> healingSpell = chooseHealingSpell(usableSpells.get(HEALING), character, hasAvailableSoul, reachDeadMonster);
             if (healingSpell.isPresent()) {
                 Spell spell = healingSpell.get();
@@ -234,7 +241,7 @@ public abstract class EnduranceTestBase {
     }
 
     private void finishEncounter() {
-        character = characterMagicService.removeBlessingMagic(character.getReference());
+        character = characterAdventureService.timePassed(character.getReference());
     }
 
     private void sleep() {
@@ -254,7 +261,7 @@ public abstract class EnduranceTestBase {
         }
     }
 
-    private List<SoulChip> listUnusedSouls() {
+    private List<SoulChip> listReadySouls() {
         List<SoulChip> unusedSouls = new ArrayList<>(character.getSoulChips());
         character.getCompanions().stream()
                 .filter(companion -> companion.getType().equals(SOUL_CHIP))
@@ -264,6 +271,6 @@ public abstract class EnduranceTestBase {
                 .map(ActiveBlessing::getSource)
                 .filter(Objects::nonNull)
                 .forEach(unusedSouls::remove);
-        return unusedSouls;
+        return unusedSouls.stream().filter(SoulChip::isReady).toList();
     }
 }

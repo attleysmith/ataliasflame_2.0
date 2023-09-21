@@ -52,7 +52,7 @@ public final class SimpleEvents {
     public static class WarningEvent extends SimpleEvent {
 
         public enum WarningReportCause {
-            OCCUPIED_SOULS, UNSUCCESSFUL_SUMMON, NO_ENEMY
+            OCCUPIED_SOULS, NO_ENEMY
         }
 
         private final WarningReportCause cause;
@@ -69,8 +69,7 @@ public final class SimpleEvents {
         @Override
         public String message() {
             return switch (cause) {
-                case OCCUPIED_SOULS -> "Soul chips are occupied!";
-                case UNSUCCESSFUL_SUMMON -> "Summoning was unsuccessful!";
+                case OCCUPIED_SOULS -> "Soul chips are occupied or exhausted!";
                 case NO_ENEMY -> "Combat without an enemy.";
                 default -> throw new UnsupportedOperationException("Unknown warning report cause!");
             };

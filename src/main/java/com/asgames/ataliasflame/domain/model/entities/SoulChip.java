@@ -44,8 +44,6 @@ public class SoulChip {
     private int minDamage;
     @Column(name = "maxDamage")
     private int maxDamage;
-    @Column(name = "health")
-    private int health;
     @Column(name = "initiative")
     private int initiative;
 
@@ -54,6 +52,21 @@ public class SoulChip {
     private Caste upgradedCaste;
     @Column(name = "upgradePercent")
     private int upgradePercent;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "totalEnergy", column = @Column(name = "totalHealth")),
+            @AttributeOverride(name = "usedEnergy", column = @Column(name = "fatigue"))
+    })
+    private Energy health;
+
+    public boolean isExhausted() {
+        return health.isEmpty();
+    }
+
+    public boolean isReady() {
+        return health.hasOne();
+    }
 
     public SummonedSoulChip summon() {
         return SummonedSoulChip.builder()
@@ -65,7 +78,7 @@ public class SoulChip {
                 .defense(defense)
                 .minDamage(minDamage)
                 .maxDamage(maxDamage)
-                .health(Energy.withTotal(health))
+                .health(Energy.fromSource(health))
                 .initiative(initiative)
                 .source(this)
                 .build();

@@ -3,6 +3,7 @@ package com.asgames.ataliasflame.domain.services;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.SoulChip;
 import com.asgames.ataliasflame.domain.model.enums.SoulChipShape;
+import com.asgames.ataliasflame.domain.model.vos.Energy;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,11 +27,15 @@ public class SoulChipService {
     private static final int SOUL_CHIP_MAX_DAMAGE_BONUS = 10;
     private static final int SOUL_CHIP_INITIATIVE = -1;
 
+    private static final int SLEEP_RECOVERY_EFFECT = 80;
+    private static final int REST_RECOVERY_EFFECT = 5;
+
     @Autowired
     private StoryLineLogger storyLineLogger;
 
     public SoulChip getSoulChip(Character character, int percent) {
         SoulChipShape shape = valueByOrder(character.getSoulChips().size());
+        int health = percent(character.getHealth().totalValue(), percent);
         return SoulChip.builder()
                 .reference(UUID.randomUUID().toString())
                 .name(shape.name)
@@ -40,7 +45,7 @@ public class SoulChipService {
                 .defense(SOUL_CHIP_DEFENSE_BASE + percent(SOUL_CHIP_DEFENSE_BONUS, percent))
                 .minDamage(SOUL_CHIP_MIN_DAMAGE_BASE + percent(SOUL_CHIP_MIN_DAMAGE_BONUS, percent))
                 .maxDamage(SOUL_CHIP_MAX_DAMAGE_BASE + percent(SOUL_CHIP_MAX_DAMAGE_BONUS, percent))
-                .health(percent(character.getHealth().totalValue(), percent))
+                .health(Energy.withTotal(health))
                 .initiative(SOUL_CHIP_INITIATIVE)
                 .upgradedCaste(character.getCaste())
                 .upgradePercent(percent)
@@ -49,9 +54,21 @@ public class SoulChipService {
 
     public void upgradeSoulChips(Character character) {
         character.getSoulChips().forEach(soulChip -> {
-            int oldHealth = soulChip.getHealth();
-            soulChip.setHealth(percent(character.getHealth().totalValue(), soulChip.getUpgradePercent()));
+            int oldHealth = soulChip.getHealth().totalValue();
+            int newHealth = percent(character.getHealth().totalValue(), soulChip.getUpgradePercent());
+            soulChip.getHealth().set(newHealth);
+            soulChip.getHealth().uplift(oldHealth);
             storyLineLogger.event(soulChipUpgrade(soulChip, oldHealth));
         });
+    }
+
+    public void sleep(Character character) {
+        character.getSoulChips()
+                .forEach(soulChip -> soulChip.getHealth().recover(SLEEP_RECOVERY_EFFECT));
+    }
+
+    public void rest(Character character) {
+        character.getSoulChips()
+                .forEach(soulChip -> soulChip.getHealth().recover(REST_RECOVERY_EFFECT));
     }
 }

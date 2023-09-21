@@ -2,7 +2,10 @@ package com.asgames.ataliasflame.domain.services.magic.spells.curse;
 
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
+import com.asgames.ataliasflame.domain.model.entities.SoulChip;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.SOUL;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.SOUL_STRIKE;
@@ -10,12 +13,16 @@ import static com.asgames.ataliasflame.domain.services.storyline.events.Characte
 import static com.asgames.ataliasflame.domain.services.storyline.events.MonsterEvents.CurseCastingEvent.curseCasting;
 import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.WarningReportCause.OCCUPIED_SOULS;
 import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.warningReport;
+import static com.asgames.ataliasflame.domain.services.storyline.events.SoulChipEvents.FatigueEvent.fatigue;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.calculate;
+import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.pointOut;
 
 @Component
 public class SoulStrike extends CurseSpell {
 
     private static final int SPELL_COST = 10;
+
+    private static final int FATIGUE_EFFECT = 10;
 
     // debuff effect
     private static final int ATTACK_MULTIPLIER = -10;
@@ -29,11 +36,16 @@ public class SoulStrike extends CurseSpell {
 
     @Override
     public void enforce(Character character, Monster targetMonster) {
-        if (listUnusedSouls(character).isEmpty()) {
+        List<SoulChip> readySouls = listReadySouls(character);
+        if (readySouls.isEmpty()) {
             storyLineLogger.event(warningReport(OCCUPIED_SOULS));
         } else {
             character.getMagic().use(SPELL_COST);
             storyLineLogger.event(spellCasting(character, this));
+
+            SoulChip soulChip = pointOut(readySouls);
+            soulChip.getHealth().trauma(FATIGUE_EFFECT);
+            storyLineLogger.event(fatigue(soulChip, FATIGUE_EFFECT));
 
             if (targetMonster.isAlive()) {
                 int oldAttack = targetMonster.getAttack();

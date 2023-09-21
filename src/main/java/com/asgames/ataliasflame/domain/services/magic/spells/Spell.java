@@ -41,7 +41,7 @@ public abstract class Spell {
         return 0;
     }
 
-    protected List<SoulChip> listUnusedSouls(Character character) {
+    protected List<SoulChip> listReadySouls(Character character) {
         List<SoulChip> unusedSouls = new ArrayList<>(character.getSoulChips());
         character.getCompanions().stream()
                 .filter(companion -> companion.getType().equals(SOUL_CHIP))
@@ -51,6 +51,6 @@ public abstract class Spell {
                 .map(ActiveBlessing::getSource)
                 .filter(Objects::nonNull)
                 .forEach(unusedSouls::remove);
-        return unusedSouls;
+        return unusedSouls.stream().filter(SoulChip::isReady).toList();
     }
 }

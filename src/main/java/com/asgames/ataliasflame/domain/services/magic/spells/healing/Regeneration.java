@@ -14,10 +14,10 @@ import static com.asgames.ataliasflame.domain.services.storyline.events.Characte
 @Component
 public class Regeneration extends HealingSpell {
 
-    private static final int SPELL_COST = 10;
-
     @Autowired
     private HealingService healingService;
+
+    private static final int SPELL_COST = 10;
 
     // healing effect
     private static final int HEALING_EFFECT = 30;

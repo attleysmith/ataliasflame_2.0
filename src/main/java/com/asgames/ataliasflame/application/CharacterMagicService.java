@@ -64,13 +64,6 @@ public class CharacterMagicService {
                 .build();
     }
 
-    @Transactional
-    public Character removeBlessingMagic(String characterReference) {
-        Character character = characterMaintenanceService.getCharacter(characterReference);
-        magicService.removeBlessingMagic(character);
-        return characterRepository.save(character);
-    }
-
     @Transactional(readOnly = true)
     public List<Spell> listCharacterSpells(String characterReference) {
         Character character = characterMaintenanceService.getCharacter(characterReference);

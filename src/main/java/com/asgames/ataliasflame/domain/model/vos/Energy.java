@@ -22,6 +22,11 @@ public class Energy {
         this.totalEnergy = totalEnergy;
     }
 
+    private Energy(int totalEnergy, int usedEnergy) {
+        this.totalEnergy = totalEnergy;
+        this.usedEnergy = usedEnergy;
+    }
+
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     private int totalEnergy;
@@ -31,6 +36,16 @@ public class Energy {
 
     public static Energy withTotal(int totalValue) {
         return new Energy(totalValue);
+    }
+
+    public static Energy emptyWithTotal(int totalValue) {
+        return new Energy(totalValue, totalValue);
+    }
+
+    public static Energy fromSource(Energy source) {
+        Energy targetEnergy = emptyWithTotal(source.totalValue());
+        targetEnergy.transferFrom(source);
+        return targetEnergy;
     }
 
     public void set(int totalValue) {
@@ -112,5 +127,10 @@ public class Energy {
         if (totalEnergy > originalValue) {
             replenish(totalEnergy - originalValue);
         }
+    }
+
+    public void transferFrom(Energy source) {
+        this.replenish(source.actualValue());
+        source.damage(source.actualValue());
     }
 }

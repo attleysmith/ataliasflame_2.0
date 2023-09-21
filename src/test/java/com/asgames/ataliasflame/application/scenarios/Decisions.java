@@ -157,7 +157,7 @@ public final class Decisions {
                 && actualNumberOfCompanions < MAX_NUMBER_OF_COMPANIONS;
     }
 
-    public static boolean repeatBlessing(Character character, Location location) {
+    public static boolean notEnoughBlessing(Character character, Location location) {
         int actualNumberOfBlessings = character.getBlessings().size();
         return actualNumberOfBlessings < maxNumberOfBlessings(character, location.getMonsters());
     }

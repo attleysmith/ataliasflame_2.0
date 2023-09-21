@@ -33,7 +33,7 @@ public final class SoulChipEvents {
         @Override
         public String message() {
             return "Ripping out a soul chip (" + soulChip.getUpgradePercent() + "%) -> " + soulChip.getName()
-                    + " (HP: " + soulChip.getHealth() + ")";
+                    + " (HP: " + soulChip.getHealth().actualValue() + ")";
         }
     }
 
@@ -51,7 +51,41 @@ public final class SoulChipEvents {
 
         @Override
         public String message() {
-            return "Soul chip (" + soulChip.getName() + ") upgraded. Health: " + oldHealth + " -> " + soulChip.getHealth();
+            return "Soul chip (" + soulChip.getName() + ") upgraded. Total health: " + oldHealth + " -> " + soulChip.getHealth().totalValue();
+        }
+    }
+
+    public static class FatigueEvent extends SoulChipEvent {
+        private final int fatigueEffect;
+
+        private FatigueEvent(SoulChip soulChip, int fatigueEffect) {
+            super(DEBUG, soulChip);
+            this.fatigueEffect = fatigueEffect;
+        }
+
+        public static FatigueEvent fatigue(SoulChip soulChip, int oldHealth) {
+            return new FatigueEvent(soulChip, oldHealth);
+        }
+
+        @Override
+        public String message() {
+            return "Soul chip (" + soulChip.getName() + ") fatigue: " + fatigueEffect + "% -> Health: " + soulChip.getHealth().actualValue();
+        }
+    }
+
+    public static class SoulChipExhaustedEvent extends SoulChipEvent {
+
+        private SoulChipExhaustedEvent(SoulChip soulChip) {
+            super(INFO, soulChip);
+        }
+
+        public static SoulChipExhaustedEvent soulChipExhausted(SoulChip soulChip) {
+            return new SoulChipExhaustedEvent(soulChip);
+        }
+
+        @Override
+        public String message() {
+            return "Soul chip (" + soulChip.getName() + ") exhausted!";
         }
     }
 }

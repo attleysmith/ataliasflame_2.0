@@ -7,6 +7,7 @@ import com.asgames.ataliasflame.domain.model.entities.DefensiveGodConversionLog;
 import com.asgames.ataliasflame.domain.services.DefensiveGodConversionService;
 import com.asgames.ataliasflame.domain.services.HealingService;
 import com.asgames.ataliasflame.domain.services.MagicService;
+import com.asgames.ataliasflame.domain.services.SoulChipService;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
 import com.asgames.ataliasflame.infrastructure.repositories.CharacterRepository;
 import com.asgames.ataliasflame.infrastructure.repositories.DefensiveGodConversionLogRepository;
@@ -39,6 +40,8 @@ public class CharacterAdventureService {
     @Autowired
     private HealingService healingService;
     @Autowired
+    private SoulChipService soulChipService;
+    @Autowired
     private DefensiveGodConversionService defensiveGodConversionService;
 
     @Transactional
@@ -47,6 +50,7 @@ public class CharacterAdventureService {
         storyLineLogger.event(debugReport(SLEEPING));
         healingService.sleep(character);
         magicService.sleep(character);
+        soulChipService.sleep(character);
         character.getCompanions().forEach(companion ->
                 healingService.companionSleep(companion));
         return characterRepository.save(character);
@@ -60,5 +64,13 @@ public class CharacterAdventureService {
 
         conversionLog = defensiveGodConversionLogRepository.save(conversionLog);
         return defensiveGodConversionCodeMapper.toCode(conversionLog);
+    }
+
+    @Transactional
+    public Character timePassed(String characterReference) {
+        Character character = characterMaintenanceService.getCharacter(characterReference);
+        magicService.removeBlessingMagic(character);
+        soulChipService.rest(character);
+        return characterRepository.save(character);
     }
 }

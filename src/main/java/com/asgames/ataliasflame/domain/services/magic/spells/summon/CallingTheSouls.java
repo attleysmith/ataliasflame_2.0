@@ -15,11 +15,16 @@ import static com.asgames.ataliasflame.domain.services.storyline.events.Characte
 import static com.asgames.ataliasflame.domain.services.storyline.events.CompanionEvents.CompanionSummoningEvent.summoning;
 import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.WarningReportCause.OCCUPIED_SOULS;
 import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.warningReport;
+import static com.asgames.ataliasflame.domain.services.storyline.events.SoulChipEvents.FatigueEvent.fatigue;
+import static com.asgames.ataliasflame.domain.services.storyline.events.SoulChipEvents.SoulChipExhaustedEvent.soulChipExhausted;
+import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.pointOut;
 
 @Component
 public class CallingTheSouls extends SummonSpell {
 
     private static final int SPELL_COST = 18;
+
+    private static final int FATIGUE_EFFECT = 1;
 
     public CallingTheSouls() {
         super(CALLING_THE_SOULS, SOUL);
@@ -27,16 +32,24 @@ public class CallingTheSouls extends SummonSpell {
 
     @Override
     public void enforce(Character character, @Nullable Monster targetMonster) {
-        List<SoulChip> unusedSouls = listUnusedSouls(character);
-        if (unusedSouls.isEmpty()) {
+        List<SoulChip> readySouls = listReadySouls(character);
+        if (readySouls.isEmpty()) {
             storyLineLogger.event(warningReport(OCCUPIED_SOULS));
         } else {
             character.getMagic().use(SPELL_COST);
             storyLineLogger.event(spellCasting(character, this));
 
-            SummonedSoulChip summonedSoulChip = unusedSouls.get(0).summon();
-            character.getCompanions().add(summonedSoulChip);
-            storyLineLogger.event(summoning(summonedSoulChip));
+            SoulChip soulChip = pointOut(readySouls);
+            soulChip.getHealth().trauma(FATIGUE_EFFECT);
+            storyLineLogger.event(fatigue(soulChip, FATIGUE_EFFECT));
+
+            if (soulChip.isExhausted()) {
+                storyLineLogger.event(soulChipExhausted(soulChip));
+            } else {
+                SummonedSoulChip summonedSoulChip = soulChip.summon();
+                character.getCompanions().add(summonedSoulChip);
+                storyLineLogger.event(summoning(summonedSoulChip));
+            }
         }
     }
 

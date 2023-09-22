@@ -16,6 +16,7 @@ import static com.asgames.ataliasflame.domain.services.storyline.events.Characte
 import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.WarningReportCause.OCCUPIED_SOULS;
 import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.warningReport;
 import static com.asgames.ataliasflame.domain.services.storyline.events.SoulChipEvents.FatigueEvent.fatigue;
+import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.percent;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.pointOut;
 
 @Component
@@ -30,6 +31,7 @@ public class SoulPower extends HealingSpell {
 
     // healing effect
     private static final int HEALING_EFFECT = 40;
+    private static final int BONUS_EFFECT = 20;
 
     public SoulPower() {
         super(SOUL_POWER, SOUL);
@@ -48,7 +50,8 @@ public class SoulPower extends HealingSpell {
             soulChip.getHealth().trauma(FATIGUE_EFFECT);
             storyLineLogger.event(fatigue(soulChip, FATIGUE_EFFECT));
 
-            healingService.recoverHealth(character, HEALING_EFFECT);
+            int bonusEffect = percent(BONUS_EFFECT, soulChip.getEffectiveness());
+            healingService.recoverHealth(character, HEALING_EFFECT + bonusEffect);
         }
     }
 

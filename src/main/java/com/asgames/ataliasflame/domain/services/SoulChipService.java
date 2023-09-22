@@ -48,14 +48,14 @@ public class SoulChipService {
                 .health(Energy.withTotal(health))
                 .initiative(SOUL_CHIP_INITIATIVE)
                 .upgradedCaste(character.getCaste())
-                .upgradePercent(percent)
+                .effectiveness(percent)
                 .build();
     }
 
     public void upgradeSoulChips(Character character) {
         character.getSoulChips().forEach(soulChip -> {
             int oldHealth = soulChip.getHealth().totalValue();
-            int newHealth = percent(character.getHealth().totalValue(), soulChip.getUpgradePercent());
+            int newHealth = percent(character.getHealth().totalValue(), soulChip.getEffectiveness());
             soulChip.getHealth().set(newHealth);
             soulChip.getHealth().uplift(oldHealth);
             storyLineLogger.event(soulChipUpgrade(soulChip, oldHealth));

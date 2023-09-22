@@ -32,7 +32,7 @@ public final class SoulChipEvents {
 
         @Override
         public String message() {
-            return "Ripping out a soul chip (" + soulChip.getUpgradePercent() + "%) -> " + soulChip.getName()
+            return "Ripping out a soul chip (" + soulChip.getEffectiveness() + "%) -> " + soulChip.getName()
                     + " (HP: " + soulChip.getHealth().actualValue() + ")";
         }
     }

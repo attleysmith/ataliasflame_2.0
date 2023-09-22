@@ -50,8 +50,8 @@ public class SoulChip {
     @Column(name = "upgradedCaste")
     @Enumerated(STRING)
     private Caste upgradedCaste;
-    @Column(name = "upgradePercent")
-    private int upgradePercent;
+    @Column(name = "effectiveness")
+    private int effectiveness;
 
     @Embedded
     @AttributeOverrides({

@@ -4,6 +4,7 @@ import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.entities.SoulChip;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
+import com.asgames.ataliasflame.domain.services.storyline.events.CombatEvents.CombatDamageEvent.DamageType;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import static com.asgames.ataliasflame.domain.services.storyline.events.CombatEv
 import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.WarningReportCause.OCCUPIED_SOULS;
 import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.warningReport;
 import static com.asgames.ataliasflame.domain.services.storyline.events.SoulChipEvents.FatigueEvent.fatigue;
+import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.percent;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.pointOut;
 import static com.asgames.ataliasflame.domain.utils.DiceUtils.successX;
 
@@ -30,6 +32,7 @@ public class SoulOutburst extends AttackSpell {
     // damage effect
     private static final int MIN_DAMAGE = 15;
     private static final int MAX_DAMAGE = 30;
+    private static final int BONUS_DAMAGE = 10;
 
     // area effect
     private static final int NOVA_EFFECT_CHANCE = 5;
@@ -51,20 +54,21 @@ public class SoulOutburst extends AttackSpell {
             soulChip.getHealth().trauma(FATIGUE_EFFECT);
             storyLineLogger.event(fatigue(soulChip, FATIGUE_EFFECT));
 
+            int bonusDamage = percent(BONUS_DAMAGE, soulChip.getEffectiveness());
             if (successX(NOVA_EFFECT_CHANCE)) {
                 targetMonster.getLocation().getMonsters().stream()
                         .filter(Combatant::isAlive)
-                        .forEach(monster -> {
-                            int damage = pointOut(MIN_DAMAGE, MAX_DAMAGE);
-                            monster.getHealth().damage(damage);
-                            storyLineLogger.event(combatDamage(character, monster, damage, NOVA));
-                        });
+                        .forEach(monster -> dealDamage(character, monster, NOVA, bonusDamage));
             } else if (targetMonster.isAlive()) {
-                int damage = pointOut(MIN_DAMAGE, MAX_DAMAGE);
-                targetMonster.getHealth().damage(damage);
-                storyLineLogger.event(combatDamage(character, targetMonster, damage, DIRECT));
+                dealDamage(character, targetMonster, DIRECT, bonusDamage);
             }
         }
+    }
+
+    private void dealDamage(Character character, Monster monster, DamageType damageType, int bonusDamage) {
+        int damage = pointOut(MIN_DAMAGE, MAX_DAMAGE) + bonusDamage;
+        monster.getHealth().damage(damage);
+        storyLineLogger.event(combatDamage(character, monster, damage, damageType));
     }
 
     @Override

@@ -4,12 +4,14 @@ import com.asgames.ataliasflame.domain.model.dtos.Modifier;
 import com.asgames.ataliasflame.domain.model.entities.Armor;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Shield;
+import com.asgames.ataliasflame.domain.model.entities.SoulChip;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.utils.CalculatorUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static com.asgames.ataliasflame.domain.MockConstants.MODIFIERS;
 import static com.asgames.ataliasflame.domain.model.enums.Caste.ATALIAS_PRIEST;
@@ -130,11 +132,14 @@ public class CharacterCalculationService {
             if (character.getCaste().equals(ATALIAS_PRIEST)) {
                 this.multipliers.add(ATALIA.booster.effects.get(attribute));
             }
-            character.getBlessings().forEach(
-                    blessing -> this.multipliers.add(
-                            blessing.getBooster().effects.get(attribute)
-                    )
-            );
+            character.getBlessings().forEach(blessing -> {
+                int bonusEffect = Optional.ofNullable(blessing.getSource())
+                        .map(SoulChip::getEffectiveness)
+                        .orElse(0);
+                this.multipliers.add(
+                        CalculatorUtils.calculate(blessing.getBooster().effects.get(attribute), bonusEffect)
+                );
+            });
         }
 
         public static AttributeCalculator of(Character character, Attribute attribute) {

@@ -17,6 +17,9 @@ public final class CalculatorUtils {
     }
 
     public static int calculate(int base, int multiplier) {
+        if (base < 0) {
+            throw new IllegalArgumentException("Simple calculation shouldn't be made on negative base value!");
+        }
         return max(0, base + percent(base, multiplier));
     }
 

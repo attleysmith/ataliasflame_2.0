@@ -14,8 +14,7 @@ import static com.asgames.ataliasflame.domain.services.storyline.events.MonsterE
 import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.WarningReportCause.OCCUPIED_SOULS;
 import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.warningReport;
 import static com.asgames.ataliasflame.domain.services.storyline.events.SoulChipEvents.FatigueEvent.fatigue;
-import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.calculate;
-import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.pointOut;
+import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.*;
 
 @Component
 public class SoulStrike extends CurseSpell {
@@ -49,16 +48,22 @@ public class SoulStrike extends CurseSpell {
 
             if (targetMonster.isAlive()) {
                 int oldAttack = targetMonster.getAttack();
+                int attackMultiplier = ATTACK_MULTIPLIER + percent(ATTACK_MULTIPLIER, soulChip.getEffectiveness());
+                targetMonster.setAttack(calculate(oldAttack, attackMultiplier));
+
                 int oldDefense = targetMonster.getDefense();
+                int defenseMultiplier = DEFENSE_MULTIPLIER + percent(DEFENSE_MULTIPLIER, soulChip.getEffectiveness());
+                targetMonster.setDefense(calculate(oldDefense, defenseMultiplier));
+
                 int oldMinDamage = targetMonster.getMinDamage();
                 int oldMaxDamage = targetMonster.getMaxDamage();
-                int oldHealth = targetMonster.getHealth().totalValue();
+                int damageMultiplier = DAMAGE_MULTIPLIER + percent(DAMAGE_MULTIPLIER, soulChip.getEffectiveness());
+                targetMonster.setMinDamage(calculate(oldMinDamage, damageMultiplier));
+                targetMonster.setMaxDamage(calculate(oldMaxDamage, damageMultiplier));
 
-                targetMonster.setAttack(calculate(oldAttack, ATTACK_MULTIPLIER));
-                targetMonster.setDefense(calculate(oldDefense, DEFENSE_MULTIPLIER));
-                targetMonster.setMinDamage(calculate(oldMinDamage, DAMAGE_MULTIPLIER));
-                targetMonster.setMaxDamage(calculate(oldMaxDamage, DAMAGE_MULTIPLIER));
-                targetMonster.getHealth().set(calculate(oldHealth, HEALTH_MULTIPLIER));
+                int oldHealth = targetMonster.getHealth().totalValue();
+                int healthMultiplier = HEALTH_MULTIPLIER + percent(HEALTH_MULTIPLIER, soulChip.getEffectiveness());
+                targetMonster.getHealth().set(calculate(oldHealth, healthMultiplier));
 
                 storyLineLogger.event(curseCasting(targetMonster, this, oldAttack, oldDefense, oldMinDamage, oldMaxDamage, oldHealth));
             }

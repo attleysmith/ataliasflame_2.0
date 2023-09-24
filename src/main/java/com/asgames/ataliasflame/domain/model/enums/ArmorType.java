@@ -1,7 +1,8 @@
 package com.asgames.ataliasflame.domain.model.enums;
 
 public enum ArmorType {
-    PHYSICAL,
+    HELMET,
+    BODY_ARMOR,
     ENERGY,
     DIVINE
 }

@@ -203,7 +203,8 @@ public abstract class EnduranceTestBase {
                         }
                         case ARMOR -> {
                             Armor newArmor = characterLocationService.getArmor(item.getReference());
-                            if (needToChangeArmor(character, newArmor)) {
+                            if ((newArmor.isHelmet() && needToChangeHelmet(character, newArmor))
+                                    || (newArmor.isBodyArmor() && needToChangeBodyArmor(character, newArmor))) {
                                 yield characterLocationService.useItem(character.getReference(), location.getReference(), newArmor.getReference());
                             } else {
                                 yield neverMind;

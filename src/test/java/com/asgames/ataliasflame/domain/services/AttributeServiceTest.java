@@ -222,7 +222,8 @@ class AttributeServiceTest {
     private void addDagger() {
         DAGGER.instance().belongsTo(character);
         character.setShield(null);
-        character.getCover().setPhysicalArmor(null);
+        character.getCover().setHelmet(null);
+        character.getCover().setBodyArmor(null);
 
         characterCalculationService.recalculateProperties(character);
     }

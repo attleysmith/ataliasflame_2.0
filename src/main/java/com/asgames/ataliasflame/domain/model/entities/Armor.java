@@ -10,6 +10,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
+import static com.asgames.ataliasflame.domain.model.enums.ArmorType.BODY_ARMOR;
+import static com.asgames.ataliasflame.domain.model.enums.ArmorType.HELMET;
 import static com.asgames.ataliasflame.domain.utils.DiceUtils.roll100;
 import static jakarta.persistence.EnumType.STRING;
 
@@ -41,7 +43,8 @@ public class Armor extends Item implements AbsorptionDefense {
 
     public void belongsTo(Combatant combatant) {
         switch (this.armorType) {
-            case PHYSICAL -> combatant.getCover().setPhysicalArmor(this);
+            case HELMET -> combatant.getCover().setHelmet(this);
+            case BODY_ARMOR -> combatant.getCover().setBodyArmor(this);
             case ENERGY -> combatant.getCover().setEnergyArmor(this);
             case DIVINE -> combatant.getCover().setDivineArmor(this);
             default -> throw new UnsupportedOperationException("Armor type not supported: " + armorType);
@@ -51,5 +54,13 @@ public class Armor extends Item implements AbsorptionDefense {
     public Armor butDamaged() {
         getDurability().trauma(roll100());
         return this;
+    }
+
+    public boolean isHelmet() {
+        return armorType.equals(HELMET);
+    }
+
+    public boolean isBodyArmor() {
+        return armorType.equals(BODY_ARMOR);
     }
 }

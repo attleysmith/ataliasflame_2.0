@@ -60,6 +60,13 @@ public final class MonsterDrops {
                             new SelectionValue<>(15, Optional.of(CHAIN_MAIL)),
                             new SelectionValue<>(10, Optional.of(PLATE_MAIL)),
                             new SelectionValue<>(5, Optional.of(FULL_PLATE_MAIL))
+                    ),
+                    List.of(
+                            new SelectionValue<>(40, Optional.empty()),
+                            new SelectionValue<>(20, Optional.of(CAP)),
+                            new SelectionValue<>(15, Optional.of(LEATHER_HELMET)),
+                            new SelectionValue<>(5, Optional.of(CHAIN_HOOD)),
+                            new SelectionValue<>(20, Optional.of(METAL_HELMET))
                     )),
             WEREWOLF.name(), List.of(
                     List.of(
@@ -86,6 +93,11 @@ public final class MonsterDrops {
                     List.of(
                             new SelectionValue<>(90, Optional.empty()),
                             new SelectionValue<>(10, Optional.of(LEATHER_ARMOR))
+                    ),
+                    List.of(
+                            new SelectionValue<>(95, Optional.empty()),
+                            new SelectionValue<>(2, Optional.of(LEATHER_HELMET)),
+                            new SelectionValue<>(3, Optional.of(METAL_HELMET))
                     )),
             OGRE.name(), List.of(
                     List.of(
@@ -97,6 +109,11 @@ public final class MonsterDrops {
                             new SelectionValue<>(65, Optional.empty()),
                             new SelectionValue<>(15, Optional.of(DAGGER)),
                             new SelectionValue<>(20, Optional.of(SPEAR))
+                    ),
+                    List.of(
+                            new SelectionValue<>(90, Optional.empty()),
+                            new SelectionValue<>(6, Optional.of(LEATHER_HELMET)),
+                            new SelectionValue<>(4, Optional.of(METAL_HELMET))
                     )),
             GHOUL.name(), List.of(
                     List.of(

@@ -81,7 +81,8 @@ public class CharacterCalculationService {
                 + character.getWeapon().getDefense()
                 + character.getShield().map(Shield::getDefense).orElse(0)
                 + character.getCover().getEnergyArmor().map(Armor::getDefense).orElse(0)
-                + character.getCover().getPhysicalArmor().map(Armor::getDefense).orElse(0)
+                + character.getCover().getHelmet().map(Armor::getDefense).orElse(0)
+                + character.getCover().getBodyArmor().map(Armor::getDefense).orElse(0)
                 + character.getCover().getDivineArmor().map(Armor::getDefense).orElse(0);
     }
 

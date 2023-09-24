@@ -1,5 +1,6 @@
 package com.asgames.ataliasflame.domain.model.entities;
 
+import com.asgames.ataliasflame.domain.model.enums.ArmorType;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
@@ -18,9 +19,13 @@ public class Cover {
     public Cover() {
     }
 
-    @JoinColumn(name = "physicalArmorId")
+    @JoinColumn(name = "helmetId")
     @OneToOne(cascade = ALL, fetch = EAGER, orphanRemoval = true)
-    private Armor physicalArmor;
+    private Armor helmet;
+
+    @JoinColumn(name = "bodyArmorId")
+    @OneToOne(cascade = ALL, fetch = EAGER, orphanRemoval = true)
+    private Armor bodyArmor;
 
     @JoinColumn(name = "energyArmorId")
     @OneToOne(cascade = ALL, fetch = EAGER, orphanRemoval = true)
@@ -30,8 +35,21 @@ public class Cover {
     @OneToOne(cascade = ALL, fetch = EAGER, orphanRemoval = true)
     private Armor divineArmor;
 
-    public Optional<Armor> getPhysicalArmor() {
-        return Optional.ofNullable(physicalArmor);
+    public Optional<Armor> get(ArmorType armorType) {
+        return switch (armorType) {
+            case HELMET -> getHelmet();
+            case BODY_ARMOR -> getBodyArmor();
+            case ENERGY -> getEnergyArmor();
+            case DIVINE -> getDivineArmor();
+        };
+    }
+
+    public Optional<Armor> getHelmet() {
+        return Optional.ofNullable(helmet);
+    }
+
+    public Optional<Armor> getBodyArmor() {
+        return Optional.ofNullable(bodyArmor);
     }
 
     public Optional<Armor> getEnergyArmor() {

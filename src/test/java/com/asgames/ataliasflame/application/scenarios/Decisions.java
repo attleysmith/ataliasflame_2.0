@@ -140,8 +140,15 @@ public final class Decisions {
                 .orElse(true);
     }
 
-    public static boolean needToChangeArmor(Character character, Armor newArmor) {
-        return character.getCover().getPhysicalArmor()
+    public static boolean needToChangeHelmet(Character character, Armor newArmor) {
+        return character.getCover().getHelmet()
+                .map(oldArmor -> newArmor.lastsLonger(oldArmor)
+                        || (newArmor.sameDurable(oldArmor) && newArmor.getDefense() > oldArmor.getDefense()))
+                .orElse(true);
+    }
+
+    public static boolean needToChangeBodyArmor(Character character, Armor newArmor) {
+        return character.getCover().getBodyArmor()
                 .map(oldArmor -> newArmor.lastsLonger(oldArmor)
                         || (newArmor.sameDurable(oldArmor) && newArmor.getDefense() > oldArmor.getDefense()))
                 .orElse(true);

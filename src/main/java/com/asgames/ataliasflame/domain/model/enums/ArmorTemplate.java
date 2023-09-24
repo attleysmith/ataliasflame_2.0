@@ -6,23 +6,30 @@ import com.asgames.ataliasflame.domain.model.vos.Energy;
 
 import java.util.UUID;
 
-import static com.asgames.ataliasflame.domain.model.enums.ArmorType.PHYSICAL;
+import static com.asgames.ataliasflame.domain.model.enums.ArmorType.BODY_ARMOR;
+import static com.asgames.ataliasflame.domain.model.enums.ArmorType.HELMET;
 import static com.asgames.ataliasflame.domain.model.enums.ItemType.ARMOR;
 
 public enum ArmorTemplate implements ItemTemplate {
-    LINEN_ARMOR(0, 10, 50),
-    LEATHER_ARMOR(3, 25, 60),
-    STUDDED_LEATHER_ARMOR(5, 30, 80),
-    CHAIN_MAIL(6, 40, 100),
-    PLATE_MAIL(8, 50, 100),
-    FULL_PLATE_MAIL(10, 60, 120);
+    CAP(HELMET, 0, 10, 10),
+    LEATHER_HELMET(HELMET, 1, 20, 20),
+    CHAIN_HOOD(HELMET, 2, 35, 35),
+    METAL_HELMET(HELMET, 3, 50, 50),
+    LINEN_ARMOR(BODY_ARMOR, 0, 10, 50),
+    LEATHER_ARMOR(BODY_ARMOR, 2, 25, 60),
+    STUDDED_LEATHER_ARMOR(BODY_ARMOR, 3, 30, 80),
+    CHAIN_MAIL(BODY_ARMOR, 4, 40, 100),
+    PLATE_MAIL(BODY_ARMOR, 6, 50, 100),
+    FULL_PLATE_MAIL(BODY_ARMOR, 8, 60, 120);
 
-    ArmorTemplate(int defense, int absorption, int durability) {
+    ArmorTemplate(ArmorType armorType, int defense, int absorption, int durability) {
+        this.armorType = armorType;
         this.defense = defense;
         this.absorption = absorption;
         this.durability = durability;
     }
 
+    private final ArmorType armorType;
     private final int defense;
     private final int absorption;
     private final int durability;
@@ -37,7 +44,7 @@ public enum ArmorTemplate implements ItemTemplate {
                 .reference(UUID.randomUUID().toString())
                 .code(name())
                 .type(getType())
-                .armorType(PHYSICAL)
+                .armorType(armorType)
                 .defense(defense)
                 .absorption(absorption)
                 .durability(Energy.withTotal(durability))

@@ -31,6 +31,8 @@ public class CombatService {
     private StoryLineLogger storyLineLogger;
 
     private static final int FOCUS_ON_TARGET = 99;
+    private static final int HEAD_HIT_CHANCE = 20;
+    private static final int HEAD_HIT_DAMAGE_BONUS = 50;
 
     public void combat(List<? extends Combatant> team1, List<? extends Combatant> team2) {
         if (team1.isEmpty() || team2.isEmpty()) {
@@ -123,16 +125,24 @@ public class CombatService {
     }
 
     private void doDamage(Combatant attacker, Combatant defender, int damage) {
-        AtomicInteger remainingDamage = new AtomicInteger(damage);
+        boolean headHit = successX(HEAD_HIT_CHANCE);
+        int bonusDamage = headHit ? percent(damage, HEAD_HIT_DAMAGE_BONUS) : 0;
+        AtomicInteger remainingDamage = new AtomicInteger(damage + bonusDamage);
         defender.getShield()
                 .filter(shield -> shield.getDurability().hasOne())
                 .ifPresent(shield -> absorption(shield, remainingDamage));
         defender.getCover().getEnergyArmor()
                 .filter(armor -> armor.getDurability().hasOne())
                 .ifPresent(armor -> absorption(armor, remainingDamage));
-        defender.getCover().getPhysicalArmor()
-                .filter(armor -> armor.getDurability().hasOne())
-                .ifPresent(armor -> absorption(armor, remainingDamage));
+        if (headHit) {
+            defender.getCover().getHelmet()
+                    .filter(armor -> armor.getDurability().hasOne())
+                    .ifPresent(armor -> absorption(armor, remainingDamage));
+        } else {
+            defender.getCover().getBodyArmor()
+                    .filter(armor -> armor.getDurability().hasOne())
+                    .ifPresent(armor -> absorption(armor, remainingDamage));
+        }
         defender.getCover().getDivineArmor()
                 .filter(armor -> armor.getDurability().hasOne())
                 .ifPresent(armor -> absorption(armor, remainingDamage));

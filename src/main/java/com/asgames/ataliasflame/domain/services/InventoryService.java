@@ -42,7 +42,14 @@ public class InventoryService {
             new SelectionValue<>(10, Optional.of(KITE_SHIELD)),
             new SelectionValue<>(5, Optional.of(TOWER_SHIELD))
     );
-    public static final List<SelectionValue<Optional<ArmorTemplate>>> STARTING_ARMOR_SELECTOR = List.of(
+    public static final List<SelectionValue<Optional<ArmorTemplate>>> STARTING_HELMET_SELECTOR = List.of(
+            new SelectionValue<>(60, Optional.empty()),
+            new SelectionValue<>(20, Optional.of(CAP)),
+            new SelectionValue<>(10, Optional.of(LEATHER_HELMET)),
+            new SelectionValue<>(5, Optional.of(CHAIN_HOOD)),
+            new SelectionValue<>(5, Optional.of(METAL_HELMET))
+    );
+    public static final List<SelectionValue<Optional<ArmorTemplate>>> STARTING_BODY_ARMOR_SELECTOR = List.of(
             new SelectionValue<>(50, Optional.empty()),
             new SelectionValue<>(15, Optional.of(LINEN_ARMOR)),
             new SelectionValue<>(10, Optional.of(LEATHER_ARMOR)),
@@ -70,7 +77,9 @@ public class InventoryService {
                     takeShield(character, startingShield.instance()));
         }
 
-        choose(STARTING_ARMOR_SELECTOR).ifPresent(startingArmor ->
+        choose(STARTING_HELMET_SELECTOR).ifPresent(startingArmor ->
+                takeArmor(character, startingArmor.instance()));
+        choose(STARTING_BODY_ARMOR_SELECTOR).ifPresent(startingArmor ->
                 takeArmor(character, startingArmor.instance()));
     }
 
@@ -147,7 +156,7 @@ public class InventoryService {
     }
 
     public void takeArmor(Character character, Armor newArmor) {
-        Armor oldArmor = character.getCover().getPhysicalArmor().orElse(null);
+        Armor oldArmor = character.getCover().get(newArmor.getArmorType()).orElse(null);
         newArmor.belongsTo(character);
         characterCalculationService.recalculateProperties(character);
         storyLineLogger.event(armorChange(character, oldArmor, newArmor));

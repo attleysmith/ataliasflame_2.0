@@ -11,7 +11,8 @@ public abstract class RaceCalculationTestBase extends CharacterTestBase {
         Character character = characterMaintenanceService.getCharacter(characterReference);
         DAGGER.instance().belongsTo(character);
         character.setShield(null);
-        character.getCover().setPhysicalArmor(null);
+        character.getCover().setHelmet(null);
+        character.getCover().setBodyArmor(null);
 
         characterCalculationService.recalculateProperties(character);
         characterRepository.save(character);

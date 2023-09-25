@@ -21,6 +21,8 @@ public class Shield extends Item implements AbsorptionDefense {
     public Shield() {
     }
 
+    @Column(name = "blocking")
+    private int blocking;
     @Column(name = "defense")
     private int defense;
     @Column(name = "absorption")

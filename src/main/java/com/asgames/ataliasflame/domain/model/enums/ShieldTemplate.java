@@ -9,17 +9,19 @@ import java.util.UUID;
 import static com.asgames.ataliasflame.domain.model.enums.ItemType.SHIELD;
 
 public enum ShieldTemplate implements ItemTemplate {
-    BUCKLER(3, 25, 30),
-    ROUND_SHIELD(5, 30, 50),
-    KITE_SHIELD(8, 35, 70),
-    TOWER_SHIELD(10, 50, 100);
+    BUCKLER(30, 1, 60, 30),
+    ROUND_SHIELD(50, 2, 70, 50),
+    KITE_SHIELD(65, 3, 80, 70),
+    TOWER_SHIELD(75, 5, 90, 100);
 
-    ShieldTemplate(int defense, int absorption, int durability) {
+    ShieldTemplate(int blocking, int defense, int absorption, int durability) {
+        this.blocking = blocking;
         this.defense = defense;
         this.absorption = absorption;
         this.durability = durability;
     }
 
+    private final int blocking;
     private final int defense;
     private final int absorption;
     private final int durability;
@@ -34,6 +36,7 @@ public enum ShieldTemplate implements ItemTemplate {
                 .reference(UUID.randomUUID().toString())
                 .code(name())
                 .type(getType())
+                .blocking(blocking)
                 .defense(defense)
                 .absorption(absorption)
                 .durability(Energy.withTotal(durability))

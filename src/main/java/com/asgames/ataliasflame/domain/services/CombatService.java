@@ -1,6 +1,7 @@
 package com.asgames.ataliasflame.domain.services;
 
 import com.asgames.ataliasflame.domain.model.dtos.TeamMember;
+import com.asgames.ataliasflame.domain.model.entities.Shield;
 import com.asgames.ataliasflame.domain.model.interfaces.AbsorptionDefense;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static com.asgames.ataliasflame.domain.services.storyline.events.CombatEvents.CombatDamageEvent.HitType.BODY_HIT;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CombatEvents.CombatDamageEvent.HitType.HEAD_HIT;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CombatEvents.CombatDamageEvent.combatDamage;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CombatEvents.DamageAbsorptionEvent.damageAbsorption;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CombatEvents.MissedAttackEvent.missedAttack;
@@ -31,8 +34,11 @@ public class CombatService {
     private StoryLineLogger storyLineLogger;
 
     private static final int FOCUS_ON_TARGET = 99;
+    private static final int CRITICAL_HIT_CHANCE = 2;
+    private static final int CRITICAL_HIT_DAMAGE_BONUS = 50;
     private static final int HEAD_HIT_CHANCE = 20;
-    private static final int HEAD_HIT_DAMAGE_BONUS = 50;
+    private static final int HEAD_HIT_DAMAGE_BONUS = 25;
+    private static final int SHIELD_BLOCKING_PENETRATION = 55;
 
     public void combat(List<? extends Combatant> team1, List<? extends Combatant> team2) {
         if (team1.isEmpty() || team2.isEmpty()) {
@@ -125,29 +131,31 @@ public class CombatService {
     }
 
     private void doDamage(Combatant attacker, Combatant defender, int damage) {
-        boolean headHit = successX(HEAD_HIT_CHANCE);
-        int bonusDamage = headHit ? percent(damage, HEAD_HIT_DAMAGE_BONUS) : 0;
-        AtomicInteger remainingDamage = new AtomicInteger(damage + bonusDamage);
-        defender.getShield()
-                .filter(shield -> shield.getDurability().hasOne())
-                .ifPresent(shield -> absorption(shield, remainingDamage));
-        defender.getCover().getEnergyArmor()
-                .filter(armor -> armor.getDurability().hasOne())
-                .ifPresent(armor -> absorption(armor, remainingDamage));
-        if (headHit) {
-            defender.getCover().getHelmet()
-                    .filter(armor -> armor.getDurability().hasOne())
-                    .ifPresent(armor -> absorption(armor, remainingDamage));
-        } else {
-            defender.getCover().getBodyArmor()
-                    .filter(armor -> armor.getDurability().hasOne())
-                    .ifPresent(armor -> absorption(armor, remainingDamage));
+        AtomicInteger remainingDamage = new AtomicInteger(damage);
+        defender.getShield().filter(shield -> shield.getDurability().hasOne()).ifPresent(shield -> blocking(shield, remainingDamage));
+
+        boolean headHit = headHitX(remainingDamage);
+        boolean criticalHit = criticalHitX(remainingDamage);
+
+        defender.getCover().getEnergyArmor().filter(armor -> armor.getDurability().hasOne()).ifPresent(armor -> absorption(armor, remainingDamage));
+        if (!criticalHit) {
+            if (headHit) {
+                defender.getCover().getHelmet().filter(armor -> armor.getDurability().hasOne()).ifPresent(armor -> absorption(armor, remainingDamage));
+            } else {
+                defender.getCover().getBodyArmor().filter(armor -> armor.getDurability().hasOne()).ifPresent(armor -> absorption(armor, remainingDamage));
+            }
         }
-        defender.getCover().getDivineArmor()
-                .filter(armor -> armor.getDurability().hasOne())
-                .ifPresent(armor -> absorption(armor, remainingDamage));
+        defender.getCover().getDivineArmor().filter(armor -> armor.getDurability().hasOne()).ifPresent(armor -> absorption(armor, remainingDamage));
+
         defender.getHealth().damage(remainingDamage.get());
-        storyLineLogger.event(combatDamage(attacker, defender, remainingDamage.get()));
+        storyLineLogger.event(combatDamage(attacker, defender, remainingDamage.get(), headHit ? HEAD_HIT : BODY_HIT));
+    }
+
+    private void blocking(Shield shield, AtomicInteger damage) {
+        if (successX(shield.getBlocking())) {
+            damage.updateAndGet(value -> percent(value, SHIELD_BLOCKING_PENETRATION));
+            absorption(shield, damage);
+        }
     }
 
     private void absorption(AbsorptionDefense defense, AtomicInteger damage) {
@@ -156,5 +164,19 @@ public class CombatService {
         int penetration = defense.getDurability().penetrate(absorbedDamage);
         damage.set(originalDamage - absorbedDamage + penetration);
         storyLineLogger.event(damageAbsorption(defense, originalDamage, absorbedDamage, penetration));
+    }
+
+    private boolean criticalHitX(AtomicInteger damage) {
+        boolean criticalHit = successX(CRITICAL_HIT_CHANCE);
+        int bonusDamage = criticalHit ? percent(damage.get(), CRITICAL_HIT_DAMAGE_BONUS) : 0;
+        damage.addAndGet(bonusDamage);
+        return criticalHit;
+    }
+
+    private boolean headHitX(AtomicInteger damage) {
+        boolean headHit = successX(HEAD_HIT_CHANCE);
+        int bonusDamage = headHit ? percent(damage.get(), HEAD_HIT_DAMAGE_BONUS) : 0;
+        damage.addAndGet(bonusDamage);
+        return headHit;
     }
 }

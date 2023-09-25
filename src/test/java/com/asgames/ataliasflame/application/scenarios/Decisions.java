@@ -136,7 +136,7 @@ public final class Decisions {
     public static boolean needToChangeShield(Character character, Shield newShield) {
         return character.getWeapon().isOneHanded() && character.getShield()
                 .map(oldShield -> newShield.lastsLonger(oldShield)
-                        || (newShield.sameDurable(oldShield) && newShield.getDefense() > oldShield.getDefense()))
+                        || (newShield.sameDurable(oldShield) && newShield.getBlocking() > oldShield.getBlocking()))
                 .orElse(true);
     }
 

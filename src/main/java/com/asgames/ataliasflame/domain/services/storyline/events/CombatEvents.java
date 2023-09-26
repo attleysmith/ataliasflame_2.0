@@ -5,8 +5,6 @@ import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
 import com.asgames.ataliasflame.domain.services.storyline.EventType;
 
 import static com.asgames.ataliasflame.domain.services.storyline.EventType.DEBUG;
-import static com.asgames.ataliasflame.domain.services.storyline.events.CombatEvents.CombatDamageEvent.DamageType.DIRECT;
-import static com.asgames.ataliasflame.domain.services.storyline.events.CombatEvents.CombatDamageEvent.HitType.BODY_HIT;
 
 public final class CombatEvents {
 
@@ -26,38 +24,29 @@ public final class CombatEvents {
 
     public static class CombatDamageEvent extends CombatEvent {
 
-        public enum HitType {
-            HEAD_HIT, BODY_HIT
-        }
-
         public enum DamageType {
             DIRECT, AREA, BLAST, CHAINING, CROSSFIRE, NOVA, STRESS
         }
 
         private final int damage;
-        private final HitType hitType;
         private final DamageType damageType;
+        private final boolean headHit;
+        private final boolean criticalHit;
 
-        private CombatDamageEvent(Combatant attacker, Combatant defender, int damage, HitType hitType, DamageType damageType) {
+        private CombatDamageEvent(Combatant attacker, Combatant defender, int damage, DamageType damageType, boolean headHit, boolean criticalHit) {
             super(DEBUG, attacker, defender);
             this.damage = damage;
-            this.hitType = hitType;
             this.damageType = damageType;
+            this.headHit = headHit;
+            this.criticalHit = criticalHit;
         }
 
-        public static CombatDamageEvent combatDamage(Combatant attacker, Combatant defender, int damage, HitType hitType) {
-            return new CombatDamageEvent(attacker, defender, damage, hitType, DIRECT);
-        }
-
-        public static CombatDamageEvent combatDamage(Combatant attacker, Combatant defender, int damage, DamageType damageType) {
-            return new CombatDamageEvent(attacker, defender, damage, BODY_HIT, damageType);
+        public static CombatDamageEvent combatDamage(Combatant attacker, Combatant defender, int damage, DamageType damageType, boolean headHit, boolean criticalHit) {
+            return new CombatDamageEvent(attacker, defender, damage, damageType, headHit, criticalHit);
         }
 
         private String hitTypeInfo() {
-            return switch (hitType) {
-                case HEAD_HIT -> "head hit";
-                case BODY_HIT -> "body hit";
-            };
+            return (criticalHit ? "critical " : "") + (headHit ? "head hit" : "body hit");
         }
 
         @Override

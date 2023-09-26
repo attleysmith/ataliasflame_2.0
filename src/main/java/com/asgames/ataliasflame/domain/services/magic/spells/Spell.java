@@ -5,6 +5,7 @@ import com.asgames.ataliasflame.domain.model.entities.*;
 import com.asgames.ataliasflame.domain.model.enums.MagicType;
 import com.asgames.ataliasflame.domain.model.enums.SpellGroup;
 import com.asgames.ataliasflame.domain.model.enums.SpellName;
+import com.asgames.ataliasflame.domain.services.DamageService;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ public abstract class Spell {
 
     @Autowired
     protected StoryLineLogger storyLineLogger;
+
+    @Autowired
+    protected DamageService damageService;
 
     @Getter
     protected final SpellName name;

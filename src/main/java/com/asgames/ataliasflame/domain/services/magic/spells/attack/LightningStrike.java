@@ -12,7 +12,6 @@ import static com.asgames.ataliasflame.domain.model.enums.SpellName.LIGHTNING_ST
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CombatEvents.CombatDamageEvent.DamageType.CHAINING;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CombatEvents.CombatDamageEvent.DamageType.DIRECT;
-import static com.asgames.ataliasflame.domain.services.storyline.events.CombatEvents.CombatDamageEvent.combatDamage;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.percent;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.pointOut;
 import static com.asgames.ataliasflame.domain.utils.DiceUtils.successX;
@@ -43,8 +42,7 @@ public class LightningStrike extends AttackSpell {
 
         int directDamage = pointOut(MIN_DAMAGE, MAX_DAMAGE);
         if (targetMonster.isAlive()) {
-            targetMonster.getHealth().damage(directDamage);
-            storyLineLogger.event(combatDamage(character, targetMonster, directDamage, DIRECT));
+            damageService.doDamage(character, targetMonster, directDamage, DIRECT);
         }
 
         List<Monster> monsterChain = targetMonster.getLocation().getMonsters().stream()
@@ -61,8 +59,7 @@ public class LightningStrike extends AttackSpell {
                 break;
             }
 
-            monster.getHealth().damage(chainingDamage);
-            storyLineLogger.event(combatDamage(character, monster, chainingDamage, CHAINING));
+            damageService.doDamage(character, monster, chainingDamage, CHAINING);
         }
     }
 

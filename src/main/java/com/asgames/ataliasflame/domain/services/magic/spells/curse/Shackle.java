@@ -9,7 +9,6 @@ import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.NATURE;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.SHACKLE;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CombatEvents.CombatDamageEvent.DamageType.STRESS;
-import static com.asgames.ataliasflame.domain.services.storyline.events.CombatEvents.CombatDamageEvent.combatDamage;
 import static com.asgames.ataliasflame.domain.services.storyline.events.MonsterEvents.CurseCastingEvent.curseCasting;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.calculate;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.pointOut;
@@ -55,8 +54,7 @@ public class Shackle extends CurseSpell {
     private void shackle(Character character, Monster targetMonster) {
         if (targetMonster.isAlive() && successX(DAMAGE_CHANCE)) {
             int damage = pointOut(MIN_DAMAGE, MAX_DAMAGE);
-            targetMonster.getHealth().damage(damage);
-            storyLineLogger.event(combatDamage(character, targetMonster, damage, STRESS));
+            damageService.doDamage(character, targetMonster, damage, STRESS);
         }
 
         if (targetMonster.isAlive()) {

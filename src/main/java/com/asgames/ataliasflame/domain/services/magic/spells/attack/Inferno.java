@@ -10,7 +10,6 @@ import static com.asgames.ataliasflame.domain.model.enums.SpellName.INFERNO;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CombatEvents.CombatDamageEvent.DamageType.AREA;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CombatEvents.CombatDamageEvent.DamageType.DIRECT;
-import static com.asgames.ataliasflame.domain.services.storyline.events.CombatEvents.CombatDamageEvent.combatDamage;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.percent;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.pointOut;
 import static com.asgames.ataliasflame.domain.utils.DiceUtils.successX;
@@ -43,11 +42,9 @@ public class Inferno extends AttackSpell {
                 .filter(Combatant::isAlive)
                 .forEach(monster -> {
                     if (monster.getReference().equals(targetMonster.getReference())) {
-                        monster.getHealth().damage(directDamage);
-                        storyLineLogger.event(combatDamage(character, monster, directDamage, DIRECT));
+                        damageService.doDamage(character, monster, directDamage, DIRECT);
                     } else if (successX(AREA_EFFECT_CHANCE)) {
-                        monster.getHealth().damage(areaDamage);
-                        storyLineLogger.event(combatDamage(character, monster, areaDamage, AREA));
+                        damageService.doDamage(character, monster, areaDamage, AREA);
                     }
                 });
     }

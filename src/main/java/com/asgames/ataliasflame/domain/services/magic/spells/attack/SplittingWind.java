@@ -8,7 +8,6 @@ import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.ELEMENTAL;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.SPLITTING_WIND;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CombatEvents.CombatDamageEvent.DamageType.DIRECT;
-import static com.asgames.ataliasflame.domain.services.storyline.events.CombatEvents.CombatDamageEvent.combatDamage;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.pointOut;
 
 @Component
@@ -31,8 +30,7 @@ public class SplittingWind extends AttackSpell {
 
         if (targetMonster.isAlive()) {
             int damage = pointOut(MIN_DAMAGE, MAX_DAMAGE);
-            targetMonster.getHealth().damage(damage);
-            storyLineLogger.event(combatDamage(character, targetMonster, damage, DIRECT));
+            damageService.doDamage(character, targetMonster, damage, DIRECT);
         }
     }
 

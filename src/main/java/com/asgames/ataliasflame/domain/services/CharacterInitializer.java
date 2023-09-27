@@ -12,6 +12,7 @@ import java.util.UUID;
 import static com.asgames.ataliasflame.domain.MockConstants.CASTE_DETAILS;
 import static com.asgames.ataliasflame.domain.MockConstants.LEVEL_ATTRIBUTE_POINTS;
 import static com.asgames.ataliasflame.domain.model.enums.Caste.ROGUE;
+import static com.asgames.ataliasflame.domain.model.enums.God.ATALIA;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.CharacterReportCause.INIT;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.characterReport;
 
@@ -41,6 +42,9 @@ public class CharacterInitializer {
     }
 
     private void validateConstraints(Character character) {
+        if (character.getDefensiveGod().equals(ATALIA)) {
+            throw new IllegalArgumentException("Calling ATALIA as defensive god is forbidden!");
+        }
         if (character.getRace().prohibitedCastes.contains(character.getCaste())) {
             throw new IllegalArgumentException(character.getRace() + " cannot be " + character.getCaste());
         }

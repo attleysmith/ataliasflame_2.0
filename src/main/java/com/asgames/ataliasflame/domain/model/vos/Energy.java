@@ -3,7 +3,6 @@ package com.asgames.ataliasflame.domain.model.vos;
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
 import lombok.Data;
-import lombok.Getter;
 import lombok.Setter;
 
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.percent;
@@ -27,10 +26,8 @@ public class Energy {
         this.usedEnergy = usedEnergy;
     }
 
-    @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     private int totalEnergy;
-    @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     private int usedEnergy;
 

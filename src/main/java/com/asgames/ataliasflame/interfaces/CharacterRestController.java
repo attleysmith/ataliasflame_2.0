@@ -1,20 +1,15 @@
 package com.asgames.ataliasflame.interfaces;
 
 import com.asgames.ataliasflame.application.CharacterAdventureService;
+import com.asgames.ataliasflame.application.CharacterLocationService;
 import com.asgames.ataliasflame.application.CharacterMagicService;
 import com.asgames.ataliasflame.application.CharacterMaintenanceService;
 import com.asgames.ataliasflame.application.model.CharacterInput;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
 import com.asgames.ataliasflame.domain.model.enums.SpellName;
-import com.asgames.ataliasflame.interfaces.mappers.CharacterDtoMapper;
-import com.asgames.ataliasflame.interfaces.mappers.DefensiveGodConversionCodeDtoMapper;
-import com.asgames.ataliasflame.interfaces.mappers.MonsterDtoMapper;
-import com.asgames.ataliasflame.interfaces.mappers.SpellDtoMapper;
-import com.asgames.ataliasflame.interfaces.model.CharacterDto;
-import com.asgames.ataliasflame.interfaces.model.DefensiveGodConversionCodeDto;
-import com.asgames.ataliasflame.interfaces.model.SpellDto;
-import com.asgames.ataliasflame.interfaces.model.TargetContextDto;
+import com.asgames.ataliasflame.interfaces.mappers.*;
+import com.asgames.ataliasflame.interfaces.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +27,8 @@ public class CharacterRestController {
     private SpellDtoMapper spellDtoMapper;
     @Autowired
     private MonsterDtoMapper monsterDtoMapper;
+    @Autowired
+    private LocationDtoMapper locationDtoMapper;
 
     @Autowired
     private CharacterMaintenanceService characterMaintenanceService;
@@ -39,64 +36,76 @@ public class CharacterRestController {
     private CharacterAdventureService characterAdventureService;
     @Autowired
     private CharacterMagicService characterMagicService;
+    @Autowired
+    private CharacterLocationService characterLocationService;
 
-    @PostMapping
+    @PostMapping()
     public CharacterDto createCharacter(@RequestBody CharacterInput characterInput) {
         return characterDtoMapper.toCharacterDto(characterMaintenanceService.createCharacter(characterInput));
     }
 
-    @GetMapping("/{reference}")
-    public CharacterDto getCharacter(@PathVariable String reference) {
-        return characterDtoMapper.toCharacterDto(characterMaintenanceService.getCharacter(reference));
+    @GetMapping("/{characterReference}")
+    public CharacterDto getCharacter(@PathVariable String characterReference) {
+        return characterDtoMapper.toCharacterDto(characterMaintenanceService.getCharacter(characterReference));
     }
 
-    @DeleteMapping("/{reference}")
-    public void removeCharacter(@PathVariable String reference) {
-        characterMaintenanceService.removeCharacter(reference);
+    @DeleteMapping("/{characterReference}")
+    public void removeCharacter(@PathVariable String characterReference) {
+        characterMaintenanceService.removeCharacter(characterReference);
     }
 
-    @PostMapping("/{reference}/attributes/{attribute}/add")
-    public CharacterDto addAttributePoints(@PathVariable String reference, @PathVariable Attribute attribute, @RequestParam int points) {
-        return characterDtoMapper.toCharacterDto(characterMaintenanceService.addAttributePoints(reference, attribute, points));
+    @PostMapping("/{characterReference}/attributes/{attribute}/add")
+    public CharacterDto addAttributePoints(@PathVariable String characterReference, @PathVariable Attribute attribute, @RequestParam int points) {
+        return characterDtoMapper.toCharacterDto(characterMaintenanceService.addAttributePoints(characterReference, attribute, points));
     }
 
-    @PostMapping("/{reference}/caste/upgrade")
-    public CharacterDto upgradeCaste(@PathVariable String reference, @RequestParam Caste newCaste) {
-        return characterDtoMapper.toCharacterDto(characterMaintenanceService.upgradeCaste(reference, newCaste));
+    @PostMapping("/{characterReference}/caste/upgrade")
+    public CharacterDto upgradeCaste(@PathVariable String characterReference, @RequestParam Caste newCaste) {
+        return characterDtoMapper.toCharacterDto(characterMaintenanceService.upgradeCaste(characterReference, newCaste));
     }
 
-    @PostMapping("/{reference}/sleep")
-    public CharacterDto sleep(@PathVariable String reference) {
-        return characterDtoMapper.toCharacterDto(characterAdventureService.sleep(reference));
+    @PostMapping("/{characterReference}/sleep")
+    public CharacterDto sleep(@PathVariable String characterReference) {
+        return characterDtoMapper.toCharacterDto(characterAdventureService.sleep(characterReference));
     }
 
-    @PostMapping("/{reference}/time-passed")
-    public CharacterDto timePassed(@PathVariable String reference) {
-        return characterDtoMapper.toCharacterDto(characterAdventureService.timePassed(reference));
+    @PostMapping("/{characterReference}/time-passed")
+    public CharacterDto timePassed(@PathVariable String characterReference) {
+        return characterDtoMapper.toCharacterDto(characterAdventureService.timePassed(characterReference));
     }
 
-    @PostMapping("/{reference}/defensive-god/convert")
-    public CharacterDto convertDefensiveGod(@PathVariable String reference, @RequestParam String conversionCode) {
-        return characterDtoMapper.toCharacterDto(characterMaintenanceService.convertDefensiveGod(reference, conversionCode));
+    @PostMapping("/{characterReference}/defensive-god/convert")
+    public CharacterDto convertDefensiveGod(@PathVariable String characterReference, @RequestParam String conversionCode) {
+        return characterDtoMapper.toCharacterDto(characterMaintenanceService.convertDefensiveGod(characterReference, conversionCode));
     }
 
-    @PostMapping("/{reference}/defensive-god/conversion-code/produce")
-    public DefensiveGodConversionCodeDto produceDefensiveGodConversionCode(@PathVariable String reference) {
-        return defensiveGodConversionCodeDtoMapper.toDto(characterAdventureService.produceDefensiveGodConversionCode(reference));
+    @PostMapping("/{characterReference}/defensive-god/conversion-code/produce")
+    public DefensiveGodConversionCodeDto produceDefensiveGodConversionCode(@PathVariable String characterReference) {
+        return defensiveGodConversionCodeDtoMapper.toDto(characterAdventureService.produceDefensiveGodConversionCode(characterReference));
     }
 
-    @GetMapping("/{reference}/spells")
-    public List<SpellDto> listCharacterSpells(@PathVariable String reference) {
-        return spellDtoMapper.toSpellDtoList(characterMagicService.listCharacterSpells(reference));
+    @GetMapping("/{characterReference}/spells")
+    public List<SpellDto> listCharacterSpells(@PathVariable String characterReference) {
+        return spellDtoMapper.toSpellDtoList(characterMagicService.listCharacterSpells(characterReference));
     }
 
-    @PostMapping(value = "/{reference}/spells/{spellName}/cast", params = "!target")
-    public CharacterDto castSpell(@PathVariable String reference, @PathVariable SpellName spellName) {
-        return characterDtoMapper.toCharacterDto(characterMagicService.castSpell(reference, spellName));
+    @PostMapping(value = "/{characterReference}/spells/{spellName}/cast", params = "!target")
+    public CharacterDto castSpell(@PathVariable String characterReference, @PathVariable SpellName spellName) {
+        return characterDtoMapper.toCharacterDto(characterMagicService.castSpell(characterReference, spellName));
     }
 
-    @PostMapping(value = "/{reference}/spells/{spellName}/cast", params = "target")
-    public TargetContextDto castTargetingSpell(@PathVariable String reference, @PathVariable SpellName spellName, @RequestParam(name = "target") String monsterReference) {
-        return monsterDtoMapper.toTargetContextDto(characterMagicService.castTargetingSpell(reference, spellName, monsterReference));
+    @PostMapping(value = "/{characterReference}/spells/{spellName}/cast", params = "target")
+    public TargetContextDto castTargetingSpell(@PathVariable String characterReference, @PathVariable SpellName spellName, @RequestParam(name = "target") String monsterReference) {
+        return monsterDtoMapper.toTargetContextDto(characterMagicService.castTargetingSpell(characterReference, spellName, monsterReference));
+    }
+
+    @PostMapping(value = "/{characterReference}/location/{locationReference}/seize")
+    public LocationContextDto seizeLocation(@PathVariable String characterReference, @PathVariable String locationReference) {
+        return locationDtoMapper.toLocationContextDto(characterLocationService.seizeLocation(characterReference, locationReference));
+    }
+
+    @PostMapping(value = "/{characterReference}/location/{locationReference}/items/{itemReference}/use")
+    public LocationContextDto useItem(@PathVariable String characterReference, @PathVariable String locationReference, @PathVariable String itemReference) {
+        return locationDtoMapper.toLocationContextDto(characterLocationService.useItem(characterReference, locationReference, itemReference));
     }
 }

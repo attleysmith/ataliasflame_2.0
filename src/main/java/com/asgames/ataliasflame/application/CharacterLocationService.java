@@ -77,19 +77,4 @@ public class CharacterLocationService {
                 .location(locationRepository.save(location))
                 .build();
     }
-
-    @Transactional(readOnly = true)
-    public Weapon getWeapon(String itemReference) {
-        return itemRepository.getWeaponByReference(itemReference);
-    }
-
-    @Transactional(readOnly = true)
-    public Shield getShield(String itemReference) {
-        return itemRepository.getShieldByReference(itemReference);
-    }
-
-    @Transactional(readOnly = true)
-    public Armor getArmor(String itemReference) {
-        return itemRepository.getArmorByReference(itemReference);
-    }
 }

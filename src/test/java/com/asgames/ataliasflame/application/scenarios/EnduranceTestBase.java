@@ -186,7 +186,7 @@ public abstract class EnduranceTestBase {
                         case FOOD ->
                                 characterLocationService.useItem(character.getReference(), location.getReference(), item.getReference());
                         case WEAPON -> {
-                            Weapon newWeapon = characterLocationService.getWeapon(item.getReference());
+                            Weapon newWeapon = locationAdventureService.getWeapon(item.getReference());
                             if (needToChangeWeapon(character, newWeapon)) {
                                 yield characterLocationService.useItem(character.getReference(), location.getReference(), newWeapon.getReference());
                             } else {
@@ -194,7 +194,7 @@ public abstract class EnduranceTestBase {
                             }
                         }
                         case SHIELD -> {
-                            Shield newShield = characterLocationService.getShield(item.getReference());
+                            Shield newShield = locationAdventureService.getShield(item.getReference());
                             if (needToChangeShield(character, newShield)) {
                                 yield characterLocationService.useItem(character.getReference(), location.getReference(), newShield.getReference());
                             } else {
@@ -202,7 +202,7 @@ public abstract class EnduranceTestBase {
                             }
                         }
                         case ARMOR -> {
-                            Armor newArmor = characterLocationService.getArmor(item.getReference());
+                            Armor newArmor = locationAdventureService.getArmor(item.getReference());
                             if ((newArmor.isHelmet() && needToChangeHelmet(character, newArmor))
                                     || (newArmor.isBodyArmor() && needToChangeBodyArmor(character, newArmor))) {
                                 yield characterLocationService.useItem(character.getReference(), location.getReference(), newArmor.getReference());

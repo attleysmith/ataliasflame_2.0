@@ -34,31 +34,47 @@ public class CharacterLocationService {
     private InventoryService inventoryService;
 
     @Transactional
-    public LocationContext seizeLocation(String characterReference, String locationReference) {
+    public LocationContext enterLocation(String characterReference, String locationReference) {
         Character character = characterMaintenanceService.getCharacter(characterReference);
         Location location = locationAdventureService.getLocation(locationReference);
-
-        locationService.seizeLocation(character, location);
+        character.setLocation(location);
 
         return LocationContext.builder()
-                .character(characterRepository.save(character))
                 .location(locationRepository.save(location))
+                .character(characterRepository.save(character))
                 .build();
     }
 
     @Transactional
-    public LocationContext useItem(String characterReference, String locationReference, String itemReference) {
+    public LocationContext seizeLocation(String characterReference) {
         Character character = characterMaintenanceService.getCharacter(characterReference);
-        Location location = locationAdventureService.getLocation(locationReference);
+        if (character.getLocation() == null) {
+            throw new IllegalStateException("Character is not at a location!");
+        }
 
+        locationService.seizeLocation(character);
+
+        return LocationContext.builder()
+                .location(locationRepository.save(character.getLocation()))
+                .character(characterRepository.save(character))
+                .build();
+    }
+
+    @Transactional
+    public LocationContext useItem(String characterReference, String itemReference) {
+        Character character = characterMaintenanceService.getCharacter(characterReference);
+        Location location = character.getLocation();
+        if (location == null) {
+            throw new IllegalStateException("Character is not at a location!");
+        }
         if (location.getMonsters().stream().anyMatch(Combatant::isAlive)) {
             throw new IllegalStateException("There are alive enemies on the location. Looting is impossible!");
         }
 
         Item item = location.getItems().stream()
                 .filter(locationItem -> locationItem.getReference().equals(itemReference))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Referenced item is not at the location!"));
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("Referenced item is not at the character's location!"));
         location.getItems().remove(item);
 
         switch (item.getType()) {
@@ -73,8 +89,8 @@ public class CharacterLocationService {
         }
 
         return LocationContext.builder()
+                .location(locationRepository.save(character.getLocation()))
                 .character(characterRepository.save(character))
-                .location(locationRepository.save(location))
                 .build();
     }
 }

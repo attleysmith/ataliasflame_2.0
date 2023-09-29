@@ -36,6 +36,7 @@ public abstract class CharacterDtoMapper {
     @Mapping(target = "weapon", source = "weapon")
     @Mapping(target = "shield", expression = "java(character.getShield().map(shield -> toShieldDto(shield)).orElse(null))")
     @Mapping(target = "cover", source = "cover")
+    @Mapping(target = "locationReference", source = "location.reference")
     public abstract CharacterDto toCharacterDto(Character character);
 
     @Mapping(target = "reference", source = "reference")

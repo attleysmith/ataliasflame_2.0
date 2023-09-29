@@ -37,8 +37,8 @@ public class LocationService {
         return location;
     }
 
-    public void seizeLocation(Character character, Location location) {
-        List<Monster> monsters = location.getMonsters();
+    public void seizeLocation(Character character) {
+        List<Monster> monsters = character.getLocation().getMonsters();
 
         List<Combatant> characterTeam = new ArrayList<>();
         characterTeam.add(character);

@@ -124,7 +124,11 @@ public abstract class EnduranceTestBase {
     }
 
     private void enterLocation() {
-        location = locationAdventureService.buildLocation(character.getLevel());
+        Location newLocation = locationAdventureService.buildLocation(character.getLevel());
+
+        LocationContext locationContext = characterLocationService.enterLocation(character.getReference(), newLocation.getReference());
+        character = locationContext.getCharacter();
+        location = locationContext.getLocation();
     }
 
     private void castAttackMagic() {
@@ -173,7 +177,7 @@ public abstract class EnduranceTestBase {
     }
 
     private void closeCombat() {
-        LocationContext locationContext = characterLocationService.seizeLocation(character.getReference(), location.getReference());
+        LocationContext locationContext = characterLocationService.seizeLocation(character.getReference());
         character = locationContext.getCharacter();
         location = locationContext.getLocation();
     }
@@ -183,12 +187,11 @@ public abstract class EnduranceTestBase {
                 .forEach(item -> {
                     LocationContext neverMind = LocationContext.builder().character(character).location(location).build();
                     LocationContext locationContext = switch (item.getType()) {
-                        case FOOD ->
-                                characterLocationService.useItem(character.getReference(), location.getReference(), item.getReference());
+                        case FOOD -> characterLocationService.useItem(character.getReference(), item.getReference());
                         case WEAPON -> {
                             Weapon newWeapon = locationAdventureService.getWeapon(item.getReference());
                             if (needToChangeWeapon(character, newWeapon)) {
-                                yield characterLocationService.useItem(character.getReference(), location.getReference(), newWeapon.getReference());
+                                yield characterLocationService.useItem(character.getReference(), newWeapon.getReference());
                             } else {
                                 yield neverMind;
                             }
@@ -196,7 +199,7 @@ public abstract class EnduranceTestBase {
                         case SHIELD -> {
                             Shield newShield = locationAdventureService.getShield(item.getReference());
                             if (needToChangeShield(character, newShield)) {
-                                yield characterLocationService.useItem(character.getReference(), location.getReference(), newShield.getReference());
+                                yield characterLocationService.useItem(character.getReference(), newShield.getReference());
                             } else {
                                 yield neverMind;
                             }
@@ -205,7 +208,7 @@ public abstract class EnduranceTestBase {
                             Armor newArmor = locationAdventureService.getArmor(item.getReference());
                             if ((newArmor.isHelmet() && needToChangeHelmet(character, newArmor))
                                     || (newArmor.isBodyArmor() && needToChangeBodyArmor(character, newArmor))) {
-                                yield characterLocationService.useItem(character.getReference(), location.getReference(), newArmor.getReference());
+                                yield characterLocationService.useItem(character.getReference(), newArmor.getReference());
                             } else {
                                 yield neverMind;
                             }

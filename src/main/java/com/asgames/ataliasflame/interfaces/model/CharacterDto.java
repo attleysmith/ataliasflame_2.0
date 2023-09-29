@@ -36,4 +36,5 @@ public class CharacterDto {
     private WeaponDto weapon;
     private ShieldDto shield;
     private CoverDto cover;
+    private String locationReference;
 }

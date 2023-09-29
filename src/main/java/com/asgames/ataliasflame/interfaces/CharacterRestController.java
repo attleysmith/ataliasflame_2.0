@@ -99,13 +99,18 @@ public class CharacterRestController {
         return monsterDtoMapper.toTargetContextDto(characterMagicService.castTargetingSpell(characterReference, spellName, monsterReference));
     }
 
-    @PostMapping(value = "/{characterReference}/location/{locationReference}/seize")
-    public LocationContextDto seizeLocation(@PathVariable String characterReference, @PathVariable String locationReference) {
-        return locationDtoMapper.toLocationContextDto(characterLocationService.seizeLocation(characterReference, locationReference));
+    @PostMapping(value = "/{characterReference}/location/enter")
+    public LocationContextDto enterLocation(@PathVariable String characterReference, @RequestParam("location") String locationReference) {
+        return locationDtoMapper.toLocationContextDto(characterLocationService.enterLocation(characterReference, locationReference));
     }
 
-    @PostMapping(value = "/{characterReference}/location/{locationReference}/items/{itemReference}/use")
-    public LocationContextDto useItem(@PathVariable String characterReference, @PathVariable String locationReference, @PathVariable String itemReference) {
-        return locationDtoMapper.toLocationContextDto(characterLocationService.useItem(characterReference, locationReference, itemReference));
+    @PostMapping(value = "/{characterReference}/location/seize")
+    public LocationContextDto seizeLocation(@PathVariable String characterReference) {
+        return locationDtoMapper.toLocationContextDto(characterLocationService.seizeLocation(characterReference));
+    }
+
+    @PostMapping(value = "/{characterReference}/location/items/{itemReference}/use")
+    public LocationContextDto useItem(@PathVariable String characterReference, @PathVariable String itemReference) {
+        return locationDtoMapper.toLocationContextDto(characterLocationService.useItem(characterReference, itemReference));
     }
 }

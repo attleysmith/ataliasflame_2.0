@@ -13,6 +13,7 @@ import java.util.*;
 import static jakarta.persistence.CascadeType.ALL;
 import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.FetchType.EAGER;
+import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
 @Builder
@@ -103,6 +104,10 @@ public class Character implements Combatant {
 
     @Embedded
     private Cover cover;
+
+    @JoinColumn(name = "locationId")
+    @OneToOne(fetch = LAZY)
+    private Location location;
 
     @Override
     public Optional<Shield> getShield() {

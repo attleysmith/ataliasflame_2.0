@@ -12,8 +12,8 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring", uses = {CharacterDtoMapper.class, MonsterDtoMapper.class})
 public abstract class LocationDtoMapper {
 
-    @Mapping(target = "character", source = "character")
     @Mapping(target = "location", source = "location")
+    @Mapping(target = "character", source = "character")
     public abstract LocationContextDto toLocationContextDto(LocationContext locationContext);
 
     @Mapping(target = "reference", source = "reference")

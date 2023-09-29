@@ -9,6 +9,6 @@ import lombok.Data;
 @Data
 public class LocationContext {
 
-    private Character character;
     private Location location;
+    private Character character;
 }

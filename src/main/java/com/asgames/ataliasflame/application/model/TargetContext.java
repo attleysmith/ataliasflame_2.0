@@ -9,6 +9,6 @@ import lombok.Data;
 @Data
 public class TargetContext {
 
-    private Character character;
     private Monster monster;
+    private Character character;
 }

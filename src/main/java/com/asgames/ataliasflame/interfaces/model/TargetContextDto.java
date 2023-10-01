@@ -6,6 +6,6 @@ import lombok.Data;
 @Builder
 @Data
 public class TargetContextDto {
-    private CharacterDto character;
     private MonsterDto monster;
+    private CharacterDto character;
 }

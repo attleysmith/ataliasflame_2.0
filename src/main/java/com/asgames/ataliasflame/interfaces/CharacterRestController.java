@@ -8,7 +8,10 @@ import com.asgames.ataliasflame.application.model.CharacterInput;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
 import com.asgames.ataliasflame.domain.model.enums.SpellName;
-import com.asgames.ataliasflame.interfaces.mappers.*;
+import com.asgames.ataliasflame.interfaces.mappers.CharacterDtoMapper;
+import com.asgames.ataliasflame.interfaces.mappers.DefensiveGodConversionCodeDtoMapper;
+import com.asgames.ataliasflame.interfaces.mappers.LocationDtoMapper;
+import com.asgames.ataliasflame.interfaces.mappers.SpellDtoMapper;
 import com.asgames.ataliasflame.interfaces.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +28,6 @@ public class CharacterRestController {
     private DefensiveGodConversionCodeDtoMapper defensiveGodConversionCodeDtoMapper;
     @Autowired
     private SpellDtoMapper spellDtoMapper;
-    @Autowired
-    private MonsterDtoMapper monsterDtoMapper;
     @Autowired
     private LocationDtoMapper locationDtoMapper;
 
@@ -96,7 +97,7 @@ public class CharacterRestController {
 
     @PostMapping(value = "/{characterReference}/spells/{spellName}/cast", params = "target")
     public TargetContextDto castTargetingSpell(@PathVariable String characterReference, @PathVariable SpellName spellName, @RequestParam(name = "target") String monsterReference) {
-        return monsterDtoMapper.toTargetContextDto(characterMagicService.castTargetingSpell(characterReference, spellName, monsterReference));
+        return locationDtoMapper.toTargetContextDto(characterMagicService.castTargetingSpell(characterReference, spellName, monsterReference));
     }
 
     @PostMapping(value = "/{characterReference}/location/enter")

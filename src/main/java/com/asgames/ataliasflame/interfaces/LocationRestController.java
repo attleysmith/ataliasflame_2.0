@@ -3,8 +3,10 @@ package com.asgames.ataliasflame.interfaces;
 import com.asgames.ataliasflame.application.LocationAdventureService;
 import com.asgames.ataliasflame.interfaces.mappers.CharacterDtoMapper;
 import com.asgames.ataliasflame.interfaces.mappers.LocationDtoMapper;
-import com.asgames.ataliasflame.interfaces.mappers.MonsterDtoMapper;
-import com.asgames.ataliasflame.interfaces.model.*;
+import com.asgames.ataliasflame.interfaces.model.ArmorDto;
+import com.asgames.ataliasflame.interfaces.model.LocationDto;
+import com.asgames.ataliasflame.interfaces.model.ShieldDto;
+import com.asgames.ataliasflame.interfaces.model.WeaponDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,8 +16,6 @@ public class LocationRestController {
 
     @Autowired
     private LocationDtoMapper locationDtoMapper;
-    @Autowired
-    private MonsterDtoMapper monsterDtoMapper;
     @Autowired
     private CharacterDtoMapper characterDtoMapper;
 
@@ -30,11 +30,6 @@ public class LocationRestController {
     @GetMapping("/locations/{locationReference}")
     public LocationDto getLocation(@PathVariable String locationReference) {
         return locationDtoMapper.toLocationDto(locationAdventureService.getLocation(locationReference));
-    }
-
-    @GetMapping("/monsters/{monsterReference}")
-    public MonsterDto getMonster(@PathVariable String monsterReference) {
-        return monsterDtoMapper.toMonsterDto(locationAdventureService.getMonster(monsterReference));
     }
 
     @GetMapping("/weapons/{itemReference}")

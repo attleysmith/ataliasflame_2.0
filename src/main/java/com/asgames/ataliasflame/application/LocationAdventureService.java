@@ -1,10 +1,12 @@
 package com.asgames.ataliasflame.application;
 
-import com.asgames.ataliasflame.domain.model.entities.*;
+import com.asgames.ataliasflame.domain.model.entities.Armor;
+import com.asgames.ataliasflame.domain.model.entities.Location;
+import com.asgames.ataliasflame.domain.model.entities.Shield;
+import com.asgames.ataliasflame.domain.model.entities.Weapon;
 import com.asgames.ataliasflame.domain.services.LocationService;
 import com.asgames.ataliasflame.infrastructure.repositories.ItemRepository;
 import com.asgames.ataliasflame.infrastructure.repositories.LocationRepository;
-import com.asgames.ataliasflame.infrastructure.repositories.MonsterRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,8 +17,6 @@ public class LocationAdventureService {
 
     @Autowired
     private LocationRepository locationRepository;
-    @Autowired
-    private MonsterRepository monsterRepository;
     @Autowired
     private ItemRepository itemRepository;
 
@@ -32,12 +32,6 @@ public class LocationAdventureService {
     public Location getLocation(String locationReference) {
         return locationRepository.findById(locationReference)
                 .orElseThrow(() -> new EntityNotFoundException("Location does not exist!"));
-    }
-
-    @Transactional(readOnly = true)
-    public Monster getMonster(String monsterReference) {
-        return monsterRepository.findById(monsterReference)
-                .orElseThrow(() -> new EntityNotFoundException("Monster does not exist!"));
     }
 
     @Transactional(readOnly = true)

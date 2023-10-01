@@ -10,6 +10,7 @@ import java.util.List;
 public class LocationDto {
     private String reference;
     private int level;
+    private boolean seized;
     private List<MonsterDto> monsters;
     private List<ItemDto> items;
 }

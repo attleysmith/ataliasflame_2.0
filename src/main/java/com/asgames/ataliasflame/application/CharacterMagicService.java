@@ -2,6 +2,7 @@ package com.asgames.ataliasflame.application;
 
 import com.asgames.ataliasflame.application.model.TargetContext;
 import com.asgames.ataliasflame.domain.model.entities.Character;
+import com.asgames.ataliasflame.domain.model.entities.Location;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.enums.SpellName;
 import com.asgames.ataliasflame.domain.services.MagicService;
@@ -26,8 +27,6 @@ public class CharacterMagicService {
 
     @Autowired
     private CharacterMaintenanceService characterMaintenanceService;
-    @Autowired
-    private LocationAdventureService locationAdventureService;
 
     @Autowired
     private MagicService magicService;
@@ -55,12 +54,16 @@ public class CharacterMagicService {
         if (spellService.unknownSpell(character, spell)) {
             throw new IllegalArgumentException("The character is not familiar with the spell!");
         }
-        Monster targetMonster = locationAdventureService.getMonster(monsterReference);
+        Location location = character.getLocation();
+        Monster targetMonster = location.getMonsters().stream()
+                .filter(locationMonster -> locationMonster.getReference().equals(monsterReference))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("Referenced monster is not at the character's location!"));
         magicService.castSpell(character, spell, targetMonster);
 
         return TargetContext.builder()
-                .character(characterRepository.save(character))
                 .monster(monsterRepository.save(targetMonster))
+                .character(characterRepository.save(character))
                 .build();
     }
 

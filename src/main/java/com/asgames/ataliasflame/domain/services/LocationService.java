@@ -38,18 +38,23 @@ public class LocationService {
     }
 
     public void seizeLocation(Character character) {
-        List<Monster> monsters = character.getLocation().getMonsters();
+        Location location = character.getLocation();
+        if (location.isSeized()) {
+            throw new IllegalStateException("Location is already seized!");
+        }
 
         List<Combatant> characterTeam = new ArrayList<>();
         characterTeam.add(character);
         characterTeam.addAll(character.getCompanions());
 
+        List<Monster> monsters = location.getMonsters();
         combatService.combat(characterTeam, monsters);
         character.getCompanions().removeIf(Combatant::isDead);
         monsterService.processMonsters(monsters);
 
         if (character.isAlive()) {
             experienceService.gainExperience(character, monsters);
+            location.setSeized(true);
             storyLineLogger.event(characterReport(character, WIN));
         } else {
             storyLineLogger.event(characterReport(character, DIED_OF_DEFEAT));

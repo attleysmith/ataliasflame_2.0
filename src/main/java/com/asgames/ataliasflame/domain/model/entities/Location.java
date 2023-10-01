@@ -28,6 +28,9 @@ public class Location {
     @Column(name = "level")
     private int level;
 
+    @Column(name = "seized")
+    private boolean seized;
+
     @OneToMany(mappedBy = "location", cascade = ALL, fetch = EAGER, orphanRemoval = true)
     private List<Monster> monsters;
 

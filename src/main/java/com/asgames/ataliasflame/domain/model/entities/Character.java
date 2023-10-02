@@ -95,11 +95,11 @@ public class Character implements Combatant {
     private Set<ActiveBlessing> blessings;
 
     @JoinColumn(name = "weaponId", nullable = false)
-    @OneToOne(cascade = ALL, fetch = EAGER, orphanRemoval = true)
+    @OneToOne(cascade = ALL, fetch = EAGER)
     private Weapon weapon;
 
     @JoinColumn(name = "shieldId")
-    @OneToOne(cascade = ALL, fetch = EAGER, orphanRemoval = true)
+    @OneToOne(cascade = ALL, fetch = EAGER)
     private Shield shield;
 
     @Embedded

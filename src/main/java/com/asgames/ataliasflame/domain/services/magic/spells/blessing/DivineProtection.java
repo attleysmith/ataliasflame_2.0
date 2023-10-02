@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
-import static com.asgames.ataliasflame.domain.model.enums.ArmorType.DIVINE;
+import static com.asgames.ataliasflame.domain.model.enums.ArmorType.DIVINE_ARMOR;
 import static com.asgames.ataliasflame.domain.model.enums.ItemType.ARMOR;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.DIVINE_PROTECTION;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.BlessingEvent.blessing;
@@ -51,7 +51,7 @@ public class DivineProtection extends BlessingSpell {
                                     .reference(UUID.randomUUID().toString())
                                     .code(name.name())
                                     .type(ARMOR)
-                                    .armorType(DIVINE)
+                                    .armorType(DIVINE_ARMOR)
                                     .defense(DEFENSE)
                                     .absorption(ABSORPTION)
                                     .durability(Energy.withTotal(DURABILITY))

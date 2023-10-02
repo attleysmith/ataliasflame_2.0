@@ -42,13 +42,7 @@ public class Armor extends Item implements AbsorptionDefense {
     private Energy durability;
 
     public void belongsTo(Combatant combatant) {
-        switch (this.armorType) {
-            case HELMET -> combatant.getCover().setHelmet(this);
-            case BODY_ARMOR -> combatant.getCover().setBodyArmor(this);
-            case ENERGY -> combatant.getCover().setEnergyArmor(this);
-            case DIVINE -> combatant.getCover().setDivineArmor(this);
-            default -> throw new UnsupportedOperationException("Armor type not supported: " + armorType);
-        }
+        combatant.getCover().set(this);
     }
 
     public Armor butDamaged() {

@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
+import static com.asgames.ataliasflame.domain.model.enums.ArmorType.DIVINE_ARMOR;
+import static com.asgames.ataliasflame.domain.model.enums.ArmorType.ENERGY_ARMOR;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.CharacterReportCause.DIED_OF_BLESSING_EXPIRY;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.characterReport;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.MagicRecoveryEvent.magicRecovery;
@@ -48,8 +50,8 @@ public class MagicService {
 
     public void removeBlessingMagic(Character character) {
         character.getBlessings().clear();
-        character.getCover().setEnergyArmor(null);
-        character.getCover().setDivineArmor(null);
+        character.getCover().drop(ENERGY_ARMOR);
+        character.getCover().drop(DIVINE_ARMOR);
         characterCalculationService.recalculateProperties(character);
         if (character.getHealth().isEmpty()) {
             storyLineLogger.event(characterReport(character, DIED_OF_BLESSING_EXPIRY));

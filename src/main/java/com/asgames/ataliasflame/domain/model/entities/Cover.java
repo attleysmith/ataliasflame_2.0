@@ -5,6 +5,7 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import lombok.Data;
+import org.springframework.lang.Nullable;
 
 import java.util.Optional;
 
@@ -20,11 +21,11 @@ public class Cover {
     }
 
     @JoinColumn(name = "helmetId")
-    @OneToOne(cascade = ALL, fetch = EAGER, orphanRemoval = true)
+    @OneToOne(cascade = ALL, fetch = EAGER)
     private Armor helmet;
 
     @JoinColumn(name = "bodyArmorId")
-    @OneToOne(cascade = ALL, fetch = EAGER, orphanRemoval = true)
+    @OneToOne(cascade = ALL, fetch = EAGER)
     private Armor bodyArmor;
 
     @JoinColumn(name = "energyArmorId")
@@ -39,9 +40,26 @@ public class Cover {
         return switch (armorType) {
             case HELMET -> getHelmet();
             case BODY_ARMOR -> getBodyArmor();
-            case ENERGY -> getEnergyArmor();
-            case DIVINE -> getDivineArmor();
+            case ENERGY_ARMOR -> getEnergyArmor();
+            case DIVINE_ARMOR -> getDivineArmor();
         };
+    }
+
+    private void set(ArmorType armorType, @Nullable Armor armor) {
+        switch (armorType) {
+            case HELMET -> helmet = armor;
+            case BODY_ARMOR -> bodyArmor = armor;
+            case ENERGY_ARMOR -> energyArmor = armor;
+            case DIVINE_ARMOR -> divineArmor = armor;
+        }
+    }
+
+    public void set(Armor armor) {
+        set(armor.getArmorType(), armor);
+    }
+
+    public void drop(ArmorType armorType) {
+        set(armorType, null);
     }
 
     public Optional<Armor> getHelmet() {

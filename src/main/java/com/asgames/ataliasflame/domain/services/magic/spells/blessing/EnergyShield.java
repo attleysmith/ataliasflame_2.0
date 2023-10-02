@@ -48,7 +48,7 @@ public class EnergyShield extends BlessingSpell {
                                     .reference(UUID.randomUUID().toString())
                                     .code(name.name())
                                     .type(ARMOR)
-                                    .armorType(ArmorType.ENERGY)
+                                    .armorType(ArmorType.ENERGY_ARMOR)
                                     .defense(DEFENSE)
                                     .absorption(ABSORPTION)
                                     .durability(Energy.withTotal(DURABILITY))

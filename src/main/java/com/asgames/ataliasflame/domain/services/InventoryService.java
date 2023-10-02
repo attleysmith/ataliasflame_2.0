@@ -2,10 +2,7 @@ package com.asgames.ataliasflame.domain.services;
 
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.*;
-import com.asgames.ataliasflame.domain.model.enums.ArmorTemplate;
-import com.asgames.ataliasflame.domain.model.enums.FoodTemplate;
-import com.asgames.ataliasflame.domain.model.enums.ShieldTemplate;
-import com.asgames.ataliasflame.domain.model.enums.WeaponTemplate;
+import com.asgames.ataliasflame.domain.model.enums.*;
 import com.asgames.ataliasflame.domain.model.interfaces.ItemTemplate;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
 import com.asgames.ataliasflame.domain.utils.SelectionValue;
@@ -128,12 +125,10 @@ public class InventoryService {
     }
 
     public void takeWeapon(Character character, Weapon newWeapon) {
-        character.getShield().ifPresent(oldShield -> {
-            if (!newWeapon.isOneHanded()) {
-                character.setShield(null);
-                storyLineLogger.event(shieldChange(character, oldShield));
-            }
-        });
+        dropWeapon(character);
+        if (!newWeapon.isOneHanded()) {
+            dropShield(character);
+        }
 
         Weapon oldWeapon = character.getWeapon();
         newWeapon.belongsTo(character);
@@ -142,11 +137,9 @@ public class InventoryService {
     }
 
     public void takeShield(Character character, Shield newShield) {
-        Weapon oldWeapon = character.getWeapon();
-        if (!oldWeapon.isOneHanded()) {
-            Weapon newWeapon = FIST.instance();
-            newWeapon.belongsTo(character);
-            storyLineLogger.event(weaponChange(character, oldWeapon));
+        dropShield(character);
+        if (!character.getWeapon().isOneHanded()) {
+            dropWeapon(character);
         }
 
         Shield oldShield = character.getShield().orElse(null);
@@ -156,9 +149,55 @@ public class InventoryService {
     }
 
     public void takeArmor(Character character, Armor newArmor) {
+        dropArmor(character, newArmor.getArmorType());
+
         Armor oldArmor = character.getCover().get(newArmor.getArmorType()).orElse(null);
         newArmor.belongsTo(character);
         characterCalculationService.recalculateProperties(character);
         storyLineLogger.event(armorChange(character, oldArmor, newArmor));
+    }
+
+    public void dropWeapon(Character character) {
+        if (character.getWeapon() == null) {
+            return;
+        }
+        Weapon oldWeapon = character.getWeapon();
+        if (character.getLocation() != null && !oldWeapon.getCode().equals(FIST.name())) {
+            character.getLocation().getItems().add(oldWeapon);
+        }
+        Weapon newWeapon = FIST.instance();
+        newWeapon.belongsTo(character);
+        characterCalculationService.recalculateProperties(character);
+        storyLineLogger.event(weaponChange(character, oldWeapon));
+    }
+
+    public void dropShield(Character character) {
+        character.getShield().ifPresent(oldShield -> {
+            if (character.getLocation() != null) {
+                character.getLocation().getItems().add(oldShield);
+            }
+
+            character.setShield(null);
+            characterCalculationService.recalculateProperties(character);
+            storyLineLogger.event(shieldChange(character, oldShield));
+        });
+    }
+
+    public void dropArmor(Character character, ArmorType armorType) {
+        switch (armorType) {
+            case HELMET, BODY_ARMOR -> character.getCover().get(armorType).ifPresent(oldArmor -> {
+                if (character.getLocation() != null) {
+                    character.getLocation().getItems().add(oldArmor);
+                }
+
+                character.getCover().drop(armorType);
+                characterCalculationService.recalculateProperties(character);
+                storyLineLogger.event(armorChange(character, oldArmor, null));
+            });
+            case ENERGY_ARMOR, DIVINE_ARMOR ->
+                    throw new IllegalArgumentException("Dropped armor is not part of the inventory: " + armorType);
+        }
+
+
     }
 }

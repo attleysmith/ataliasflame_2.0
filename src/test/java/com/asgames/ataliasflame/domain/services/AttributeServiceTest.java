@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static com.asgames.ataliasflame.domain.MockConstants.MAX_ATTRIBUTE_POINTS;
+import static com.asgames.ataliasflame.domain.model.enums.ArmorType.BODY_ARMOR;
+import static com.asgames.ataliasflame.domain.model.enums.ArmorType.HELMET;
 import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
 import static com.asgames.ataliasflame.domain.model.enums.Gender.MALE;
 import static com.asgames.ataliasflame.domain.model.enums.God.ALATE;
@@ -222,8 +224,8 @@ class AttributeServiceTest {
     private void addDagger() {
         DAGGER.instance().belongsTo(character);
         character.setShield(null);
-        character.getCover().setHelmet(null);
-        character.getCover().setBodyArmor(null);
+        character.getCover().drop(HELMET);
+        character.getCover().drop(BODY_ARMOR);
 
         characterCalculationService.recalculateProperties(character);
     }

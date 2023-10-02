@@ -230,7 +230,11 @@ public final class CharacterEvents {
         public String message() {
             String oldArmorCode = oldArmor == null ? MISSING_ITEM : oldArmor.getCode();
             int oldDurability = oldArmor == null ? 0 : oldArmor.getDurability().actualValue();
-            return "Armor changed: " + oldArmorCode + " (" + oldDurability + ") -> " + newArmor.getCode() + " (" + newArmor.getDurability().actualValue() + ")";
+            if (newArmor != null) {
+                return "Armor changed: " + oldArmorCode + " (" + oldDurability + ") -> " + newArmor.getCode() + " (" + newArmor.getDurability().actualValue() + ")";
+            } else {
+                return "Armor dropped: " + oldArmorCode + " (" + oldDurability + ")";
+            }
         }
     }
 

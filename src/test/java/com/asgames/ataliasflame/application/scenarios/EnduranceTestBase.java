@@ -76,6 +76,7 @@ public abstract class EnduranceTestBase {
         closeCombat();
         if (character.isAlive()) {
             lootLocation();
+            lootLocation(); // to look at dropped shields or whatever (e.g. +SPEAR/-SHIELD -> +SWORD/-SPEAR -> +SHIELD)
             castHealingMagic();
             finishEncounter();
             sleep();

@@ -1,10 +1,7 @@
 package com.asgames.ataliasflame.domain.services;
 
-import com.asgames.ataliasflame.domain.model.dtos.Modifier;
-import com.asgames.ataliasflame.domain.model.entities.Armor;
 import com.asgames.ataliasflame.domain.model.entities.Character;
-import com.asgames.ataliasflame.domain.model.entities.Shield;
-import com.asgames.ataliasflame.domain.model.entities.SoulChip;
+import com.asgames.ataliasflame.domain.model.entities.*;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.utils.CalculatorUtils;
 import org.springframework.stereotype.Service;
@@ -13,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.asgames.ataliasflame.domain.MockConstants.MODIFIERS;
 import static com.asgames.ataliasflame.domain.model.enums.Caste.ATALIAS_PRIEST;
 import static com.asgames.ataliasflame.domain.model.enums.God.ATALIA;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.calculate;
@@ -28,6 +24,10 @@ public class CharacterCalculationService {
     private static final int BASE_DAMAGE_MULTIPLIER = 0;
     private static final int BASE_MAGIC_POINT = 0;
 
+    private static final int FIST_MIN_DAMAGE = 1;
+    private static final int FIST_MAX_DAMAGE = 2;
+    private static final int FIST_INITIATIVE = 1;
+
     public void recalculateProperties(Character character) {
         recalculateAttack(character);
         recalculateDefense(character);
@@ -35,9 +35,16 @@ public class CharacterCalculationService {
         recalculateHealth(character);
         recalculateMagic(character);
 
-        character.setMinDamage(calculate(character.getWeapon().getMinDamage(), character.getDamageMultiplier()));
-        character.setMaxDamage(calculate(character.getWeapon().getMaxDamage(), character.getDamageMultiplier()));
-        character.setInitiative(character.getWeapon().getInitiative());
+        character.getWeapon().ifPresentOrElse(weapon -> {
+                    character.setMinDamage(calculate(weapon.getMinDamage(), character.getDamageMultiplier()));
+                    character.setMaxDamage(calculate(weapon.getMaxDamage(), character.getDamageMultiplier()));
+                    character.setInitiative(weapon.getInitiative());
+                },
+                () -> {
+                    character.setMinDamage(calculate(FIST_MIN_DAMAGE, character.getDamageMultiplier()));
+                    character.setMaxDamage(calculate(FIST_MAX_DAMAGE, character.getDamageMultiplier()));
+                    character.setInitiative(FIST_INITIATIVE);
+                });
     }
 
     private void recalculateAttack(Character character) {
@@ -78,7 +85,7 @@ public class CharacterCalculationService {
 
     private int actualDefense(Character character) {
         return BASE_DEFENSE
-                + character.getWeapon().getDefense()
+                + character.getWeapon().map(Weapon::getDefense).orElse(0)
                 + character.getShield().map(Shield::getDefense).orElse(0)
                 + character.getCover().getEnergyArmor().map(Armor::getDefense).orElse(0)
                 + character.getCover().getHelmet().map(Armor::getDefense).orElse(0)
@@ -88,11 +95,11 @@ public class CharacterCalculationService {
 
     private static class PropertyCalculator {
 
-        private final Modifier attributeModifier;
+        private final Attribute attribute;
         private final int calculatedAttributeValue;
 
         private PropertyCalculator(Character character, Attribute attribute) {
-            this.attributeModifier = MODIFIERS.get(attribute.name());
+            this.attribute = attribute;
             this.calculatedAttributeValue = AttributeCalculator.of(character, attribute).calculate();
         }
 
@@ -101,23 +108,23 @@ public class CharacterCalculationService {
         }
 
         public int getAttackMultiplier() {
-            return calculatedAttributeValue * attributeModifier.getAttackMultiplier();
+            return calculatedAttributeValue * attribute.attackMultiplier;
         }
 
         public int getDefenseMultiplier() {
-            return calculatedAttributeValue * attributeModifier.getDefenseMultiplier();
+            return calculatedAttributeValue * attribute.defenseMultiplier;
         }
 
         public int getDamageMultiplier() {
-            return calculatedAttributeValue * attributeModifier.getDamageMultiplier();
+            return calculatedAttributeValue * attribute.damageMultiplier;
         }
 
         public int getHealthMultiplier() {
-            return calculatedAttributeValue * attributeModifier.getHealthMultiplier();
+            return calculatedAttributeValue * attribute.healthMultiplier;
         }
 
         public int getMagicPoint() {
-            return calculatedAttributeValue * attributeModifier.getMagicPoint();
+            return calculatedAttributeValue * attribute.magicPoint;
         }
     }
 

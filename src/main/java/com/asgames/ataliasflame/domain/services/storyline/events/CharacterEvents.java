@@ -183,7 +183,12 @@ public final class CharacterEvents {
         @Override
         public String message() {
             String oldWeaponCode = oldWeapon == null ? MISSING_ITEM : oldWeapon.getCode();
-            return "Weapon changed: " + oldWeaponCode + " -> " + character.getWeapon().getCode();
+            if (character.getWeapon().isPresent()) {
+                Weapon weapon = character.getWeapon().get();
+                return "Weapon changed: " + oldWeaponCode + " -> " + weapon.getCode();
+            } else {
+                return "Weapon dropped: " + oldWeaponCode;
+            }
         }
     }
 

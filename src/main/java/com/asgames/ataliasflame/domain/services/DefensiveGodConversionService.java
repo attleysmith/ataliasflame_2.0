@@ -1,15 +1,14 @@
 package com.asgames.ataliasflame.domain.services;
 
-import com.asgames.ataliasflame.domain.model.dtos.CasteDetails;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.DefensiveGodConversionLog;
+import com.asgames.ataliasflame.domain.model.enums.Caste;
 import com.asgames.ataliasflame.domain.model.enums.God;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
-import static com.asgames.ataliasflame.domain.MockConstants.CASTE_DETAILS;
 import static com.asgames.ataliasflame.domain.model.enums.Caste.MONK;
 import static com.asgames.ataliasflame.domain.model.enums.CasteGroup.CLERIC;
 
@@ -20,8 +19,8 @@ public class DefensiveGodConversionService {
     private CharacterCalculationService characterCalculationService;
 
     public DefensiveGodConversionLog getConversionLog(Character character) {
-        CasteDetails casteDetails = CASTE_DETAILS.get(character.getCaste());
-        if (casteDetails.getCaste().equals(MONK) || !casteDetails.getGroup().equals(CLERIC)) {
+        Caste characterCaste = character.getCaste();
+        if (characterCaste.equals(MONK) || !characterCaste.group.equals(CLERIC)) {
             throw new IllegalArgumentException("Only higher rank clerics can convert characters! (At least priests.)");
         }
 

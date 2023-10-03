@@ -1,6 +1,5 @@
 package com.asgames.ataliasflame.domain.services;
 
-import com.asgames.ataliasflame.domain.model.dtos.CasteDetails;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
@@ -9,8 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
-import static com.asgames.ataliasflame.domain.MockConstants.CASTE_DETAILS;
-import static com.asgames.ataliasflame.domain.MockConstants.LEVEL_ATTRIBUTE_POINTS;
 import static com.asgames.ataliasflame.domain.model.enums.Caste.ROGUE;
 import static com.asgames.ataliasflame.domain.model.enums.God.ATALIA;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.CharacterReportCause.INIT;
@@ -30,9 +27,9 @@ public class CharacterInitializer {
     public Character initialize(Character character) {
         character.setReference(UUID.randomUUID().toString());
         initializeAttributes(character);
+        setStartingLevel(character);
         setStartingCaste(character);
         setStartingInventory(character);
-        setStartingLevel(character);
         setStartingAttributes(character);
 
         validateConstraints(character);
@@ -68,7 +65,6 @@ public class CharacterInitializer {
     private void setStartingLevel(Character character) {
         character.setLevel(1);
         character.setExperience(0);
-        character.setAttributePoints(LEVEL_ATTRIBUTE_POINTS);
     }
 
     private void setStartingCaste(Character character) {
@@ -76,9 +72,10 @@ public class CharacterInitializer {
     }
 
     private void setStartingAttributes(Character character) {
-        CasteDetails casteDetails = CASTE_DETAILS.get(character.getCaste());
         for (Attribute attribute : Attribute.values()) {
-            attributeService.addAttributePoints(character, attribute, casteDetails.getMinimumAttributes().get(attribute));
+            int attributeValue = character.getCaste().minimumAttributes.get(attribute);
+            character.setAttributePoints(attributeValue);
+            attributeService.addAttributePoints(character, attribute, attributeValue);
         }
     }
 

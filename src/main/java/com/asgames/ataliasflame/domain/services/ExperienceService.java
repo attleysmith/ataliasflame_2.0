@@ -11,13 +11,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.asgames.ataliasflame.domain.MockConstants.LEVEL_ATTRIBUTE_POINTS;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.CharacterReportCause.LEVEL_UP;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.characterReport;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.ExperienceEvent.experienceGain;
 
 @Service
 public class ExperienceService {
+
+    private static final int LEVEL_ATTRIBUTE_POINTS = 5;
 
     @Autowired
     private StoryLineLogger storyLineLogger;

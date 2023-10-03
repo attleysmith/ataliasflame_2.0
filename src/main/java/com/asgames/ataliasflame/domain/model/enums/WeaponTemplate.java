@@ -8,7 +8,6 @@ import java.util.UUID;
 import static com.asgames.ataliasflame.domain.model.enums.ItemType.WEAPON;
 
 public enum WeaponTemplate implements ItemTemplate {
-    FIST(1, 2, 0, 1, true),
     STAFF(1, 5, 5, -5, false),
     DAGGER(2, 6, 1, 0, true),
     SPEAR(2, 12, 5, -6, false),

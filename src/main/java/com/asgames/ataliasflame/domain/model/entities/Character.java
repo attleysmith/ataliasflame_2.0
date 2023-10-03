@@ -94,7 +94,7 @@ public class Character implements Combatant {
     @OneToMany(mappedBy = "owner", cascade = ALL, fetch = EAGER, orphanRemoval = true)
     private Set<ActiveBlessing> blessings;
 
-    @JoinColumn(name = "weaponId", nullable = false)
+    @JoinColumn(name = "weaponId")
     @OneToOne(cascade = ALL, fetch = EAGER)
     private Weapon weapon;
 
@@ -108,6 +108,10 @@ public class Character implements Combatant {
     @JoinColumn(name = "locationId")
     @OneToOne(fetch = LAZY)
     private Location location;
+
+    public Optional<Weapon> getWeapon() {
+        return Optional.ofNullable(weapon);
+    }
 
     @Override
     public Optional<Shield> getShield() {
@@ -167,5 +171,9 @@ public class Character implements Combatant {
             blessings = new HashSet<>();
         }
         return blessings;
+    }
+
+    public boolean hasFreeHand() {
+        return getWeapon().map(Weapon::isOneHanded).orElse(true);
     }
 }

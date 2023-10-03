@@ -1,15 +1,14 @@
 package com.asgames.ataliasflame.domain.services;
 
-import com.asgames.ataliasflame.domain.model.dtos.CasteDetails;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.SoulChip;
-import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static com.asgames.ataliasflame.domain.MockConstants.CASTE_DETAILS;
+import java.util.List;
+
 import static com.asgames.ataliasflame.domain.model.enums.CasteGroup.WANDERER;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.CharacterReportCause.DIED_OF_TRAUMA;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.characterReport;
@@ -52,29 +51,23 @@ public class CasteService {
     }
 
     private void validateAvailability(Character character, Caste newCaste) {
-        CasteDetails actualCasteDetails = CASTE_DETAILS.get(character.getCaste());
-        if (!actualCasteDetails.getNextCastes().contains(newCaste)) {
-            throw new IllegalArgumentException("New caste is not available! Available castes: " + actualCasteDetails.getNextCastes());
+        List<Caste> nextCastes = character.getCaste().nextCastes;
+        if (!nextCastes.contains(newCaste)) {
+            throw new IllegalArgumentException("New caste is not available! Available castes: " + nextCastes);
         }
     }
 
     private void validateAttributes(Character character, Caste newCaste) {
-        CasteDetails newCasteDetails = CASTE_DETAILS.get(newCaste);
-        newCasteDetails.getMinimumAttributes().keySet().forEach(attribute ->
-                validateAttribute(attribute, character, newCasteDetails));
-    }
-
-    private void validateAttribute(Attribute attribute, Character character, CasteDetails newCasteDetails) {
-        int actualValue = character.getAttributes().get(attribute);
-        int requiredValue = newCasteDetails.getMinimumAttributes().get(attribute);
-        if (actualValue < requiredValue) {
-            throw new IllegalArgumentException(attribute + " is lower than required (" + requiredValue + ")! Actual: " + actualValue);
-        }
+        newCaste.minimumAttributes.forEach((attribute, requiredValue) -> {
+            int actualValue = character.getAttributes().get(attribute);
+            if (actualValue < requiredValue) {
+                throw new IllegalArgumentException(attribute + " is lower than required (" + requiredValue + ")! Actual: " + actualValue);
+            }
+        });
     }
 
     private void ripOutSoulChip(Character character) {
-        CasteDetails casteDetails = CASTE_DETAILS.get(character.getCaste());
-        if (casteDetails.getGroup().equals(WANDERER)) {
+        if (character.getCaste().group.equals(WANDERER)) {
             int percent = roll100();
 
             SoulChip soulChip = soulChipService.getSoulChip(character, percent);

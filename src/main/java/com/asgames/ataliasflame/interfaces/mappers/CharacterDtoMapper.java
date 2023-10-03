@@ -33,7 +33,7 @@ public abstract class CharacterDtoMapper {
     @Mapping(target = "soulChips", source = "soulChips")
     @Mapping(target = "companions", source = "companions")
     @Mapping(target = "blessings", source = "blessings")
-    @Mapping(target = "weapon", source = "weapon")
+    @Mapping(target = "weapon", expression = "java(character.getWeapon().map(weapon -> toWeaponDto(weapon)).orElse(null))")
     @Mapping(target = "shield", expression = "java(character.getShield().map(shield -> toShieldDto(shield)).orElse(null))")
     @Mapping(target = "cover", source = "cover")
     @Mapping(target = "locationReference", source = "location.reference")

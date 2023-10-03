@@ -10,7 +10,6 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static com.asgames.ataliasflame.domain.MockConstants.MAX_ATTRIBUTE_POINTS;
 import static com.asgames.ataliasflame.domain.model.enums.ArmorType.BODY_ARMOR;
 import static com.asgames.ataliasflame.domain.model.enums.ArmorType.HELMET;
 import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
@@ -209,7 +208,7 @@ class AttributeServiceTest {
     @Order(9)
     void maxAttributeValueTest() {
         // given
-        int allowedAdditionalStrength = MAX_ATTRIBUTE_POINTS - character.getAttributes().get(STRENGTH);
+        int allowedAdditionalStrength = 100 - character.getAttributes().get(STRENGTH);
         // and
         character.setAttributePoints(allowedAdditionalStrength + 1);
 

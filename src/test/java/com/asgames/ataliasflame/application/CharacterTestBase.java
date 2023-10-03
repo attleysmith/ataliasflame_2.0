@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static com.asgames.ataliasflame.domain.MockConstants.CASTE_DETAILS;
 import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
 
 public abstract class CharacterTestBase {
@@ -32,7 +31,7 @@ public abstract class CharacterTestBase {
 
         ArrayList<Caste> pathForward = new ArrayList<>(upgradePath);
         Caste nextCaste = pathForward.remove(0);
-        setAttributes(characterReference, CASTE_DETAILS.get(nextCaste).getMinimumAttributes());
+        setAttributes(characterReference, nextCaste.minimumAttributes);
 
         characterMaintenanceService.upgradeCaste(characterReference, nextCaste);
         upgradeCaste(characterReference, pathForward);

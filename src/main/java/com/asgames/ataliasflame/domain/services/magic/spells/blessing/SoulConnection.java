@@ -28,19 +28,19 @@ import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.pointOut;
 @Component
 public class SoulConnection extends BlessingSpell {
 
-    @Autowired
-    private CharacterCalculationService characterCalculationService;
-
     private static final int SPELL_COST = 5;
 
     private static final int FATIGUE_EFFECT = 5;
 
     // buff effect
-    public static final Map<SoulChipShape, Booster> BOOSTER_EFFECT_MAP = Map.of(
+    private static final Map<SoulChipShape, Booster> BOOSTER_EFFECT_MAP = Map.of(
             CANINE, CANINE_SOUL_CONNECTION,
             APE_LIKE, APE_LIKE_SOUL_CONNECTION,
             BIRD_OF_PREY, BIRD_OF_PREY_SOUL_CONNECTION
     );
+
+    @Autowired
+    private CharacterCalculationService characterCalculationService;
 
     public SoulConnection() {
         super(SOUL_CONNECTION, SOUL);

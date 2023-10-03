@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 1696148693795-1
+      id: 1696323728375-1
       author: Mikló Attila (generated)
       changes:
         - createTable:
@@ -25,7 +25,7 @@ databaseChangeLog:
                   type: VARCHAR(255)
             tableName: ActiveBlessing
   - changeSet:
-      id: 1696148693795-2
+      id: 1696323728375-2
       author: Mikló Attila (generated)
       changes:
         - createTable:
@@ -110,13 +110,11 @@ databaseChangeLog:
                   name: shieldId
                   type: VARCHAR(255)
               - column:
-                  constraints:
-                    nullable: false
                   name: weaponId
                   type: VARCHAR(255)
             tableName: Character
   - changeSet:
-      id: 1696148693795-3
+      id: 1696323728375-3
       author: Mikló Attila (generated)
       changes:
         - createTable:
@@ -140,7 +138,7 @@ databaseChangeLog:
                   type: VARCHAR(255)
             tableName: CharacterAttributeMapping
   - changeSet:
-      id: 1696148693795-4
+      id: 1696323728375-4
       author: Mikló Attila (generated)
       changes:
         - createTable:
@@ -194,7 +192,7 @@ databaseChangeLog:
                   type: VARCHAR(255)
             tableName: Companion
   - changeSet:
-      id: 1696148693795-5
+      id: 1696323728375-5
       author: Mikló Attila (generated)
       changes:
         - createTable:
@@ -219,7 +217,7 @@ databaseChangeLog:
                   type: VARCHAR(255)
             tableName: DefensiveGodConversionLog
   - changeSet:
-      id: 1696148693795-6
+      id: 1696323728375-6
       author: Mikló Attila (generated)
       changes:
         - createTable:
@@ -280,7 +278,7 @@ databaseChangeLog:
                   type: BOOLEAN
             tableName: Item
   - changeSet:
-      id: 1696148693795-7
+      id: 1696323728375-7
       author: Mikló Attila (generated)
       changes:
         - createTable:
@@ -297,7 +295,7 @@ databaseChangeLog:
                   type: INT
             tableName: Level
   - changeSet:
-      id: 1696148693795-8
+      id: 1696323728375-8
       author: Mikló Attila (generated)
       changes:
         - createTable:
@@ -317,7 +315,7 @@ databaseChangeLog:
                   type: BOOLEAN
             tableName: Location
   - changeSet:
-      id: 1696148693795-9
+      id: 1696323728375-9
       author: Mikló Attila (generated)
       changes:
         - createTable:
@@ -334,7 +332,7 @@ databaseChangeLog:
                   type: VARCHAR(255)
             tableName: LocationItem
   - changeSet:
-      id: 1696148693795-10
+      id: 1696323728375-10
       author: Mikló Attila (generated)
       changes:
         - createTable:
@@ -389,7 +387,7 @@ databaseChangeLog:
                   type: VARCHAR(255)
             tableName: Monster
   - changeSet:
-      id: 1696148693795-11
+      id: 1696323728375-11
       author: Mikló Attila (generated)
       changes:
         - createTable:
@@ -441,7 +439,7 @@ databaseChangeLog:
                   type: VARCHAR(255)
             tableName: SoulChip
   - changeSet:
-      id: 1696148693795-12
+      id: 1696323728375-12
       author: Mikló Attila (generated)
       changes:
         - addUniqueConstraint:
@@ -449,7 +447,7 @@ databaseChangeLog:
             constraintName: UK_o0copm3cmhvlg49omjh1aon68
             tableName: LocationItem
   - changeSet:
-      id: 1696148693795-13
+      id: 1696323728375-13
       author: Mikló Attila (generated)
       changes:
         - addForeignKeyConstraint:
@@ -462,7 +460,7 @@ databaseChangeLog:
             referencedTableName: Character
             validate: true
   - changeSet:
-      id: 1696148693795-14
+      id: 1696323728375-14
       author: Mikló Attila (generated)
       changes:
         - addForeignKeyConstraint:
@@ -475,7 +473,7 @@ databaseChangeLog:
             referencedTableName: Character
             validate: true
   - changeSet:
-      id: 1696148693795-15
+      id: 1696323728375-15
       author: Mikló Attila (generated)
       changes:
         - addForeignKeyConstraint:
@@ -488,7 +486,7 @@ databaseChangeLog:
             referencedTableName: Item
             validate: true
   - changeSet:
-      id: 1696148693795-16
+      id: 1696323728375-16
       author: Mikló Attila (generated)
       changes:
         - addForeignKeyConstraint:
@@ -501,7 +499,7 @@ databaseChangeLog:
             referencedTableName: Item
             validate: true
   - changeSet:
-      id: 1696148693795-17
+      id: 1696323728375-17
       author: Mikló Attila (generated)
       changes:
         - addForeignKeyConstraint:
@@ -514,7 +512,7 @@ databaseChangeLog:
             referencedTableName: Item
             validate: true
   - changeSet:
-      id: 1696148693795-18
+      id: 1696323728375-18
       author: Mikló Attila (generated)
       changes:
         - addForeignKeyConstraint:
@@ -527,7 +525,7 @@ databaseChangeLog:
             referencedTableName: Item
             validate: true
   - changeSet:
-      id: 1696148693795-19
+      id: 1696323728375-19
       author: Mikló Attila (generated)
       changes:
         - addForeignKeyConstraint:
@@ -540,7 +538,7 @@ databaseChangeLog:
             referencedTableName: Location
             validate: true
   - changeSet:
-      id: 1696148693795-20
+      id: 1696323728375-20
       author: Mikló Attila (generated)
       changes:
         - addForeignKeyConstraint:
@@ -553,7 +551,7 @@ databaseChangeLog:
             referencedTableName: Character
             validate: true
   - changeSet:
-      id: 1696148693795-21
+      id: 1696323728375-21
       author: Mikló Attila (generated)
       changes:
         - addForeignKeyConstraint:
@@ -566,7 +564,7 @@ databaseChangeLog:
             referencedTableName: Item
             validate: true
   - changeSet:
-      id: 1696148693795-22
+      id: 1696323728375-22
       author: Mikló Attila (generated)
       changes:
         - addForeignKeyConstraint:
@@ -579,7 +577,7 @@ databaseChangeLog:
             referencedTableName: Location
             validate: true
   - changeSet:
-      id: 1696148693795-23
+      id: 1696323728375-23
       author: Mikló Attila (generated)
       changes:
         - addForeignKeyConstraint:
@@ -592,7 +590,7 @@ databaseChangeLog:
             referencedTableName: Item
             validate: true
   - changeSet:
-      id: 1696148693795-24
+      id: 1696323728375-24
       author: Mikló Attila (generated)
       changes:
         - addForeignKeyConstraint:
@@ -605,7 +603,7 @@ databaseChangeLog:
             referencedTableName: SoulChip
             validate: true
   - changeSet:
-      id: 1696148693795-25
+      id: 1696323728375-25
       author: Mikló Attila (generated)
       changes:
         - addForeignKeyConstraint:
@@ -618,7 +616,7 @@ databaseChangeLog:
             referencedTableName: SoulChip
             validate: true
   - changeSet:
-      id: 1696148693795-26
+      id: 1696323728375-26
       author: Mikló Attila (generated)
       changes:
         - addForeignKeyConstraint:
@@ -631,7 +629,7 @@ databaseChangeLog:
             referencedTableName: Item
             validate: true
   - changeSet:
-      id: 1696148693795-27
+      id: 1696323728375-27
       author: Mikló Attila (generated)
       changes:
         - addForeignKeyConstraint:
@@ -644,7 +642,7 @@ databaseChangeLog:
             referencedTableName: Character
             validate: true
   - changeSet:
-      id: 1696148693795-28
+      id: 1696323728375-28
       author: Mikló Attila (generated)
       changes:
         - addForeignKeyConstraint:
@@ -657,7 +655,7 @@ databaseChangeLog:
             referencedTableName: Character
             validate: true
   - changeSet:
-      id: 1696148693795-29
+      id: 1696323728375-29
       author: Mikló Attila (generated)
       changes:
         - addForeignKeyConstraint:
@@ -670,7 +668,7 @@ databaseChangeLog:
             referencedTableName: Location
             validate: true
   - changeSet:
-      id: 1696148693795-30
+      id: 1696323728375-30
       author: Mikló Attila (generated)
       changes:
         - addForeignKeyConstraint:

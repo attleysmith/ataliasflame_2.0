@@ -25,12 +25,12 @@ import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.choose;
 @Service
 public class InventoryService {
 
-    private static final List<SelectionValue<WeaponTemplate>> STARTING_WEAPON_SELECTOR = List.of(
-            new SelectionValue<>(5, FIST),
-            new SelectionValue<>(30, STAFF),
-            new SelectionValue<>(30, DAGGER),
-            new SelectionValue<>(20, SPEAR),
-            new SelectionValue<>(15, SWORD)
+    private static final List<SelectionValue<Optional<WeaponTemplate>>> STARTING_WEAPON_SELECTOR = List.of(
+            new SelectionValue<>(5, Optional.empty()),
+            new SelectionValue<>(30, Optional.of(STAFF)),
+            new SelectionValue<>(30, Optional.of(DAGGER)),
+            new SelectionValue<>(20, Optional.of(SPEAR)),
+            new SelectionValue<>(15, Optional.of(SWORD))
     );
     private static final List<SelectionValue<Optional<ShieldTemplate>>> STARTING_SHIELD_SELECTOR = List.of(
             new SelectionValue<>(60, Optional.empty()),
@@ -39,14 +39,14 @@ public class InventoryService {
             new SelectionValue<>(10, Optional.of(KITE_SHIELD)),
             new SelectionValue<>(5, Optional.of(TOWER_SHIELD))
     );
-    public static final List<SelectionValue<Optional<ArmorTemplate>>> STARTING_HELMET_SELECTOR = List.of(
+    private static final List<SelectionValue<Optional<ArmorTemplate>>> STARTING_HELMET_SELECTOR = List.of(
             new SelectionValue<>(60, Optional.empty()),
             new SelectionValue<>(20, Optional.of(CAP)),
             new SelectionValue<>(10, Optional.of(LEATHER_HELMET)),
             new SelectionValue<>(5, Optional.of(CHAIN_HOOD)),
             new SelectionValue<>(5, Optional.of(METAL_HELMET))
     );
-    public static final List<SelectionValue<Optional<ArmorTemplate>>> STARTING_BODY_ARMOR_SELECTOR = List.of(
+    private static final List<SelectionValue<Optional<ArmorTemplate>>> STARTING_BODY_ARMOR_SELECTOR = List.of(
             new SelectionValue<>(50, Optional.empty()),
             new SelectionValue<>(15, Optional.of(LINEN_ARMOR)),
             new SelectionValue<>(10, Optional.of(LEATHER_ARMOR)),
@@ -67,9 +67,11 @@ public class InventoryService {
     private MagicService magicService;
 
     public void setStartingInventory(Character character) {
-        takeWeapon(character, choose(STARTING_WEAPON_SELECTOR).instance());
+        choose(STARTING_WEAPON_SELECTOR).ifPresent(startingWeapon -> {
+            takeWeapon(character, startingWeapon.instance());
+        });
 
-        if (character.getWeapon().isOneHanded()) {
+        if (character.hasFreeHand()) {
             choose(STARTING_SHIELD_SELECTOR).ifPresent(startingShield ->
                     takeShield(character, startingShield.instance()));
         }
@@ -130,7 +132,7 @@ public class InventoryService {
             dropShield(character);
         }
 
-        Weapon oldWeapon = character.getWeapon();
+        Weapon oldWeapon = character.getWeapon().orElse(null);
         newWeapon.belongsTo(character);
         characterCalculationService.recalculateProperties(character);
         storyLineLogger.event(weaponChange(character, oldWeapon));
@@ -138,7 +140,7 @@ public class InventoryService {
 
     public void takeShield(Character character, Shield newShield) {
         dropShield(character);
-        if (!character.getWeapon().isOneHanded()) {
+        if (!character.hasFreeHand()) {
             dropWeapon(character);
         }
 
@@ -158,17 +160,15 @@ public class InventoryService {
     }
 
     public void dropWeapon(Character character) {
-        if (character.getWeapon() == null) {
-            return;
-        }
-        Weapon oldWeapon = character.getWeapon();
-        if (character.getLocation() != null && !oldWeapon.getCode().equals(FIST.name())) {
-            character.getLocation().getItems().add(oldWeapon);
-        }
-        Weapon newWeapon = FIST.instance();
-        newWeapon.belongsTo(character);
-        characterCalculationService.recalculateProperties(character);
-        storyLineLogger.event(weaponChange(character, oldWeapon));
+        character.getWeapon().ifPresent(oldWeapon -> {
+            if (character.getLocation() != null) {
+                character.getLocation().getItems().add(oldWeapon);
+            }
+
+            character.setWeapon(null);
+            characterCalculationService.recalculateProperties(character);
+            storyLineLogger.event(weaponChange(character, oldWeapon));
+        });
     }
 
     public void dropShield(Character character) {

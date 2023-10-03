@@ -1,25 +1,231 @@
 package com.asgames.ataliasflame.domain.model.enums;
 
+import java.util.List;
+import java.util.Map;
+
+import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
+import static com.asgames.ataliasflame.domain.model.enums.CasteGroup.*;
+import static java.util.Collections.emptyList;
+
 public enum Caste {
-    ROGUE,
-    WIZARD,
-    MAGE,
-    WITCHMASTER,
-    AVATAR,
-    FIGHTER,
-    PALADIN,
-    GRANDMASTER,
-    TITAN,
-    TRACKER,
-    RANGER,
-    PILGRIM,
-    FREE_SOUL,
-    HERMIT,
-    DRUID,
-    ARCHDRUID,
-    ATALIAS_PRIEST,
-    MONK,
-    PRIEST,
-    HIERARCH,
-    ARCHANGEL
+    ARCHANGEL(CLERIC, Map.of(
+            STRENGTH, 50,
+            DEXTERITY, 55,
+            CONSTITUTION, 60,
+            AGILITY, 50,
+            INTELLIGENCE, 70,
+            LORE, 100,
+            MENTAL_POWER, 90,
+            SPIRITUAL_POWER, 25
+    ), emptyList()),
+    HIERARCH(CLERIC, Map.of(
+            STRENGTH, 25,
+            DEXTERITY, 27,
+            CONSTITUTION, 26,
+            AGILITY, 27,
+            INTELLIGENCE, 45,
+            LORE, 50,
+            MENTAL_POWER, 45,
+            SPIRITUAL_POWER, 5
+    ), List.of(ARCHANGEL)),
+    PRIEST(CLERIC, Map.of(
+            STRENGTH, 8,
+            DEXTERITY, 12,
+            CONSTITUTION, 12,
+            AGILITY, 12,
+            INTELLIGENCE, 16,
+            LORE, 20,
+            MENTAL_POWER, 18,
+            SPIRITUAL_POWER, 2
+    ), List.of(HIERARCH)),
+    MONK(CLERIC, Map.of(
+            STRENGTH, 3,
+            DEXTERITY, 3,
+            CONSTITUTION, 2,
+            AGILITY, 3,
+            INTELLIGENCE, 4,
+            LORE, 5,
+            MENTAL_POWER, 4,
+            SPIRITUAL_POWER, 1
+    ), List.of(PRIEST)),
+    ATALIAS_PRIEST(NATURE_DWELLER, Map.of(
+            STRENGTH, 45,
+            DEXTERITY, 50,
+            CONSTITUTION, 70,
+            AGILITY, 50,
+            INTELLIGENCE, 80,
+            LORE, 90,
+            MENTAL_POWER, 90,
+            SPIRITUAL_POWER, 25
+    ), emptyList()),
+    ARCHDRUID(NATURE_DWELLER, Map.of(
+            STRENGTH, 25,
+            DEXTERITY, 25,
+            CONSTITUTION, 45,
+            AGILITY, 25,
+            INTELLIGENCE, 40,
+            LORE, 40,
+            MENTAL_POWER, 40,
+            SPIRITUAL_POWER, 10
+    ), List.of(ATALIAS_PRIEST)),
+    DRUID(NATURE_DWELLER, Map.of(
+            STRENGTH, 8,
+            DEXTERITY, 12,
+            CONSTITUTION, 17,
+            AGILITY, 12,
+            INTELLIGENCE, 18,
+            LORE, 18,
+            MENTAL_POWER, 12,
+            SPIRITUAL_POWER, 3
+    ), List.of(ARCHDRUID)),
+    HERMIT(NATURE_DWELLER, Map.of(
+            STRENGTH, 3,
+            DEXTERITY, 3,
+            CONSTITUTION, 4,
+            AGILITY, 3,
+            INTELLIGENCE, 4,
+            LORE, 4,
+            MENTAL_POWER, 3,
+            SPIRITUAL_POWER, 1
+    ), List.of(DRUID)),
+    FREE_SOUL(WANDERER, Map.of(
+            STRENGTH, 75,
+            DEXTERITY, 80,
+            CONSTITUTION, 85,
+            AGILITY, 85,
+            INTELLIGENCE, 40,
+            LORE, 25,
+            MENTAL_POWER, 10,
+            SPIRITUAL_POWER, 100
+    ), emptyList()),
+    PILGRIM(WANDERER, Map.of(
+            STRENGTH, 35,
+            DEXTERITY, 42,
+            CONSTITUTION, 45,
+            AGILITY, 45,
+            INTELLIGENCE, 20,
+            LORE, 18,
+            MENTAL_POWER, 5,
+            SPIRITUAL_POWER, 40
+    ), List.of(FREE_SOUL)),
+    RANGER(WANDERER, Map.of(
+            STRENGTH, 16,
+            DEXTERITY, 18,
+            CONSTITUTION, 20,
+            AGILITY, 18,
+            INTELLIGENCE, 7,
+            LORE, 7,
+            MENTAL_POWER, 2,
+            SPIRITUAL_POWER, 12
+    ), List.of(PILGRIM)),
+    TRACKER(WANDERER, Map.of(
+            STRENGTH, 4,
+            DEXTERITY, 5,
+            CONSTITUTION, 5,
+            AGILITY, 5,
+            INTELLIGENCE, 2,
+            LORE, 1,
+            MENTAL_POWER, 1,
+            SPIRITUAL_POWER, 2
+    ), List.of(RANGER)),
+    TITAN(WARRIOR, Map.of(
+            STRENGTH, 100,
+            DEXTERITY, 100,
+            CONSTITUTION, 100,
+            AGILITY, 100,
+            INTELLIGENCE, 40,
+            LORE, 25,
+            MENTAL_POWER, 25,
+            SPIRITUAL_POWER, 10
+    ), emptyList()),
+    GRANDMASTER(WARRIOR, Map.of(
+            STRENGTH, 50,
+            DEXTERITY, 50,
+            CONSTITUTION, 50,
+            AGILITY, 50,
+            INTELLIGENCE, 20,
+            LORE, 13,
+            MENTAL_POWER, 12,
+            SPIRITUAL_POWER, 5
+    ), List.of(TITAN)),
+    PALADIN(WARRIOR, Map.of(
+            STRENGTH, 20,
+            DEXTERITY, 20,
+            CONSTITUTION, 20,
+            AGILITY, 20,
+            INTELLIGENCE, 7,
+            LORE, 6,
+            MENTAL_POWER, 5,
+            SPIRITUAL_POWER, 2
+    ), List.of(GRANDMASTER)),
+    FIGHTER(WARRIOR, Map.of(
+            STRENGTH, 5,
+            DEXTERITY, 5,
+            CONSTITUTION, 5,
+            AGILITY, 5,
+            INTELLIGENCE, 2,
+            LORE, 1,
+            MENTAL_POWER, 1,
+            SPIRITUAL_POWER, 1
+    ), List.of(PALADIN)),
+    AVATAR(SORCERER, Map.of(
+            STRENGTH, 40,
+            DEXTERITY, 45,
+            CONSTITUTION, 45,
+            AGILITY, 45,
+            INTELLIGENCE, 100,
+            LORE, 100,
+            MENTAL_POWER, 100,
+            SPIRITUAL_POWER, 25
+    ), emptyList()),
+    WITCHMASTER(SORCERER, Map.of(
+            STRENGTH, 18,
+            DEXTERITY, 25,
+            CONSTITUTION, 20,
+            AGILITY, 22,
+            INTELLIGENCE, 50,
+            LORE, 50,
+            MENTAL_POWER, 50,
+            SPIRITUAL_POWER, 15
+    ), List.of(AVATAR)),
+    MAGE(SORCERER, Map.of(
+            STRENGTH, 6,
+            DEXTERITY, 12,
+            CONSTITUTION, 7,
+            AGILITY, 10,
+            INTELLIGENCE, 20,
+            LORE, 20,
+            MENTAL_POWER, 20,
+            SPIRITUAL_POWER, 5
+    ), List.of(WITCHMASTER)),
+    WIZARD(SORCERER, Map.of(
+            STRENGTH, 2,
+            DEXTERITY, 3,
+            CONSTITUTION, 2,
+            AGILITY, 3,
+            INTELLIGENCE, 5,
+            LORE, 5,
+            MENTAL_POWER, 4,
+            SPIRITUAL_POWER, 1
+    ), List.of(MAGE)),
+    ROGUE(UNSPECIALIZED, Map.of(
+            STRENGTH, 1,
+            DEXTERITY, 1,
+            CONSTITUTION, 1,
+            AGILITY, 1,
+            INTELLIGENCE, 1,
+            LORE, 0,
+            MENTAL_POWER, 0,
+            SPIRITUAL_POWER, 0
+    ), List.of(WIZARD, FIGHTER, TRACKER, HERMIT, MONK));
+
+    Caste(CasteGroup group, Map<Attribute, Integer> minimumAttributes, List<Caste> nextCastes) {
+        this.group = group;
+        this.minimumAttributes = minimumAttributes;
+        this.nextCastes = nextCastes;
+    }
+
+    public final CasteGroup group;
+    public final Map<Attribute, Integer> minimumAttributes;
+    public final List<Caste> nextCastes;
 }

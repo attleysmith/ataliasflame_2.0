@@ -29,12 +29,12 @@ public final class Decisions {
     private static final int TOLERATED_INJURY_TO_HEAL = 80;
     private static final int TOLERATED_INJURY_TO_SLEEP = 40;
 
-    public static final Map<MagicType, Integer> MIN_HEALTH_TO_TARGET = Map.of(
+    private static final Map<MagicType, Integer> MIN_HEALTH_TO_TARGET = Map.of(
             ATTACK, 20,
             CURSE, 30
     );
 
-    public static final Map<SpellName, Integer> SUMMON_PREFERENCES = Map.of(
+    private static final Map<SpellName, Integer> SUMMON_PREFERENCES = Map.of(
             PROJECTION_OF_ENERGY, 1,
             FRIEND_IN_NEED, 2,
             SUMMON_GUARDIAN, 3,
@@ -42,7 +42,7 @@ public final class Decisions {
             CALLING_THE_SOULS, 5
     );
 
-    public static final Map<SpellName, Integer> BLESSING_PREFERENCES = Map.of(
+    private static final Map<SpellName, Integer> BLESSING_PREFERENCES = Map.of(
             DIVINE_PROTECTION, 1,
             PROTECTIVE_HAND_OF_NATURE, 2,
             STRENGTHENING, 3,
@@ -50,7 +50,7 @@ public final class Decisions {
             ENERGY_SHIELD, 5
     );
 
-    public static final Map<SpellName, Integer> ATTACK_PREFERENCES = Map.of(
+    private static final Map<SpellName, Integer> ATTACK_PREFERENCES = Map.of(
             SOUL_OUTBURST, 1,
             INFERNO, 2,
             BLADES_OF_JUDGEMENT, 3,
@@ -63,7 +63,7 @@ public final class Decisions {
             BALL_OF_ENERGY, 10
     );
 
-    public static final Map<SpellName, Integer> CURSE_PREFERENCES = Map.of(
+    private static final Map<SpellName, Integer> CURSE_PREFERENCES = Map.of(
             ENERGY_BLOCKING, 1,
             SOUL_STRIKE, 2,
             POWER_DRAIN, 3,
@@ -71,7 +71,7 @@ public final class Decisions {
             SHACKLE, 5
     );
 
-    public static final Map<SpellName, Integer> HEALING_PREFERENCES = Map.of(
+    private static final Map<SpellName, Integer> HEALING_PREFERENCES = Map.of(
             ENERGY_ABSORPTION, 1,
             SOUL_POWER, 2,
             REGENERATION, 3,
@@ -84,7 +84,7 @@ public final class Decisions {
             WOUND_HEALING, 10
     );
 
-    public static final Map<ItemType, Integer> LOOTING_PREFERENCES = Map.of(
+    private static final Map<ItemType, Integer> LOOTING_PREFERENCES = Map.of(
             FOOD, 1,
             WEAPON, 2,
             SHIELD, 3,
@@ -130,11 +130,11 @@ public final class Decisions {
     }
 
     public static boolean needToChangeWeapon(Character character, Weapon newWeapon) {
-        return newWeapon.averageDamage() > character.getWeapon().averageDamage();
+        return newWeapon.averageDamage() > character.getWeapon().map(Weapon::averageDamage).orElse(1);
     }
 
     public static boolean needToChangeShield(Character character, Shield newShield) {
-        return character.getWeapon().isOneHanded() && character.getShield()
+        return character.hasFreeHand() && character.getShield()
                 .map(oldShield -> newShield.lastsLonger(oldShield)
                         || (newShield.sameDurable(oldShield) && newShield.getBlocking() > oldShield.getBlocking()))
                 .orElse(true);

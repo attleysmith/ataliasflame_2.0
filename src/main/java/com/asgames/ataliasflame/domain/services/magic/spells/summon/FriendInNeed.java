@@ -26,7 +26,7 @@ public class FriendInNeed extends SummonSpell {
 
     private static final int SPELL_COST = 15;
 
-    public static final List<SelectionValue<Optional<DivineGuardianTemplate>>> DIVINE_GUARDIAN_SELECTOR = List.of(
+    private static final List<SelectionValue<Optional<DivineGuardianTemplate>>> DIVINE_GUARDIAN_SELECTOR = List.of(
             new SelectionValue<>(1, Optional.empty()),
             new SelectionValue<>(96, Optional.of(KNIGHT)),
             new SelectionValue<>(3, Optional.of(COMMANDER))

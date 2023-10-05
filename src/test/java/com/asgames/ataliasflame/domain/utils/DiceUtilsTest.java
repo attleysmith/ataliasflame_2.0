@@ -63,7 +63,7 @@ class DiceUtilsTest {
                 .forEach(entry -> {
                     int count = entry.getKey();
                     int occurrence = entry.getValue();
-                    System.out.println(count + ": " + occurrence + "(" + percentage(occurrence, total) + "%) -- cca. " + referenceValue(count) + "%");
+                    System.out.println(count + ": " + occurrence + " (" + percentage(occurrence, total) + "%) -- cca. " + referenceValue(count) + "%");
                 });
     }
 

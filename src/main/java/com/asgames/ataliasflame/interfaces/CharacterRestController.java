@@ -114,4 +114,9 @@ public class CharacterRestController {
     public LocationContextDto useItem(@PathVariable String characterReference, @PathVariable String itemReference) {
         return locationDtoMapper.toLocationContextDto(characterLocationService.useItem(characterReference, itemReference));
     }
+
+    @PostMapping(value = "/{characterReference}/items/{itemReference}/drop")
+    public LocationContextDto dropItem(@PathVariable String characterReference, @PathVariable String itemReference) {
+        return locationDtoMapper.toLocationContextDto(characterLocationService.dropItem(characterReference, itemReference));
+    }
 }

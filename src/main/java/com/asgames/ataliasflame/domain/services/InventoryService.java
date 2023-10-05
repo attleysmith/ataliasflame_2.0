@@ -16,10 +16,13 @@ import static com.asgames.ataliasflame.domain.model.enums.ArmorTemplate.*;
 import static com.asgames.ataliasflame.domain.model.enums.ItemType.*;
 import static com.asgames.ataliasflame.domain.model.enums.ShieldTemplate.*;
 import static com.asgames.ataliasflame.domain.model.enums.WeaponTemplate.*;
-import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.ArmorChangeEvent.armorChange;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.ArmorDropEvent.armorDrop;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.ArmorUseEvent.armorUse;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.EatingEvent.eating;
-import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.ShieldChangeEvent.shieldChange;
-import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.WeaponChangeEvent.weaponChange;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.ShieldDropEvent.shieldDrop;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.ShieldUseEvent.shieldUse;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.WeaponDropEvent.weaponDrop;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.WeaponUseEvent.weaponUse;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.choose;
 
 @Service
@@ -132,31 +135,9 @@ public class InventoryService {
             dropShield(character);
         }
 
-        Weapon oldWeapon = character.getWeapon().orElse(null);
         newWeapon.belongsTo(character);
         characterCalculationService.recalculateProperties(character);
-        storyLineLogger.event(weaponChange(character, oldWeapon));
-    }
-
-    public void takeShield(Character character, Shield newShield) {
-        dropShield(character);
-        if (!character.hasFreeHand()) {
-            dropWeapon(character);
-        }
-
-        Shield oldShield = character.getShield().orElse(null);
-        newShield.belongsTo(character);
-        characterCalculationService.recalculateProperties(character);
-        storyLineLogger.event(shieldChange(character, oldShield));
-    }
-
-    public void takeArmor(Character character, Armor newArmor) {
-        dropArmor(character, newArmor.getArmorType());
-
-        Armor oldArmor = character.getCover().get(newArmor.getArmorType()).orElse(null);
-        newArmor.belongsTo(character);
-        characterCalculationService.recalculateProperties(character);
-        storyLineLogger.event(armorChange(character, oldArmor, newArmor));
+        storyLineLogger.event(weaponUse(character, newWeapon));
     }
 
     public void dropWeapon(Character character) {
@@ -167,8 +148,19 @@ public class InventoryService {
 
             character.setWeapon(null);
             characterCalculationService.recalculateProperties(character);
-            storyLineLogger.event(weaponChange(character, oldWeapon));
+            storyLineLogger.event(weaponDrop(character, oldWeapon));
         });
+    }
+
+    public void takeShield(Character character, Shield newShield) {
+        dropShield(character);
+        if (!character.hasFreeHand()) {
+            dropWeapon(character);
+        }
+
+        newShield.belongsTo(character);
+        characterCalculationService.recalculateProperties(character);
+        storyLineLogger.event(shieldUse(character, newShield));
     }
 
     public void dropShield(Character character) {
@@ -179,8 +171,16 @@ public class InventoryService {
 
             character.setShield(null);
             characterCalculationService.recalculateProperties(character);
-            storyLineLogger.event(shieldChange(character, oldShield));
+            storyLineLogger.event(shieldDrop(character, oldShield));
         });
+    }
+
+    public void takeArmor(Character character, Armor newArmor) {
+        dropArmor(character, newArmor.getArmorType());
+
+        newArmor.belongsTo(character);
+        characterCalculationService.recalculateProperties(character);
+        storyLineLogger.event(armorUse(character, newArmor));
     }
 
     public void dropArmor(Character character, ArmorType armorType) {
@@ -192,7 +192,7 @@ public class InventoryService {
 
                 character.getCover().drop(armorType);
                 characterCalculationService.recalculateProperties(character);
-                storyLineLogger.event(armorChange(character, oldArmor, null));
+                storyLineLogger.event(armorDrop(character, oldArmor));
             });
             case ENERGY_ARMOR, DIVINE_ARMOR ->
                     throw new IllegalArgumentException("Dropped armor is not part of the inventory: " + armorType);

@@ -13,6 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.asgames.ataliasflame.domain.model.enums.ArmorType.BODY_ARMOR;
+import static com.asgames.ataliasflame.domain.model.enums.ArmorType.HELMET;
+
 @Service
 public class CharacterLocationService {
 
@@ -86,6 +92,34 @@ public class CharacterLocationService {
             case SHIELD -> inventoryService.takeShield(character, (Shield) item);
             case ARMOR -> inventoryService.takeArmor(character, (Armor) item);
             default -> throw new UnsupportedOperationException("Not supported item usage: " + item.getType());
+        }
+
+        return LocationContext.builder()
+                .location(locationRepository.save(character.getLocation()))
+                .character(characterRepository.save(character))
+                .build();
+    }
+
+    @Transactional
+    public LocationContext dropItem(String characterReference, String itemReference) {
+        Character character = characterMaintenanceService.getCharacter(characterReference);
+        if (character.getLocation() == null) {
+            throw new IllegalStateException("Character is not at a location!");
+        }
+
+        List<Item> characterItems = new ArrayList<>();
+        character.getWeapon().ifPresent(characterItems::add);
+        character.getShield().ifPresent(characterItems::add);
+        character.getCover().get(HELMET).ifPresent(characterItems::add);
+        character.getCover().get(BODY_ARMOR).ifPresent(characterItems::add);
+        Item item = characterItems.stream()
+                .filter(characterItem -> characterItem.getReference().equals(itemReference))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("Character doesn't have the referenced item!"));
+        switch (item.getType()) {
+            case WEAPON -> inventoryService.dropWeapon(character);
+            case SHIELD -> inventoryService.dropShield(character);
+            case ARMOR -> inventoryService.dropArmor(character, ((Armor) item).getArmorType());
         }
 
         return LocationContext.builder()

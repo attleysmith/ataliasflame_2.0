@@ -12,8 +12,6 @@ import static com.asgames.ataliasflame.domain.services.storyline.EventType.INFO;
 
 public final class CharacterEvents {
 
-    private static final String MISSING_ITEM = "NONE";
-
     private CharacterEvents() {
     }
 
@@ -168,78 +166,111 @@ public final class CharacterEvents {
         }
     }
 
-    public static class WeaponChangeEvent extends CharacterEvent {
+    public static class WeaponUseEvent extends CharacterEvent {
+        private final Weapon newWeapon;
+
+        private WeaponUseEvent(Character character, Weapon newWeapon) {
+            super(INFO, character);
+            this.newWeapon = newWeapon;
+        }
+
+        public static WeaponUseEvent weaponUse(Character character, Weapon newWeapon) {
+            return new WeaponUseEvent(character, newWeapon);
+        }
+
+        @Override
+        public String message() {
+            return "Weapon used: " + newWeapon.getCode();
+        }
+    }
+
+    public static class WeaponDropEvent extends CharacterEvent {
         private final Weapon oldWeapon;
 
-        private WeaponChangeEvent(Character character, Weapon oldWeapon) {
+        private WeaponDropEvent(Character character, Weapon oldWeapon) {
             super(INFO, character);
             this.oldWeapon = oldWeapon;
         }
 
-        public static WeaponChangeEvent weaponChange(Character character, Weapon oldWeapon) {
-            return new WeaponChangeEvent(character, oldWeapon);
+        public static WeaponDropEvent weaponDrop(Character character, Weapon oldWeapon) {
+            return new WeaponDropEvent(character, oldWeapon);
         }
 
         @Override
         public String message() {
-            String oldWeaponCode = oldWeapon == null ? MISSING_ITEM : oldWeapon.getCode();
-            if (character.getWeapon().isPresent()) {
-                Weapon weapon = character.getWeapon().get();
-                return "Weapon changed: " + oldWeaponCode + " -> " + weapon.getCode();
-            } else {
-                return "Weapon dropped: " + oldWeaponCode;
-            }
+            return "Weapon dropped: " + oldWeapon.getCode();
         }
     }
 
-    public static class ShieldChangeEvent extends CharacterEvent {
+    public static class ShieldUseEvent extends CharacterEvent {
+        private final Shield newShield;
+
+        private ShieldUseEvent(Character character, Shield newShield) {
+            super(INFO, character);
+            this.newShield = newShield;
+        }
+
+        public static ShieldUseEvent shieldUse(Character character, Shield newShield) {
+            return new ShieldUseEvent(character, newShield);
+        }
+
+        @Override
+        public String message() {
+            return "Shield used: " + newShield.getCode() + " (" + newShield.getDurability().actualValue() + ")";
+        }
+    }
+
+    public static class ShieldDropEvent extends CharacterEvent {
         private final Shield oldShield;
 
-        private ShieldChangeEvent(Character character, Shield oldShield) {
+        private ShieldDropEvent(Character character, Shield oldShield) {
             super(INFO, character);
             this.oldShield = oldShield;
         }
 
-        public static ShieldChangeEvent shieldChange(Character character, Shield oldShield) {
-            return new ShieldChangeEvent(character, oldShield);
+        public static ShieldUseEvent shieldDrop(Character character, Shield oldShield) {
+            return new ShieldUseEvent(character, oldShield);
         }
 
         @Override
         public String message() {
-            String oldShieldCode = oldShield == null ? MISSING_ITEM : oldShield.getCode();
-            int oldDurability = oldShield == null ? 0 : oldShield.getDurability().actualValue();
-            if (character.getShield().isPresent()) {
-                Shield shield = character.getShield().get();
-                return "Shield changed: " + oldShieldCode + " (" + oldDurability + ") -> " + shield.getCode() + " (" + shield.getDurability().actualValue() + ")";
-            } else {
-                return "Shield dropped: " + oldShieldCode + " (" + oldDurability + ")";
-            }
+            return "Shield dropped: " + oldShield.getCode() + " (" + oldShield.getDurability().actualValue() + ")";
         }
     }
 
-    public static class ArmorChangeEvent extends CharacterEvent {
-        private final Armor oldArmor;
+    public static class ArmorUseEvent extends CharacterEvent {
         private final Armor newArmor;
 
-        private ArmorChangeEvent(Character character, Armor oldArmor, Armor newArmor) {
+        private ArmorUseEvent(Character character, Armor newArmor) {
             super(INFO, character);
-            this.oldArmor = oldArmor;
             this.newArmor = newArmor;
         }
 
-        public static ArmorChangeEvent armorChange(Character character, Armor oldArmor, Armor newArmor) {
-            return new ArmorChangeEvent(character, oldArmor, newArmor);
+        public static ArmorUseEvent armorUse(Character character, Armor newArmor) {
+            return new ArmorUseEvent(character, newArmor);
         }
 
         @Override
         public String message() {
-            String oldArmorCode = oldArmor == null ? MISSING_ITEM : oldArmor.getCode();
-            int oldDurability = oldArmor == null ? 0 : oldArmor.getDurability().actualValue();
-            if (newArmor != null) {
-                return "Armor changed: " + oldArmorCode + " (" + oldDurability + ") -> " + newArmor.getCode() + " (" + newArmor.getDurability().actualValue() + ")";
-            } else {
-                return "Armor dropped: " + oldArmorCode + " (" + oldDurability + ")";
-            }
+            return "Armor used: " + newArmor.getCode() + " (" + newArmor.getDurability().actualValue() + ")";
+        }
+    }
+
+    public static class ArmorDropEvent extends CharacterEvent {
+        private final Armor oldArmor;
+
+        private ArmorDropEvent(Character character, Armor oldArmor) {
+            super(INFO, character);
+            this.oldArmor = oldArmor;
+        }
+
+        public static ArmorDropEvent armorDrop(Character character, Armor oldArmor) {
+            return new ArmorDropEvent(character, oldArmor);
+        }
+
+        @Override
+        public String message() {
+            return "Armor dropped: " + oldArmor.getCode() + " (" + oldArmor.getDurability().actualValue() + ")";
         }
     }
 

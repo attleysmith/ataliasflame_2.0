@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "/")
+@RequestMapping(path = "/locations")
 public class LocationRestController {
 
     @Autowired
@@ -22,28 +22,28 @@ public class LocationRestController {
     @Autowired
     private LocationAdventureService locationAdventureService;
 
-    @PostMapping("/locations")
+    @PostMapping()
     public LocationDto buildLocation(@RequestParam int level) {
         return locationDtoMapper.toLocationDto(locationAdventureService.buildLocation(level));
     }
 
-    @GetMapping("/locations/{locationReference}")
+    @GetMapping("/{locationReference}")
     public LocationDto getLocation(@PathVariable String locationReference) {
         return locationDtoMapper.toLocationDto(locationAdventureService.getLocation(locationReference));
     }
 
-    @GetMapping("/weapons/{itemReference}")
-    public WeaponDto getWeapon(@PathVariable String itemReference) {
-        return characterDtoMapper.toWeaponDto(locationAdventureService.getWeapon(itemReference));
+    @GetMapping("/{locationReference}/weapons/{itemReference}")
+    public WeaponDto getWeapon(@PathVariable String locationReference, @PathVariable String itemReference) {
+        return characterDtoMapper.toWeaponDto(locationAdventureService.getWeapon(locationReference, itemReference));
     }
 
-    @GetMapping("/shields/{itemReference}")
-    public ShieldDto getShield(@PathVariable String itemReference) {
-        return characterDtoMapper.toShieldDto(locationAdventureService.getShield(itemReference));
+    @GetMapping("/{locationReference}/shields/{itemReference}")
+    public ShieldDto getShield(@PathVariable String locationReference, @PathVariable String itemReference) {
+        return characterDtoMapper.toShieldDto(locationAdventureService.getShield(locationReference, itemReference));
     }
 
-    @GetMapping("/armors/{itemReference}")
-    public ArmorDto getArmor(@PathVariable String itemReference) {
-        return characterDtoMapper.toArmorDto(locationAdventureService.getArmor(itemReference));
+    @GetMapping("/{locationReference}/armors/{itemReference}")
+    public ArmorDto getArmor(@PathVariable String locationReference, @PathVariable String itemReference) {
+        return characterDtoMapper.toArmorDto(locationAdventureService.getArmor(locationReference, itemReference));
     }
 }

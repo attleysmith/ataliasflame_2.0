@@ -1,24 +1,20 @@
 package com.asgames.ataliasflame.application;
 
-import com.asgames.ataliasflame.domain.model.entities.Armor;
-import com.asgames.ataliasflame.domain.model.entities.Location;
-import com.asgames.ataliasflame.domain.model.entities.Shield;
-import com.asgames.ataliasflame.domain.model.entities.Weapon;
+import com.asgames.ataliasflame.domain.model.entities.*;
 import com.asgames.ataliasflame.domain.services.LocationService;
-import com.asgames.ataliasflame.infrastructure.repositories.ItemRepository;
 import com.asgames.ataliasflame.infrastructure.repositories.LocationRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.asgames.ataliasflame.domain.model.enums.ItemType.*;
+
 @Service
 public class LocationAdventureService {
 
     @Autowired
     private LocationRepository locationRepository;
-    @Autowired
-    private ItemRepository itemRepository;
 
     @Autowired
     private LocationService locationService;
@@ -35,17 +31,35 @@ public class LocationAdventureService {
     }
 
     @Transactional(readOnly = true)
-    public Weapon getWeapon(String itemReference) {
-        return itemRepository.getWeaponByReference(itemReference);
+    public Weapon getWeapon(String locationReference, String itemReference) {
+        Location location = getLocation(locationReference);
+        Item item = location.getItems().stream()
+                .filter(locationItem -> locationItem.getReference().equals(itemReference))
+                .filter(locationItem -> locationItem.getType().equals(WEAPON))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("Referenced weapon is not at the location!"));
+        return (Weapon) item;
     }
 
     @Transactional(readOnly = true)
-    public Shield getShield(String itemReference) {
-        return itemRepository.getShieldByReference(itemReference);
+    public Shield getShield(String locationReference, String itemReference) {
+        Location location = getLocation(locationReference);
+        Item item = location.getItems().stream()
+                .filter(locationItem -> locationItem.getReference().equals(itemReference))
+                .filter(locationItem -> locationItem.getType().equals(SHIELD))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("Referenced shield is not at the location!"));
+        return (Shield) item;
     }
 
     @Transactional(readOnly = true)
-    public Armor getArmor(String itemReference) {
-        return itemRepository.getArmorByReference(itemReference);
+    public Armor getArmor(String locationReference, String itemReference) {
+        Location location = getLocation(locationReference);
+        Item item = location.getItems().stream()
+                .filter(locationItem -> locationItem.getReference().equals(itemReference))
+                .filter(locationItem -> locationItem.getType().equals(ARMOR))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("Referenced armor is not at the location!"));
+        return (Armor) item;
     }
 }

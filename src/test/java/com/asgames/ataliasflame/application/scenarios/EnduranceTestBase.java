@@ -190,7 +190,7 @@ public abstract class EnduranceTestBase {
                     LocationContext locationContext = switch (item.getType()) {
                         case FOOD -> characterLocationService.useItem(character.getReference(), item.getReference());
                         case WEAPON -> {
-                            Weapon newWeapon = locationAdventureService.getWeapon(item.getReference());
+                            Weapon newWeapon = locationAdventureService.getWeapon(location.getReference(), item.getReference());
                             if (needToChangeWeapon(character, newWeapon)) {
                                 yield characterLocationService.useItem(character.getReference(), newWeapon.getReference());
                             } else {
@@ -198,7 +198,7 @@ public abstract class EnduranceTestBase {
                             }
                         }
                         case SHIELD -> {
-                            Shield newShield = locationAdventureService.getShield(item.getReference());
+                            Shield newShield = locationAdventureService.getShield(location.getReference(), item.getReference());
                             if (needToChangeShield(character, newShield)) {
                                 yield characterLocationService.useItem(character.getReference(), newShield.getReference());
                             } else {
@@ -206,7 +206,7 @@ public abstract class EnduranceTestBase {
                             }
                         }
                         case ARMOR -> {
-                            Armor newArmor = locationAdventureService.getArmor(item.getReference());
+                            Armor newArmor = locationAdventureService.getArmor(location.getReference(), item.getReference());
                             if ((newArmor.isHelmet() && needToChangeHelmet(character, newArmor))
                                     || (newArmor.isBodyArmor() && needToChangeBodyArmor(character, newArmor))) {
                                 yield characterLocationService.useItem(character.getReference(), newArmor.getReference());

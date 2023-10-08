@@ -20,10 +20,12 @@ public class SpellService {
 
     public List<Spell> listSpells(Character character) {
         return spellRegistry.get().stream()
-                .filter(spell -> !spell.getName().prohibitedCastes.contains(character.getCaste()))
-                .filter(spell -> !spell.getName().prohibitedRaces.contains(character.getRace()))
+                .filter(spell -> !spell.getGroup().prohibitedCasteGroups.contains(character.getCaste().group))
                 .filter(spell -> !spell.getGroup().prohibitedCastes.contains(character.getCaste()))
                 .filter(spell -> !spell.getGroup().prohibitedRaces.contains(character.getRace()))
+                .filter(spell -> !spell.getName().prohibitedCasteGroups.contains(character.getCaste().group))
+                .filter(spell -> !spell.getName().prohibitedCastes.contains(character.getCaste()))
+                .filter(spell -> !spell.getName().prohibitedRaces.contains(character.getRace()))
                 .toList();
     }
 }

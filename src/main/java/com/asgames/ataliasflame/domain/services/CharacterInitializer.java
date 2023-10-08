@@ -42,7 +42,7 @@ public class CharacterInitializer {
         if (character.getDefensiveGod().equals(ATALIA)) {
             throw new IllegalArgumentException("Calling ATALIA as defensive god is forbidden!");
         }
-        if (character.getRace().prohibitedCastes.contains(character.getCaste())) {
+        if (character.getRace().prohibitedCasteGroups.contains(character.getCaste().group)) {
             throw new IllegalArgumentException(character.getRace() + " cannot be " + character.getCaste());
         }
         if (character.getRace().prohibitedGenders.contains(character.getGender())) {
@@ -51,7 +51,7 @@ public class CharacterInitializer {
         if (character.getRace().prohibitedGods.contains(character.getDefensiveGod())) {
             throw new IllegalArgumentException(character.getRace() + " cannot be a follower of " + character.getDefensiveGod());
         }
-        if (character.getDefensiveGod().prohibitedCastes.contains(character.getCaste())) {
+        if (character.getDefensiveGod().prohibitedCasteGroups.contains(character.getCaste().group)) {
             throw new IllegalArgumentException("Followers of " + character.getDefensiveGod() + " cannot be " + character.getCaste());
         }
     }

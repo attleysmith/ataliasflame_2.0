@@ -48,7 +48,7 @@ public class DefensiveGodConversionService {
         if (character.getRace().prohibitedGods.contains(newGod)) {
             throw new IllegalArgumentException(character.getRace() + " cannot be a follower of " + newGod);
         }
-        if (newGod.prohibitedCastes.contains(character.getCaste())) {
+        if (newGod.prohibitedCasteGroups.contains(character.getCaste().group)) {
             throw new IllegalArgumentException(character.getCaste() + " cannot be a follower of " + newGod);
         }
     }

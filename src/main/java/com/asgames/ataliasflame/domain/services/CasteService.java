@@ -42,10 +42,10 @@ public class CasteService {
     }
 
     private void validateConstraints(Character character, Caste newCaste) {
-        if (character.getRace().prohibitedCastes.contains(newCaste)) {
+        if (character.getRace().prohibitedCasteGroups.contains(newCaste.group)) {
             throw new IllegalArgumentException(character.getRace() + " cannot be " + newCaste);
         }
-        if (character.getDefensiveGod().prohibitedCastes.contains(newCaste)) {
+        if (character.getDefensiveGod().prohibitedCasteGroups.contains(newCaste.group)) {
             throw new IllegalArgumentException("Followers of " + character.getDefensiveGod() + " cannot be " + newCaste);
         }
     }

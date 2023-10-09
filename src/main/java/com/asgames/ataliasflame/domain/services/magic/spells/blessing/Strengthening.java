@@ -22,6 +22,9 @@ public class Strengthening extends BlessingSpell {
 
     private static final int SPELL_COST = 5;
 
+    // buff effect
+    private static final Booster BOOSTER = Booster.STRENGTHENING;
+
     public Strengthening() {
         super(STRENGTHENING, GENERAL);
     }
@@ -31,10 +34,9 @@ public class Strengthening extends BlessingSpell {
         character.getMagic().use(SPELL_COST);
         storyLineLogger.event(spellCasting(character, this));
 
-        Booster booster = Booster.STRENGTHENING;
         if (character.getBlessings().stream()
-                .noneMatch(blessing -> blessing.getBooster().equals(booster))) {
-            ActiveBlessing activeBlessing = ActiveBlessing.of(character, booster);
+                .noneMatch(blessing -> blessing.getBooster().equals(BOOSTER))) {
+            ActiveBlessing activeBlessing = ActiveBlessing.of(character, BOOSTER);
             character.getBlessings().add(activeBlessing);
 
             int originalHealth = character.getHealth().totalValue();

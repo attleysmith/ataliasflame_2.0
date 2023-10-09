@@ -22,6 +22,9 @@ public class ProtectiveHandOfNature extends BlessingSpell {
 
     private static final int SPELL_COST = 3;
 
+    // buff effect
+    private static final Booster BOOSTER = Booster.PROTECTIVE_HAND_OF_NATURE;
+
     public ProtectiveHandOfNature() {
         super(PROTECTIVE_HAND_OF_NATURE, NATURE);
     }
@@ -31,10 +34,9 @@ public class ProtectiveHandOfNature extends BlessingSpell {
         character.getMagic().use(SPELL_COST);
         storyLineLogger.event(spellCasting(character, this));
 
-        Booster booster = Booster.PROTECTIVE_HAND_OF_NATURE;
         if (character.getBlessings().stream()
-                .noneMatch(blessing -> blessing.getBooster().equals(booster))) {
-            ActiveBlessing activeBlessing = ActiveBlessing.of(character, booster);
+                .noneMatch(blessing -> blessing.getBooster().equals(BOOSTER))) {
+            ActiveBlessing activeBlessing = ActiveBlessing.of(character, BOOSTER);
             character.getBlessings().add(activeBlessing);
 
             int originalHealth = character.getHealth().totalValue();

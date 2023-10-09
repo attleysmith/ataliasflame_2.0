@@ -29,6 +29,9 @@ public class DivineProtection extends BlessingSpell {
 
     private static final int SPELL_COST = 8;
 
+    // buff effect
+    private static final Booster BOOSTER = Booster.DIVINE_PROTECTION;
+
     // armor effect
     private static final int DEFENSE = 12;
     private static final int ABSORPTION = 0;
@@ -63,10 +66,9 @@ public class DivineProtection extends BlessingSpell {
         character.getCover().getDivineArmor().ifPresent(armor ->
                 storyLineLogger.event(spellArmor(character, armor)));
 
-        Booster booster = Booster.DIVINE_PROTECTION;
         if (character.getBlessings().stream()
-                .noneMatch(blessing -> blessing.getBooster().equals(booster))) {
-            ActiveBlessing activeBlessing = ActiveBlessing.of(character, booster);
+                .noneMatch(blessing -> blessing.getBooster().equals(BOOSTER))) {
+            ActiveBlessing activeBlessing = ActiveBlessing.of(character, BOOSTER);
             character.getBlessings().add(activeBlessing);
 
             int originalHealth = character.getHealth().totalValue();

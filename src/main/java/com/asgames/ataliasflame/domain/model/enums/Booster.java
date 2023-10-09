@@ -207,6 +207,16 @@ public enum Booster {
             MENTAL_POWER, 0,
             SPIRITUAL_POWER, 0
     )),
+    POWER_DRAIN(SPELL_EFFECT, Map.of(
+            STRENGTH, 1,
+            DEXTERITY, 1,
+            CONSTITUTION, 0,
+            AGILITY, 1,
+            INTELLIGENCE, 0,
+            LORE, 0,
+            MENTAL_POWER, 0,
+            SPIRITUAL_POWER, 0
+    )),
     CANINE_SOUL_CONNECTION(SPELL_EFFECT, Map.of(
             STRENGTH, 5,
             DEXTERITY, 5,

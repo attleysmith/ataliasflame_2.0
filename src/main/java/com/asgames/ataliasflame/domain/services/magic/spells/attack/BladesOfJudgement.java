@@ -5,7 +5,6 @@ import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
 import org.springframework.stereotype.Component;
 
-import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.GENERAL;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.BLADES_OF_JUDGEMENT;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CombatEvents.CombatDamageEvent.DamageType.DIRECT;
@@ -29,7 +28,7 @@ public class BladesOfJudgement extends AttackSpell {
     private static final int INTIMIDATION_DEFENSE_MULTIPLIER = -20;
 
     public BladesOfJudgement() {
-        super(BLADES_OF_JUDGEMENT, GENERAL);
+        super(BLADES_OF_JUDGEMENT);
     }
 
     @Override

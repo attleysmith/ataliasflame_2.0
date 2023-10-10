@@ -7,7 +7,6 @@ import com.asgames.ataliasflame.domain.services.HealingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.ENERGY;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.ENERGY_ABSORPTION;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 import static com.asgames.ataliasflame.domain.services.storyline.events.MonsterEvents.VitalityAbsorptionEvent.vitalityAbsorption;
@@ -29,7 +28,7 @@ public class EnergyAbsorption extends HealingSpell {
     private static final int NEARBY_ABSORBING_CHANCE = 40;
 
     public EnergyAbsorption() {
-        super(ENERGY_ABSORPTION, ENERGY);
+        super(ENERGY_ABSORPTION);
     }
 
     @Override

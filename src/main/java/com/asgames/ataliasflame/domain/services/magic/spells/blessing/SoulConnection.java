@@ -16,7 +16,6 @@ import java.util.Map;
 
 import static com.asgames.ataliasflame.domain.model.enums.Booster.*;
 import static com.asgames.ataliasflame.domain.model.enums.SoulChipShape.*;
-import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.SOUL;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.SOUL_CONNECTION;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.BlessingEvent.blessing;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
@@ -43,7 +42,7 @@ public class SoulConnection extends BlessingSpell {
     private CharacterCalculationService characterCalculationService;
 
     public SoulConnection() {
-        super(SOUL_CONNECTION, SOUL);
+        super(SOUL_CONNECTION);
     }
 
     @Override

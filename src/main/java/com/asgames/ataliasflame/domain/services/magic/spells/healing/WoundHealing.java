@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
-import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.GENERAL;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.WOUND_HEALING;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 
@@ -23,7 +22,7 @@ public class WoundHealing extends HealingSpell {
     private static final int HEALING_EFFECT = 1;
 
     public WoundHealing() {
-        super(WOUND_HEALING, GENERAL);
+        super(WOUND_HEALING);
     }
 
     @Override

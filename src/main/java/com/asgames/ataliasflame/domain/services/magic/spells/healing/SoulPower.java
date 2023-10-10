@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.SOUL;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.SOUL_POWER;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.WarningReportCause.OCCUPIED_SOULS;
@@ -34,7 +33,7 @@ public class SoulPower extends HealingSpell {
     private static final int BONUS_EFFECT = 20;
 
     public SoulPower() {
-        super(SOUL_POWER, SOUL);
+        super(SOUL_POWER);
     }
 
     @Override

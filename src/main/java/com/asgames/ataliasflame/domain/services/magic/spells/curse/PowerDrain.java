@@ -8,7 +8,6 @@ import com.asgames.ataliasflame.domain.services.CharacterCalculationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.GENERAL;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.POWER_DRAIN;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.BlessingEvent.blessing;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
@@ -33,7 +32,7 @@ public class PowerDrain extends CurseSpell {
     private static final int HEALTH_MULTIPLIER = -1;
 
     public PowerDrain() {
-        super(POWER_DRAIN, GENERAL);
+        super(POWER_DRAIN);
     }
 
     @Override

@@ -5,7 +5,6 @@ import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
 import org.springframework.stereotype.Component;
 
-import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.DIVINE;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.DIVINE_HAMMER;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CombatEvents.CombatDamageEvent.DamageType.CROSSFIRE;
@@ -28,7 +27,7 @@ public class DivineHammer extends AttackSpell {
     private static final int CROSSFIRE_EFFECT_RATIO = 50;
 
     public DivineHammer() {
-        super(DIVINE_HAMMER, DIVINE);
+        super(DIVINE_HAMMER);
     }
 
     @Override

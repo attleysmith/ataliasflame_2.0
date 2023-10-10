@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
-import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.NATURE;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.POWER_OF_NATURE;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 
@@ -23,7 +22,7 @@ public class PowerOfNature extends HealingSpell {
     private static final int HEALING_EFFECT = 10;
 
     public PowerOfNature() {
-        super(POWER_OF_NATURE, NATURE);
+        super(POWER_OF_NATURE);
     }
 
     @Override

@@ -5,7 +5,6 @@ import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
 import org.springframework.stereotype.Component;
 
-import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.ELEMENTAL;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.GLACIAL_BLOW;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CombatEvents.CombatDamageEvent.DamageType.CROSSFIRE;
@@ -28,7 +27,7 @@ public class GlacialBlow extends AttackSpell {
     private static final int CROSSFIRE_EFFECT_RATIO = 80;
 
     public GlacialBlow() {
-        super(GLACIAL_BLOW, ELEMENTAL);
+        super(GLACIAL_BLOW);
     }
 
     @Override

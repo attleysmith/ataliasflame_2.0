@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import java.util.UUID;
 
 import static com.asgames.ataliasflame.domain.model.enums.CompanionType.ENERGY_PROJECTION;
-import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.ENERGY;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.PROJECTION_OF_ENERGY;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CompanionEvents.CompanionSummoningEvent.summoning;
@@ -24,7 +23,7 @@ public class ProjectionOfEnergy extends SummonSpell {
     private static final int ENERGY_PROJECTION_PERCENT = 50;
 
     public ProjectionOfEnergy() {
-        super(PROJECTION_OF_ENERGY, ENERGY);
+        super(PROJECTION_OF_ENERGY);
     }
 
     @Override

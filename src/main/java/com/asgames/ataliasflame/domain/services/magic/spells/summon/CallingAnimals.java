@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.asgames.ataliasflame.domain.model.enums.AnimalTemplate.*;
-import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.NATURE;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.CALLING_ANIMALS;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CompanionEvents.CompanionSummoningEvent.summoning;
@@ -33,7 +32,7 @@ public class CallingAnimals extends SummonSpell {
     );
 
     public CallingAnimals() {
-        super(CALLING_ANIMALS, NATURE);
+        super(CALLING_ANIMALS);
     }
 
     @Override

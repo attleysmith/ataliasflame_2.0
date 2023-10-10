@@ -26,15 +26,9 @@ public abstract class Spell {
 
     @Getter
     protected final SpellName name;
-    @Getter
-    protected final SpellGroup group;
-    @Getter
-    protected final MagicType type;
 
-    public Spell(SpellName name, SpellGroup group, MagicType type) {
+    public Spell(SpellName name) {
         this.name = name;
-        this.group = group;
-        this.type = type;
     }
 
     public abstract void enforce(Character character, Monster targetMonster);
@@ -43,6 +37,14 @@ public abstract class Spell {
 
     public int averageDamage() {
         return 0;
+    }
+
+    public SpellGroup getGroup() {
+        return name.group;
+    }
+
+    public MagicType getType() {
+        return name.type;
     }
 
     protected List<SoulChip> listReadySouls(Character character) {

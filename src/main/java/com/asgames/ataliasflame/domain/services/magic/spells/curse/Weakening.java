@@ -4,7 +4,6 @@ import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import org.springframework.stereotype.Component;
 
-import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.GENERAL;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.WEAKENING;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 import static com.asgames.ataliasflame.domain.services.storyline.events.MonsterEvents.CurseCastingEvent.curseCasting;
@@ -21,7 +20,7 @@ public class Weakening extends CurseSpell {
     private static final int DAMAGE_MULTIPLIER = -5;
 
     public Weakening() {
-        super(WEAKENING, GENERAL);
+        super(WEAKENING);
     }
 
     @Override

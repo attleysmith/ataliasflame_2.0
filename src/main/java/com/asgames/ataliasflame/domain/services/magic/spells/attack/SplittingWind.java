@@ -4,7 +4,6 @@ import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import org.springframework.stereotype.Component;
 
-import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.ELEMENTAL;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.SPLITTING_WIND;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CombatEvents.CombatDamageEvent.DamageType.DIRECT;
@@ -20,7 +19,7 @@ public class SplittingWind extends AttackSpell {
     private static final int MAX_DAMAGE = 10;
 
     public SplittingWind() {
-        super(SPLITTING_WIND, ELEMENTAL);
+        super(SPLITTING_WIND);
     }
 
     @Override

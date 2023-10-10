@@ -4,7 +4,6 @@ import com.asgames.ataliasflame.domain.model.entities.Armor;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.enums.ArmorType;
-import com.asgames.ataliasflame.domain.model.enums.SpellGroup;
 import com.asgames.ataliasflame.domain.model.vos.Energy;
 import com.asgames.ataliasflame.domain.services.CharacterCalculationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +31,7 @@ public class EnergyShield extends BlessingSpell {
     private static final int DURABILITY = 40;
 
     public EnergyShield() {
-        super(ENERGY_SHIELD, SpellGroup.ENERGY);
+        super(ENERGY_SHIELD);
     }
 
     @Override

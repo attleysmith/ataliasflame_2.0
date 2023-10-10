@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.asgames.ataliasflame.domain.model.enums.GuardianWarriorTemplate.*;
-import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.GENERAL;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.SUMMON_GUARDIAN;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CompanionEvents.CompanionSummoningEvent.summoning;
@@ -33,7 +32,7 @@ public class SummonGuardian extends SummonSpell {
     );
 
     public SummonGuardian() {
-        super(SUMMON_GUARDIAN, GENERAL);
+        super(SUMMON_GUARDIAN);
     }
 
     @Override

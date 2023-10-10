@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.SOUL;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.SOUL_STRIKE;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 import static com.asgames.ataliasflame.domain.services.storyline.events.MonsterEvents.CurseCastingEvent.curseCasting;
@@ -30,7 +29,7 @@ public class SoulStrike extends CurseSpell {
     private static final int HEALTH_MULTIPLIER = -2;
 
     public SoulStrike() {
-        super(SOUL_STRIKE, SOUL);
+        super(SOUL_STRIKE);
     }
 
     @Override

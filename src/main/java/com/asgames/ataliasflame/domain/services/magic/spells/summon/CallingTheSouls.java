@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.SOUL;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.CALLING_THE_SOULS;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CompanionEvents.CompanionSummoningEvent.summoning;
@@ -27,7 +26,7 @@ public class CallingTheSouls extends SummonSpell {
     private static final int FATIGUE_EFFECT = 1;
 
     public CallingTheSouls() {
-        super(CALLING_THE_SOULS, SOUL);
+        super(CALLING_THE_SOULS);
     }
 
     @Override

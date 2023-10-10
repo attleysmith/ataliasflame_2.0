@@ -4,7 +4,6 @@ import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import org.springframework.stereotype.Component;
 
-import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.ENERGY;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.BALL_OF_ENERGY;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CombatEvents.CombatDamageEvent.DamageType.DIRECT;
@@ -20,7 +19,7 @@ public class BallOfEnergy extends AttackSpell {
     private static final int MAX_DAMAGE = 5;
 
     public BallOfEnergy() {
-        super(BALL_OF_ENERGY, ENERGY);
+        super(BALL_OF_ENERGY);
     }
 
     @Override

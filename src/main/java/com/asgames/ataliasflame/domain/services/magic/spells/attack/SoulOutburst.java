@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.SOUL;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.SOUL_OUTBURST;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CombatEvents.CombatDamageEvent.DamageType.DIRECT;
@@ -36,7 +35,7 @@ public class SoulOutburst extends AttackSpell {
     private static final int NOVA_EFFECT_CHANCE = 5;
 
     public SoulOutburst() {
-        super(SOUL_OUTBURST, SOUL);
+        super(SOUL_OUTBURST);
     }
 
     @Override

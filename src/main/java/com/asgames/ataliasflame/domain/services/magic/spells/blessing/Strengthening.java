@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
-import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.GENERAL;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.STRENGTHENING;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.BlessingEvent.blessing;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
@@ -26,7 +25,7 @@ public class Strengthening extends BlessingSpell {
     private static final Booster BOOSTER = Booster.STRENGTHENING;
 
     public Strengthening() {
-        super(STRENGTHENING, GENERAL);
+        super(STRENGTHENING);
     }
 
     @Override

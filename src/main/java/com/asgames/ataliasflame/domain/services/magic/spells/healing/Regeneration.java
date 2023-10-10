@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
-import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.GENERAL;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.REGENERATION;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 
@@ -23,7 +22,7 @@ public class Regeneration extends HealingSpell {
     private static final int HEALING_EFFECT = 30;
 
     public Regeneration() {
-        super(REGENERATION, GENERAL);
+        super(REGENERATION);
     }
 
     @Override

@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
-import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.DIVINE;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.BREATH_OF_GOD;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 
@@ -23,7 +22,7 @@ public class BreathOfGod extends HealingSpell {
     private static final int HEALING_EFFECT = 18;
 
     public BreathOfGod() {
-        super(BREATH_OF_GOD, DIVINE);
+        super(BREATH_OF_GOD);
     }
 
     @Override

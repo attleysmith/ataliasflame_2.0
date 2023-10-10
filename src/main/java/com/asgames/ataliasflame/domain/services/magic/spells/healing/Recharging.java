@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
-import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.ENERGY;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.RECHARGING;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 
@@ -23,7 +22,7 @@ public class Recharging extends HealingSpell {
     private static final int HEALING_EFFECT = 20;
 
     public Recharging() {
-        super(RECHARGING, ENERGY);
+        super(RECHARGING);
     }
 
     @Override

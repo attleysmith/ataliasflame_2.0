@@ -5,7 +5,6 @@ import com.asgames.ataliasflame.domain.model.entities.Armor;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.enums.Booster;
-import com.asgames.ataliasflame.domain.model.enums.SpellGroup;
 import com.asgames.ataliasflame.domain.model.vos.Energy;
 import com.asgames.ataliasflame.domain.services.CharacterCalculationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +37,7 @@ public class DivineProtection extends BlessingSpell {
     private static final int DURABILITY = 0;
 
     public DivineProtection() {
-        super(DIVINE_PROTECTION, SpellGroup.DIVINE);
+        super(DIVINE_PROTECTION);
     }
 
     @Override

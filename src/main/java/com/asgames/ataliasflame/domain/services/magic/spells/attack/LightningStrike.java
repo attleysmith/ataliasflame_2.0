@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.ELEMENTAL;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.LIGHTNING_STRIKE;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CombatEvents.CombatDamageEvent.DamageType.CHAINING;
@@ -32,7 +31,7 @@ public class LightningStrike extends AttackSpell {
     private static final int CHAINING_EFFECT_RATIO = 49;
 
     public LightningStrike() {
-        super(LIGHTNING_STRIKE, ELEMENTAL);
+        super(LIGHTNING_STRIKE);
     }
 
     @Override

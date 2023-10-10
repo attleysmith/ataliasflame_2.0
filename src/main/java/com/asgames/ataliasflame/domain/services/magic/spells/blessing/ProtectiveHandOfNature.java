@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
-import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.NATURE;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.PROTECTIVE_HAND_OF_NATURE;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.BlessingEvent.blessing;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
@@ -26,7 +25,7 @@ public class ProtectiveHandOfNature extends BlessingSpell {
     private static final Booster BOOSTER = Booster.PROTECTIVE_HAND_OF_NATURE;
 
     public ProtectiveHandOfNature() {
-        super(PROTECTIVE_HAND_OF_NATURE, NATURE);
+        super(PROTECTIVE_HAND_OF_NATURE);
     }
 
     @Override

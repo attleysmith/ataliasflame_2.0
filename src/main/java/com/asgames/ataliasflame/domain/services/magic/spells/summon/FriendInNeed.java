@@ -12,7 +12,6 @@ import java.util.Optional;
 
 import static com.asgames.ataliasflame.domain.model.enums.DivineGuardianTemplate.COMMANDER;
 import static com.asgames.ataliasflame.domain.model.enums.DivineGuardianTemplate.KNIGHT;
-import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.DIVINE;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.FRIEND_IN_NEED;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CompanionEvents.CompanionSummoningEvent.summoning;
@@ -34,7 +33,7 @@ public class FriendInNeed extends SummonSpell {
     private static final int CHANCE_OF_MORE = 1;
 
     public FriendInNeed() {
-        super(FRIEND_IN_NEED, DIVINE);
+        super(FRIEND_IN_NEED);
     }
 
     @Override

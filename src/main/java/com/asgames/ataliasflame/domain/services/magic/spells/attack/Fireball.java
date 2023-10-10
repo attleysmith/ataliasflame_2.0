@@ -5,7 +5,6 @@ import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
 import org.springframework.stereotype.Component;
 
-import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.ELEMENTAL;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.FIREBALL;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CombatEvents.CombatDamageEvent.DamageType.*;
@@ -29,7 +28,7 @@ public class Fireball extends AttackSpell {
     private static final int BLAST_EFFECT_RATIO = 20;
 
     public Fireball() {
-        super(FIREBALL, ELEMENTAL);
+        super(FIREBALL);
     }
 
     @Override

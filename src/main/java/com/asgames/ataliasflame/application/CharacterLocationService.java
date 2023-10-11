@@ -43,7 +43,8 @@ public class CharacterLocationService {
     public LocationContext enterLocation(String characterReference, String locationReference) {
         Character character = characterMaintenanceService.getCharacter(characterReference);
         Location location = locationAdventureService.getLocation(locationReference);
-        character.setLocation(location);
+
+        locationService.enterLocation(character, location);
 
         return LocationContext.builder()
                 .location(locationRepository.save(location))

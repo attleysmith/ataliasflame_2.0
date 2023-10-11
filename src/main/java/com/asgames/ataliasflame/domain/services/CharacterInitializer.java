@@ -1,6 +1,7 @@
 package com.asgames.ataliasflame.domain.services;
 
 import com.asgames.ataliasflame.domain.model.entities.Character;
+import com.asgames.ataliasflame.domain.model.entities.Location;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,8 @@ public class CharacterInitializer {
     private AttributeService attributeService;
     @Autowired
     private InventoryService inventoryService;
+    @Autowired
+    private LocationService locationService;
 
     public Character initialize(Character character) {
         character.setReference(UUID.randomUUID().toString());
@@ -31,6 +34,7 @@ public class CharacterInitializer {
         setStartingCaste(character);
         setStartingInventory(character);
         setStartingAttributes(character);
+        setStartingLocation(character);
 
         validateConstraints(character);
 
@@ -81,5 +85,10 @@ public class CharacterInitializer {
 
     private void setStartingInventory(Character character) {
         inventoryService.setStartingInventory(character);
+    }
+
+    private void setStartingLocation(Character character) {
+        Location location = locationService.buildLocation(character.getLevel());
+        locationService.enterLocation(character, location);
     }
 }

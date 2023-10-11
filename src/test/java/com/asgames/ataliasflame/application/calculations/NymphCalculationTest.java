@@ -49,10 +49,10 @@ class NymphCalculationTest extends RaceCalculationTestBase {
 
     private static Stream<Arguments> rogueCalculations() {
         return Stream.of(
-                arguments(HORA, 82, 22, 2, 6, 3, 110, 5),
-                arguments(SIFER, 82, 22, 2, 6, 3, 110, 5),
-                arguments(RUNID, 82, 22, 2, 6, 3, 110, 5),
-                arguments(GINDON, 82, 22, 2, 6, 3, 110, 5)
+                arguments(HORA, 82, 6, 2, 6, 3, 110, 5),
+                arguments(SIFER, 82, 6, 2, 6, 3, 110, 5),
+                arguments(RUNID, 82, 6, 2, 6, 3, 110, 5),
+                arguments(GINDON, 82, 6, 2, 6, 3, 110, 5)
         );
     }
 
@@ -82,10 +82,10 @@ class NymphCalculationTest extends RaceCalculationTestBase {
 
     private static Stream<Arguments> wizardCalculations() {
         return Stream.of(
-                arguments(HORA, 87, 23, 2, 6, 7, 120, 93),
-                arguments(SIFER, 87, 23, 2, 6, 7, 120, 91),
-                arguments(RUNID, 87, 23, 2, 6, 7, 120, 91),
-                arguments(GINDON, 87, 23, 2, 6, 7, 120, 91)
+                arguments(HORA, 87, 6, 2, 6, 7, 120, 93),
+                arguments(SIFER, 87, 6, 2, 6, 7, 120, 91),
+                arguments(RUNID, 87, 6, 2, 6, 7, 120, 91),
+                arguments(GINDON, 87, 6, 2, 6, 7, 120, 91)
         );
     }
 
@@ -115,10 +115,10 @@ class NymphCalculationTest extends RaceCalculationTestBase {
 
     private static Stream<Arguments> mageCalculations() {
         return Stream.of(
-                arguments(HORA, 107, 27, 2, 7, 22, 160, 398),
-                arguments(SIFER, 107, 27, 2, 7, 22, 160, 396),
-                arguments(RUNID, 107, 27, 2, 7, 22, 160, 396),
-                arguments(GINDON, 107, 27, 2, 7, 22, 160, 396)
+                arguments(HORA, 107, 8, 2, 7, 22, 160, 398),
+                arguments(SIFER, 107, 8, 2, 7, 22, 160, 396),
+                arguments(RUNID, 107, 8, 2, 7, 22, 160, 396),
+                arguments(GINDON, 107, 8, 2, 7, 22, 160, 396)
         );
     }
 
@@ -148,10 +148,10 @@ class NymphCalculationTest extends RaceCalculationTestBase {
 
     private static Stream<Arguments> witchmasterCalculations() {
         return Stream.of(
-                arguments(HORA, 138, 34, 3, 9, 57, 260, 996),
-                arguments(SIFER, 138, 34, 3, 9, 57, 260, 992),
-                arguments(RUNID, 138, 34, 3, 9, 57, 260, 997),
-                arguments(GINDON, 138, 34, 3, 9, 57, 260, 1002)
+                arguments(HORA, 138, 10, 3, 9, 57, 260, 996),
+                arguments(SIFER, 138, 10, 3, 9, 57, 260, 992),
+                arguments(RUNID, 138, 10, 3, 9, 57, 260, 997),
+                arguments(GINDON, 138, 10, 3, 9, 57, 260, 1002)
         );
     }
 
@@ -181,10 +181,10 @@ class NymphCalculationTest extends RaceCalculationTestBase {
 
     private static Stream<Arguments> avatarCalculations() {
         return Stream.of(
-                arguments(HORA, 188, 47, 4, 13, 117, 460, 1988),
-                arguments(SIFER, 188, 47, 4, 13, 117, 460, 1978),
-                arguments(RUNID, 188, 47, 4, 13, 117, 460, 1988),
-                arguments(GINDON, 188, 47, 4, 13, 117, 460, 1988)
+                arguments(HORA, 188, 14, 4, 13, 117, 460, 1988),
+                arguments(SIFER, 188, 14, 4, 13, 117, 460, 1978),
+                arguments(RUNID, 188, 14, 4, 13, 117, 460, 1988),
+                arguments(GINDON, 188, 14, 4, 13, 117, 460, 1988)
         );
     }
 }

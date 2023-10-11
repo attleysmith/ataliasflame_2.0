@@ -20,7 +20,7 @@ public class CharacterCalculationService {
 
     private static final int BASE_HEALTH = 100;
     private static final int BASE_ATTACK = 80;
-    private static final int BASE_DEFENSE = 20;
+    private static final int BASE_DEFENSE = 5;
     private static final int BASE_DAMAGE_MULTIPLIER = 0;
     private static final int BASE_MAGIC_POINT = 0;
 

@@ -49,12 +49,12 @@ class HalflingCalculationTest extends RaceCalculationTestBase {
 
     private static Stream<Arguments> rogueCalculations() {
         return Stream.of(
-                arguments(HORA, 84, 22, 2, 6, 4, 110, 5),
-                arguments(SIFER, 84, 22, 2, 6, 4, 110, 5),
-                arguments(GETON, 84, 22, 2, 6, 4, 110, 5),
-                arguments(RUNID, 84, 22, 2, 6, 4, 110, 5),
-                arguments(ALATE, 84, 22, 2, 6, 4, 110, 5),
-                arguments(GINDON, 84, 22, 2, 6, 4, 110, 5)
+                arguments(HORA, 84, 6, 2, 6, 4, 110, 5),
+                arguments(SIFER, 84, 6, 2, 6, 4, 110, 5),
+                arguments(GETON, 84, 6, 2, 6, 4, 110, 5),
+                arguments(RUNID, 84, 6, 2, 6, 4, 110, 5),
+                arguments(ALATE, 84, 6, 2, 6, 4, 110, 5),
+                arguments(GINDON, 84, 6, 2, 6, 4, 110, 5)
         );
     }
 
@@ -84,12 +84,12 @@ class HalflingCalculationTest extends RaceCalculationTestBase {
 
     private static Stream<Arguments> fighterCalculations() {
         return Stream.of(
-                arguments(HORA, 97, 25, 2, 7, 16, 150, 23),
-                arguments(SIFER, 97, 25, 2, 7, 16, 150, 23),
-                arguments(GETON, 97, 25, 2, 7, 16, 150, 23),
-                arguments(RUNID, 97, 25, 2, 7, 16, 150, 23),
-                arguments(ALATE, 97, 25, 2, 7, 16, 150, 23),
-                arguments(GINDON, 97, 25, 2, 7, 16, 150, 23)
+                arguments(HORA, 97, 7, 2, 7, 16, 150, 23),
+                arguments(SIFER, 97, 7, 2, 7, 16, 150, 23),
+                arguments(GETON, 97, 7, 2, 7, 16, 150, 23),
+                arguments(RUNID, 97, 7, 2, 7, 16, 150, 23),
+                arguments(ALATE, 97, 7, 2, 7, 16, 150, 23),
+                arguments(GINDON, 97, 7, 2, 7, 16, 150, 23)
         );
     }
 
@@ -119,12 +119,12 @@ class HalflingCalculationTest extends RaceCalculationTestBase {
 
     private static Stream<Arguments> paladinCalculations() {
         return Stream.of(
-                arguments(HORA, 143, 34, 3, 9, 58, 280, 99),
-                arguments(SIFER, 143, 34, 3, 9, 58, 280, 99),
-                arguments(GETON, 143, 34, 3, 10, 60, 280, 99),
-                arguments(RUNID, 143, 34, 3, 9, 58, 280, 99),
-                arguments(ALATE, 145, 34, 3, 10, 59, 280, 99),
-                arguments(GINDON, 143, 34, 3, 9, 58, 280, 99)
+                arguments(HORA, 143, 10, 3, 9, 58, 280, 99),
+                arguments(SIFER, 143, 10, 3, 9, 58, 280, 99),
+                arguments(GETON, 143, 10, 3, 10, 60, 280, 99),
+                arguments(RUNID, 143, 10, 3, 9, 58, 280, 99),
+                arguments(ALATE, 145, 10, 3, 10, 59, 280, 99),
+                arguments(GINDON, 143, 10, 3, 9, 58, 280, 99)
         );
     }
 
@@ -154,12 +154,12 @@ class HalflingCalculationTest extends RaceCalculationTestBase {
 
     private static Stream<Arguments> grandmasterCalculations() {
         return Stream.of(
-                arguments(HORA, 238, 54, 5, 15, 145, 550, 253),
-                arguments(SIFER, 238, 54, 5, 15, 145, 560, 251),
-                arguments(GETON, 238, 55, 5, 15, 149, 550, 251),
-                arguments(RUNID, 238, 54, 5, 15, 145, 550, 251),
-                arguments(ALATE, 242, 55, 5, 15, 147, 550, 251),
-                arguments(GINDON, 238, 54, 5, 15, 145, 550, 251)
+                arguments(HORA, 238, 15, 5, 15, 145, 550, 253),
+                arguments(SIFER, 238, 15, 5, 15, 145, 560, 251),
+                arguments(GETON, 238, 16, 5, 15, 149, 550, 251),
+                arguments(RUNID, 238, 15, 5, 15, 145, 550, 251),
+                arguments(ALATE, 242, 16, 5, 15, 147, 550, 251),
+                arguments(GINDON, 238, 15, 5, 15, 145, 550, 251)
         );
     }
 
@@ -189,12 +189,12 @@ class HalflingCalculationTest extends RaceCalculationTestBase {
 
     private static Stream<Arguments> titanCalculations() {
         return Stream.of(
-                arguments(HORA, 396, 87, 8, 23, 290, 1000, 512),
-                arguments(SIFER, 396, 87, 8, 23, 290, 1010, 510),
-                arguments(GETON, 396, 88, 8, 24, 296, 1000, 510),
-                arguments(RUNID, 396, 87, 8, 23, 290, 1000, 515),
-                arguments(ALATE, 401, 88, 8, 24, 293, 1000, 510),
-                arguments(GINDON, 396, 87, 8, 23, 290, 1000, 510)
+                arguments(HORA, 396, 25, 8, 23, 290, 1000, 512),
+                arguments(SIFER, 396, 25, 8, 23, 290, 1010, 510),
+                arguments(GETON, 396, 25, 8, 24, 296, 1000, 510),
+                arguments(RUNID, 396, 25, 8, 23, 290, 1000, 515),
+                arguments(ALATE, 401, 25, 8, 24, 293, 1000, 510),
+                arguments(GINDON, 396, 25, 8, 23, 290, 1000, 510)
         );
     }
 }

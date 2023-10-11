@@ -50,6 +50,7 @@ public abstract class EnduranceTestBase {
 
     protected void createCharacter(CharacterInput characterInput) {
         character = characterMaintenanceService.createCharacter(characterInput);
+        location = character.getLocation();
         refreshUsableSpells();
     }
 
@@ -69,7 +70,6 @@ public abstract class EnduranceTestBase {
 
     protected void doCombat() {
         summon();
-        enterLocation();
         putOnBlessings();
         castAttackMagic();
         castCurseMagic();
@@ -80,6 +80,7 @@ public abstract class EnduranceTestBase {
             castHealingMagic();
             finishEncounter();
             sleep();
+            enterNewLocation();
         }
     }
 
@@ -124,7 +125,7 @@ public abstract class EnduranceTestBase {
         }
     }
 
-    private void enterLocation() {
+    private void enterNewLocation() {
         Location newLocation = locationAdventureService.buildLocation(character.getLevel());
 
         LocationContext locationContext = characterLocationService.enterLocation(character.getReference(), newLocation.getReference());

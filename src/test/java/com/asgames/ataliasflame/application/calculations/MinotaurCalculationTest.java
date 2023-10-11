@@ -49,11 +49,11 @@ class MinotaurCalculationTest extends RaceCalculationTestBase {
 
     private static Stream<Arguments> rogueCalculations() {
         return Stream.of(
-                arguments(SIFER, 82, 22, 2, 6, 3, 110, 5),
-                arguments(GETON, 82, 22, 2, 6, 3, 110, 5),
-                arguments(RUNID, 82, 22, 2, 6, 3, 110, 5),
-                arguments(ALATE, 82, 22, 2, 6, 3, 110, 5),
-                arguments(GINDON, 82, 22, 2, 6, 3, 110, 5)
+                arguments(SIFER, 82, 6, 2, 6, 3, 110, 5),
+                arguments(GETON, 82, 6, 2, 6, 3, 110, 5),
+                arguments(RUNID, 82, 6, 2, 6, 3, 110, 5),
+                arguments(ALATE, 82, 6, 2, 6, 3, 110, 5),
+                arguments(GINDON, 82, 6, 2, 6, 3, 110, 5)
         );
     }
 
@@ -83,11 +83,11 @@ class MinotaurCalculationTest extends RaceCalculationTestBase {
 
     private static Stream<Arguments> fighterCalculations() {
         return Stream.of(
-                arguments(SIFER, 92, 24, 2, 7, 17, 160, 23),
-                arguments(GETON, 92, 24, 2, 7, 17, 160, 23),
-                arguments(RUNID, 92, 24, 2, 7, 17, 160, 23),
-                arguments(ALATE, 92, 24, 2, 7, 17, 160, 23),
-                arguments(GINDON, 92, 24, 2, 7, 17, 160, 23)
+                arguments(SIFER, 92, 7, 2, 7, 17, 160, 23),
+                arguments(GETON, 92, 7, 2, 7, 17, 160, 23),
+                arguments(RUNID, 92, 7, 2, 7, 17, 160, 23),
+                arguments(ALATE, 92, 7, 2, 7, 17, 160, 23),
+                arguments(GINDON, 92, 7, 2, 7, 17, 160, 23)
         );
     }
 
@@ -117,11 +117,11 @@ class MinotaurCalculationTest extends RaceCalculationTestBase {
 
     private static Stream<Arguments> paladinCalculations() {
         return Stream.of(
-                arguments(SIFER, 123, 34, 3, 10, 66, 340, 89),
-                arguments(GETON, 123, 34, 3, 10, 68, 340, 89),
-                arguments(RUNID, 123, 34, 3, 10, 66, 340, 89),
-                arguments(ALATE, 125, 34, 3, 10, 67, 340, 89),
-                arguments(GINDON, 123, 34, 3, 10, 66, 340, 89)
+                arguments(SIFER, 123, 10, 3, 10, 66, 340, 89),
+                arguments(GETON, 123, 10, 3, 10, 68, 340, 89),
+                arguments(RUNID, 123, 10, 3, 10, 66, 340, 89),
+                arguments(ALATE, 125, 10, 3, 10, 67, 340, 89),
+                arguments(GINDON, 123, 10, 3, 10, 66, 340, 89)
         );
     }
 
@@ -151,11 +151,11 @@ class MinotaurCalculationTest extends RaceCalculationTestBase {
 
     private static Stream<Arguments> grandmasterCalculations() {
         return Stream.of(
-                arguments(SIFER, 188, 53, 5, 16, 165, 710, 231),
-                arguments(GETON, 188, 53, 5, 16, 169, 700, 231),
-                arguments(RUNID, 188, 53, 5, 16, 165, 700, 231),
-                arguments(ALATE, 191, 53, 5, 16, 167, 700, 231),
-                arguments(GINDON, 188, 53, 5, 16, 165, 700, 231)
+                arguments(SIFER, 188, 15, 5, 16, 165, 710, 231),
+                arguments(GETON, 188, 15, 5, 16, 169, 700, 231),
+                arguments(RUNID, 188, 15, 5, 16, 165, 700, 231),
+                arguments(ALATE, 191, 15, 5, 16, 167, 700, 231),
+                arguments(GINDON, 188, 15, 5, 16, 165, 700, 231)
         );
     }
 
@@ -185,11 +185,11 @@ class MinotaurCalculationTest extends RaceCalculationTestBase {
 
     private static Stream<Arguments> titanCalculations() {
         return Stream.of(
-                arguments(SIFER, 296, 84, 9, 26, 330, 1310, 460),
-                arguments(GETON, 296, 85, 9, 26, 336, 1300, 460),
-                arguments(RUNID, 296, 84, 9, 26, 330, 1300, 465),
-                arguments(ALATE, 301, 85, 9, 26, 333, 1300, 460),
-                arguments(GINDON, 296, 84, 9, 26, 330, 1300, 460)
+                arguments(SIFER, 296, 24, 9, 26, 330, 1310, 460),
+                arguments(GETON, 296, 24, 9, 26, 336, 1300, 460),
+                arguments(RUNID, 296, 24, 9, 26, 330, 1300, 465),
+                arguments(ALATE, 301, 24, 9, 26, 333, 1300, 460),
+                arguments(GINDON, 296, 24, 9, 26, 330, 1300, 460)
         );
     }
 }

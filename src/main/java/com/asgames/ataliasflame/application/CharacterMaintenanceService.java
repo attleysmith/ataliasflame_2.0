@@ -12,6 +12,7 @@ import com.asgames.ataliasflame.domain.services.CharacterInitializer;
 import com.asgames.ataliasflame.domain.services.DefensiveGodConversionService;
 import com.asgames.ataliasflame.infrastructure.repositories.CharacterRepository;
 import com.asgames.ataliasflame.infrastructure.repositories.DefensiveGodConversionLogRepository;
+import com.asgames.ataliasflame.infrastructure.repositories.LocationRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,8 @@ public class CharacterMaintenanceService {
 
     @Autowired
     private CharacterRepository characterRepository;
+    @Autowired
+    private LocationRepository locationRepository;
     @Autowired
     private DefensiveGodConversionLogRepository defensiveGodConversionLogRepository;
 
@@ -42,6 +45,7 @@ public class CharacterMaintenanceService {
         Character character = characterMapper.toCharacter(characterInput);
         character = characterInitializer.initialize(character);
 
+        locationRepository.save(character.getLocation());
         return characterRepository.save(character);
     }
 

@@ -37,6 +37,10 @@ public class LocationService {
         return location;
     }
 
+    public void enterLocation(Character character, Location location) {
+        character.setLocation(location);
+    }
+
     public void seizeLocation(Character character) {
         Location location = character.getLocation();
         if (location.isSeized()) {

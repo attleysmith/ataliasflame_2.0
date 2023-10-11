@@ -49,11 +49,11 @@ class DwarfCalculationTest extends RaceCalculationTestBase {
 
     private static Stream<Arguments> rogueCalculations() {
         return Stream.of(
-                arguments(SIFER, 82, 22, 2, 6, 3, 110, 5),
-                arguments(GETON, 82, 22, 2, 6, 3, 110, 5),
-                arguments(RUNID, 82, 22, 2, 6, 3, 110, 5),
-                arguments(ALATE, 82, 22, 2, 6, 3, 110, 5),
-                arguments(GINDON, 82, 22, 2, 6, 3, 110, 5)
+                arguments(SIFER, 82, 6, 2, 6, 3, 110, 5),
+                arguments(GETON, 82, 6, 2, 6, 3, 110, 5),
+                arguments(RUNID, 82, 6, 2, 6, 3, 110, 5),
+                arguments(ALATE, 82, 6, 2, 6, 3, 110, 5),
+                arguments(GINDON, 82, 6, 2, 6, 3, 110, 5)
         );
     }
 
@@ -83,11 +83,11 @@ class DwarfCalculationTest extends RaceCalculationTestBase {
 
     private static Stream<Arguments> fighterCalculations() {
         return Stream.of(
-                arguments(SIFER, 91, 24, 2, 7, 17, 160, 23),
-                arguments(GETON, 91, 24, 2, 7, 17, 160, 23),
-                arguments(RUNID, 91, 24, 2, 7, 17, 160, 23),
-                arguments(ALATE, 91, 24, 2, 7, 17, 160, 23),
-                arguments(GINDON, 91, 24, 2, 7, 17, 160, 23)
+                arguments(SIFER, 91, 7, 2, 7, 17, 160, 23),
+                arguments(GETON, 91, 7, 2, 7, 17, 160, 23),
+                arguments(RUNID, 91, 7, 2, 7, 17, 160, 23),
+                arguments(ALATE, 91, 7, 2, 7, 17, 160, 23),
+                arguments(GINDON, 91, 7, 2, 7, 17, 160, 23)
         );
     }
 
@@ -117,11 +117,11 @@ class DwarfCalculationTest extends RaceCalculationTestBase {
 
     private static Stream<Arguments> paladinCalculations() {
         return Stream.of(
-                arguments(SIFER, 122, 33, 3, 10, 62, 340, 89),
-                arguments(GETON, 122, 33, 3, 10, 64, 340, 89),
-                arguments(RUNID, 122, 33, 3, 10, 62, 340, 89),
-                arguments(ALATE, 123, 33, 3, 10, 63, 340, 89),
-                arguments(GINDON, 122, 33, 3, 10, 62, 340, 89)
+                arguments(SIFER, 122, 9, 3, 10, 62, 340, 89),
+                arguments(GETON, 122, 9, 3, 10, 64, 340, 89),
+                arguments(RUNID, 122, 9, 3, 10, 62, 340, 89),
+                arguments(ALATE, 123, 9, 3, 10, 63, 340, 89),
+                arguments(GINDON, 122, 9, 3, 10, 62, 340, 89)
         );
     }
 
@@ -151,11 +151,11 @@ class DwarfCalculationTest extends RaceCalculationTestBase {
 
     private static Stream<Arguments> grandmasterCalculations() {
         return Stream.of(
-                arguments(SIFER, 184, 50, 5, 15, 155, 710, 231),
-                arguments(GETON, 184, 51, 5, 16, 159, 700, 231),
-                arguments(RUNID, 184, 50, 5, 15, 155, 700, 231),
-                arguments(ALATE, 187, 51, 5, 15, 157, 700, 231),
-                arguments(GINDON, 184, 50, 5, 15, 155, 700, 231)
+                arguments(SIFER, 184, 14, 5, 15, 155, 710, 231),
+                arguments(GETON, 184, 15, 5, 16, 159, 700, 231),
+                arguments(RUNID, 184, 14, 5, 15, 155, 700, 231),
+                arguments(ALATE, 187, 15, 5, 15, 157, 700, 231),
+                arguments(GINDON, 184, 14, 5, 15, 155, 700, 231)
         );
     }
 
@@ -185,11 +185,11 @@ class DwarfCalculationTest extends RaceCalculationTestBase {
 
     private static Stream<Arguments> titanCalculations() {
         return Stream.of(
-                arguments(SIFER, 288, 80, 8, 25, 310, 1310, 470),
-                arguments(GETON, 288, 80, 8, 25, 316, 1300, 470),
-                arguments(RUNID, 288, 80, 8, 25, 310, 1300, 475),
-                arguments(ALATE, 293, 80, 8, 25, 313, 1300, 470),
-                arguments(GINDON, 288, 80, 8, 25, 310, 1300, 480)
+                arguments(SIFER, 288, 23, 8, 25, 310, 1310, 470),
+                arguments(GETON, 288, 23, 8, 25, 316, 1300, 470),
+                arguments(RUNID, 288, 23, 8, 25, 310, 1300, 475),
+                arguments(ALATE, 293, 23, 8, 25, 313, 1300, 470),
+                arguments(GINDON, 288, 23, 8, 25, 310, 1300, 480)
         );
     }
 }

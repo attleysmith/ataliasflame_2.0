@@ -19,6 +19,7 @@ import java.util.*;
 
 import static com.asgames.ataliasflame.application.scenarios.Decisions.*;
 import static com.asgames.ataliasflame.domain.model.enums.CompanionType.SOUL_CHIP;
+import static com.asgames.ataliasflame.domain.model.enums.ItemType.*;
 import static com.asgames.ataliasflame.domain.model.enums.MagicType.*;
 import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.SOUL;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.ENERGY_ABSORPTION;
@@ -76,7 +77,6 @@ public abstract class EnduranceTestBase {
         closeCombat();
         if (character.isAlive()) {
             lootLocation();
-            lootLocation(); // to look at dropped shields or whatever (e.g. +SPEAR/-SHIELD -> +SWORD/-SPEAR -> +SHIELD)
             castHealingMagic();
             finishEncounter();
             sleep();
@@ -185,39 +185,59 @@ public abstract class EnduranceTestBase {
     }
 
     private void lootLocation() {
-        lootingOrder(location)
+        lootFood();
+        lootWeapons();
+        lootShields();
+        lootArmors();
+    }
+
+    private void lootFood() {
+        location.getItems().stream()
+                .filter(item -> item.getType().equals(FOOD))
                 .forEach(item -> {
-                    LocationContext neverMind = LocationContext.builder().character(character).location(location).build();
-                    LocationContext locationContext = switch (item.getType()) {
-                        case FOOD -> characterLocationService.useItem(character.getReference(), item.getReference());
-                        case WEAPON -> {
-                            Weapon newWeapon = locationAdventureService.getWeapon(location.getReference(), item.getReference());
-                            if (needToChangeWeapon(character, newWeapon)) {
-                                yield characterLocationService.useItem(character.getReference(), newWeapon.getReference());
-                            } else {
-                                yield neverMind;
-                            }
-                        }
-                        case SHIELD -> {
-                            Shield newShield = locationAdventureService.getShield(location.getReference(), item.getReference());
-                            if (needToChangeShield(character, newShield)) {
-                                yield characterLocationService.useItem(character.getReference(), newShield.getReference());
-                            } else {
-                                yield neverMind;
-                            }
-                        }
-                        case ARMOR -> {
-                            Armor newArmor = locationAdventureService.getArmor(location.getReference(), item.getReference());
-                            if ((newArmor.isHelmet() && needToChangeHelmet(character, newArmor))
-                                    || (newArmor.isBodyArmor() && needToChangeBodyArmor(character, newArmor))) {
-                                yield characterLocationService.useItem(character.getReference(), newArmor.getReference());
-                            } else {
-                                yield neverMind;
-                            }
-                        }
-                    };
+                    LocationContext locationContext = characterLocationService.useItem(character.getReference(), item.getReference());
                     character = locationContext.getCharacter();
                     location = locationContext.getLocation();
+                });
+    }
+
+    private void lootWeapons() {
+        location.getItems().stream()
+                .filter(item -> item.getType().equals(WEAPON))
+                .forEach(item -> {
+                    Weapon newWeapon = locationAdventureService.getWeapon(location.getReference(), item.getReference());
+                    if (needToChangeWeapon(character, newWeapon)) {
+                        LocationContext locationContext = characterLocationService.useItem(character.getReference(), newWeapon.getReference());
+                        character = locationContext.getCharacter();
+                        location = locationContext.getLocation();
+                    }
+                });
+    }
+
+    private void lootShields() {
+        location.getItems().stream()
+                .filter(item -> item.getType().equals(SHIELD))
+                .forEach(item -> {
+                    Shield newShield = locationAdventureService.getShield(location.getReference(), item.getReference());
+                    if (needToChangeShield(character, newShield)) {
+                        LocationContext locationContext = characterLocationService.useItem(character.getReference(), newShield.getReference());
+                        character = locationContext.getCharacter();
+                        location = locationContext.getLocation();
+                    }
+                });
+    }
+
+    private void lootArmors() {
+        location.getItems().stream()
+                .filter(item -> item.getType().equals(ARMOR))
+                .forEach(item -> {
+                    Armor newArmor = locationAdventureService.getArmor(location.getReference(), item.getReference());
+                    if ((newArmor.isHelmet() && needToChangeHelmet(character, newArmor))
+                            || (newArmor.isBodyArmor() && needToChangeBodyArmor(character, newArmor))) {
+                        LocationContext locationContext = characterLocationService.useItem(character.getReference(), newArmor.getReference());
+                        character = locationContext.getCharacter();
+                        location = locationContext.getLocation();
+                    }
                 });
     }
 

@@ -2,7 +2,6 @@ package com.asgames.ataliasflame.application.scenarios;
 
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.*;
-import com.asgames.ataliasflame.domain.model.enums.ItemType;
 import com.asgames.ataliasflame.domain.model.enums.MagicType;
 import com.asgames.ataliasflame.domain.model.enums.SpellName;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
@@ -13,7 +12,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import static com.asgames.ataliasflame.domain.model.enums.ItemType.*;
 import static com.asgames.ataliasflame.domain.model.enums.MagicType.ATTACK;
 import static com.asgames.ataliasflame.domain.model.enums.MagicType.CURSE;
 import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.SOUL;
@@ -82,13 +80,6 @@ public final class Decisions {
             POWER_OF_NATURE, 8,
             CURE, 9,
             WOUND_HEALING, 10
-    );
-
-    private static final Map<ItemType, Integer> LOOTING_PREFERENCES = Map.of(
-            FOOD, 1,
-            WEAPON, 2,
-            SHIELD, 3,
-            ARMOR, 4
     );
 
     private static int maxNumberOfBlessings(Character character, List<Monster> monsters) {
@@ -177,11 +168,6 @@ public final class Decisions {
     public static Stream<Spell> blessingOrder(List<Spell> usableSpells) {
         return usableSpells.stream()
                 .sorted(comparing(spell -> BLESSING_PREFERENCES.getOrDefault(spell.getName(), 0)));
-    }
-
-    public static Stream<Item> lootingOrder(Location location) {
-        return location.getItems().stream()
-                .sorted(comparing(item -> LOOTING_PREFERENCES.getOrDefault(item.getType(), 0)));
     }
 
     public static Optional<Spell> chooseAttackSpell(List<Spell> usableSpells, Character character, boolean hasAvailableSoul) {

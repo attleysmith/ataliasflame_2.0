@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.asgames.ataliasflame.domain.model.enums.Caste.ATALIAS_PRIEST;
 import static com.asgames.ataliasflame.domain.model.enums.CasteGroup.WANDERER;
+import static com.asgames.ataliasflame.domain.model.enums.Race.ARIMASPI;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.CharacterReportCause.DIED_OF_TRAUMA;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.characterReport;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.NewCasteEvent.newCaste;
@@ -47,6 +49,9 @@ public class CasteService {
         }
         if (character.getDefensiveGod().prohibitedCasteGroups.contains(newCaste.group)) {
             throw new IllegalArgumentException("Followers of " + character.getDefensiveGod() + " cannot be " + newCaste);
+        }
+        if (newCaste.equals(ATALIAS_PRIEST) && character.getRace().equals(ARIMASPI)) {
+            throw new IllegalArgumentException("Arimaspos cannot be Atalia's priests!");
         }
     }
 

@@ -16,7 +16,7 @@ public enum Race {
     DWARF(DWARF_EFFECT, List.of(), List.of(HORA), List.of(SORCERER)),
     ORC(ORC_EFFECT, List.of(), List.of(HORA, RUNID), List.of(SORCERER)),
     MINOTAUR(MINOTAUR_EFFECT, List.of(FEMALE), List.of(HORA), List.of(SORCERER, CLERIC)),
-    ARIMASPI(ARIMASPI_EFFECT, List.of(), List.of(), List.of(SORCERER, NATURE_DWELLER, CLERIC)),
+    ARIMASPI(ARIMASPI_EFFECT, List.of(), List.of(), List.of(SORCERER, CLERIC)),
     NYMPH(NYMPH_EFFECT, List.of(MALE), List.of(GETON, ALATE), List.of(WARRIOR, WANDERER)),
     HALFLING(HALFLING_EFFECT, List.of(), List.of(), List.of());
 

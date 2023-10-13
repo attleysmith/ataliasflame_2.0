@@ -32,8 +32,4 @@ public class Weapon extends Item {
     public void belongsTo(Character character) {
         character.setWeapon(this);
     }
-
-    public int averageDamage() {
-        return (minDamage + maxDamage) / 2;
-    }
 }

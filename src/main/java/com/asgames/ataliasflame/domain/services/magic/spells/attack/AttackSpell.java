@@ -14,12 +14,13 @@ public abstract class AttackSpell extends Spell {
         }
     }
 
-    public abstract int getMinDamage();
-
-    public abstract int getMaxDamage();
+    @Override
+    public int getMinDamage() {
+        throw new UnsupportedOperationException("Minimum damage of attack spell must be overridden!");
+    }
 
     @Override
-    public int averageDamage() {
-        return (getMinDamage() + getMaxDamage()) / 2;
+    public int getMaxDamage() {
+        throw new UnsupportedOperationException("Maximum damage of attack spell must be overridden!");
     }
 }

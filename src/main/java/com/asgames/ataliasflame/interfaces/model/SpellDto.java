@@ -13,4 +13,6 @@ public class SpellDto {
     private final SpellGroup group;
     private final MagicType type;
     private final int cost;
+    private final int minDamage;
+    private final int maxDamage;
 }

@@ -35,7 +35,11 @@ public abstract class Spell {
 
     public abstract int getCost();
 
-    public int averageDamage() {
+    public int getMinDamage() {
+        return 0;
+    }
+
+    public int getMaxDamage() {
         return 0;
     }
 

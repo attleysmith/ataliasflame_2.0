@@ -16,5 +16,7 @@ public abstract class SpellDtoMapper {
     @Mapping(target = "group", source = "group")
     @Mapping(target = "type", source = "type")
     @Mapping(target = "cost", source = "cost")
+    @Mapping(target = "minDamage", source = "minDamage")
+    @Mapping(target = "maxDamage", source = "maxDamage")
     public abstract SpellDto toSpellDto(Spell spell);
 }

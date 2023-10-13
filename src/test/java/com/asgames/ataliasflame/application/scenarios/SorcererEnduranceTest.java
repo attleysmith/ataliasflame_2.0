@@ -3,10 +3,11 @@ package com.asgames.ataliasflame.application.scenarios;
 import com.asgames.ataliasflame.application.model.CharacterInput;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Map;
 
+import static com.asgames.ataliasflame.application.scenarios.HelperUtils.isAlive;
+import static com.asgames.ataliasflame.application.scenarios.HelperUtils.isDead;
 import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
 import static com.asgames.ataliasflame.domain.model.enums.Caste.*;
 import static com.asgames.ataliasflame.domain.model.enums.Gender.MALE;
@@ -16,7 +17,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 @Disabled("May be killed in action")
-@SpringBootTest(properties = "booster.experience:true")
 public class SorcererEnduranceTest extends EnduranceTestBase {
 
     @Test
@@ -28,7 +28,7 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
                 .defensiveGod(HORA)
                 .name("Plato")
                 .build();
-        createCharacter(characterInput);
+        initializeCharacter(characterInput);
 
         // expect
         level1Upgrade();
@@ -51,12 +51,12 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
             // expect
             assertThat(character.getAttributePoints(), is(0));
 
-        } while (character.isAlive() && character.getLevel() < 100);
+        } while (isAlive(character) && character.getLevel() < 100);
 
         // then do some more adventuring
         for (int i = 0; i < 1000; i++) {
             doCombat();
-            if (character.isDead()) break;
+            if (isDead(character)) break;
         }
     }
 
@@ -75,8 +75,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(82));
         assertThat(character.getDamageMultiplier(), is(3));
-        assertThat(character.getHealth().totalValue(), is(110));
-        assertThat(character.getMagic().totalValue(), is(5));
+        assertThat(character.getTotalHealth(), is(110));
+        assertThat(character.getTotalMagicPoint(), is(5));
     }
 
     private void level2Upgrade() {
@@ -101,8 +101,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(84));
         assertThat(character.getDamageMultiplier(), is(4));
-        assertThat(character.getHealth().totalValue(), is(120));
-        assertThat(character.getMagic().totalValue(), is(22));
+        assertThat(character.getTotalHealth(), is(120));
+        assertThat(character.getTotalMagicPoint(), is(22));
     }
 
     private void level3Upgrade() {
@@ -127,8 +127,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(85));
         assertThat(character.getDamageMultiplier(), is(4));
-        assertThat(character.getHealth().totalValue(), is(120));
-        assertThat(character.getMagic().totalValue(), is(39));
+        assertThat(character.getTotalHealth(), is(120));
+        assertThat(character.getTotalMagicPoint(), is(39));
     }
 
     private void level4Upgrade() {
@@ -153,8 +153,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(89));
         assertThat(character.getDamageMultiplier(), is(6));
-        assertThat(character.getHealth().totalValue(), is(120));
-        assertThat(character.getMagic().totalValue(), is(56));
+        assertThat(character.getTotalHealth(), is(120));
+        assertThat(character.getTotalMagicPoint(), is(56));
     }
 
     private void level5Upgrade() {
@@ -178,8 +178,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(89));
         assertThat(character.getDamageMultiplier(), is(6));
-        assertThat(character.getHealth().totalValue(), is(120));
-        assertThat(character.getMagic().totalValue(), is(76));
+        assertThat(character.getTotalHealth(), is(120));
+        assertThat(character.getTotalMagicPoint(), is(76));
 
         // then
         upgradeCaste(WIZARD);
@@ -210,8 +210,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(91));
         assertThat(character.getDamageMultiplier(), is(7));
-        assertThat(character.getHealth().totalValue(), is(120));
-        assertThat(character.getMagic().totalValue(), is(103));
+        assertThat(character.getTotalHealth(), is(120));
+        assertThat(character.getTotalMagicPoint(), is(103));
     }
 
     private void level7Upgrade() {
@@ -236,8 +236,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(91));
         assertThat(character.getDamageMultiplier(), is(9));
-        assertThat(character.getHealth().totalValue(), is(130));
-        assertThat(character.getMagic().totalValue(), is(120));
+        assertThat(character.getTotalHealth(), is(130));
+        assertThat(character.getTotalMagicPoint(), is(120));
     }
 
     private void level8Upgrade() {
@@ -262,8 +262,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(94));
         assertThat(character.getDamageMultiplier(), is(10));
-        assertThat(character.getHealth().totalValue(), is(130));
-        assertThat(character.getMagic().totalValue(), is(137));
+        assertThat(character.getTotalHealth(), is(130));
+        assertThat(character.getTotalMagicPoint(), is(137));
     }
 
     private void level9Upgrade() {
@@ -288,8 +288,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(96));
         assertThat(character.getDamageMultiplier(), is(11));
-        assertThat(character.getHealth().totalValue(), is(130));
-        assertThat(character.getMagic().totalValue(), is(154));
+        assertThat(character.getTotalHealth(), is(130));
+        assertThat(character.getTotalMagicPoint(), is(154));
     }
 
     private void level10Upgrade() {
@@ -314,8 +314,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(98));
         assertThat(character.getDamageMultiplier(), is(12));
-        assertThat(character.getHealth().totalValue(), is(130));
-        assertThat(character.getMagic().totalValue(), is(174));
+        assertThat(character.getTotalHealth(), is(130));
+        assertThat(character.getTotalMagicPoint(), is(174));
     }
 
     private void level11Upgrade() {
@@ -340,8 +340,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(98));
         assertThat(character.getDamageMultiplier(), is(14));
-        assertThat(character.getHealth().totalValue(), is(140));
-        assertThat(character.getMagic().totalValue(), is(191));
+        assertThat(character.getTotalHealth(), is(140));
+        assertThat(character.getTotalMagicPoint(), is(191));
     }
 
     private void level12Upgrade() {
@@ -366,8 +366,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(102));
         assertThat(character.getDamageMultiplier(), is(16));
-        assertThat(character.getHealth().totalValue(), is(140));
-        assertThat(character.getMagic().totalValue(), is(208));
+        assertThat(character.getTotalHealth(), is(140));
+        assertThat(character.getTotalMagicPoint(), is(208));
     }
 
     private void level13Upgrade() {
@@ -392,8 +392,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(102));
         assertThat(character.getDamageMultiplier(), is(16));
-        assertThat(character.getHealth().totalValue(), is(140));
-        assertThat(character.getMagic().totalValue(), is(226));
+        assertThat(character.getTotalHealth(), is(140));
+        assertThat(character.getTotalMagicPoint(), is(226));
     }
 
     private void level14Upgrade() {
@@ -418,8 +418,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(104));
         assertThat(character.getDamageMultiplier(), is(17));
-        assertThat(character.getHealth().totalValue(), is(150));
-        assertThat(character.getMagic().totalValue(), is(243));
+        assertThat(character.getTotalHealth(), is(150));
+        assertThat(character.getTotalMagicPoint(), is(243));
     }
 
     private void level15Upgrade() {
@@ -444,8 +444,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(105));
         assertThat(character.getDamageMultiplier(), is(19));
-        assertThat(character.getHealth().totalValue(), is(150));
-        assertThat(character.getMagic().totalValue(), is(260));
+        assertThat(character.getTotalHealth(), is(150));
+        assertThat(character.getTotalMagicPoint(), is(260));
     }
 
     private void level16Upgrade() {
@@ -470,8 +470,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(106));
         assertThat(character.getDamageMultiplier(), is(20));
-        assertThat(character.getHealth().totalValue(), is(150));
-        assertThat(character.getMagic().totalValue(), is(288));
+        assertThat(character.getTotalHealth(), is(150));
+        assertThat(character.getTotalMagicPoint(), is(288));
     }
 
     private void level17Upgrade() {
@@ -496,8 +496,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(108));
         assertThat(character.getDamageMultiplier(), is(21));
-        assertThat(character.getHealth().totalValue(), is(150));
-        assertThat(character.getMagic().totalValue(), is(305));
+        assertThat(character.getTotalHealth(), is(150));
+        assertThat(character.getTotalMagicPoint(), is(305));
     }
 
     private void level18Upgrade() {
@@ -522,8 +522,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(110));
         assertThat(character.getDamageMultiplier(), is(22));
-        assertThat(character.getHealth().totalValue(), is(160));
-        assertThat(character.getMagic().totalValue(), is(322));
+        assertThat(character.getTotalHealth(), is(160));
+        assertThat(character.getTotalMagicPoint(), is(322));
     }
 
     private void level19Upgrade() {
@@ -548,8 +548,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(110));
         assertThat(character.getDamageMultiplier(), is(22));
-        assertThat(character.getHealth().totalValue(), is(160));
-        assertThat(character.getMagic().totalValue(), is(339));
+        assertThat(character.getTotalHealth(), is(160));
+        assertThat(character.getTotalMagicPoint(), is(339));
     }
 
     private void level20Upgrade() {
@@ -573,8 +573,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(110));
         assertThat(character.getDamageMultiplier(), is(22));
-        assertThat(character.getHealth().totalValue(), is(160));
-        assertThat(character.getMagic().totalValue(), is(367));
+        assertThat(character.getTotalHealth(), is(160));
+        assertThat(character.getTotalMagicPoint(), is(367));
 
         // then
         upgradeCaste(MAGE);
@@ -605,8 +605,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(110));
         assertThat(character.getDamageMultiplier(), is(24));
-        assertThat(character.getHealth().totalValue(), is(170));
-        assertThat(character.getMagic().totalValue(), is(384));
+        assertThat(character.getTotalHealth(), is(170));
+        assertThat(character.getTotalMagicPoint(), is(384));
     }
 
     private void level22Upgrade() {
@@ -631,8 +631,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(114));
         assertThat(character.getDamageMultiplier(), is(26));
-        assertThat(character.getHealth().totalValue(), is(170));
-        assertThat(character.getMagic().totalValue(), is(402));
+        assertThat(character.getTotalHealth(), is(170));
+        assertThat(character.getTotalMagicPoint(), is(402));
     }
 
     private void level23Upgrade() {
@@ -657,8 +657,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(114));
         assertThat(character.getDamageMultiplier(), is(26));
-        assertThat(character.getHealth().totalValue(), is(180));
-        assertThat(character.getMagic().totalValue(), is(420));
+        assertThat(character.getTotalHealth(), is(180));
+        assertThat(character.getTotalMagicPoint(), is(420));
     }
 
     private void level24Upgrade() {
@@ -683,8 +683,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(116));
         assertThat(character.getDamageMultiplier(), is(27));
-        assertThat(character.getHealth().totalValue(), is(180));
-        assertThat(character.getMagic().totalValue(), is(437));
+        assertThat(character.getTotalHealth(), is(180));
+        assertThat(character.getTotalMagicPoint(), is(437));
     }
 
     private void level25Upgrade() {
@@ -709,8 +709,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(116));
         assertThat(character.getDamageMultiplier(), is(29));
-        assertThat(character.getHealth().totalValue(), is(190));
-        assertThat(character.getMagic().totalValue(), is(469));
+        assertThat(character.getTotalHealth(), is(190));
+        assertThat(character.getTotalMagicPoint(), is(469));
     }
 
     private void level26Upgrade() {
@@ -735,8 +735,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(118));
         assertThat(character.getDamageMultiplier(), is(30));
-        assertThat(character.getHealth().totalValue(), is(190));
-        assertThat(character.getMagic().totalValue(), is(486));
+        assertThat(character.getTotalHealth(), is(190));
+        assertThat(character.getTotalMagicPoint(), is(486));
     }
 
     private void level27Upgrade() {
@@ -761,8 +761,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(120));
         assertThat(character.getDamageMultiplier(), is(31));
-        assertThat(character.getHealth().totalValue(), is(200));
-        assertThat(character.getMagic().totalValue(), is(503));
+        assertThat(character.getTotalHealth(), is(200));
+        assertThat(character.getTotalMagicPoint(), is(503));
     }
 
     private void level28Upgrade() {
@@ -787,8 +787,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(121));
         assertThat(character.getDamageMultiplier(), is(31));
-        assertThat(character.getHealth().totalValue(), is(200));
-        assertThat(character.getMagic().totalValue(), is(520));
+        assertThat(character.getTotalHealth(), is(200));
+        assertThat(character.getTotalMagicPoint(), is(520));
     }
 
     private void level29Upgrade() {
@@ -813,8 +813,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(121));
         assertThat(character.getDamageMultiplier(), is(33));
-        assertThat(character.getHealth().totalValue(), is(210));
-        assertThat(character.getMagic().totalValue(), is(537));
+        assertThat(character.getTotalHealth(), is(210));
+        assertThat(character.getTotalMagicPoint(), is(537));
     }
 
     private void level30Upgrade() {
@@ -839,8 +839,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(123));
         assertThat(character.getDamageMultiplier(), is(34));
-        assertThat(character.getHealth().totalValue(), is(210));
-        assertThat(character.getMagic().totalValue(), is(556));
+        assertThat(character.getTotalHealth(), is(210));
+        assertThat(character.getTotalMagicPoint(), is(556));
     }
 
     private void level31Upgrade() {
@@ -865,8 +865,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(123));
         assertThat(character.getDamageMultiplier(), is(34));
-        assertThat(character.getHealth().totalValue(), is(220));
-        assertThat(character.getMagic().totalValue(), is(574));
+        assertThat(character.getTotalHealth(), is(220));
+        assertThat(character.getTotalMagicPoint(), is(574));
     }
 
     private void level32Upgrade() {
@@ -891,8 +891,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(126));
         assertThat(character.getDamageMultiplier(), is(38));
-        assertThat(character.getHealth().totalValue(), is(220));
-        assertThat(character.getMagic().totalValue(), is(591));
+        assertThat(character.getTotalHealth(), is(220));
+        assertThat(character.getTotalMagicPoint(), is(591));
     }
 
     private void level33Upgrade() {
@@ -917,8 +917,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(127));
         assertThat(character.getDamageMultiplier(), is(38));
-        assertThat(character.getHealth().totalValue(), is(230));
-        assertThat(character.getMagic().totalValue(), is(608));
+        assertThat(character.getTotalHealth(), is(230));
+        assertThat(character.getTotalMagicPoint(), is(608));
     }
 
     private void level34Upgrade() {
@@ -943,8 +943,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(130));
         assertThat(character.getDamageMultiplier(), is(39));
-        assertThat(character.getHealth().totalValue(), is(230));
-        assertThat(character.getMagic().totalValue(), is(625));
+        assertThat(character.getTotalHealth(), is(230));
+        assertThat(character.getTotalMagicPoint(), is(625));
     }
 
     private void level35Upgrade() {
@@ -969,8 +969,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(130));
         assertThat(character.getDamageMultiplier(), is(39));
-        assertThat(character.getHealth().totalValue(), is(230));
-        assertThat(character.getMagic().totalValue(), is(653));
+        assertThat(character.getTotalHealth(), is(230));
+        assertThat(character.getTotalMagicPoint(), is(653));
     }
 
     private void level36Upgrade() {
@@ -995,8 +995,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(131));
         assertThat(character.getDamageMultiplier(), is(40));
-        assertThat(character.getHealth().totalValue(), is(240));
-        assertThat(character.getMagic().totalValue(), is(670));
+        assertThat(character.getTotalHealth(), is(240));
+        assertThat(character.getTotalMagicPoint(), is(670));
     }
 
     private void level37Upgrade() {
@@ -1021,8 +1021,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(132));
         assertThat(character.getDamageMultiplier(), is(42));
-        assertThat(character.getHealth().totalValue(), is(240));
-        assertThat(character.getMagic().totalValue(), is(687));
+        assertThat(character.getTotalHealth(), is(240));
+        assertThat(character.getTotalMagicPoint(), is(687));
     }
 
     private void level38Upgrade() {
@@ -1047,8 +1047,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(132));
         assertThat(character.getDamageMultiplier(), is(42));
-        assertThat(character.getHealth().totalValue(), is(240));
-        assertThat(character.getMagic().totalValue(), is(705));
+        assertThat(character.getTotalHealth(), is(240));
+        assertThat(character.getTotalMagicPoint(), is(705));
     }
 
     private void level39Upgrade() {
@@ -1073,8 +1073,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(134));
         assertThat(character.getDamageMultiplier(), is(45));
-        assertThat(character.getHealth().totalValue(), is(240));
-        assertThat(character.getMagic().totalValue(), is(722));
+        assertThat(character.getTotalHealth(), is(240));
+        assertThat(character.getTotalMagicPoint(), is(722));
     }
 
     private void level40Upgrade() {
@@ -1099,8 +1099,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(134));
         assertThat(character.getDamageMultiplier(), is(45));
-        assertThat(character.getHealth().totalValue(), is(240));
-        assertThat(character.getMagic().totalValue(), is(740));
+        assertThat(character.getTotalHealth(), is(240));
+        assertThat(character.getTotalMagicPoint(), is(740));
     }
 
     private void level41Upgrade() {
@@ -1125,8 +1125,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(136));
         assertThat(character.getDamageMultiplier(), is(46));
-        assertThat(character.getHealth().totalValue(), is(250));
-        assertThat(character.getMagic().totalValue(), is(757));
+        assertThat(character.getTotalHealth(), is(250));
+        assertThat(character.getTotalMagicPoint(), is(757));
     }
 
     private void level42Upgrade() {
@@ -1151,8 +1151,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(137));
         assertThat(character.getDamageMultiplier(), is(48));
-        assertThat(character.getHealth().totalValue(), is(250));
-        assertThat(character.getMagic().totalValue(), is(774));
+        assertThat(character.getTotalHealth(), is(250));
+        assertThat(character.getTotalMagicPoint(), is(774));
     }
 
     private void level43Upgrade() {
@@ -1177,8 +1177,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(137));
         assertThat(character.getDamageMultiplier(), is(48));
-        assertThat(character.getHealth().totalValue(), is(250));
-        assertThat(character.getMagic().totalValue(), is(792));
+        assertThat(character.getTotalHealth(), is(250));
+        assertThat(character.getTotalMagicPoint(), is(792));
     }
 
     private void level44Upgrade() {
@@ -1203,8 +1203,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(137));
         assertThat(character.getDamageMultiplier(), is(48));
-        assertThat(character.getHealth().totalValue(), is(260));
-        assertThat(character.getMagic().totalValue(), is(810));
+        assertThat(character.getTotalHealth(), is(260));
+        assertThat(character.getTotalMagicPoint(), is(810));
     }
 
     private void level45Upgrade() {
@@ -1229,8 +1229,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(141));
         assertThat(character.getDamageMultiplier(), is(50));
-        assertThat(character.getHealth().totalValue(), is(260));
-        assertThat(character.getMagic().totalValue(), is(837));
+        assertThat(character.getTotalHealth(), is(260));
+        assertThat(character.getTotalMagicPoint(), is(837));
     }
 
     private void level46Upgrade() {
@@ -1255,8 +1255,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(141));
         assertThat(character.getDamageMultiplier(), is(50));
-        assertThat(character.getHealth().totalValue(), is(270));
-        assertThat(character.getMagic().totalValue(), is(855));
+        assertThat(character.getTotalHealth(), is(270));
+        assertThat(character.getTotalMagicPoint(), is(855));
     }
 
     private void level47Upgrade() {
@@ -1281,8 +1281,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(142));
         assertThat(character.getDamageMultiplier(), is(53));
-        assertThat(character.getHealth().totalValue(), is(270));
-        assertThat(character.getMagic().totalValue(), is(872));
+        assertThat(character.getTotalHealth(), is(270));
+        assertThat(character.getTotalMagicPoint(), is(872));
     }
 
     private void level48Upgrade() {
@@ -1307,8 +1307,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(143));
         assertThat(character.getDamageMultiplier(), is(53));
-        assertThat(character.getHealth().totalValue(), is(270));
-        assertThat(character.getMagic().totalValue(), is(890));
+        assertThat(character.getTotalHealth(), is(270));
+        assertThat(character.getTotalMagicPoint(), is(890));
     }
 
     private void level49Upgrade() {
@@ -1333,8 +1333,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(145));
         assertThat(character.getDamageMultiplier(), is(54));
-        assertThat(character.getHealth().totalValue(), is(280));
-        assertThat(character.getMagic().totalValue(), is(907));
+        assertThat(character.getTotalHealth(), is(280));
+        assertThat(character.getTotalMagicPoint(), is(907));
     }
 
     private void level50Upgrade() {
@@ -1359,8 +1359,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(146));
         assertThat(character.getDamageMultiplier(), is(56));
-        assertThat(character.getHealth().totalValue(), is(280));
-        assertThat(character.getMagic().totalValue(), is(926));
+        assertThat(character.getTotalHealth(), is(280));
+        assertThat(character.getTotalMagicPoint(), is(926));
 
         // then
         upgradeCaste(WITCHMASTER);
@@ -1391,8 +1391,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(146));
         assertThat(character.getDamageMultiplier(), is(56));
-        assertThat(character.getHealth().totalValue(), is(290));
-        assertThat(character.getMagic().totalValue(), is(943));
+        assertThat(character.getTotalHealth(), is(290));
+        assertThat(character.getTotalMagicPoint(), is(943));
     }
 
     private void level52Upgrade() {
@@ -1417,8 +1417,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(146));
         assertThat(character.getDamageMultiplier(), is(58));
-        assertThat(character.getHealth().totalValue(), is(290));
-        assertThat(character.getMagic().totalValue(), is(960));
+        assertThat(character.getTotalHealth(), is(290));
+        assertThat(character.getTotalMagicPoint(), is(960));
     }
 
     private void level53Upgrade() {
@@ -1443,8 +1443,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(147));
         assertThat(character.getDamageMultiplier(), is(58));
-        assertThat(character.getHealth().totalValue(), is(300));
-        assertThat(character.getMagic().totalValue(), is(977));
+        assertThat(character.getTotalHealth(), is(300));
+        assertThat(character.getTotalMagicPoint(), is(977));
     }
 
     private void level54Upgrade() {
@@ -1469,8 +1469,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(148));
         assertThat(character.getDamageMultiplier(), is(60));
-        assertThat(character.getHealth().totalValue(), is(300));
-        assertThat(character.getMagic().totalValue(), is(994));
+        assertThat(character.getTotalHealth(), is(300));
+        assertThat(character.getTotalMagicPoint(), is(994));
     }
 
     private void level55Upgrade() {
@@ -1495,8 +1495,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(148));
         assertThat(character.getDamageMultiplier(), is(60));
-        assertThat(character.getHealth().totalValue(), is(310));
-        assertThat(character.getMagic().totalValue(), is(1022));
+        assertThat(character.getTotalHealth(), is(310));
+        assertThat(character.getTotalMagicPoint(), is(1022));
     }
 
     private void level56Upgrade() {
@@ -1521,8 +1521,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(150));
         assertThat(character.getDamageMultiplier(), is(61));
-        assertThat(character.getHealth().totalValue(), is(310));
-        assertThat(character.getMagic().totalValue(), is(1039));
+        assertThat(character.getTotalHealth(), is(310));
+        assertThat(character.getTotalMagicPoint(), is(1039));
     }
 
     private void level57Upgrade() {
@@ -1547,8 +1547,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(150));
         assertThat(character.getDamageMultiplier(), is(61));
-        assertThat(character.getHealth().totalValue(), is(320));
-        assertThat(character.getMagic().totalValue(), is(1056));
+        assertThat(character.getTotalHealth(), is(320));
+        assertThat(character.getTotalMagicPoint(), is(1056));
     }
 
     private void level58Upgrade() {
@@ -1573,8 +1573,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(152));
         assertThat(character.getDamageMultiplier(), is(64));
-        assertThat(character.getHealth().totalValue(), is(320));
-        assertThat(character.getMagic().totalValue(), is(1073));
+        assertThat(character.getTotalHealth(), is(320));
+        assertThat(character.getTotalMagicPoint(), is(1073));
     }
 
     private void level59Upgrade() {
@@ -1599,8 +1599,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(153));
         assertThat(character.getDamageMultiplier(), is(64));
-        assertThat(character.getHealth().totalValue(), is(330));
-        assertThat(character.getMagic().totalValue(), is(1090));
+        assertThat(character.getTotalHealth(), is(330));
+        assertThat(character.getTotalMagicPoint(), is(1090));
     }
 
     private void level60Upgrade() {
@@ -1625,8 +1625,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(153));
         assertThat(character.getDamageMultiplier(), is(66));
-        assertThat(character.getHealth().totalValue(), is(330));
-        assertThat(character.getMagic().totalValue(), is(1108));
+        assertThat(character.getTotalHealth(), is(330));
+        assertThat(character.getTotalMagicPoint(), is(1108));
     }
 
     private void level61Upgrade() {
@@ -1651,8 +1651,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(153));
         assertThat(character.getDamageMultiplier(), is(68));
-        assertThat(character.getHealth().totalValue(), is(330));
-        assertThat(character.getMagic().totalValue(), is(1125));
+        assertThat(character.getTotalHealth(), is(330));
+        assertThat(character.getTotalMagicPoint(), is(1125));
     }
 
     private void level62Upgrade() {
@@ -1677,8 +1677,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(157));
         assertThat(character.getDamageMultiplier(), is(70));
-        assertThat(character.getHealth().totalValue(), is(330));
-        assertThat(character.getMagic().totalValue(), is(1142));
+        assertThat(character.getTotalHealth(), is(330));
+        assertThat(character.getTotalMagicPoint(), is(1142));
     }
 
     private void level63Upgrade() {
@@ -1703,8 +1703,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(158));
         assertThat(character.getDamageMultiplier(), is(71));
-        assertThat(character.getHealth().totalValue(), is(340));
-        assertThat(character.getMagic().totalValue(), is(1159));
+        assertThat(character.getTotalHealth(), is(340));
+        assertThat(character.getTotalMagicPoint(), is(1159));
     }
 
     private void level64Upgrade() {
@@ -1729,8 +1729,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(159));
         assertThat(character.getDamageMultiplier(), is(71));
-        assertThat(character.getHealth().totalValue(), is(340));
-        assertThat(character.getMagic().totalValue(), is(1176));
+        assertThat(character.getTotalHealth(), is(340));
+        assertThat(character.getTotalMagicPoint(), is(1176));
     }
 
     private void level65Upgrade() {
@@ -1755,8 +1755,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(159));
         assertThat(character.getDamageMultiplier(), is(71));
-        assertThat(character.getHealth().totalValue(), is(350));
-        assertThat(character.getMagic().totalValue(), is(1204));
+        assertThat(character.getTotalHealth(), is(350));
+        assertThat(character.getTotalMagicPoint(), is(1204));
     }
 
     private void level66Upgrade() {
@@ -1781,8 +1781,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(162));
         assertThat(character.getDamageMultiplier(), is(72));
-        assertThat(character.getHealth().totalValue(), is(350));
-        assertThat(character.getMagic().totalValue(), is(1221));
+        assertThat(character.getTotalHealth(), is(350));
+        assertThat(character.getTotalMagicPoint(), is(1221));
     }
 
     private void level67Upgrade() {
@@ -1807,8 +1807,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(162));
         assertThat(character.getDamageMultiplier(), is(74));
-        assertThat(character.getHealth().totalValue(), is(360));
-        assertThat(character.getMagic().totalValue(), is(1238));
+        assertThat(character.getTotalHealth(), is(360));
+        assertThat(character.getTotalMagicPoint(), is(1238));
     }
 
     private void level68Upgrade() {
@@ -1833,8 +1833,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(163));
         assertThat(character.getDamageMultiplier(), is(77));
-        assertThat(character.getHealth().totalValue(), is(360));
-        assertThat(character.getMagic().totalValue(), is(1255));
+        assertThat(character.getTotalHealth(), is(360));
+        assertThat(character.getTotalMagicPoint(), is(1255));
     }
 
     private void level69Upgrade() {
@@ -1859,8 +1859,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(164));
         assertThat(character.getDamageMultiplier(), is(77));
-        assertThat(character.getHealth().totalValue(), is(370));
-        assertThat(character.getMagic().totalValue(), is(1272));
+        assertThat(character.getTotalHealth(), is(370));
+        assertThat(character.getTotalMagicPoint(), is(1272));
     }
 
     private void level70Upgrade() {
@@ -1885,8 +1885,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(164));
         assertThat(character.getDamageMultiplier(), is(77));
-        assertThat(character.getHealth().totalValue(), is(370));
-        assertThat(character.getMagic().totalValue(), is(1292));
+        assertThat(character.getTotalHealth(), is(370));
+        assertThat(character.getTotalMagicPoint(), is(1292));
     }
 
     private void level71Upgrade() {
@@ -1911,8 +1911,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(166));
         assertThat(character.getDamageMultiplier(), is(78));
-        assertThat(character.getHealth().totalValue(), is(380));
-        assertThat(character.getMagic().totalValue(), is(1309));
+        assertThat(character.getTotalHealth(), is(380));
+        assertThat(character.getTotalMagicPoint(), is(1309));
     }
 
     private void level72Upgrade() {
@@ -1937,8 +1937,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(166));
         assertThat(character.getDamageMultiplier(), is(80));
-        assertThat(character.getHealth().totalValue(), is(380));
-        assertThat(character.getMagic().totalValue(), is(1326));
+        assertThat(character.getTotalHealth(), is(380));
+        assertThat(character.getTotalMagicPoint(), is(1326));
     }
 
     private void level73Upgrade() {
@@ -1963,8 +1963,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(170));
         assertThat(character.getDamageMultiplier(), is(82));
-        assertThat(character.getHealth().totalValue(), is(390));
-        assertThat(character.getMagic().totalValue(), is(1343));
+        assertThat(character.getTotalHealth(), is(390));
+        assertThat(character.getTotalMagicPoint(), is(1343));
     }
 
     private void level74Upgrade() {
@@ -1989,8 +1989,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(170));
         assertThat(character.getDamageMultiplier(), is(84));
-        assertThat(character.getHealth().totalValue(), is(390));
-        assertThat(character.getMagic().totalValue(), is(1360));
+        assertThat(character.getTotalHealth(), is(390));
+        assertThat(character.getTotalMagicPoint(), is(1360));
     }
 
     private void level75Upgrade() {
@@ -2015,8 +2015,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(170));
         assertThat(character.getDamageMultiplier(), is(84));
-        assertThat(character.getHealth().totalValue(), is(400));
-        assertThat(character.getMagic().totalValue(), is(1393));
+        assertThat(character.getTotalHealth(), is(400));
+        assertThat(character.getTotalMagicPoint(), is(1393));
     }
 
     private void level76Upgrade() {
@@ -2041,8 +2041,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(173));
         assertThat(character.getDamageMultiplier(), is(85));
-        assertThat(character.getHealth().totalValue(), is(400));
-        assertThat(character.getMagic().totalValue(), is(1410));
+        assertThat(character.getTotalHealth(), is(400));
+        assertThat(character.getTotalMagicPoint(), is(1410));
     }
 
     private void level77Upgrade() {
@@ -2067,8 +2067,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(173));
         assertThat(character.getDamageMultiplier(), is(85));
-        assertThat(character.getHealth().totalValue(), is(410));
-        assertThat(character.getMagic().totalValue(), is(1427));
+        assertThat(character.getTotalHealth(), is(410));
+        assertThat(character.getTotalMagicPoint(), is(1427));
     }
 
     private void level78Upgrade() {
@@ -2093,8 +2093,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(175));
         assertThat(character.getDamageMultiplier(), is(86));
-        assertThat(character.getHealth().totalValue(), is(410));
-        assertThat(character.getMagic().totalValue(), is(1444));
+        assertThat(character.getTotalHealth(), is(410));
+        assertThat(character.getTotalMagicPoint(), is(1444));
     }
 
     private void level79Upgrade() {
@@ -2119,8 +2119,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(175));
         assertThat(character.getDamageMultiplier(), is(88));
-        assertThat(character.getHealth().totalValue(), is(420));
-        assertThat(character.getMagic().totalValue(), is(1461));
+        assertThat(character.getTotalHealth(), is(420));
+        assertThat(character.getTotalMagicPoint(), is(1461));
     }
 
     private void level80Upgrade() {
@@ -2145,8 +2145,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(175));
         assertThat(character.getDamageMultiplier(), is(90));
-        assertThat(character.getHealth().totalValue(), is(420));
-        assertThat(character.getMagic().totalValue(), is(1479));
+        assertThat(character.getTotalHealth(), is(420));
+        assertThat(character.getTotalMagicPoint(), is(1479));
     }
 
     private void level81Upgrade() {
@@ -2171,8 +2171,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(175));
         assertThat(character.getDamageMultiplier(), is(92));
-        assertThat(character.getHealth().totalValue(), is(420));
-        assertThat(character.getMagic().totalValue(), is(1496));
+        assertThat(character.getTotalHealth(), is(420));
+        assertThat(character.getTotalMagicPoint(), is(1496));
     }
 
     private void level82Upgrade() {
@@ -2197,8 +2197,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(178));
         assertThat(character.getDamageMultiplier(), is(93));
-        assertThat(character.getHealth().totalValue(), is(420));
-        assertThat(character.getMagic().totalValue(), is(1513));
+        assertThat(character.getTotalHealth(), is(420));
+        assertThat(character.getTotalMagicPoint(), is(1513));
     }
 
     private void level83Upgrade() {
@@ -2223,8 +2223,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(179));
         assertThat(character.getDamageMultiplier(), is(94));
-        assertThat(character.getHealth().totalValue(), is(430));
-        assertThat(character.getMagic().totalValue(), is(1530));
+        assertThat(character.getTotalHealth(), is(430));
+        assertThat(character.getTotalMagicPoint(), is(1530));
     }
 
     private void level84Upgrade() {
@@ -2249,8 +2249,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(180));
         assertThat(character.getDamageMultiplier(), is(94));
-        assertThat(character.getHealth().totalValue(), is(430));
-        assertThat(character.getMagic().totalValue(), is(1547));
+        assertThat(character.getTotalHealth(), is(430));
+        assertThat(character.getTotalMagicPoint(), is(1547));
     }
 
     private void level85Upgrade() {
@@ -2275,8 +2275,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(180));
         assertThat(character.getDamageMultiplier(), is(94));
-        assertThat(character.getHealth().totalValue(), is(440));
-        assertThat(character.getMagic().totalValue(), is(1575));
+        assertThat(character.getTotalHealth(), is(440));
+        assertThat(character.getTotalMagicPoint(), is(1575));
     }
 
     private void level86Upgrade() {
@@ -2301,8 +2301,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(184));
         assertThat(character.getDamageMultiplier(), is(96));
-        assertThat(character.getHealth().totalValue(), is(440));
-        assertThat(character.getMagic().totalValue(), is(1592));
+        assertThat(character.getTotalHealth(), is(440));
+        assertThat(character.getTotalMagicPoint(), is(1592));
     }
 
     private void level87Upgrade() {
@@ -2327,8 +2327,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(186));
         assertThat(character.getDamageMultiplier(), is(97));
-        assertThat(character.getHealth().totalValue(), is(450));
-        assertThat(character.getMagic().totalValue(), is(1609));
+        assertThat(character.getTotalHealth(), is(450));
+        assertThat(character.getTotalMagicPoint(), is(1609));
     }
 
     private void level88Upgrade() {
@@ -2353,8 +2353,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(186));
         assertThat(character.getDamageMultiplier(), is(99));
-        assertThat(character.getHealth().totalValue(), is(450));
-        assertThat(character.getMagic().totalValue(), is(1626));
+        assertThat(character.getTotalHealth(), is(450));
+        assertThat(character.getTotalMagicPoint(), is(1626));
     }
 
     private void level89Upgrade() {
@@ -2379,8 +2379,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(188));
         assertThat(character.getDamageMultiplier(), is(100));
-        assertThat(character.getHealth().totalValue(), is(460));
-        assertThat(character.getMagic().totalValue(), is(1643));
+        assertThat(character.getTotalHealth(), is(460));
+        assertThat(character.getTotalMagicPoint(), is(1643));
     }
 
     private void level90Upgrade() {
@@ -2405,8 +2405,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(189));
         assertThat(character.getDamageMultiplier(), is(100));
-        assertThat(character.getHealth().totalValue(), is(460));
-        assertThat(character.getMagic().totalValue(), is(1663));
+        assertThat(character.getTotalHealth(), is(460));
+        assertThat(character.getTotalMagicPoint(), is(1663));
     }
 
     private void level91Upgrade() {
@@ -2431,8 +2431,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(189));
         assertThat(character.getDamageMultiplier(), is(102));
-        assertThat(character.getHealth().totalValue(), is(470));
-        assertThat(character.getMagic().totalValue(), is(1680));
+        assertThat(character.getTotalHealth(), is(470));
+        assertThat(character.getTotalMagicPoint(), is(1680));
     }
 
     private void level92Upgrade() {
@@ -2457,8 +2457,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(190));
         assertThat(character.getDamageMultiplier(), is(103));
-        assertThat(character.getHealth().totalValue(), is(470));
-        assertThat(character.getMagic().totalValue(), is(1697));
+        assertThat(character.getTotalHealth(), is(470));
+        assertThat(character.getTotalMagicPoint(), is(1697));
     }
 
     private void level93Upgrade() {
@@ -2483,8 +2483,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(191));
         assertThat(character.getDamageMultiplier(), is(103));
-        assertThat(character.getHealth().totalValue(), is(480));
-        assertThat(character.getMagic().totalValue(), is(1714));
+        assertThat(character.getTotalHealth(), is(480));
+        assertThat(character.getTotalMagicPoint(), is(1714));
     }
 
     private void level94Upgrade() {
@@ -2509,8 +2509,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(193));
         assertThat(character.getDamageMultiplier(), is(106));
-        assertThat(character.getHealth().totalValue(), is(480));
-        assertThat(character.getMagic().totalValue(), is(1731));
+        assertThat(character.getTotalHealth(), is(480));
+        assertThat(character.getTotalMagicPoint(), is(1731));
     }
 
     private void level95Upgrade() {
@@ -2535,8 +2535,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(193));
         assertThat(character.getDamageMultiplier(), is(106));
-        assertThat(character.getHealth().totalValue(), is(490));
-        assertThat(character.getMagic().totalValue(), is(1759));
+        assertThat(character.getTotalHealth(), is(490));
+        assertThat(character.getTotalMagicPoint(), is(1759));
     }
 
     private void level96Upgrade() {
@@ -2561,8 +2561,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(197));
         assertThat(character.getDamageMultiplier(), is(108));
-        assertThat(character.getHealth().totalValue(), is(490));
-        assertThat(character.getMagic().totalValue(), is(1776));
+        assertThat(character.getTotalHealth(), is(490));
+        assertThat(character.getTotalMagicPoint(), is(1776));
     }
 
     private void level97Upgrade() {
@@ -2587,8 +2587,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(198));
         assertThat(character.getDamageMultiplier(), is(108));
-        assertThat(character.getHealth().totalValue(), is(500));
-        assertThat(character.getMagic().totalValue(), is(1793));
+        assertThat(character.getTotalHealth(), is(500));
+        assertThat(character.getTotalMagicPoint(), is(1793));
     }
 
     private void level98Upgrade() {
@@ -2613,8 +2613,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(200));
         assertThat(character.getDamageMultiplier(), is(109));
-        assertThat(character.getHealth().totalValue(), is(500));
-        assertThat(character.getMagic().totalValue(), is(1810));
+        assertThat(character.getTotalHealth(), is(500));
+        assertThat(character.getTotalMagicPoint(), is(1810));
     }
 
     private void level99Upgrade() {
@@ -2639,8 +2639,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(202));
         assertThat(character.getDamageMultiplier(), is(110));
-        assertThat(character.getHealth().totalValue(), is(510));
-        assertThat(character.getMagic().totalValue(), is(1827));
+        assertThat(character.getTotalHealth(), is(510));
+        assertThat(character.getTotalMagicPoint(), is(1827));
     }
 
     private void level100Upgrade() {
@@ -2665,8 +2665,8 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
         // and
         assertThat(character.getAttack(), is(202));
         assertThat(character.getDamageMultiplier(), is(110));
-        assertThat(character.getHealth().totalValue(), is(510));
-        assertThat(character.getMagic().totalValue(), is(1845));
+        assertThat(character.getTotalHealth(), is(510));
+        assertThat(character.getTotalMagicPoint(), is(1845));
 
         // then
         upgradeCaste(AVATAR);

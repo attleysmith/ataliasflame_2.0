@@ -11,12 +11,4 @@ public interface AbsorptionDefense {
     int getAbsorption();
 
     Energy getDurability();
-
-    default boolean lastsLonger(AbsorptionDefense other) {
-        return this.getDurability().actualValue() > other.getDurability().actualValue();
-    }
-
-    default boolean sameDurable(AbsorptionDefense other) {
-        return this.getDurability().actualValue() == other.getDurability().actualValue();
-    }
 }

@@ -80,11 +80,6 @@ public class Energy {
         return actualValue() < cost;
     }
 
-    public boolean tolerateLoss(int toleratedLossPercent) {
-        int toleratedLossValue = percent(totalEnergy, toleratedLossPercent);
-        return usedEnergy <= toleratedLossValue;
-    }
-
     public void use(int cost) {
         if (hasNot(cost)) {
             throw new IllegalArgumentException("Low energy value!");

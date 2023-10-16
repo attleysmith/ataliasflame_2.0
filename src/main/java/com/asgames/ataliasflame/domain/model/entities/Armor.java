@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import static com.asgames.ataliasflame.domain.utils.DiceUtils.roll100;
@@ -17,12 +18,9 @@ import static jakarta.persistence.EnumType.STRING;
 @SuperBuilder
 @Data
 @EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor // JPA needs it
 @AllArgsConstructor // Builder needs it
 public class Armor extends Item implements AbsorptionDefense {
-
-    // JPA needs it
-    public Armor() {
-    }
 
     @Column(name = "defense")
     private int defense;

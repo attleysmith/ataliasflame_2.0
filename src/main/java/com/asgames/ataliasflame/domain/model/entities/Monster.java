@@ -8,12 +8,9 @@ import lombok.*;
 @Entity
 @Builder
 @Data
+@NoArgsConstructor // JPA needs it
 @AllArgsConstructor // Builder needs it
 public class Monster implements Combatant {
-
-    // JPA needs it
-    public Monster() {
-    }
 
     @Id
     @Column(name = "reference")

@@ -1,5 +1,7 @@
 package com.asgames.ataliasflame.domain.model.enums;
 
+import lombok.AllArgsConstructor;
+
 import java.util.List;
 
 import static com.asgames.ataliasflame.domain.model.enums.Booster.*;
@@ -8,6 +10,7 @@ import static com.asgames.ataliasflame.domain.model.enums.Gender.FEMALE;
 import static com.asgames.ataliasflame.domain.model.enums.Gender.MALE;
 import static com.asgames.ataliasflame.domain.model.enums.God.*;
 
+@AllArgsConstructor
 public enum Race {
     HUMAN(HUMAN_EFFECT, List.of(), List.of(), List.of()),
     ELF(ELF_EFFECT, List.of(), List.of(), List.of()),
@@ -19,13 +22,6 @@ public enum Race {
     ARIMASPI(ARIMASPI_EFFECT, List.of(), List.of(), List.of(SORCERER, CLERIC)),
     NYMPH(NYMPH_EFFECT, List.of(MALE), List.of(GETON, ALATE), List.of(WARRIOR, WANDERER)),
     HALFLING(HALFLING_EFFECT, List.of(), List.of(), List.of());
-
-    Race(Booster booster, List<Gender> prohibitedGenders, List<God> prohibitedGods, List<CasteGroup> prohibitedCasteGroups) {
-        this.booster = booster;
-        this.prohibitedGenders = prohibitedGenders;
-        this.prohibitedGods = prohibitedGods;
-        this.prohibitedCasteGroups = prohibitedCasteGroups;
-    }
 
     public final Booster booster;
     public final List<Gender> prohibitedGenders;

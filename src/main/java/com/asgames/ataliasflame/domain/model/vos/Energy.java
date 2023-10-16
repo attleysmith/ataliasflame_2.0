@@ -3,6 +3,7 @@ package com.asgames.ataliasflame.domain.model.vos;
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.percent;
@@ -11,11 +12,8 @@ import static java.lang.Math.min;
 
 @Embeddable
 @Data
+@NoArgsConstructor // JPA needs it
 public class Energy {
-
-    // JPA needs it
-    public Energy() {
-    }
 
     private Energy(int totalEnergy) {
         this.totalEnergy = totalEnergy;

@@ -1,5 +1,7 @@
 package com.asgames.ataliasflame.domain.model.enums;
 
+import lombok.AllArgsConstructor;
+
 import java.util.List;
 import java.util.Map;
 
@@ -7,6 +9,7 @@ import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
 import static com.asgames.ataliasflame.domain.model.enums.CasteGroup.*;
 import static java.util.Collections.emptyList;
 
+@AllArgsConstructor
 public enum Caste {
     ARCHANGEL(CLERIC, Map.of(
             STRENGTH, 50,
@@ -218,12 +221,6 @@ public enum Caste {
             MENTAL_POWER, 0,
             SPIRITUAL_POWER, 0
     ), List.of(WIZARD, FIGHTER, TRACKER, HERMIT, MONK));
-
-    Caste(CasteGroup group, Map<Attribute, Integer> minimumAttributes, List<Caste> nextCastes) {
-        this.group = group;
-        this.minimumAttributes = minimumAttributes;
-        this.nextCastes = nextCastes;
-    }
 
     public final CasteGroup group;
     public final Map<Attribute, Integer> minimumAttributes;

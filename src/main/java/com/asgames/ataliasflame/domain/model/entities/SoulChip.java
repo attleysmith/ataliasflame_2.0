@@ -14,12 +14,9 @@ import static jakarta.persistence.EnumType.STRING;
 @Entity
 @Builder
 @Data
+@NoArgsConstructor // JPA needs it
 @AllArgsConstructor // Builder needs it
 public class SoulChip {
-
-    // JPA needs it
-    public SoulChip() {
-    }
 
     @Id
     @Column(name = "reference")

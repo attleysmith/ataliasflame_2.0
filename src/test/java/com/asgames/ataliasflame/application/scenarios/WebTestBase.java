@@ -21,165 +21,93 @@ public abstract class WebTestBase {
     private TestRestTemplate restTemplate;
 
     protected CharacterDto createCharacter(CharacterInput characterInput) {
-        try {
-            String path = "/characters";
-            return restTemplate.postForObject(path, characterInput, CharacterDto.class);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        String path = "/characters";
+        return restTemplate.postForObject(path, characterInput, CharacterDto.class);
     }
 
     protected CharacterDto getCharacter(String characterReference) {
-        try {
-            String path = "/characters/{characterReference}";
-            return restTemplate.getForObject(path, CharacterDto.class, characterReference);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        String path = "/characters/{characterReference}";
+        return restTemplate.getForObject(path, CharacterDto.class, characterReference);
     }
 
     protected void removeCharacter(String characterReference) {
-        try {
-            String path = "/characters/{characterReference}";
-            restTemplate.delete(path, characterReference);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        String path = "/characters/{characterReference}";
+        restTemplate.delete(path, characterReference);
     }
 
     protected CharacterDto addAttributePoints(String characterReference, Attribute attribute, int points) {
-        try {
-            String path = "/characters/{characterReference}/attributes/{attribute}/add?points={points}";
-            return restTemplate.postForObject(path, null, CharacterDto.class, characterReference, attribute, points);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        String path = "/characters/{characterReference}/attributes/{attribute}/add?points={points}";
+        return restTemplate.postForObject(path, null, CharacterDto.class, characterReference, attribute, points);
     }
 
     protected CharacterDto upgradeCaste(String characterReference, Caste newCaste) {
-        try {
-            String path = "/characters/{characterReference}/caste/upgrade?newCaste={newCaste}";
-            return restTemplate.postForObject(path, null, CharacterDto.class, characterReference, newCaste);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        String path = "/characters/{characterReference}/caste/upgrade?newCaste={newCaste}";
+        return restTemplate.postForObject(path, null, CharacterDto.class, characterReference, newCaste);
     }
 
     protected List<SpellDto> listCharacterSpells(String characterReference) {
-        try {
-            String path = "/characters/{characterReference}/spells";
-            return List.of(requireNonNull(restTemplate.getForEntity(path, SpellDto[].class, characterReference).getBody()));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        String path = "/characters/{characterReference}/spells";
+        return List.of(requireNonNull(restTemplate.getForEntity(path, SpellDto[].class, characterReference).getBody()));
     }
 
     protected CharacterDto castSpell(String characterReference, SpellName spellName) {
-        try {
-            String path = "/characters/{characterReference}/spells/{spellName}/cast";
-            return restTemplate.postForObject(path, null, CharacterDto.class, characterReference, spellName);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        String path = "/characters/{characterReference}/spells/{spellName}/cast";
+        return restTemplate.postForObject(path, null, CharacterDto.class, characterReference, spellName);
     }
 
     protected TargetContextDto castTargetingSpell(String characterReference, SpellName spellName, String targetMonsterReference) {
-        try {
-            String path = "/characters/{characterReference}/spells/{spellName}/cast?target={targetMonsterReference}";
-            return restTemplate.postForObject(path, null, TargetContextDto.class, characterReference, spellName, targetMonsterReference);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        String path = "/characters/{characterReference}/spells/{spellName}/cast?target={targetMonsterReference}";
+        return restTemplate.postForObject(path, null, TargetContextDto.class, characterReference, spellName, targetMonsterReference);
     }
 
     protected CharacterDto sleep(String characterReference) {
-        try {
-            String path = "/characters/{characterReference}/sleep";
-            return restTemplate.postForObject(path, null, CharacterDto.class, characterReference);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        String path = "/characters/{characterReference}/sleep";
+        return restTemplate.postForObject(path, null, CharacterDto.class, characterReference);
     }
 
     protected CharacterDto timePassed(String characterReference) {
-        try {
-            String path = "/characters/{characterReference}/time-passed";
-            return restTemplate.postForObject(path, null, CharacterDto.class, characterReference);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        String path = "/characters/{characterReference}/time-passed";
+        return restTemplate.postForObject(path, null, CharacterDto.class, characterReference);
     }
 
     protected LocationContextDto enterLocation(String characterReference, String locationReference) {
-        try {
-            String path = "/characters/{characterReference}/location/enter?location={locationReference}";
-            return restTemplate.postForObject(path, null, LocationContextDto.class, characterReference, locationReference);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        String path = "/characters/{characterReference}/location/enter?location={locationReference}";
+        return restTemplate.postForObject(path, null, LocationContextDto.class, characterReference, locationReference);
     }
 
     protected LocationContextDto seizeLocation(String characterReference) {
-        try {
-            String path = "/characters/{characterReference}/location/seize";
-            return restTemplate.postForObject(path, null, LocationContextDto.class, characterReference);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        String path = "/characters/{characterReference}/location/seize";
+        return restTemplate.postForObject(path, null, LocationContextDto.class, characterReference);
     }
 
     protected LocationContextDto useItem(String characterReference, String itemReference) {
-        try {
-            String path = "/characters/{characterReference}/location/items/{itemReference}/use";
-            return restTemplate.postForObject(path, null, LocationContextDto.class, characterReference, itemReference);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        String path = "/characters/{characterReference}/location/items/{itemReference}/use";
+        return restTemplate.postForObject(path, null, LocationContextDto.class, characterReference, itemReference);
     }
 
     protected LocationDto buildLocation(int level) {
-        try {
-            String path = "/locations?level={level}";
-            return restTemplate.postForObject(path, null, LocationDto.class, level);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        String path = "/locations?level={level}";
+        return restTemplate.postForObject(path, null, LocationDto.class, level);
     }
 
     protected LocationDto getLocation(String locationReference) {
-        try {
-            String path = "/locations/{locationReference}";
-            return restTemplate.getForObject(path, LocationDto.class, locationReference);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        String path = "/locations/{locationReference}";
+        return restTemplate.getForObject(path, LocationDto.class, locationReference);
     }
 
     protected WeaponDto getWeapon(String locationReference, String itemReference) {
-        try {
-            String path = "/locations/{locationReference}/weapons/{itemReference}";
-            return restTemplate.getForObject(path, WeaponDto.class, locationReference, itemReference);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        String path = "/locations/{locationReference}/weapons/{itemReference}";
+        return restTemplate.getForObject(path, WeaponDto.class, locationReference, itemReference);
     }
 
     protected ShieldDto getShield(String locationReference, String itemReference) {
-        try {
-            String path = "/locations/{locationReference}/shields/{itemReference}";
-            return restTemplate.getForObject(path, ShieldDto.class, locationReference, itemReference);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        String path = "/locations/{locationReference}/shields/{itemReference}";
+        return restTemplate.getForObject(path, ShieldDto.class, locationReference, itemReference);
     }
 
     protected ArmorDto getArmor(String locationReference, String itemReference) {
-        try {
-            String path = "/locations/{locationReference}/armors/{itemReference}";
-            return restTemplate.getForObject(path, ArmorDto.class, locationReference, itemReference);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        String path = "/locations/{locationReference}/armors/{itemReference}";
+        return restTemplate.getForObject(path, ArmorDto.class, locationReference, itemReference);
     }
 
 }

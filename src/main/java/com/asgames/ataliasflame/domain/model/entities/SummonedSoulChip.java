@@ -6,6 +6,7 @@ import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import static jakarta.persistence.FetchType.LAZY;
@@ -14,12 +15,9 @@ import static jakarta.persistence.FetchType.LAZY;
 @SuperBuilder
 @Data
 @EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor // JPA needs it
 @AllArgsConstructor // Builder needs it
 public class SummonedSoulChip extends Companion {
-
-    // JPA needs it
-    public SummonedSoulChip() {
-    }
 
     @JoinColumn(name = "sourceId")
     @OneToOne(fetch = LAZY)

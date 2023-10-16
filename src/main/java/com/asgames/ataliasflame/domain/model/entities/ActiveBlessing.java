@@ -12,12 +12,9 @@ import static jakarta.persistence.FetchType.LAZY;
 @Entity
 @Builder
 @Data
+@NoArgsConstructor // JPA needs it
 @AllArgsConstructor // Builder needs it
 public class ActiveBlessing {
-
-    // JPA needs it
-    public ActiveBlessing() {
-    }
 
     @Id
     @Column(name = "reference")

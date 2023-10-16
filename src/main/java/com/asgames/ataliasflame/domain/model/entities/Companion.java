@@ -4,10 +4,7 @@ import com.asgames.ataliasflame.domain.model.enums.CompanionType;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
 import com.asgames.ataliasflame.domain.model.vos.Energy;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import static jakarta.persistence.EnumType.STRING;
@@ -17,12 +14,9 @@ import static jakarta.persistence.InheritanceType.SINGLE_TABLE;
 @Entity
 @SuperBuilder
 @Data
+@NoArgsConstructor // JPA needs it
 @AllArgsConstructor // Builder needs it
 public class Companion implements Combatant {
-
-    // JPA needs it
-    public Companion() {
-    }
 
     @Id
     @Column(name = "reference")

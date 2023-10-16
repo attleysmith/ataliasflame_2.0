@@ -1,10 +1,13 @@
 package com.asgames.ataliasflame.domain.model.enums;
 
+import lombok.AllArgsConstructor;
+
 import java.util.Map;
 
 import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
 import static com.asgames.ataliasflame.domain.model.enums.BoosterType.*;
 
+@AllArgsConstructor
 public enum Booster {
 
     HORA_EFFECT(GOD_EFFECT, Map.of(
@@ -247,11 +250,6 @@ public enum Booster {
             MENTAL_POWER, 0,
             SPIRITUAL_POWER, 0
     ));
-
-    Booster(BoosterType type, Map<Attribute, Integer> effects) {
-        this.type = type;
-        this.effects = effects;
-    }
 
     public final BoosterType type;
     public final Map<Attribute, Integer> effects;

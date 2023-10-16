@@ -4,14 +4,12 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor // JPA needs it
 public class Level {
-
-    // JPA needs it
-    public Level() {
-    }
 
     @Id
     @Column(name = "id")

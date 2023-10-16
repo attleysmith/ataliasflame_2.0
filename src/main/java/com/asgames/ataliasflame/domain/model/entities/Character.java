@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.*;
 
@@ -18,12 +19,9 @@ import static jakarta.persistence.FetchType.LAZY;
 @Entity
 @Builder
 @Data
+@NoArgsConstructor // JPA needs it
 @AllArgsConstructor // Builder needs it
 public class Character implements Combatant {
-
-    // JPA needs it
-    public Character() {
-    }
 
     @Id
     @Column(name = "reference")

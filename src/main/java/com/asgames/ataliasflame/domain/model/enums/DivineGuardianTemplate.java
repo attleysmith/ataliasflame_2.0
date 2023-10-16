@@ -3,23 +3,16 @@ package com.asgames.ataliasflame.domain.model.enums;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Companion;
 import com.asgames.ataliasflame.domain.model.vos.Energy;
+import lombok.AllArgsConstructor;
 
 import java.util.UUID;
 
 import static com.asgames.ataliasflame.domain.model.enums.CompanionType.DIVINE_GUARDIAN;
 
+@AllArgsConstructor
 public enum DivineGuardianTemplate {
     KNIGHT(90, 25, 5, 20, 100, -4),
     COMMANDER(100, 40, 6, 24, 120, -5);
-
-    DivineGuardianTemplate(int attack, int defense, int minDamage, int maxDamage, int health, int initiative) {
-        this.attack = attack;
-        this.defense = defense;
-        this.minDamage = minDamage;
-        this.maxDamage = maxDamage;
-        this.health = health;
-        this.initiative = initiative;
-    }
 
     private final int attack;
     private final int defense;

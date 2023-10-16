@@ -5,6 +5,7 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.lang.Nullable;
 
 import java.util.Optional;
@@ -14,11 +15,8 @@ import static jakarta.persistence.FetchType.EAGER;
 
 @Embeddable
 @Data
+@NoArgsConstructor // JPA needs it
 public class Cover {
-
-    // JPA needs it
-    public Cover() {
-    }
 
     @JoinColumn(name = "helmetId")
     @OneToOne(cascade = ALL, fetch = EAGER)

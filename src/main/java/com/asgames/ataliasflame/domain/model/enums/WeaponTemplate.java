@@ -2,24 +2,18 @@ package com.asgames.ataliasflame.domain.model.enums;
 
 import com.asgames.ataliasflame.domain.model.entities.Weapon;
 import com.asgames.ataliasflame.domain.model.interfaces.ItemTemplate;
+import lombok.AllArgsConstructor;
 
 import java.util.UUID;
 
 import static com.asgames.ataliasflame.domain.model.enums.ItemType.WEAPON;
 
+@AllArgsConstructor
 public enum WeaponTemplate implements ItemTemplate {
     STAFF(1, 5, 5, -5, false),
     DAGGER(2, 6, 1, 0, true),
     SPEAR(2, 12, 5, -6, false),
     SWORD(2, 18, 3, -3, true);
-
-    WeaponTemplate(int minDamage, int maxDamage, int defense, int initiative, boolean oneHanded) {
-        this.minDamage = minDamage;
-        this.maxDamage = maxDamage;
-        this.defense = defense;
-        this.initiative = initiative;
-        this.oneHanded = oneHanded;
-    }
 
     private final int minDamage;
     private final int maxDamage;

@@ -5,18 +5,16 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import static jakarta.persistence.EnumType.STRING;
 
 @Entity
 @Builder
 @Data
+@NoArgsConstructor // JPA needs it
 @AllArgsConstructor // Builder needs it
 public class DefensiveGodConversionLog {
-
-    // JPA needs it
-    public DefensiveGodConversionLog() {
-    }
 
     @Id
     @Column(name = "conversionCode")

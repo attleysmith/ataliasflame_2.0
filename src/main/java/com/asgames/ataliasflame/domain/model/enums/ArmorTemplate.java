@@ -3,6 +3,7 @@ package com.asgames.ataliasflame.domain.model.enums;
 import com.asgames.ataliasflame.domain.model.entities.Armor;
 import com.asgames.ataliasflame.domain.model.interfaces.ItemTemplate;
 import com.asgames.ataliasflame.domain.model.vos.Energy;
+import lombok.AllArgsConstructor;
 
 import java.util.UUID;
 
@@ -10,6 +11,7 @@ import static com.asgames.ataliasflame.domain.model.enums.ArmorType.BODY_ARMOR;
 import static com.asgames.ataliasflame.domain.model.enums.ArmorType.HELMET;
 import static com.asgames.ataliasflame.domain.model.enums.ItemType.ARMOR;
 
+@AllArgsConstructor
 public enum ArmorTemplate implements ItemTemplate {
     CAP(HELMET, 0, 10, 10),
     LEATHER_HELMET(HELMET, 1, 20, 20),
@@ -21,13 +23,6 @@ public enum ArmorTemplate implements ItemTemplate {
     CHAIN_MAIL(BODY_ARMOR, 4, 40, 100),
     PLATE_MAIL(BODY_ARMOR, 6, 50, 100),
     FULL_PLATE_MAIL(BODY_ARMOR, 8, 60, 120);
-
-    ArmorTemplate(ArmorType armorType, int defense, int absorption, int durability) {
-        this.armorType = armorType;
-        this.defense = defense;
-        this.absorption = absorption;
-        this.durability = durability;
-    }
 
     private final ArmorType armorType;
     private final int defense;

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.UUID;
@@ -14,12 +15,9 @@ import static jakarta.persistence.FetchType.EAGER;
 @Entity
 @Builder
 @Data
+@NoArgsConstructor // JPA needs it
 @AllArgsConstructor // Builder needs it
 public class Location {
-
-    // JPA needs it
-    public Location() {
-    }
 
     @Id
     @Column(name = "reference")

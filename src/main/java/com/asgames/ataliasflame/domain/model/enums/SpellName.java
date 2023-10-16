@@ -1,5 +1,7 @@
 package com.asgames.ataliasflame.domain.model.enums;
 
+import lombok.AllArgsConstructor;
+
 import java.util.List;
 
 import static com.asgames.ataliasflame.domain.model.enums.Caste.*;
@@ -8,6 +10,7 @@ import static com.asgames.ataliasflame.domain.model.enums.MagicType.*;
 import static com.asgames.ataliasflame.domain.model.enums.Race.*;
 import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.*;
 
+@AllArgsConstructor
 public enum SpellName {
     FIREBALL(ELEMENTAL, ATTACK,
             List.of(), List.of(FIGHTER, TRACKER, HERMIT, MONK), List.of()),
@@ -79,14 +82,6 @@ public enum SpellName {
             List.of(), List.of(WIZARD, FIGHTER, PALADIN, HERMIT, DRUID, MONK, PRIEST), List.of()),
     FRIEND_IN_NEED(DIVINE, SUMMON,
             List.of(SORCERER, NATURE_DWELLER), List.of(), List.of());
-
-    SpellName(SpellGroup group, MagicType type, List<CasteGroup> prohibitedCasteGroups, List<Caste> prohibitedCastes, List<Race> prohibitedRaces) {
-        this.group = group;
-        this.type = type;
-        this.prohibitedCasteGroups = prohibitedCasteGroups;
-        this.prohibitedCastes = prohibitedCastes;
-        this.prohibitedRaces = prohibitedRaces;
-    }
 
     public final SpellGroup group;
     public final MagicType type;

@@ -58,4 +58,13 @@ public class SoulPower extends HealingSpell {
     public int getCost() {
         return SPELL_COST;
     }
+
+    @Override
+    public String getDetails() {
+        return "Absorbing the energies of a soul chip to recover the caster's body and health. " +
+                "Healing effect: " + HEALING_EFFECT + "% " +
+                "There can be an utmost " + BONUS_EFFECT + "% bonus effect of healing depending on the soul chip's effectiveness. " +
+                "Fatigue effect of the soul magic is " + FATIGUE_EFFECT + "%. " +
+                "Cost: " + SPELL_COST + " MP";
+    }
 }

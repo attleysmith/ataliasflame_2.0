@@ -71,6 +71,14 @@ public class BladesOfJudgement extends AttackSpell {
     }
 
     @Override
+    public String getDetails() {
+        return "Summoning dozens of small blades surrounding a single enemy to cause damage (" + MIN_DAMAGE + "-" + MAX_DAMAGE + "). " +
+                "If the targeted enemy dies because of this attack then other enemies have a " + INTIMIDATION_EFFECT_CHANCE + "% chance each to get intimidated. " +
+                "Intimidation effect: [" + effectDetailsOf(INTIMIDATION_ATTACK_MULTIPLIER, INTIMIDATION_DEFENSE_MULTIPLIER, 0, 0) + "] " +
+                "Cost: " + SPELL_COST + " MP";
+    }
+
+    @Override
     public int getMinDamage() {
         return MIN_DAMAGE;
     }

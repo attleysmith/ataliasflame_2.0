@@ -39,6 +39,12 @@ public class SplittingWind extends AttackSpell {
     }
 
     @Override
+    public String getDetails() {
+        return "Summoning and throwing dozens of wind blades towards an enemy to cause damage (" + MIN_DAMAGE + "-" + MAX_DAMAGE + "). " +
+                "Cost: " + SPELL_COST + " MP";
+    }
+
+    @Override
     public int getMinDamage() {
         return MIN_DAMAGE;
     }

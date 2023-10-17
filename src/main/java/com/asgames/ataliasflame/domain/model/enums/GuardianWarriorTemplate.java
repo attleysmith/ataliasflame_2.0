@@ -10,7 +10,7 @@ import java.util.UUID;
 import static com.asgames.ataliasflame.domain.model.enums.CompanionType.GUARDIAN_WARRIOR;
 
 @AllArgsConstructor
-public enum GuardianWarriorTemplate {
+public enum GuardianWarriorTemplate implements CompanionTemplate {
     HUNTER(85, 5, 2, 6, 75, -9),
     MILITIA(85, 10, 3, 15, 80, -3),
     SWORDSMAN(90, 25, 5, 15, 90, -3);
@@ -35,5 +35,10 @@ public enum GuardianWarriorTemplate {
                 .health(Energy.withTotal(health))
                 .initiative(initiative)
                 .build();
+    }
+
+    @Override
+    public String getCode() {
+        return name();
     }
 }

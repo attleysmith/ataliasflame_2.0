@@ -68,6 +68,14 @@ public class LightningStrike extends AttackSpell {
     }
 
     @Override
+    public String getDetails() {
+        return "Calling a lightning strike by targeting an enemy to cause damage (" + MIN_DAMAGE + "-" + MAX_DAMAGE + "). " +
+                "There is a " + CHAINING_EFFECT_CHANCE + "% chance that other enemies near the target get damage because of a chaining effect. " +
+                "Chaining damage is " + CHAINING_EFFECT_RATIO + "% of the previous damage while reaching zero. " +
+                "Cost: " + SPELL_COST + " MP";
+    }
+
+    @Override
     public int getMinDamage() {
         return MIN_DAMAGE;
     }

@@ -56,4 +56,11 @@ public class CallingTheSouls extends SummonSpell {
     public int getCost() {
         return SPELL_COST;
     }
+
+    @Override
+    public String getDetails() {
+        return "Summoning of a soul chip to help in combat. " +
+                "Fatigue effect of the soul magic is " + FATIGUE_EFFECT + "%. " +
+                "Cost: " + SPELL_COST + " MP";
+    }
 }

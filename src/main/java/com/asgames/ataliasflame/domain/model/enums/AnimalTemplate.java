@@ -10,7 +10,7 @@ import java.util.UUID;
 import static com.asgames.ataliasflame.domain.model.enums.CompanionType.ANIMAL;
 
 @AllArgsConstructor
-public enum AnimalTemplate {
+public enum AnimalTemplate implements CompanionTemplate {
     TAMED_FALCON(75, 0, 1, 2, 10, -6),
     TAMED_DOG(70, 5, 1, 3, 20, -3),
     TAMED_WOLF(70, 5, 1, 3, 25, -3),
@@ -36,5 +36,10 @@ public enum AnimalTemplate {
                 .health(Energy.withTotal(health))
                 .initiative(initiative)
                 .build();
+    }
+
+    @Override
+    public String getCode() {
+        return name();
     }
 }

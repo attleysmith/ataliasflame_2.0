@@ -54,6 +54,14 @@ public class GlacialBlow extends AttackSpell {
     }
 
     @Override
+    public String getDetails() {
+        return "Blowing an icy breath towards an enemy to cause damage (" + MIN_DAMAGE + "-" + MAX_DAMAGE + "). " +
+                "There is a " + CROSSFIRE_EFFECT_CHANCE + "% chance that other enemies get damage because of crossing the way of the air flow. " +
+                "Crossfire damage is " + CROSSFIRE_EFFECT_RATIO + "% of the original damage. " +
+                "Cost: " + SPELL_COST + " MP";
+    }
+
+    @Override
     public int getMinDamage() {
         return MIN_DAMAGE;
     }

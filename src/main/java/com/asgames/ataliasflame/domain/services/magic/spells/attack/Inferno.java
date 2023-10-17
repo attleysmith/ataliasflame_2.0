@@ -54,6 +54,14 @@ public class Inferno extends AttackSpell {
     }
 
     @Override
+    public String getDetails() {
+        return "Summoning infernal fire field under a targeted enemy to cause damage (" + MIN_DAMAGE + "-" + MAX_DAMAGE + "). " +
+                "There is a " + AREA_EFFECT_CHANCE + "% chance that other enemies near the target get damage because of an area effect. " +
+                "Area damage is " + AREA_EFFECT_RATIO + "% of the original damage. " +
+                "Cost: " + SPELL_COST + " MP";
+    }
+
+    @Override
     public int getMinDamage() {
         return MIN_DAMAGE;
     }

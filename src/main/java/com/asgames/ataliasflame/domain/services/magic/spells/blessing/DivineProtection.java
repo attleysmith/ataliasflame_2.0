@@ -84,4 +84,14 @@ public class DivineProtection extends BlessingSpell {
     public int getCost() {
         return SPELL_COST;
     }
+
+    @Override
+    public String getDetails() {
+        return "Improves the attributes of the caster by getting the blessing of their defensive god. " +
+                "Effect: [" + effectDetailsOf(BOOSTER) + "] " +
+                "Additionally this blessing covers the caster's body with a divine armor. " +
+                "Effect: [" + effectDetailsOf(DEFENSE, ABSORPTION, DURABILITY) + "] " +
+                "The absorption effect (if any) of the divine armor is the last among armors because it protects only the living body of the caster. " +
+                "Cost: " + SPELL_COST + " MP";
+    }
 }

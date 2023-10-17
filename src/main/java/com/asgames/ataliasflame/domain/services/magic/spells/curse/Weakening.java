@@ -48,4 +48,11 @@ public class Weakening extends CurseSpell {
     public int getCost() {
         return SPELL_COST;
     }
+
+    @Override
+    public String getDetails() {
+        return "Lowering the attributes of a targeted enemy by weakening their body. " +
+                "Effect: [" + effectDetailsOf(ATTACK_MULTIPLIER, DEFENSE_MULTIPLIER, DAMAGE_MULTIPLIER, 0) + "] " +
+                "Cost: " + SPELL_COST + " MP";
+    }
 }

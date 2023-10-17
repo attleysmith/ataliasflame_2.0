@@ -72,6 +72,15 @@ public class SoulOutburst extends AttackSpell {
     }
 
     @Override
+    public String getDetails() {
+        return "Summoning a wave of a soul chip targeting a single enemy to cause damage (" + MIN_DAMAGE + "-" + MAX_DAMAGE + "). " +
+                "There is a " + NOVA_EFFECT_CHANCE + "% chance that the summoned wave explodes like a nova and every single enemies get damage not only the targeted one. " +
+                "There can be an utmost " + BONUS_DAMAGE + " bonus damage depending on the soul chip's effectiveness. " +
+                "Fatigue effect of the soul magic is " + FATIGUE_EFFECT + "%. " +
+                "Cost: " + SPELL_COST + " MP";
+    }
+
+    @Override
     public int getMinDamage() {
         return MIN_DAMAGE;
     }

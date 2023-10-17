@@ -37,4 +37,11 @@ public class PowerOfNature extends HealingSpell {
     public int getCost() {
         return SPELL_COST;
     }
+
+    @Override
+    public String getDetails() {
+        return "Absorbing the energies of the surrounding nature to recover the caster's body and health. " +
+                "Healing effect: " + HEALING_EFFECT + "% " +
+                "Cost: " + SPELL_COST + " MP";
+    }
 }

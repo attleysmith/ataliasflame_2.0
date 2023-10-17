@@ -37,4 +37,11 @@ public class HealingWord extends HealingSpell {
     public int getCost() {
         return SPELL_COST;
     }
+
+    @Override
+    public String getDetails() {
+        return "Praying for the caster's defensive god to gain its recovering blessing. " +
+                "Healing effect: " + HEALING_EFFECT + "% " +
+                "Cost: " + SPELL_COST + " MP";
+    }
 }

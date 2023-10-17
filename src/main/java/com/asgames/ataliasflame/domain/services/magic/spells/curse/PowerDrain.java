@@ -75,4 +75,13 @@ public class PowerDrain extends CurseSpell {
     public int getCost() {
         return SPELL_COST;
     }
+
+    @Override
+    public String getDetails() {
+        return "Lowering the attributes of a targeted enemy by draining their energies. " +
+                "Effect: [" + effectDetailsOf(ATTACK_MULTIPLIER, DEFENSE_MULTIPLIER, DAMAGE_MULTIPLIER, HEALTH_MULTIPLIER) + "] " +
+                "Additionally the drained and absorbed power improves the attributes of the caster. " +
+                "Effect: [" + effectDetailsOf(BOOSTER) + "] " +
+                "Cost: " + SPELL_COST + " MP";
+    }
 }

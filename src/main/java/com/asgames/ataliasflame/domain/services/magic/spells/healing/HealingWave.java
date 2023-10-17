@@ -42,4 +42,11 @@ public class HealingWave extends HealingSpell {
     public int getCost() {
         return SPELL_COST;
     }
+
+    @Override
+    public String getDetails() {
+        return "Radiating magical energies to recover the caster's and their companions' body and health. " +
+                "Healing effect: " + HEALING_EFFECT + "% " +
+                "Cost: " + SPELL_COST + " MP";
+    }
 }

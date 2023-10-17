@@ -52,4 +52,11 @@ public class ProtectiveHandOfNature extends BlessingSpell {
     public int getCost() {
         return SPELL_COST;
     }
+
+    @Override
+    public String getDetails() {
+        return "Improves the attributes of the caster by absorbing the energies of the surrounding natural elements. " +
+                "Effect: [" + effectDetailsOf(BOOSTER) + "] " +
+                "Cost: " + SPELL_COST + " MP";
+    }
 }

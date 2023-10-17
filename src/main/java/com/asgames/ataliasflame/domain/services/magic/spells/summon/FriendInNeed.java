@@ -56,4 +56,11 @@ public class FriendInNeed extends SummonSpell {
     public int getCost() {
         return SPELL_COST;
     }
+
+    @Override
+    public String getDetails() {
+        return "Summoning of a divine guardian from the sect of the defensive god's followers to help in combat. " +
+                "Summonings: [" + summonings(DIVINE_GUARDIAN_SELECTOR) + "] " +
+                "Cost: " + SPELL_COST + " MP";
+    }
 }

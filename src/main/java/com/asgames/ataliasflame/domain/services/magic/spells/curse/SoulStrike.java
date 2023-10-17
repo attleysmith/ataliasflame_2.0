@@ -73,4 +73,13 @@ public class SoulStrike extends CurseSpell {
     public int getCost() {
         return SPELL_COST;
     }
+
+    @Override
+    public String getDetails() {
+        return "Projection of the powers of a soul chip towards an enemy to cause body shock and so lowering their attributes. " +
+                "Effect: [" + effectDetailsOf(ATTACK_MULTIPLIER, DEFENSE_MULTIPLIER, DAMAGE_MULTIPLIER, HEALTH_MULTIPLIER) + "] " +
+                "Effect of the strike is increased by the effectiveness of the projected soul chip. " +
+                "Fatigue effect of the soul magic is " + FATIGUE_EFFECT + "%. " +
+                "Cost: " + SPELL_COST + " MP";
+    }
 }

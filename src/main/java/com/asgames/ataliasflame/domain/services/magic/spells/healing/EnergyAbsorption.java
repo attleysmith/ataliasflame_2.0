@@ -57,4 +57,12 @@ public class EnergyAbsorption extends HealingSpell {
     public int getCost() {
         return SPELL_COST;
     }
+
+    @Override
+    public String getDetails() {
+        return "Absorbing the energies of a dead enemy to recover the caster's body and health. " +
+                "Vitality absorbing effect: " + VITALITY_ABSORBING_EFFECT + "% " +
+                "There is a " + NEARBY_ABSORBING_CHANCE + "% chance to absorb the energies of nearby enemy corpses as well. " +
+                "Cost: " + SPELL_COST + " MP";
+    }
 }

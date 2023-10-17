@@ -58,6 +58,16 @@ public class Fireball extends AttackSpell {
     }
 
     @Override
+    public String getDetails() {
+        return "Shooting a single ball of fire towards an enemy to cause damage (" + MIN_DAMAGE + "-" + MAX_DAMAGE + "). " +
+                "There is a " + AREA_EFFECT_CHANCE + "% chance that other enemies near the target get damage because of an area effect. " +
+                "Area damage is " + AREA_EFFECT_RATIO + "% of the original damage. " +
+                "There is a " + BLAST_EFFECT_CHANCE + "% chance that other enemies further away of the target get damage because of a blast effect. " +
+                "Blast damage is " + BLAST_EFFECT_RATIO + "% of the original damage. " +
+                "Cost: " + SPELL_COST + " MP";
+    }
+
+    @Override
     public int getMinDamage() {
         return MIN_DAMAGE;
     }

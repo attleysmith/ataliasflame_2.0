@@ -37,4 +37,11 @@ public class Cure extends HealingSpell {
     public int getCost() {
         return SPELL_COST;
     }
+
+    @Override
+    public String getDetails() {
+        return "Curing wounds and illnesses by magical energies. " +
+                "Healing effect: " + HEALING_EFFECT + "% " +
+                "Cost: " + SPELL_COST + " MP";
+    }
 }

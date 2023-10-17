@@ -79,4 +79,15 @@ public class SoulConnection extends BlessingSpell {
     public int getCost() {
         return SPELL_COST;
     }
+
+    @Override
+    public String getDetails() {
+        return "Improves the attributes of the caster by connecting the energies of a soul chips. " +
+                "Canine connection effect: [" + effectDetailsOf(CANINE_SOUL_CONNECTION) + "] " +
+                "Ape like connection effect: [" + effectDetailsOf(APE_LIKE_SOUL_CONNECTION) + "] " +
+                "Bird of prey connection effect: [" + effectDetailsOf(BIRD_OF_PREY_SOUL_CONNECTION) + "] " +
+                "Effect of the connection is increased by the effectiveness of the connected soul chip. " +
+                "Fatigue effect of the soul magic is " + FATIGUE_EFFECT + "%. " +
+                "Cost: " + SPELL_COST + " MP";
+    }
 }

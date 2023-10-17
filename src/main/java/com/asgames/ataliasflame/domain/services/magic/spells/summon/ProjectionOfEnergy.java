@@ -51,4 +51,11 @@ public class ProjectionOfEnergy extends SummonSpell {
     public int getCost() {
         return SPELL_COST;
     }
+
+    @Override
+    public String getDetails() {
+        return "Projecting the caster's energies into a humanoid body to help in combat. " +
+                "Percentage of inherited attributes (attack, defense, damage, health): " + ENERGY_PROJECTION_PERCENT + "% " +
+                "Cost: " + SPELL_COST + " MP";
+    }
 }

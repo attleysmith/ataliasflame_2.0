@@ -53,4 +53,11 @@ public class SummonGuardian extends SummonSpell {
     public int getCost() {
         return SPELL_COST;
     }
+
+    @Override
+    public String getDetails() {
+        return "Summoning of a guardian warrior to help in combat. " +
+                "Summonings: [" + summonings(GUARDIAN_WARRIOR_SELECTOR) + "] " +
+                "Cost: " + SPELL_COST + " MP";
+    }
 }

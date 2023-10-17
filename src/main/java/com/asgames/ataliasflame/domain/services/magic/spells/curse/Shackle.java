@@ -76,4 +76,24 @@ public class Shackle extends CurseSpell {
     public int getCost() {
         return SPELL_COST;
     }
+
+    @Override
+    public String getDetails() {
+        return "Summoning tendrils from the earth to shackle the targeted enemy. " +
+                "Shackle lowers the attributes of the captured enemy. " +
+                "Effect: [" + effectDetailsOf(ATTACK_MULTIPLIER, DEFENSE_MULTIPLIER, DAMAGE_MULTIPLIER, 0) + "] " +
+                "There is a " + NEARBY_CATCHING_CHANCE + "% chance to catch nearby enemies as well. " +
+                "There is a " + DAMAGE_CHANCE + "% chance to cause stress damage (" + MIN_DAMAGE + "-" + MAX_DAMAGE + ") to captured enemies. " +
+                "Cost: " + SPELL_COST + " MP";
+    }
+
+    @Override
+    public int getMinDamage() {
+        return MIN_DAMAGE;
+    }
+
+    @Override
+    public int getMaxDamage() {
+        return MAX_DAMAGE;
+    }
 }

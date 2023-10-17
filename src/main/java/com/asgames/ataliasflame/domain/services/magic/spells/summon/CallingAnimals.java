@@ -53,4 +53,11 @@ public class CallingAnimals extends SummonSpell {
     public int getCost() {
         return SPELL_COST;
     }
+
+    @Override
+    public String getDetails() {
+        return "Summoning of a companion animal to help in combat. " +
+                "Summonings: [" + summonings(ANIMAL_SELECTOR) + "] " +
+                "Cost: " + SPELL_COST + " MP";
+    }
 }

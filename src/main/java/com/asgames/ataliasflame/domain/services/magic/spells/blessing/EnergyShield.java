@@ -64,4 +64,12 @@ public class EnergyShield extends BlessingSpell {
     public int getCost() {
         return SPELL_COST;
     }
+
+    @Override
+    public String getDetails() {
+        return "Summons an energy armor covering the caster's body. " +
+                "Effect: [" + effectDetailsOf(DEFENSE, ABSORPTION, DURABILITY) + "] " +
+                "The absorption effect of the energy armor precedes the effect of any other armor. " +
+                "Cost: " + SPELL_COST + " MP";
+    }
 }

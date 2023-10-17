@@ -10,7 +10,7 @@ import java.util.UUID;
 import static com.asgames.ataliasflame.domain.model.enums.CompanionType.DIVINE_GUARDIAN;
 
 @AllArgsConstructor
-public enum DivineGuardianTemplate {
+public enum DivineGuardianTemplate implements CompanionTemplate {
     KNIGHT(90, 25, 5, 20, 100, -4),
     COMMANDER(100, 40, 6, 24, 120, -5);
 
@@ -34,5 +34,10 @@ public enum DivineGuardianTemplate {
                 .health(Energy.withTotal(health))
                 .initiative(initiative)
                 .build();
+    }
+
+    @Override
+    public String getCode() {
+        return name();
     }
 }

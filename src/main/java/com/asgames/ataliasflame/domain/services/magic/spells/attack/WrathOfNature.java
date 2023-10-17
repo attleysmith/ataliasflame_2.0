@@ -39,6 +39,12 @@ public class WrathOfNature extends AttackSpell {
     }
 
     @Override
+    public String getDetails() {
+        return "Animating the surrounding natural elements (roots, leaves, tree branches, tendrils) to cause damage (" + MIN_DAMAGE + "-" + MAX_DAMAGE + ") to a single enemy. " +
+                "Cost: " + SPELL_COST + " MP";
+    }
+
+    @Override
     public int getMinDamage() {
         return MIN_DAMAGE;
     }

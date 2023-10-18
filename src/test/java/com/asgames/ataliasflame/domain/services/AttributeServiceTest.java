@@ -221,7 +221,7 @@ class AttributeServiceTest {
     }
 
     private void addDagger() {
-        DAGGER.instance().belongsTo(character);
+        character.setPrimaryWeapon(DAGGER.instance());
         character.setShield(null);
         character.getCover().drop(HELMET);
         character.getCover().drop(BODY_ARMOR);

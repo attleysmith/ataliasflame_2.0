@@ -33,7 +33,8 @@ public class CharacterDto {
     private Set<SoulChipDto> soulChips;
     private Set<CompanionDto> companions;
     private Set<ActiveBlessingDto> blessings;
-    private WeaponDto weapon;
+    private WeaponDto primaryWeapon;
+    private WeaponDto secondaryWeapon;
     private ShieldDto shield;
     private CoverDto cover;
     private String locationReference;

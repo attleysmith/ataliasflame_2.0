@@ -49,7 +49,7 @@ public class DivineProtection extends BlessingSpell {
                 .ifPresentOrElse(
                         armor -> armor.getDurability().fullRecover(),
                         () -> {
-                            Armor.builder()
+                            character.getCover().set(Armor.builder()
                                     .reference(UUID.randomUUID().toString())
                                     .code(name.name())
                                     .type(ARMOR)
@@ -57,8 +57,7 @@ public class DivineProtection extends BlessingSpell {
                                     .defense(DEFENSE)
                                     .absorption(ABSORPTION)
                                     .durability(Energy.withTotal(DURABILITY))
-                                    .build()
-                                    .belongsTo(character);
+                                    .build());
                             characterCalculationService.recalculateProperties(character);
                         }
                 );

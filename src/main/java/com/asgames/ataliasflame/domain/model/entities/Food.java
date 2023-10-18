@@ -2,15 +2,13 @@ package com.asgames.ataliasflame.domain.model.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 @Entity
 @SuperBuilder
 @Data
+@ToString(callSuper=true)
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor // JPA needs it
 @AllArgsConstructor // Builder needs it

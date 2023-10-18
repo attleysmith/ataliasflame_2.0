@@ -192,6 +192,10 @@ public abstract class EnduranceTestBase extends WebTestBase {
                         LocationContextDto locationContext = useItem(character.getReference(), newWeapon.getReference());
                         character = locationContext.getCharacter();
                         location = locationContext.getLocation();
+                    } else if (needToStoreWeapon(character, newWeapon)) {
+                        LocationContextDto locationContext = storeItem(character.getReference(), newWeapon.getReference());
+                        character = locationContext.getCharacter();
+                        location = locationContext.getLocation();
                     }
                 });
     }

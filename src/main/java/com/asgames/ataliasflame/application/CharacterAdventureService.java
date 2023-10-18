@@ -4,10 +4,7 @@ import com.asgames.ataliasflame.application.mappers.DefensiveGodConversionCodeMa
 import com.asgames.ataliasflame.application.model.DefensiveGodConversionCode;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.DefensiveGodConversionLog;
-import com.asgames.ataliasflame.domain.services.DefensiveGodConversionService;
-import com.asgames.ataliasflame.domain.services.HealingService;
-import com.asgames.ataliasflame.domain.services.MagicService;
-import com.asgames.ataliasflame.domain.services.SoulChipService;
+import com.asgames.ataliasflame.domain.services.*;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
 import com.asgames.ataliasflame.infrastructure.repositories.CharacterRepository;
 import com.asgames.ataliasflame.infrastructure.repositories.DefensiveGodConversionLogRepository;
@@ -43,6 +40,8 @@ public class CharacterAdventureService {
     private SoulChipService soulChipService;
     @Autowired
     private DefensiveGodConversionService defensiveGodConversionService;
+    @Autowired
+    private InventoryService inventoryService;
 
     @Transactional
     public Character sleep(String characterReference) {
@@ -71,6 +70,12 @@ public class CharacterAdventureService {
         Character character = characterMaintenanceService.getCharacter(characterReference);
         magicService.removeBlessingMagic(character);
         soulChipService.rest(character);
+        return characterRepository.save(character);
+    }
+
+    public Character switchWeapons(String characterReference) {
+        Character character = characterMaintenanceService.getCharacter(characterReference);
+        inventoryService.switchWeapons(character);
         return characterRepository.save(character);
     }
 }

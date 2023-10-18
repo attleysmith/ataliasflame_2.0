@@ -122,11 +122,15 @@ public final class Decisions {
     }
 
     public static boolean needToChangeWeapon(CharacterDto character, WeaponDto newWeapon) {
-        return averageDamageOf(newWeapon) > (character.getWeapon() == null ? 1 : averageDamageOf(character.getWeapon()));
+        return averageDamageOf(newWeapon) > (character.getPrimaryWeapon() == null ? 1 : averageDamageOf(character.getPrimaryWeapon()));
+    }
+
+    public static boolean needToStoreWeapon(CharacterDto character, WeaponDto newWeapon) {
+        return averageDamageOf(newWeapon) > (character.getSecondaryWeapon() == null ? 1 : averageDamageOf(character.getSecondaryWeapon()));
     }
 
     public static boolean needToChangeShield(CharacterDto character, ShieldDto newShield) {
-        return isOneHanded(character.getWeapon()) && isBetterShield(newShield, character.getShield());
+        return isOneHanded(character.getPrimaryWeapon()) && isBetterShield(newShield, character.getShield());
     }
 
     private static boolean isBetterShield(ShieldDto newShield, @Nullable ShieldDto oldShield) {

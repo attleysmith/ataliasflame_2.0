@@ -85,6 +85,11 @@ public class CharacterRestController {
         return defensiveGodConversionCodeDtoMapper.toDto(characterAdventureService.produceDefensiveGodConversionCode(characterReference));
     }
 
+    @PostMapping(value = "/{characterReference}/weapons/switch")
+    public CharacterDto switchWeapons(@PathVariable String characterReference) {
+        return characterDtoMapper.toCharacterDto(characterAdventureService.switchWeapons(characterReference));
+    }
+
     @GetMapping("/{characterReference}/spells")
     public List<SpellDto> listCharacterSpells(@PathVariable String characterReference) {
         return spellDtoMapper.toSpellDtoList(characterMagicService.listCharacterSpells(characterReference));
@@ -113,6 +118,11 @@ public class CharacterRestController {
     @PostMapping(value = "/{characterReference}/location/items/{itemReference}/use")
     public LocationContextDto useItem(@PathVariable String characterReference, @PathVariable String itemReference) {
         return locationDtoMapper.toLocationContextDto(characterLocationService.useItem(characterReference, itemReference));
+    }
+
+    @PostMapping(value = "/{characterReference}/location/items/{itemReference}/store")
+    public LocationContextDto storeItem(@PathVariable String characterReference, @PathVariable String itemReference) {
+        return locationDtoMapper.toLocationContextDto(characterLocationService.storeItem(characterReference, itemReference));
     }
 
     @PostMapping(value = "/{characterReference}/items/{itemReference}/drop")

@@ -85,6 +85,11 @@ public abstract class WebTestBase {
         return restTemplate.postForObject(path, null, LocationContextDto.class, characterReference, itemReference);
     }
 
+    protected LocationContextDto storeItem(String characterReference, String itemReference) {
+        String path = "/characters/{characterReference}/location/items/{itemReference}/store";
+        return restTemplate.postForObject(path, null, LocationContextDto.class, characterReference, itemReference);
+    }
+
     protected LocationDto buildLocation(int level) {
         String path = "/locations?level={level}";
         return restTemplate.postForObject(path, null, LocationDto.class, level);

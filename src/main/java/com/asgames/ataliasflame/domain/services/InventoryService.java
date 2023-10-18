@@ -9,10 +9,14 @@ import com.asgames.ataliasflame.domain.utils.SelectionValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static com.asgames.ataliasflame.domain.model.enums.ArmorTemplate.*;
+import static com.asgames.ataliasflame.domain.model.enums.ArmorType.BODY_ARMOR;
+import static com.asgames.ataliasflame.domain.model.enums.ArmorType.HELMET;
 import static com.asgames.ataliasflame.domain.model.enums.ItemType.*;
 import static com.asgames.ataliasflame.domain.model.enums.ShieldTemplate.*;
 import static com.asgames.ataliasflame.domain.model.enums.WeaponTemplate.*;
@@ -22,6 +26,9 @@ import static com.asgames.ataliasflame.domain.services.storyline.events.Characte
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.ShieldDropEvent.shieldDrop;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.ShieldUseEvent.shieldUse;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.WeaponDropEvent.weaponDrop;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.WeaponSwitchEvent.weaponSwitch;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.WeaponType.PRIMARY;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.WeaponType.SECONDARY;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.WeaponUseEvent.weaponUse;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.choose;
 
@@ -69,10 +76,19 @@ public class InventoryService {
     @Autowired
     private MagicService magicService;
 
+    public Map<InventoryType, Item> getInventory(Character character) {
+        Map<InventoryType, Item> characterInventory = new HashMap<>();
+        character.getPrimaryWeapon().ifPresent(weapon -> characterInventory.put(InventoryType.PRIMARY_WEAPON, weapon));
+        character.getSecondaryWeapon().ifPresent(weapon -> characterInventory.put(InventoryType.SECONDARY_WEAPON, weapon));
+        character.getShield().ifPresent(shield -> characterInventory.put(InventoryType.SHIELD, shield));
+        character.getCover().get(HELMET).ifPresent(armor -> characterInventory.put(InventoryType.HELMET, armor));
+        character.getCover().get(BODY_ARMOR).ifPresent(armor -> characterInventory.put(InventoryType.BODY_ARMOR, armor));
+        return characterInventory;
+    }
+
     public void setStartingInventory(Character character) {
-        choose(STARTING_WEAPON_SELECTOR).ifPresent(startingWeapon -> {
-            takeWeapon(character, startingWeapon.instance());
-        });
+        choose(STARTING_WEAPON_SELECTOR).ifPresent(startingWeapon ->
+                takeWeapon(character, startingWeapon.instance()));
 
         if (character.hasFreeHand()) {
             choose(STARTING_SHIELD_SELECTOR).ifPresent(startingShield ->
@@ -113,14 +129,14 @@ public class InventoryService {
         if (!template.getType().equals(SHIELD)) {
             throw new IllegalArgumentException("Only SHIELD can be produced as shield!");
         }
-        return ((ShieldTemplate) template).instance().butDamaged();
+        return ((ShieldTemplate) template).instance().worn();
     }
 
     private Armor produceArmor(ItemTemplate template) {
         if (!template.getType().equals(ARMOR)) {
             throw new IllegalArgumentException("Only ARMOR can be produced as armor!");
         }
-        return ((ArmorTemplate) template).instance().butDamaged();
+        return ((ArmorTemplate) template).instance().worn();
     }
 
     public void eatFood(Character character, Food food) {
@@ -130,35 +146,53 @@ public class InventoryService {
     }
 
     public void takeWeapon(Character character, Weapon newWeapon) {
-        dropWeapon(character);
+        dropPrimaryWeapon(character);
         if (!newWeapon.isOneHanded()) {
             dropShield(character);
         }
 
-        newWeapon.belongsTo(character);
+        character.setPrimaryWeapon(newWeapon);
         characterCalculationService.recalculateProperties(character);
-        storyLineLogger.event(weaponUse(character, newWeapon));
+        storyLineLogger.event(weaponUse(character, newWeapon, PRIMARY));
     }
 
-    public void dropWeapon(Character character) {
-        character.getWeapon().ifPresent(oldWeapon -> {
+    public void storeWeapon(Character character, Weapon newWeapon) {
+        dropSecondaryWeapon(character);
+
+        character.setSecondaryWeapon(newWeapon);
+        storyLineLogger.event(weaponUse(character, newWeapon, SECONDARY));
+    }
+
+    public void dropPrimaryWeapon(Character character) {
+        character.getPrimaryWeapon().ifPresent(oldWeapon -> {
             if (character.getLocation() != null) {
                 character.getLocation().getItems().add(oldWeapon);
             }
 
-            character.setWeapon(null);
+            character.setPrimaryWeapon(null);
             characterCalculationService.recalculateProperties(character);
-            storyLineLogger.event(weaponDrop(character, oldWeapon));
+            storyLineLogger.event(weaponDrop(character, oldWeapon, PRIMARY));
+        });
+    }
+
+    public void dropSecondaryWeapon(Character character) {
+        character.getSecondaryWeapon().ifPresent(oldWeapon -> {
+            if (character.getLocation() != null) {
+                character.getLocation().getItems().add(oldWeapon);
+            }
+
+            character.setSecondaryWeapon(null);
+            storyLineLogger.event(weaponDrop(character, oldWeapon, SECONDARY));
         });
     }
 
     public void takeShield(Character character, Shield newShield) {
         dropShield(character);
         if (!character.hasFreeHand()) {
-            dropWeapon(character);
+            dropPrimaryWeapon(character);
         }
 
-        newShield.belongsTo(character);
+        character.setShield(newShield);
         characterCalculationService.recalculateProperties(character);
         storyLineLogger.event(shieldUse(character, newShield));
     }
@@ -178,7 +212,7 @@ public class InventoryService {
     public void takeArmor(Character character, Armor newArmor) {
         dropArmor(character, newArmor.getArmorType());
 
-        newArmor.belongsTo(character);
+        character.getCover().set(newArmor);
         characterCalculationService.recalculateProperties(character);
         storyLineLogger.event(armorUse(character, newArmor));
     }
@@ -197,7 +231,26 @@ public class InventoryService {
             case ENERGY_ARMOR, DIVINE_ARMOR ->
                     throw new IllegalArgumentException("Dropped armor is not part of the inventory: " + armorType);
         }
+    }
 
+    public void switchWeapons(Character character) {
+        Optional<Weapon> primaryWeapon = character.getPrimaryWeapon();
+        Optional<Weapon> secondaryWeapon = character.getSecondaryWeapon();
 
+        primaryWeapon.ifPresentOrElse(weaponToStore -> {
+                    character.setPrimaryWeapon(null);
+                    character.setSecondaryWeapon(weaponToStore);
+                },
+                () -> {
+                    character.setSecondaryWeapon(null);
+                });
+        secondaryWeapon.ifPresent(weaponToUse -> {
+            if (!weaponToUse.isOneHanded()) {
+                dropShield(character);
+            }
+            character.setPrimaryWeapon(weaponToUse);
+        });
+        characterCalculationService.recalculateProperties(character);
+        storyLineLogger.event(weaponSwitch(character));
     }
 }

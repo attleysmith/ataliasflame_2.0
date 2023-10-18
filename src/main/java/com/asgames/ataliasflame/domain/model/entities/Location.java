@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,6 +40,13 @@ public class Location {
     )
     @OneToMany(cascade = ALL, fetch = EAGER)
     private List<Item> items;
+
+    public List<Item> getItems() {
+        if (items == null) {
+            items = new ArrayList<>();
+        }
+        return items;
+    }
 
     public static Location build(int level) {
         return Location.builder()

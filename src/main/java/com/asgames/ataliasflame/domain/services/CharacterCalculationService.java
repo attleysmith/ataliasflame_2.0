@@ -35,7 +35,7 @@ public class CharacterCalculationService {
         recalculateHealth(character);
         recalculateMagic(character);
 
-        character.getWeapon().ifPresentOrElse(weapon -> {
+        character.getPrimaryWeapon().ifPresentOrElse(weapon -> {
                     character.setMinDamage(calculate(weapon.getMinDamage(), character.getDamageMultiplier()));
                     character.setMaxDamage(calculate(weapon.getMaxDamage(), character.getDamageMultiplier()));
                     character.setInitiative(weapon.getInitiative());
@@ -85,7 +85,7 @@ public class CharacterCalculationService {
 
     private int actualDefense(Character character) {
         return BASE_DEFENSE
-                + character.getWeapon().map(Weapon::getDefense).orElse(0)
+                + character.getPrimaryWeapon().map(Weapon::getDefense).orElse(0)
                 + character.getShield().map(Shield::getDefense).orElse(0)
                 + character.getCover().getEnergyArmor().map(Armor::getDefense).orElse(0)
                 + character.getCover().getHelmet().map(Armor::getDefense).orElse(0)

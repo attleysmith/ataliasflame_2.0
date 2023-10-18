@@ -2,13 +2,9 @@ package com.asgames.ataliasflame.domain.model.entities;
 
 import com.asgames.ataliasflame.domain.model.enums.ArmorType;
 import com.asgames.ataliasflame.domain.model.interfaces.AbsorptionDefense;
-import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
 import com.asgames.ataliasflame.domain.model.vos.Energy;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import static com.asgames.ataliasflame.domain.utils.DiceUtils.roll100;
@@ -17,6 +13,7 @@ import static jakarta.persistence.EnumType.STRING;
 @Entity
 @SuperBuilder
 @Data
+@ToString(callSuper=true)
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor // JPA needs it
 @AllArgsConstructor // Builder needs it
@@ -37,11 +34,7 @@ public class Armor extends Item implements AbsorptionDefense {
     })
     private Energy durability;
 
-    public void belongsTo(Combatant combatant) {
-        combatant.getCover().set(this);
-    }
-
-    public Armor butDamaged() {
+    public Armor worn() {
         getDurability().trauma(roll100());
         return this;
     }

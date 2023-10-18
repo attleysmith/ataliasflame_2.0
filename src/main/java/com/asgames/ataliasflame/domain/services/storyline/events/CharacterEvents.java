@@ -12,6 +12,10 @@ import static com.asgames.ataliasflame.domain.services.storyline.EventType.INFO;
 
 public final class CharacterEvents {
 
+    public enum WeaponType {
+        PRIMARY, SECONDARY
+    }
+
     private CharacterEvents() {
     }
 
@@ -168,37 +172,63 @@ public final class CharacterEvents {
 
     public static class WeaponUseEvent extends CharacterEvent {
         private final Weapon newWeapon;
+        private final WeaponType weaponType;
 
-        private WeaponUseEvent(Character character, Weapon newWeapon) {
+        private WeaponUseEvent(Character character, Weapon newWeapon, WeaponType weaponType) {
             super(INFO, character);
             this.newWeapon = newWeapon;
+            this.weaponType = weaponType;
         }
 
-        public static WeaponUseEvent weaponUse(Character character, Weapon newWeapon) {
-            return new WeaponUseEvent(character, newWeapon);
+        public static WeaponUseEvent weaponUse(Character character, Weapon newWeapon, WeaponType weaponType) {
+            return new WeaponUseEvent(character, newWeapon, weaponType);
         }
 
         @Override
         public String message() {
-            return "Weapon used: " + newWeapon.getCode();
+            return switch (weaponType) {
+                case PRIMARY -> weaponType + " weapon used: " + newWeapon.getCode();
+                case SECONDARY -> weaponType + " weapon stored: " + newWeapon.getCode();
+            };
         }
     }
 
     public static class WeaponDropEvent extends CharacterEvent {
         private final Weapon oldWeapon;
+        private final WeaponType weaponType;
 
-        private WeaponDropEvent(Character character, Weapon oldWeapon) {
+        private WeaponDropEvent(Character character, Weapon oldWeapon, WeaponType weaponType) {
             super(INFO, character);
             this.oldWeapon = oldWeapon;
+            this.weaponType = weaponType;
         }
 
-        public static WeaponDropEvent weaponDrop(Character character, Weapon oldWeapon) {
-            return new WeaponDropEvent(character, oldWeapon);
+        public static WeaponDropEvent weaponDrop(Character character, Weapon oldWeapon, WeaponType weaponType) {
+            return new WeaponDropEvent(character, oldWeapon, weaponType);
         }
 
         @Override
         public String message() {
-            return "Weapon dropped: " + oldWeapon.getCode();
+            return weaponType + " weapon dropped: " + oldWeapon.getCode();
+        }
+    }
+
+    public static class WeaponSwitchEvent extends CharacterEvent {
+
+        protected WeaponSwitchEvent(Character character) {
+            super(INFO, character);
+        }
+
+        public static WeaponSwitchEvent weaponSwitch(Character character) {
+            return new WeaponSwitchEvent(character);
+        }
+
+        @Override
+        public String message() {
+            return "Weapons switched. Primary: "
+                    + character.getPrimaryWeapon().map(Weapon::getCode).orElse("NONE")
+                    + "; Secondary: "
+                    + character.getSecondaryWeapon().map(Weapon::getCode).orElse("NONE");
         }
     }
 
@@ -228,8 +258,8 @@ public final class CharacterEvents {
             this.oldShield = oldShield;
         }
 
-        public static ShieldUseEvent shieldDrop(Character character, Shield oldShield) {
-            return new ShieldUseEvent(character, oldShield);
+        public static ShieldDropEvent shieldDrop(Character character, Shield oldShield) {
+            return new ShieldDropEvent(character, oldShield);
         }
 
         @Override

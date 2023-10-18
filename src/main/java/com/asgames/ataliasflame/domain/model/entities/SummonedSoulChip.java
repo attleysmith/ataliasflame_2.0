@@ -3,10 +3,7 @@ package com.asgames.ataliasflame.domain.model.entities;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import static jakarta.persistence.FetchType.LAZY;
@@ -14,6 +11,7 @@ import static jakarta.persistence.FetchType.LAZY;
 @Entity
 @SuperBuilder
 @Data
+@ToString(callSuper=true)
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor // JPA needs it
 @AllArgsConstructor // Builder needs it

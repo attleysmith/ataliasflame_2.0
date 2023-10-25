@@ -17,6 +17,7 @@ import java.util.Optional;
 import static com.asgames.ataliasflame.domain.model.enums.ArmorTemplate.*;
 import static com.asgames.ataliasflame.domain.model.enums.ArmorType.BODY_ARMOR;
 import static com.asgames.ataliasflame.domain.model.enums.ArmorType.HELMET;
+import static com.asgames.ataliasflame.domain.model.enums.InventoryType.*;
 import static com.asgames.ataliasflame.domain.model.enums.ItemType.*;
 import static com.asgames.ataliasflame.domain.model.enums.ShieldTemplate.*;
 import static com.asgames.ataliasflame.domain.model.enums.WeaponTemplate.*;
@@ -24,11 +25,10 @@ import static com.asgames.ataliasflame.domain.services.storyline.events.Characte
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.ArmorUseEvent.armorUse;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.EatingEvent.eating;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.ShieldDropEvent.shieldDrop;
+import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.ShieldSwitchEvent.shieldSwitch;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.ShieldUseEvent.shieldUse;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.WeaponDropEvent.weaponDrop;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.WeaponSwitchEvent.weaponSwitch;
-import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.WeaponType.PRIMARY;
-import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.WeaponType.SECONDARY;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.WeaponUseEvent.weaponUse;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.choose;
 
@@ -78,11 +78,12 @@ public class InventoryService {
 
     public Map<InventoryType, Item> getInventory(Character character) {
         Map<InventoryType, Item> characterInventory = new HashMap<>();
-        character.getPrimaryWeapon().ifPresent(weapon -> characterInventory.put(InventoryType.PRIMARY_WEAPON, weapon));
-        character.getSecondaryWeapon().ifPresent(weapon -> characterInventory.put(InventoryType.SECONDARY_WEAPON, weapon));
-        character.getShield().ifPresent(shield -> characterInventory.put(InventoryType.SHIELD, shield));
-        character.getCover().get(HELMET).ifPresent(armor -> characterInventory.put(InventoryType.HELMET, armor));
-        character.getCover().get(BODY_ARMOR).ifPresent(armor -> characterInventory.put(InventoryType.BODY_ARMOR, armor));
+        character.getWeapon().ifPresent(weapon -> characterInventory.put(USED_WEAPON, weapon));
+        character.getInventory().getSpareWeapon().ifPresent(weapon -> characterInventory.put(SPARE_WEAPON, weapon));
+        character.getShield().ifPresent(shield -> characterInventory.put(USED_SHIELD, shield));
+        character.getInventory().getSpareShield().ifPresent(shield -> characterInventory.put(SPARE_SHIELD, shield));
+        character.getCover().get(HELMET).ifPresent(armor -> characterInventory.put(USED_HELMET, armor));
+        character.getCover().get(BODY_ARMOR).ifPresent(armor -> characterInventory.put(USED_BODY_ARMOR, armor));
         return characterInventory;
     }
 
@@ -146,55 +147,64 @@ public class InventoryService {
     }
 
     public void takeWeapon(Character character, Weapon newWeapon) {
-        dropPrimaryWeapon(character);
+        dropWeapon(character);
         if (!newWeapon.isOneHanded()) {
             dropShield(character);
         }
 
-        character.setPrimaryWeapon(newWeapon);
+        character.setWeapon(newWeapon);
         characterCalculationService.recalculateProperties(character);
-        storyLineLogger.event(weaponUse(character, newWeapon, PRIMARY));
+        storyLineLogger.event(weaponUse(character, newWeapon, USED_WEAPON));
     }
 
     public void storeWeapon(Character character, Weapon newWeapon) {
-        dropSecondaryWeapon(character);
+        dropSpareWeapon(character);
 
-        character.setSecondaryWeapon(newWeapon);
-        storyLineLogger.event(weaponUse(character, newWeapon, SECONDARY));
+        character.getInventory().setSpareWeapon(newWeapon);
+        storyLineLogger.event(weaponUse(character, newWeapon, SPARE_WEAPON));
     }
 
-    public void dropPrimaryWeapon(Character character) {
-        character.getPrimaryWeapon().ifPresent(oldWeapon -> {
+    public void dropWeapon(Character character) {
+        character.getWeapon().ifPresent(oldWeapon -> {
             if (character.getLocation() != null) {
                 character.getLocation().getItems().add(oldWeapon);
             }
 
-            character.setPrimaryWeapon(null);
+            character.setWeapon(null);
             characterCalculationService.recalculateProperties(character);
-            storyLineLogger.event(weaponDrop(character, oldWeapon, PRIMARY));
+            storyLineLogger.event(weaponDrop(character, oldWeapon, USED_WEAPON));
         });
     }
 
-    public void dropSecondaryWeapon(Character character) {
-        character.getSecondaryWeapon().ifPresent(oldWeapon -> {
+    public void dropSpareWeapon(Character character) {
+        character.getInventory().getSpareWeapon().ifPresent(oldWeapon -> {
             if (character.getLocation() != null) {
                 character.getLocation().getItems().add(oldWeapon);
             }
 
-            character.setSecondaryWeapon(null);
-            storyLineLogger.event(weaponDrop(character, oldWeapon, SECONDARY));
+            character.getInventory().setSpareWeapon(null);
+            storyLineLogger.event(weaponDrop(character, oldWeapon, SPARE_WEAPON));
         });
     }
 
     public void takeShield(Character character, Shield newShield) {
         dropShield(character);
+        dropSpareShield(character);
         if (!character.hasFreeHand()) {
-            dropPrimaryWeapon(character);
+            dropWeapon(character);
         }
 
         character.setShield(newShield);
         characterCalculationService.recalculateProperties(character);
-        storyLineLogger.event(shieldUse(character, newShield));
+        storyLineLogger.event(shieldUse(character, newShield, USED_SHIELD));
+    }
+
+    public void storeShield(Character character, Shield newShield) {
+        dropShield(character);
+        dropSpareShield(character);
+
+        character.getInventory().setSpareShield(newShield);
+        storyLineLogger.event(shieldUse(character, newShield, SPARE_SHIELD));
     }
 
     public void dropShield(Character character) {
@@ -205,7 +215,18 @@ public class InventoryService {
 
             character.setShield(null);
             characterCalculationService.recalculateProperties(character);
-            storyLineLogger.event(shieldDrop(character, oldShield));
+            storyLineLogger.event(shieldDrop(character, oldShield, USED_SHIELD));
+        });
+    }
+
+    public void dropSpareShield(Character character) {
+        character.getInventory().getSpareShield().ifPresent(oldShield -> {
+            if (character.getLocation() != null) {
+                character.getLocation().getItems().add(oldShield);
+            }
+
+            character.getInventory().setSpareShield(null);
+            storyLineLogger.event(shieldDrop(character, oldShield, SPARE_SHIELD));
         });
     }
 
@@ -234,23 +255,41 @@ public class InventoryService {
     }
 
     public void switchWeapons(Character character) {
-        Optional<Weapon> primaryWeapon = character.getPrimaryWeapon();
-        Optional<Weapon> secondaryWeapon = character.getSecondaryWeapon();
+        Optional<Weapon> weapon = character.getWeapon();
+        Optional<Weapon> spareWeapon = character.getInventory().getSpareWeapon();
 
-        primaryWeapon.ifPresentOrElse(weaponToStore -> {
-                    character.setPrimaryWeapon(null);
-                    character.setSecondaryWeapon(weaponToStore);
+        weapon.ifPresentOrElse(weaponToStore -> {
+                    character.setWeapon(null);
+                    character.getInventory().setSpareWeapon(weaponToStore);
                 },
-                () -> {
-                    character.setSecondaryWeapon(null);
-                });
-        secondaryWeapon.ifPresent(weaponToUse -> {
-            if (!weaponToUse.isOneHanded()) {
-                dropShield(character);
+                () -> character.getInventory().setSpareWeapon(null));
+        spareWeapon.ifPresent(weaponToUse -> {
+            if (weaponToUse.isOneHanded()) {
+                character.getInventory().getSpareShield().ifPresent(shield -> switchShields(character));
+            } else {
+                character.getShield().ifPresent(shield -> switchShields(character));
             }
-            character.setPrimaryWeapon(weaponToUse);
+            character.setWeapon(weaponToUse);
         });
         characterCalculationService.recalculateProperties(character);
         storyLineLogger.event(weaponSwitch(character));
+    }
+
+    public void switchShields(Character character) {
+        Optional<Shield> shield = character.getShield();
+        Optional<Shield> spareShield = character.getInventory().getSpareShield();
+        shield.ifPresentOrElse(shieldToStore -> {
+                    character.setShield(null);
+                    character.getInventory().setSpareShield(shieldToStore);
+                },
+                () -> character.getInventory().setSpareShield(null));
+        spareShield.ifPresent(shieldToUse -> {
+            if (!character.hasFreeHand()) {
+                throw new IllegalStateException("There must be a free hand to use shield!");
+            }
+            character.setShield(shieldToUse);
+        });
+        characterCalculationService.recalculateProperties(character);
+        storyLineLogger.event(shieldSwitch(character));
     }
 }

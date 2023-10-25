@@ -4,6 +4,7 @@ import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.*;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
+import com.asgames.ataliasflame.domain.model.enums.InventoryType;
 import com.asgames.ataliasflame.domain.services.magic.spells.Spell;
 import com.asgames.ataliasflame.domain.services.storyline.EventType;
 
@@ -11,10 +12,6 @@ import static com.asgames.ataliasflame.domain.services.storyline.EventType.DEBUG
 import static com.asgames.ataliasflame.domain.services.storyline.EventType.INFO;
 
 public final class CharacterEvents {
-
-    public enum WeaponType {
-        PRIMARY, SECONDARY
-    }
 
     private CharacterEvents() {
     }
@@ -172,44 +169,46 @@ public final class CharacterEvents {
 
     public static class WeaponUseEvent extends CharacterEvent {
         private final Weapon newWeapon;
-        private final WeaponType weaponType;
+        private final InventoryType weaponType;
 
-        private WeaponUseEvent(Character character, Weapon newWeapon, WeaponType weaponType) {
+        private WeaponUseEvent(Character character, Weapon newWeapon, InventoryType weaponType) {
             super(INFO, character);
             this.newWeapon = newWeapon;
             this.weaponType = weaponType;
         }
 
-        public static WeaponUseEvent weaponUse(Character character, Weapon newWeapon, WeaponType weaponType) {
+        public static WeaponUseEvent weaponUse(Character character, Weapon newWeapon, InventoryType weaponType) {
             return new WeaponUseEvent(character, newWeapon, weaponType);
         }
 
         @Override
         public String message() {
             return switch (weaponType) {
-                case PRIMARY -> weaponType + " weapon used: " + newWeapon.getCode();
-                case SECONDARY -> weaponType + " weapon stored: " + newWeapon.getCode();
+                case USED_WEAPON -> "Weapon used: " + newWeapon.getCode();
+                case SPARE_WEAPON -> "Weapon stored: " + newWeapon.getCode();
+                default ->
+                        throw new IllegalArgumentException("Not supported inventory type. Type must be some weapon.");
             };
         }
     }
 
     public static class WeaponDropEvent extends CharacterEvent {
         private final Weapon oldWeapon;
-        private final WeaponType weaponType;
+        private final InventoryType weaponType;
 
-        private WeaponDropEvent(Character character, Weapon oldWeapon, WeaponType weaponType) {
+        private WeaponDropEvent(Character character, Weapon oldWeapon, InventoryType weaponType) {
             super(INFO, character);
             this.oldWeapon = oldWeapon;
             this.weaponType = weaponType;
         }
 
-        public static WeaponDropEvent weaponDrop(Character character, Weapon oldWeapon, WeaponType weaponType) {
+        public static WeaponDropEvent weaponDrop(Character character, Weapon oldWeapon, InventoryType weaponType) {
             return new WeaponDropEvent(character, oldWeapon, weaponType);
         }
 
         @Override
         public String message() {
-            return weaponType + " weapon dropped: " + oldWeapon.getCode();
+            return weaponType + " dropped: " + oldWeapon.getCode();
         }
     }
 
@@ -225,46 +224,76 @@ public final class CharacterEvents {
 
         @Override
         public String message() {
-            return "Weapons switched. Primary: "
-                    + character.getPrimaryWeapon().map(Weapon::getCode).orElse("NONE")
-                    + "; Secondary: "
-                    + character.getSecondaryWeapon().map(Weapon::getCode).orElse("NONE");
+            return "Weapons switched. Used: "
+                    + character.getWeapon().map(Weapon::getCode).orElse("NONE")
+                    + "; Spare: "
+                    + character.getInventory().getSpareWeapon().map(Weapon::getCode).orElse("NONE");
         }
     }
 
     public static class ShieldUseEvent extends CharacterEvent {
         private final Shield newShield;
+        private final InventoryType shieldType;
 
-        private ShieldUseEvent(Character character, Shield newShield) {
+        private ShieldUseEvent(Character character, Shield newShield, InventoryType shieldType) {
             super(INFO, character);
             this.newShield = newShield;
+            this.shieldType = shieldType;
         }
 
-        public static ShieldUseEvent shieldUse(Character character, Shield newShield) {
-            return new ShieldUseEvent(character, newShield);
+        public static ShieldUseEvent shieldUse(Character character, Shield newShield, InventoryType shieldType) {
+            return new ShieldUseEvent(character, newShield, shieldType);
         }
 
         @Override
         public String message() {
-            return "Shield used: " + newShield.getCode() + " (" + newShield.getDurability().actualValue() + ")";
+            return switch (shieldType) {
+                case USED_SHIELD ->
+                        "Shield used: " + newShield.getCode() + " (" + newShield.getDurability().actualValue() + ")";
+                case SPARE_SHIELD ->
+                        "Shield stored: " + newShield.getCode() + " (" + newShield.getDurability().actualValue() + ")";
+                default ->
+                        throw new IllegalArgumentException("Not supported inventory type. Type must be some shield.");
+            };
         }
     }
 
     public static class ShieldDropEvent extends CharacterEvent {
         private final Shield oldShield;
+        private final InventoryType shieldType;
 
-        private ShieldDropEvent(Character character, Shield oldShield) {
+        private ShieldDropEvent(Character character, Shield oldShield, InventoryType shieldType) {
             super(INFO, character);
             this.oldShield = oldShield;
+            this.shieldType = shieldType;
         }
 
-        public static ShieldDropEvent shieldDrop(Character character, Shield oldShield) {
-            return new ShieldDropEvent(character, oldShield);
+        public static ShieldDropEvent shieldDrop(Character character, Shield oldShield, InventoryType shieldType) {
+            return new ShieldDropEvent(character, oldShield, shieldType);
         }
 
         @Override
         public String message() {
-            return "Shield dropped: " + oldShield.getCode() + " (" + oldShield.getDurability().actualValue() + ")";
+            return shieldType + " dropped: " + oldShield.getCode() + " (" + oldShield.getDurability().actualValue() + ")";
+        }
+    }
+
+    public static class ShieldSwitchEvent extends CharacterEvent {
+
+        protected ShieldSwitchEvent(Character character) {
+            super(INFO, character);
+        }
+
+        public static ShieldSwitchEvent shieldSwitch(Character character) {
+            return new ShieldSwitchEvent(character);
+        }
+
+        @Override
+        public String message() {
+            return "Shields switched. Used: "
+                    + character.getShield().map(Shield::getCode).orElse("NONE")
+                    + "; Spare: "
+                    + character.getInventory().getSpareShield().map(Shield::getCode).orElse("NONE");
         }
     }
 

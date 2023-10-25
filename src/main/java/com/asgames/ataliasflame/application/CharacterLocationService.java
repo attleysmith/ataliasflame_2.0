@@ -13,8 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.asgames.ataliasflame.domain.model.enums.ItemType.WEAPON;
-
 @Service
 public class CharacterLocationService {
 
@@ -113,10 +111,10 @@ public class CharacterLocationService {
                 .orElseThrow(() -> new IllegalArgumentException("Referenced item is not at the character's location!"));
         location.getItems().remove(item);
 
-        if (item.getType() == WEAPON) {
-            inventoryService.storeWeapon(character, (Weapon) item);
-        } else {
-            throw new UnsupportedOperationException("Not supported item storage: " + item.getType());
+        switch (item.getType()) {
+            case WEAPON -> inventoryService.storeWeapon(character, (Weapon) item);
+            case SHIELD -> inventoryService.storeShield(character, (Shield) item);
+            default -> throw new IllegalArgumentException("Not supported item storage: " + item.getType());
         }
 
         return LocationContext.builder()
@@ -135,10 +133,11 @@ public class CharacterLocationService {
         inventoryService.getInventory(character).forEach((inventoryType, characterItem) -> {
             if (characterItem.getReference().equals(itemReference)) {
                 switch (inventoryType) {
-                    case PRIMARY_WEAPON -> inventoryService.dropPrimaryWeapon(character);
-                    case SECONDARY_WEAPON -> inventoryService.dropSecondaryWeapon(character);
-                    case SHIELD -> inventoryService.dropShield(character);
-                    case HELMET, BODY_ARMOR ->
+                    case USED_WEAPON -> inventoryService.dropWeapon(character);
+                    case SPARE_WEAPON -> inventoryService.dropSpareWeapon(character);
+                    case USED_SHIELD -> inventoryService.dropShield(character);
+                    case SPARE_SHIELD -> inventoryService.dropSpareShield(character);
+                    case USED_HELMET, USED_BODY_ARMOR ->
                             inventoryService.dropArmor(character, ((Armor) characterItem).getArmorType());
                 }
             }

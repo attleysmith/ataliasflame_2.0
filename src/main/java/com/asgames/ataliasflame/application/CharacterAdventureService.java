@@ -78,4 +78,10 @@ public class CharacterAdventureService {
         inventoryService.switchWeapons(character);
         return characterRepository.save(character);
     }
+
+    public Character switchShields(String characterReference) {
+        Character character = characterMaintenanceService.getCharacter(characterReference);
+        inventoryService.switchShields(character);
+        return characterRepository.save(character);
+    }
 }

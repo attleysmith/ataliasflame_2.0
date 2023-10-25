@@ -33,9 +33,10 @@ public abstract class CharacterDtoMapper {
     @Mapping(target = "soulChips", source = "soulChips")
     @Mapping(target = "companions", source = "companions")
     @Mapping(target = "blessings", source = "blessings")
-    @Mapping(target = "primaryWeapon", expression = "java(character.getPrimaryWeapon().map(weapon -> toWeaponDto(weapon)).orElse(null))")
-    @Mapping(target = "secondaryWeapon", expression = "java(character.getSecondaryWeapon().map(weapon -> toWeaponDto(weapon)).orElse(null))")
+    @Mapping(target = "weapon", expression = "java(character.getWeapon().map(weapon -> toWeaponDto(weapon)).orElse(null))")
+    @Mapping(target = "spareWeapon", expression = "java(character.getInventory().getSpareWeapon().map(weapon -> toWeaponDto(weapon)).orElse(null))")
     @Mapping(target = "shield", expression = "java(character.getShield().map(shield -> toShieldDto(shield)).orElse(null))")
+    @Mapping(target = "spareShield", expression = "java(character.getInventory().getSpareShield().map(shield -> toShieldDto(shield)).orElse(null))")
     @Mapping(target = "cover", source = "cover")
     @Mapping(target = "locationReference", source = "location.reference")
     public abstract CharacterDto toCharacterDto(Character character);

@@ -122,15 +122,41 @@ public final class Decisions {
     }
 
     public static boolean needToChangeWeapon(CharacterDto character, WeaponDto newWeapon) {
-        return averageDamageOf(newWeapon) > (character.getPrimaryWeapon() == null ? 1 : averageDamageOf(character.getPrimaryWeapon()));
+        return averageDamageOf(newWeapon) > (character.getWeapon() == null ? 1 : averageDamageOf(character.getWeapon()));
     }
 
     public static boolean needToStoreWeapon(CharacterDto character, WeaponDto newWeapon) {
-        return averageDamageOf(newWeapon) > (character.getSecondaryWeapon() == null ? 1 : averageDamageOf(character.getSecondaryWeapon()));
+        return averageDamageOf(newWeapon) > (character.getSpareWeapon() == null ? 1 : averageDamageOf(character.getSpareWeapon()));
+    }
+
+    public static boolean needToSwitchWeapons(CharacterDto character) {
+        if (character.getSpareWeapon() == null) {
+            return false;
+        }
+        return needToChangeWeapon(character, character.getSpareWeapon());
+    }
+
+    public static boolean newShieldAllowed(CharacterDto character) {
+        return character.getSpareShield() == null;
     }
 
     public static boolean needToChangeShield(CharacterDto character, ShieldDto newShield) {
-        return isOneHanded(character.getPrimaryWeapon()) && isBetterShield(newShield, character.getShield());
+        return isOneHanded(character.getWeapon()) && isBetterShield(newShield, character.getShield());
+    }
+
+    public static boolean newSpareShieldAllowed(CharacterDto character) {
+        return character.getShield() == null;
+    }
+
+    public static boolean needToStoreShield(CharacterDto character, ShieldDto newShield) {
+        return isBetterShield(newShield, character.getSpareShield());
+    }
+
+    public static boolean needToSwitchShields(CharacterDto character) {
+        if (character.getSpareShield() == null) {
+            return false;
+        }
+        return needToChangeShield(character, character.getSpareShield());
     }
 
     private static boolean isBetterShield(ShieldDto newShield, @Nullable ShieldDto oldShield) {

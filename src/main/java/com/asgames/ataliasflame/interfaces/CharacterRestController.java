@@ -90,6 +90,11 @@ public class CharacterRestController {
         return characterDtoMapper.toCharacterDto(characterAdventureService.switchWeapons(characterReference));
     }
 
+    @PostMapping(value = "/{characterReference}/shields/switch")
+    public CharacterDto switchShields(@PathVariable String characterReference) {
+        return characterDtoMapper.toCharacterDto(characterAdventureService.switchShields(characterReference));
+    }
+
     @GetMapping("/{characterReference}/spells")
     public List<SpellDto> listCharacterSpells(@PathVariable String characterReference) {
         return spellDtoMapper.toSpellDtoList(characterMagicService.listCharacterSpells(characterReference));

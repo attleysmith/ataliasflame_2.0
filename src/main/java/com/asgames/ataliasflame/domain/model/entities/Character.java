@@ -92,13 +92,9 @@ public class Character implements Combatant {
     @OneToMany(mappedBy = "owner", cascade = ALL, fetch = EAGER, orphanRemoval = true)
     private Set<ActiveBlessing> blessings;
 
-    @JoinColumn(name = "primaryWeaponId")
+    @JoinColumn(name = "weaponId")
     @OneToOne(cascade = ALL, fetch = EAGER)
-    private Weapon primaryWeapon;
-
-    @JoinColumn(name = "secondaryWeaponId")
-    @OneToOne(cascade = ALL, fetch = EAGER)
-    private Weapon secondaryWeapon;
+    private Weapon weapon;
 
     @JoinColumn(name = "shieldId")
     @OneToOne(cascade = ALL, fetch = EAGER)
@@ -107,16 +103,15 @@ public class Character implements Combatant {
     @Embedded
     private Cover cover;
 
+    @Embedded
+    private Inventory inventory;
+
     @JoinColumn(name = "locationId")
     @OneToOne(fetch = LAZY)
     private Location location;
 
-    public Optional<Weapon> getPrimaryWeapon() {
-        return Optional.ofNullable(primaryWeapon);
-    }
-
-    public Optional<Weapon> getSecondaryWeapon() {
-        return Optional.ofNullable(secondaryWeapon);
+    public Optional<Weapon> getWeapon() {
+        return Optional.ofNullable(weapon);
     }
 
     @Override
@@ -130,6 +125,13 @@ public class Character implements Combatant {
             cover = new Cover();
         }
         return cover;
+    }
+
+    public Inventory getInventory() {
+        if (inventory == null) {
+            inventory = new Inventory();
+        }
+        return inventory;
     }
 
     @Override
@@ -180,6 +182,6 @@ public class Character implements Combatant {
     }
 
     public boolean hasFreeHand() {
-        return getPrimaryWeapon().map(Weapon::isOneHanded).orElse(true);
+        return getWeapon().map(Weapon::isOneHanded).orElse(true);
     }
 }

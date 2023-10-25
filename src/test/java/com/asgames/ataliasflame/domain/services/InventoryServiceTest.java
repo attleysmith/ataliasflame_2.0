@@ -35,7 +35,7 @@ class InventoryServiceTest {
 
     @ParameterizedTest
     @MethodSource("weaponSource")
-    void switchSingleWeaponsTest(Weapon primaryWeapon, Weapon secondaryWeapon) {
+    void switchSingleWeaponsTest(Weapon weapon, Weapon spareWeapon) {
         // given
         CharacterInput characterInput = CharacterInput.builder()
                 .race(HUMAN)
@@ -45,20 +45,20 @@ class InventoryServiceTest {
                 .build();
         Character character = characterMaintenanceService.createCharacter(characterInput);
         // and
-        character.setPrimaryWeapon(primaryWeapon);
-        character.setSecondaryWeapon(secondaryWeapon);
+        character.setWeapon(weapon);
+        character.getInventory().setSpareWeapon(spareWeapon);
 
         // when
         inventoryService.switchWeapons(character);
 
         // then
-        assertThat(character.getPrimaryWeapon().orElse(null), is(secondaryWeapon));
-        assertThat(character.getSecondaryWeapon().orElse(null), is(primaryWeapon));
+        assertThat(character.getWeapon().orElse(null), is(spareWeapon));
+        assertThat(character.getInventory().getSpareWeapon().orElse(null), is(weapon));
     }
 
     @ParameterizedTest
     @MethodSource("weaponSourceWithShield")
-    void switchWeaponsWithShieldTest(Weapon primaryWeapon, Weapon secondaryWeapon, Shield shield, String expectedShieldCode) {
+    void switchWeaponsWithShieldTest(Weapon weapon, Weapon spareWeapon, Shield shield, Shield spareShield, String expectedShieldCode, String expectedSpareShieldCode) {
         // given
         CharacterInput characterInput = CharacterInput.builder()
                 .race(ORC)
@@ -68,17 +68,19 @@ class InventoryServiceTest {
                 .build();
         Character character = characterMaintenanceService.createCharacter(characterInput);
         // and
-        character.setPrimaryWeapon(primaryWeapon);
-        character.setSecondaryWeapon(secondaryWeapon);
+        character.setWeapon(weapon);
+        character.getInventory().setSpareWeapon(spareWeapon);
         character.setShield(shield);
+        character.getInventory().setSpareShield(spareShield);
 
         // when
         inventoryService.switchWeapons(character);
 
         // then
-        assertThat(character.getPrimaryWeapon().orElse(null), is(secondaryWeapon));
-        assertThat(character.getSecondaryWeapon().orElse(null), is(primaryWeapon));
+        assertThat(character.getWeapon().orElse(null), is(spareWeapon));
+        assertThat(character.getInventory().getSpareWeapon().orElse(null), is(weapon));
         assertThat(character.getShield().map(Shield::getCode).orElse("NONE"), is(expectedShieldCode));
+        assertThat(character.getInventory().getSpareShield().map(Shield::getCode).orElse("NONE"), is(expectedSpareShieldCode));
     }
 
     private static Stream<Arguments> weaponSource() {
@@ -92,8 +94,12 @@ class InventoryServiceTest {
 
     private static Stream<Arguments> weaponSourceWithShield() {
         return Stream.of(
-                arguments(DAGGER.instance(), SPEAR.instance(), BUCKLER.instance(), "NONE"),
-                arguments(DAGGER.instance(), SWORD.instance(), BUCKLER.instance(), BUCKLER.name())
+                arguments(DAGGER.instance(), SPEAR.instance(), BUCKLER.instance(), null, "NONE", BUCKLER.name()),
+                arguments(DAGGER.instance(), SPEAR.instance(), null, BUCKLER.instance(), "NONE", BUCKLER.name()),
+                arguments(DAGGER.instance(), SWORD.instance(), BUCKLER.instance(), null, BUCKLER.name(), "NONE"),
+                arguments(DAGGER.instance(), SWORD.instance(), null, BUCKLER.instance(), BUCKLER.name(), "NONE"),
+                arguments(SPEAR.instance(), SWORD.instance(), null, BUCKLER.instance(), BUCKLER.name(), "NONE"),
+                arguments(SPEAR.instance(), STAFF.instance(), null, BUCKLER.instance(), "NONE", BUCKLER.name())
         );
     }
 }

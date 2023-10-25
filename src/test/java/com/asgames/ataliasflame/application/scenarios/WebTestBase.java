@@ -70,6 +70,16 @@ public abstract class WebTestBase {
         return restTemplate.postForObject(path, null, CharacterDto.class, characterReference);
     }
 
+    protected CharacterDto switchWeapons(String characterReference) {
+        String path = "/characters/{characterReference}/weapons/switch";
+        return restTemplate.postForObject(path, null, CharacterDto.class, characterReference);
+    }
+
+    protected CharacterDto switchShields(String characterReference) {
+        String path = "/characters/{characterReference}/shields/switch";
+        return restTemplate.postForObject(path, null, CharacterDto.class, characterReference);
+    }
+
     protected LocationContextDto enterLocation(String characterReference, String locationReference) {
         String path = "/characters/{characterReference}/location/enter?location={locationReference}";
         return restTemplate.postForObject(path, null, LocationContextDto.class, characterReference, locationReference);

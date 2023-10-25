@@ -9,8 +9,8 @@ import org.junit.jupiter.api.AfterEach;
 
 import java.util.*;
 
-import static com.asgames.ataliasflame.application.scenarios.HelperUtils.*;
 import static com.asgames.ataliasflame.application.scenarios.Decisions.*;
+import static com.asgames.ataliasflame.application.scenarios.HelperUtils.*;
 import static com.asgames.ataliasflame.domain.model.enums.ArmorType.BODY_ARMOR;
 import static com.asgames.ataliasflame.domain.model.enums.ArmorType.HELMET;
 import static com.asgames.ataliasflame.domain.model.enums.ItemType.*;
@@ -59,6 +59,7 @@ public abstract class EnduranceTestBase extends WebTestBase {
         closeCombat();
         if (isAlive(character)) {
             lootLocation();
+            organizeInventory();
             castHealingMagic();
             finishEncounter();
             sleep();
@@ -205,8 +206,12 @@ public abstract class EnduranceTestBase extends WebTestBase {
                 .filter(item -> item.getType().equals(SHIELD))
                 .forEach(item -> {
                     ShieldDto newShield = getShield(location.getReference(), item.getReference());
-                    if (needToChangeShield(character, newShield)) {
+                    if (newShieldAllowed(character) && needToChangeShield(character, newShield)) {
                         LocationContextDto locationContext = useItem(character.getReference(), newShield.getReference());
+                        character = locationContext.getCharacter();
+                        location = locationContext.getLocation();
+                    } else if (newSpareShieldAllowed(character) && needToStoreShield(character, newShield)) {
+                        LocationContextDto locationContext = storeItem(character.getReference(), newShield.getReference());
                         character = locationContext.getCharacter();
                         location = locationContext.getLocation();
                     }
@@ -225,6 +230,15 @@ public abstract class EnduranceTestBase extends WebTestBase {
                         location = locationContext.getLocation();
                     }
                 });
+    }
+
+    private void organizeInventory() {
+        if (needToSwitchWeapons(character)) {
+            character = switchWeapons(character.getReference());
+        }
+        if (needToSwitchShields(character)) {
+            character = switchShields(character.getReference());
+        }
     }
 
     private void castHealingMagic() {

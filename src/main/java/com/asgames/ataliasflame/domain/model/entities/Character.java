@@ -28,17 +28,17 @@ public class Character implements Combatant {
     private String reference;
     @Column(name = "name")
     private String name;
+    @Enumerated(STRING)
     @Column(name = "gender")
-    @Enumerated(STRING)
     private Gender gender;
+    @Enumerated(STRING)
     @Column(name = "race")
-    @Enumerated(STRING)
     private Race race;
+    @Enumerated(STRING)
     @Column(name = "caste")
-    @Enumerated(STRING)
     private Caste caste;
-    @Column(name = "defensiveGod")
     @Enumerated(STRING)
+    @Column(name = "defensiveGod")
     private God defensiveGod;
 
     @Column(name = "attack")

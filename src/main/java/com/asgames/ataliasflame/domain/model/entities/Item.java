@@ -23,7 +23,7 @@ public class Item {
     protected String reference;
     @Column(name = "code")
     protected String code;
-    @Column(name = "type")
     @Enumerated(STRING)
+    @Column(name = "type")
     protected ItemType type;
 }

@@ -168,13 +168,15 @@ public abstract class EnduranceTestBase extends WebTestBase {
     }
 
     private void lootLocation() {
-        lootFood();
-        lootWeapons();
-        lootShields();
-        lootArmors();
+        useFood();
+        useWeapons();
+        useShields();
+        useArmors();
+        storeWeapons();
+        storeShields();
     }
 
-    private void lootFood() {
+    private void useFood() {
         location.getItems().stream()
                 .filter(item -> item.getType().equals(FOOD))
                 .forEach(item -> {
@@ -184,48 +186,66 @@ public abstract class EnduranceTestBase extends WebTestBase {
                 });
     }
 
-    private void lootWeapons() {
+    private void useWeapons() {
         location.getItems().stream()
                 .filter(item -> item.getType().equals(WEAPON))
                 .forEach(item -> {
-                    WeaponDto newWeapon = getWeapon(location.getReference(), item.getReference());
-                    if (needToChangeWeapon(character, newWeapon)) {
-                        LocationContextDto locationContext = useItem(character.getReference(), newWeapon.getReference());
-                        character = locationContext.getCharacter();
-                        location = locationContext.getLocation();
-                    } else if (needToStoreWeapon(character, newWeapon)) {
-                        LocationContextDto locationContext = storeItem(character.getReference(), newWeapon.getReference());
+                    WeaponDto weaponToUse = getWeapon(location.getReference(), item.getReference());
+                    if (needToChangeWeapon(character, weaponToUse)) {
+                        LocationContextDto locationContext = useItem(character.getReference(), weaponToUse.getReference());
                         character = locationContext.getCharacter();
                         location = locationContext.getLocation();
                     }
                 });
     }
 
-    private void lootShields() {
+    private void storeWeapons() {
+        location.getItems().stream()
+                .filter(item -> item.getType().equals(WEAPON))
+                .forEach(item -> {
+                    WeaponDto weaponToStore = getWeapon(location.getReference(), item.getReference());
+                    if (needToStoreWeapon(character, weaponToStore)) {
+                        LocationContextDto locationContext = storeItem(character.getReference(), weaponToStore.getReference());
+                        character = locationContext.getCharacter();
+                        location = locationContext.getLocation();
+                    }
+                });
+    }
+
+    private void useShields() {
         location.getItems().stream()
                 .filter(item -> item.getType().equals(SHIELD))
                 .forEach(item -> {
-                    ShieldDto newShield = getShield(location.getReference(), item.getReference());
-                    if (newShieldAllowed(character) && needToChangeShield(character, newShield)) {
-                        LocationContextDto locationContext = useItem(character.getReference(), newShield.getReference());
-                        character = locationContext.getCharacter();
-                        location = locationContext.getLocation();
-                    } else if (newSpareShieldAllowed(character) && needToStoreShield(character, newShield)) {
-                        LocationContextDto locationContext = storeItem(character.getReference(), newShield.getReference());
+                    ShieldDto shieldToUse = getShield(location.getReference(), item.getReference());
+                    if (newShieldAllowed(character) && needToChangeShield(character, shieldToUse)) {
+                        LocationContextDto locationContext = useItem(character.getReference(), shieldToUse.getReference());
                         character = locationContext.getCharacter();
                         location = locationContext.getLocation();
                     }
                 });
     }
 
-    private void lootArmors() {
+    private void storeShields() {
+        location.getItems().stream()
+                .filter(item -> item.getType().equals(SHIELD))
+                .forEach(item -> {
+                    ShieldDto shieldToStore = getShield(location.getReference(), item.getReference());
+                    if (newSpareShieldAllowed(character) && needToStoreShield(character, shieldToStore)) {
+                        LocationContextDto locationContext = storeItem(character.getReference(), shieldToStore.getReference());
+                        character = locationContext.getCharacter();
+                        location = locationContext.getLocation();
+                    }
+                });
+    }
+
+    private void useArmors() {
         location.getItems().stream()
                 .filter(item -> item.getType().equals(ARMOR))
                 .forEach(item -> {
-                    ArmorDto newArmor = getArmor(location.getReference(), item.getReference());
-                    if ((newArmor.getArmorType().equals(HELMET) && needToChangeHelmet(character, newArmor))
-                            || (newArmor.getArmorType().equals(BODY_ARMOR) && needToChangeBodyArmor(character, newArmor))) {
-                        LocationContextDto locationContext = useItem(character.getReference(), newArmor.getReference());
+                    ArmorDto armorToUse = getArmor(location.getReference(), item.getReference());
+                    if ((armorToUse.getArmorType().equals(HELMET) && needToChangeHelmet(character, armorToUse))
+                            || (armorToUse.getArmorType().equals(BODY_ARMOR) && needToChangeBodyArmor(character, armorToUse))) {
+                        LocationContextDto locationContext = useItem(character.getReference(), armorToUse.getReference());
                         character = locationContext.getCharacter();
                         location = locationContext.getLocation();
                     }

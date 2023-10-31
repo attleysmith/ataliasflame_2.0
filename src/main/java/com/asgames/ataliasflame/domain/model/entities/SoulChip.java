@@ -23,8 +23,8 @@ public class SoulChip {
     private String reference;
     @Column(name = "name")
     private String name;
-    @Column(name = "shape")
     @Enumerated(STRING)
+    @Column(name = "shape")
     private SoulChipShape shape;
 
     @EqualsAndHashCode.Exclude
@@ -44,8 +44,8 @@ public class SoulChip {
     @Column(name = "initiative")
     private int initiative;
 
-    @Column(name = "upgradedCaste")
     @Enumerated(STRING)
+    @Column(name = "upgradedCaste")
     private Caste upgradedCaste;
     @Column(name = "effectiveness")
     private int effectiveness;

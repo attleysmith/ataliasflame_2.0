@@ -26,8 +26,8 @@ public class ActiveBlessing {
     @JoinColumn(name = "ownerId", nullable = false, updatable = false)
     private Character owner;
 
-    @Column(name = "booster")
     @Enumerated(STRING)
+    @Column(name = "booster")
     private Booster booster;
 
     @JoinColumn(name = "sourceId")

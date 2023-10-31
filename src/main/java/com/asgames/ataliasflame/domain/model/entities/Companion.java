@@ -23,8 +23,8 @@ public class Companion implements Combatant {
     private String reference;
     @Column(name = "name")
     private String name;
-    @Column(name = "type")
     @Enumerated(STRING)
+    @Column(name = "type")
     private CompanionType type;
 
     @EqualsAndHashCode.Exclude

@@ -25,7 +25,7 @@ public class DefensiveGodConversionLog {
     @ManyToOne()
     @JoinColumn(name = "convertedCharacterId")
     private Character convertedCharacter;
-    @Column(name = "god")
     @Enumerated(STRING)
+    @Column(name = "god")
     private God god;
 }

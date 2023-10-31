@@ -23,8 +23,8 @@ public class Armor extends Item implements AbsorptionDefense {
     private int defense;
     @Column(name = "absorption")
     private int absorption;
-    @Column(name = "armorType")
     @Enumerated(STRING)
+    @Column(name = "armorType")
     private ArmorType armorType;
 
     @Embedded

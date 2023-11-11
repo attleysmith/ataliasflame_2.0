@@ -6,5 +6,6 @@ public enum CasteGroup {
     WARRIOR,
     WANDERER,
     NATURE_DWELLER,
-    CLERIC
+    CLERIC,
+    DUAL
 }

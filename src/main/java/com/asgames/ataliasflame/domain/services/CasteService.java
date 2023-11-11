@@ -3,11 +3,12 @@ package com.asgames.ataliasflame.domain.services;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.SoulChip;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
+import com.asgames.ataliasflame.domain.model.enums.CasteGroup;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Set;
 
 import static com.asgames.ataliasflame.domain.model.enums.Caste.ATALIAS_PRIEST;
 import static com.asgames.ataliasflame.domain.model.enums.CasteGroup.WANDERER;
@@ -44,11 +45,13 @@ public class CasteService {
     }
 
     private void validateConstraints(Character character, Caste newCaste) {
-        if (character.getRace().prohibitedCasteGroups.contains(newCaste.group)) {
-            throw new IllegalArgumentException(character.getRace() + " cannot be " + newCaste);
-        }
-        if (character.getDefensiveGod().prohibitedCasteGroups.contains(newCaste.group)) {
-            throw new IllegalArgumentException("Followers of " + character.getDefensiveGod() + " cannot be " + newCaste);
+        for (CasteGroup groupTag : newCaste.groupTags) {
+            if (character.getRace().prohibitedCasteGroups.contains(groupTag)) {
+                throw new IllegalArgumentException(character.getRace() + " cannot be " + newCaste);
+            }
+            if (character.getDefensiveGod().prohibitedCasteGroups.contains(groupTag)) {
+                throw new IllegalArgumentException("Followers of " + character.getDefensiveGod() + " cannot be " + newCaste);
+            }
         }
         if (newCaste.equals(ATALIAS_PRIEST) && character.getRace().equals(ARIMASPI)) {
             throw new IllegalArgumentException("Arimaspos cannot be Atalia's priests!");
@@ -56,7 +59,7 @@ public class CasteService {
     }
 
     private void validateAvailability(Character character, Caste newCaste) {
-        List<Caste> nextCastes = character.getCaste().nextCastes;
+        Set<Caste> nextCastes = character.getCaste().nextCastes;
         if (!nextCastes.contains(newCaste)) {
             throw new IllegalArgumentException("New caste is not available! Available castes: " + nextCastes);
         }
@@ -72,7 +75,7 @@ public class CasteService {
     }
 
     private void ripOutSoulChip(Character character) {
-        if (character.getCaste().group.equals(WANDERER)) {
+        if (character.getCaste().groupTags.contains(WANDERER)) {
             int percent = roll100();
 
             SoulChip soulChip = soulChipService.getSoulChip(character, percent);

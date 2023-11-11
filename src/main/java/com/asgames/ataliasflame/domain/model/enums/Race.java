@@ -2,7 +2,7 @@ package com.asgames.ataliasflame.domain.model.enums;
 
 import lombok.AllArgsConstructor;
 
-import java.util.List;
+import java.util.Set;
 
 import static com.asgames.ataliasflame.domain.model.enums.Booster.*;
 import static com.asgames.ataliasflame.domain.model.enums.CasteGroup.*;
@@ -12,19 +12,19 @@ import static com.asgames.ataliasflame.domain.model.enums.God.*;
 
 @AllArgsConstructor
 public enum Race {
-    HUMAN(HUMAN_EFFECT, List.of(), List.of(), List.of()),
-    ELF(ELF_EFFECT, List.of(), List.of(), List.of()),
-    HALF_ELF(HALF_ELF_EFFECT, List.of(), List.of(), List.of()),
-    NIGHT_ELF(NIGHT_ELF_EFFECT, List.of(), List.of(), List.of()),
-    DWARF(DWARF_EFFECT, List.of(), List.of(HORA), List.of(SORCERER)),
-    ORC(ORC_EFFECT, List.of(), List.of(HORA, RUNID), List.of(SORCERER)),
-    MINOTAUR(MINOTAUR_EFFECT, List.of(FEMALE), List.of(HORA), List.of(SORCERER, CLERIC)),
-    ARIMASPI(ARIMASPI_EFFECT, List.of(), List.of(), List.of(SORCERER, CLERIC)),
-    NYMPH(NYMPH_EFFECT, List.of(MALE), List.of(GETON, ALATE), List.of(WARRIOR, WANDERER)),
-    HALFLING(HALFLING_EFFECT, List.of(), List.of(), List.of());
+    HUMAN(HUMAN_EFFECT, Set.of(), Set.of(), Set.of()),
+    ELF(ELF_EFFECT, Set.of(), Set.of(), Set.of()),
+    HALF_ELF(HALF_ELF_EFFECT, Set.of(), Set.of(), Set.of()),
+    NIGHT_ELF(NIGHT_ELF_EFFECT, Set.of(), Set.of(), Set.of()),
+    DWARF(DWARF_EFFECT, Set.of(), Set.of(HORA), Set.of(SORCERER)),
+    ORC(ORC_EFFECT, Set.of(), Set.of(HORA, RUNID), Set.of(SORCERER)),
+    MINOTAUR(MINOTAUR_EFFECT, Set.of(FEMALE), Set.of(HORA), Set.of(SORCERER, CLERIC)),
+    ARIMASPI(ARIMASPI_EFFECT, Set.of(), Set.of(), Set.of(SORCERER, CLERIC)),
+    NYMPH(NYMPH_EFFECT, Set.of(MALE), Set.of(GETON, ALATE), Set.of(WARRIOR, WANDERER)),
+    HALFLING(HALFLING_EFFECT, Set.of(), Set.of(), Set.of());
 
     public final Booster booster;
-    public final List<Gender> prohibitedGenders;
-    public final List<God> prohibitedGods;
-    public final List<CasteGroup> prohibitedCasteGroups;
+    public final Set<Gender> prohibitedGenders;
+    public final Set<God> prohibitedGods;
+    public final Set<CasteGroup> prohibitedCasteGroups;
 }

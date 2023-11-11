@@ -3,6 +3,7 @@ package com.asgames.ataliasflame.domain.services;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.DefensiveGodConversionLog;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
+import com.asgames.ataliasflame.domain.model.enums.CasteGroup;
 import com.asgames.ataliasflame.domain.model.enums.God;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ public class DefensiveGodConversionService {
 
     public DefensiveGodConversionLog getConversionLog(Character character) {
         Caste characterCaste = character.getCaste();
-        if (characterCaste.equals(MONK) || !characterCaste.group.equals(CLERIC)) {
+        if (characterCaste.equals(MONK) || !characterCaste.groupTags.contains(CLERIC)) {
             throw new IllegalArgumentException("Only higher rank clerics can convert characters! (At least priests.)");
         }
 
@@ -48,8 +49,10 @@ public class DefensiveGodConversionService {
         if (character.getRace().prohibitedGods.contains(newGod)) {
             throw new IllegalArgumentException(character.getRace() + " cannot be a follower of " + newGod);
         }
-        if (newGod.prohibitedCasteGroups.contains(character.getCaste().group)) {
-            throw new IllegalArgumentException(character.getCaste() + " cannot be a follower of " + newGod);
+        for (CasteGroup groupTag : character.getCaste().groupTags) {
+            if (newGod.prohibitedCasteGroups.contains(groupTag)) {
+                throw new IllegalArgumentException(character.getCaste() + " cannot be a follower of " + newGod);
+            }
         }
     }
 }

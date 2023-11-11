@@ -2,16 +2,116 @@ package com.asgames.ataliasflame.domain.model.enums;
 
 import lombok.AllArgsConstructor;
 
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
 import static com.asgames.ataliasflame.domain.model.enums.CasteGroup.*;
-import static java.util.Collections.emptyList;
+import static java.util.Collections.emptySet;
 
 @AllArgsConstructor
 public enum Caste {
-    ARCHANGEL(CLERIC, Map.of(
+    WITCH_DOCTOR(DUAL, Set.of(NATURE_DWELLER, SORCERER), Map.of(
+            STRENGTH, 25,
+            DEXTERITY, 25,
+            CONSTITUTION, 45,
+            AGILITY, 25,
+            INTELLIGENCE, 50,
+            LORE, 50,
+            MENTAL_POWER, 50,
+            SPIRITUAL_POWER, 15
+    ), emptySet()),
+    BARBARIAN(DUAL, Set.of(WARRIOR, NATURE_DWELLER), Map.of(
+            STRENGTH, 45,
+            DEXTERITY, 50,
+            CONSTITUTION, 50,
+            AGILITY, 50,
+            INTELLIGENCE, 40,
+            LORE, 25,
+            MENTAL_POWER, 25,
+            SPIRITUAL_POWER, 10
+    ), emptySet()),
+    CRUSADER(DUAL, Set.of(CLERIC, WARRIOR), Map.of(
+            STRENGTH, 50,
+            DEXTERITY, 50,
+            CONSTITUTION, 50,
+            AGILITY, 50,
+            INTELLIGENCE, 40,
+            LORE, 25,
+            MENTAL_POWER, 25,
+            SPIRITUAL_POWER, 5
+    ), emptySet()),
+    APOSTLE(DUAL, Set.of(WANDERER, CLERIC), Map.of(
+            STRENGTH, 35,
+            DEXTERITY, 45,
+            CONSTITUTION, 45,
+            AGILITY, 45,
+            INTELLIGENCE, 40,
+            LORE, 25,
+            MENTAL_POWER, 20,
+            SPIRITUAL_POWER, 25
+    ), emptySet()),
+    CHARLATAN(DUAL, Set.of(SORCERER, WANDERER), Map.of(
+            STRENGTH, 35,
+            DEXTERITY, 45,
+            CONSTITUTION, 45,
+            AGILITY, 45,
+            INTELLIGENCE, 40,
+            LORE, 25,
+            MENTAL_POWER, 20,
+            SPIRITUAL_POWER, 25
+    ), emptySet()),
+    SAINT(DUAL, Set.of(CLERIC, SORCERER), Map.of(
+            STRENGTH, 25,
+            DEXTERITY, 30,
+            CONSTITUTION, 30,
+            AGILITY, 30,
+            INTELLIGENCE, 50,
+            LORE, 50,
+            MENTAL_POWER, 50,
+            SPIRITUAL_POWER, 15
+    ), emptySet()),
+    SHAMAN(DUAL, Set.of(NATURE_DWELLER, CLERIC), Map.of(
+            STRENGTH, 25,
+            DEXTERITY, 30,
+            CONSTITUTION, 45,
+            AGILITY, 30,
+            INTELLIGENCE, 45,
+            LORE, 50,
+            MENTAL_POWER, 45,
+            SPIRITUAL_POWER, 10
+    ), emptySet()),
+    NOMAD(DUAL, Set.of(WANDERER, NATURE_DWELLER), Map.of(
+            STRENGTH, 35,
+            DEXTERITY, 45,
+            CONSTITUTION, 45,
+            AGILITY, 45,
+            INTELLIGENCE, 40,
+            LORE, 25,
+            MENTAL_POWER, 15,
+            SPIRITUAL_POWER, 25
+    ), emptySet()),
+    CHAMPION(DUAL, Set.of(WARRIOR, WANDERER), Map.of(
+            STRENGTH, 50,
+            DEXTERITY, 50,
+            CONSTITUTION, 50,
+            AGILITY, 50,
+            INTELLIGENCE, 20,
+            LORE, 20,
+            MENTAL_POWER, 10,
+            SPIRITUAL_POWER, 15
+    ), emptySet()),
+    SAGE(DUAL, Set.of(SORCERER, WARRIOR), Map.of(
+            STRENGTH, 40,
+            DEXTERITY, 45,
+            CONSTITUTION, 45,
+            AGILITY, 45,
+            INTELLIGENCE, 40,
+            LORE, 25,
+            MENTAL_POWER, 25,
+            SPIRITUAL_POWER, 10
+    ), emptySet()),
+    ARCHANGEL(CLERIC, Set.of(CLERIC), Map.of(
             STRENGTH, 50,
             DEXTERITY, 55,
             CONSTITUTION, 60,
@@ -20,8 +120,8 @@ public enum Caste {
             LORE, 100,
             MENTAL_POWER, 90,
             SPIRITUAL_POWER, 25
-    ), emptyList()),
-    HIERARCH(CLERIC, Map.of(
+    ), emptySet()),
+    HIERARCH(CLERIC, Set.of(CLERIC), Map.of(
             STRENGTH, 25,
             DEXTERITY, 27,
             CONSTITUTION, 26,
@@ -30,8 +130,8 @@ public enum Caste {
             LORE, 50,
             MENTAL_POWER, 45,
             SPIRITUAL_POWER, 5
-    ), List.of(ARCHANGEL)),
-    PRIEST(CLERIC, Map.of(
+    ), Set.of(ARCHANGEL)),
+    PRIEST(CLERIC, Set.of(CLERIC), Map.of(
             STRENGTH, 8,
             DEXTERITY, 12,
             CONSTITUTION, 12,
@@ -40,8 +140,8 @@ public enum Caste {
             LORE, 20,
             MENTAL_POWER, 18,
             SPIRITUAL_POWER, 2
-    ), List.of(HIERARCH)),
-    MONK(CLERIC, Map.of(
+    ), Set.of(HIERARCH, SHAMAN, SAINT, APOSTLE, CRUSADER)),
+    MONK(CLERIC, Set.of(CLERIC), Map.of(
             STRENGTH, 3,
             DEXTERITY, 3,
             CONSTITUTION, 2,
@@ -50,8 +150,8 @@ public enum Caste {
             LORE, 5,
             MENTAL_POWER, 4,
             SPIRITUAL_POWER, 1
-    ), List.of(PRIEST)),
-    ATALIAS_PRIEST(NATURE_DWELLER, Map.of(
+    ), Set.of(PRIEST)),
+    ATALIAS_PRIEST(NATURE_DWELLER, Set.of(NATURE_DWELLER), Map.of(
             STRENGTH, 45,
             DEXTERITY, 50,
             CONSTITUTION, 70,
@@ -60,8 +160,8 @@ public enum Caste {
             LORE, 90,
             MENTAL_POWER, 90,
             SPIRITUAL_POWER, 25
-    ), emptyList()),
-    ARCHDRUID(NATURE_DWELLER, Map.of(
+    ), emptySet()),
+    ARCHDRUID(NATURE_DWELLER, Set.of(NATURE_DWELLER), Map.of(
             STRENGTH, 25,
             DEXTERITY, 25,
             CONSTITUTION, 45,
@@ -70,8 +170,8 @@ public enum Caste {
             LORE, 40,
             MENTAL_POWER, 40,
             SPIRITUAL_POWER, 10
-    ), List.of(ATALIAS_PRIEST)),
-    DRUID(NATURE_DWELLER, Map.of(
+    ), Set.of(ATALIAS_PRIEST)),
+    DRUID(NATURE_DWELLER, Set.of(NATURE_DWELLER), Map.of(
             STRENGTH, 8,
             DEXTERITY, 12,
             CONSTITUTION, 17,
@@ -80,8 +180,8 @@ public enum Caste {
             LORE, 18,
             MENTAL_POWER, 12,
             SPIRITUAL_POWER, 3
-    ), List.of(ARCHDRUID)),
-    HERMIT(NATURE_DWELLER, Map.of(
+    ), Set.of(ARCHDRUID, NOMAD, SHAMAN, BARBARIAN, WITCH_DOCTOR)),
+    HERMIT(NATURE_DWELLER, Set.of(NATURE_DWELLER), Map.of(
             STRENGTH, 3,
             DEXTERITY, 3,
             CONSTITUTION, 4,
@@ -90,8 +190,8 @@ public enum Caste {
             LORE, 4,
             MENTAL_POWER, 3,
             SPIRITUAL_POWER, 1
-    ), List.of(DRUID)),
-    FREE_SOUL(WANDERER, Map.of(
+    ), Set.of(DRUID)),
+    FREE_SOUL(WANDERER, Set.of(WANDERER), Map.of(
             STRENGTH, 75,
             DEXTERITY, 80,
             CONSTITUTION, 85,
@@ -100,8 +200,8 @@ public enum Caste {
             LORE, 25,
             MENTAL_POWER, 10,
             SPIRITUAL_POWER, 100
-    ), emptyList()),
-    PILGRIM(WANDERER, Map.of(
+    ), emptySet()),
+    PILGRIM(WANDERER, Set.of(WANDERER), Map.of(
             STRENGTH, 35,
             DEXTERITY, 42,
             CONSTITUTION, 45,
@@ -110,8 +210,8 @@ public enum Caste {
             LORE, 18,
             MENTAL_POWER, 5,
             SPIRITUAL_POWER, 40
-    ), List.of(FREE_SOUL)),
-    RANGER(WANDERER, Map.of(
+    ), Set.of(FREE_SOUL)),
+    RANGER(WANDERER, Set.of(WANDERER), Map.of(
             STRENGTH, 16,
             DEXTERITY, 18,
             CONSTITUTION, 20,
@@ -120,8 +220,8 @@ public enum Caste {
             LORE, 7,
             MENTAL_POWER, 2,
             SPIRITUAL_POWER, 12
-    ), List.of(PILGRIM)),
-    TRACKER(WANDERER, Map.of(
+    ), Set.of(PILGRIM, CHAMPION, NOMAD, CHARLATAN, APOSTLE)),
+    TRACKER(WANDERER, Set.of(WANDERER), Map.of(
             STRENGTH, 4,
             DEXTERITY, 5,
             CONSTITUTION, 5,
@@ -130,8 +230,8 @@ public enum Caste {
             LORE, 1,
             MENTAL_POWER, 1,
             SPIRITUAL_POWER, 2
-    ), List.of(RANGER)),
-    TITAN(WARRIOR, Map.of(
+    ), Set.of(RANGER)),
+    TITAN(WARRIOR, Set.of(WARRIOR), Map.of(
             STRENGTH, 100,
             DEXTERITY, 100,
             CONSTITUTION, 100,
@@ -140,8 +240,8 @@ public enum Caste {
             LORE, 25,
             MENTAL_POWER, 25,
             SPIRITUAL_POWER, 10
-    ), emptyList()),
-    GRANDMASTER(WARRIOR, Map.of(
+    ), emptySet()),
+    GRANDMASTER(WARRIOR, Set.of(WARRIOR), Map.of(
             STRENGTH, 50,
             DEXTERITY, 50,
             CONSTITUTION, 50,
@@ -150,8 +250,8 @@ public enum Caste {
             LORE, 13,
             MENTAL_POWER, 12,
             SPIRITUAL_POWER, 5
-    ), List.of(TITAN)),
-    PALADIN(WARRIOR, Map.of(
+    ), Set.of(TITAN)),
+    PALADIN(WARRIOR, Set.of(WARRIOR), Map.of(
             STRENGTH, 20,
             DEXTERITY, 20,
             CONSTITUTION, 20,
@@ -160,8 +260,8 @@ public enum Caste {
             LORE, 6,
             MENTAL_POWER, 5,
             SPIRITUAL_POWER, 2
-    ), List.of(GRANDMASTER)),
-    FIGHTER(WARRIOR, Map.of(
+    ), Set.of(GRANDMASTER, SAGE, CHAMPION, CRUSADER, BARBARIAN)),
+    FIGHTER(WARRIOR, Set.of(WARRIOR), Map.of(
             STRENGTH, 5,
             DEXTERITY, 5,
             CONSTITUTION, 5,
@@ -170,8 +270,8 @@ public enum Caste {
             LORE, 1,
             MENTAL_POWER, 1,
             SPIRITUAL_POWER, 1
-    ), List.of(PALADIN)),
-    AVATAR(SORCERER, Map.of(
+    ), Set.of(PALADIN)),
+    AVATAR(SORCERER, Set.of(SORCERER), Map.of(
             STRENGTH, 40,
             DEXTERITY, 45,
             CONSTITUTION, 45,
@@ -180,8 +280,8 @@ public enum Caste {
             LORE, 100,
             MENTAL_POWER, 100,
             SPIRITUAL_POWER, 25
-    ), emptyList()),
-    WITCHMASTER(SORCERER, Map.of(
+    ), emptySet()),
+    WITCHMASTER(SORCERER, Set.of(SORCERER), Map.of(
             STRENGTH, 18,
             DEXTERITY, 25,
             CONSTITUTION, 20,
@@ -190,8 +290,8 @@ public enum Caste {
             LORE, 50,
             MENTAL_POWER, 50,
             SPIRITUAL_POWER, 15
-    ), List.of(AVATAR)),
-    MAGE(SORCERER, Map.of(
+    ), Set.of(AVATAR)),
+    MAGE(SORCERER, Set.of(SORCERER), Map.of(
             STRENGTH, 6,
             DEXTERITY, 12,
             CONSTITUTION, 7,
@@ -200,8 +300,8 @@ public enum Caste {
             LORE, 20,
             MENTAL_POWER, 20,
             SPIRITUAL_POWER, 5
-    ), List.of(WITCHMASTER)),
-    WIZARD(SORCERER, Map.of(
+    ), Set.of(WITCHMASTER, SAGE, SAINT, CHARLATAN, WITCH_DOCTOR)),
+    WIZARD(SORCERER, Set.of(SORCERER), Map.of(
             STRENGTH, 2,
             DEXTERITY, 3,
             CONSTITUTION, 2,
@@ -210,8 +310,8 @@ public enum Caste {
             LORE, 5,
             MENTAL_POWER, 4,
             SPIRITUAL_POWER, 1
-    ), List.of(MAGE)),
-    ROGUE(UNSPECIALIZED, Map.of(
+    ), Set.of(MAGE)),
+    ROGUE(UNSPECIALIZED, Set.of(UNSPECIALIZED), Map.of(
             STRENGTH, 1,
             DEXTERITY, 1,
             CONSTITUTION, 1,
@@ -220,9 +320,10 @@ public enum Caste {
             LORE, 0,
             MENTAL_POWER, 0,
             SPIRITUAL_POWER, 0
-    ), List.of(WIZARD, FIGHTER, TRACKER, HERMIT, MONK));
+    ), Set.of(WIZARD, FIGHTER, TRACKER, HERMIT, MONK));
 
     public final CasteGroup group;
+    public final Set<CasteGroup> groupTags;
     public final Map<Attribute, Integer> minimumAttributes;
-    public final List<Caste> nextCastes;
+    public final Set<Caste> nextCastes;
 }

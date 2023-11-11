@@ -3,6 +3,7 @@ package com.asgames.ataliasflame.domain.services;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Location;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
+import com.asgames.ataliasflame.domain.model.enums.CasteGroup;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,17 +47,19 @@ public class CharacterInitializer {
         if (character.getDefensiveGod().equals(ATALIA)) {
             throw new IllegalArgumentException("Calling ATALIA as defensive god is forbidden!");
         }
-        if (character.getRace().prohibitedCasteGroups.contains(character.getCaste().group)) {
-            throw new IllegalArgumentException(character.getRace() + " cannot be " + character.getCaste());
-        }
         if (character.getRace().prohibitedGenders.contains(character.getGender())) {
             throw new IllegalArgumentException(character.getRace() + " cannot be " + character.getGender());
         }
         if (character.getRace().prohibitedGods.contains(character.getDefensiveGod())) {
             throw new IllegalArgumentException(character.getRace() + " cannot be a follower of " + character.getDefensiveGod());
         }
-        if (character.getDefensiveGod().prohibitedCasteGroups.contains(character.getCaste().group)) {
-            throw new IllegalArgumentException("Followers of " + character.getDefensiveGod() + " cannot be " + character.getCaste());
+        for (CasteGroup groupTag : character.getCaste().groupTags) {
+            if (character.getRace().prohibitedCasteGroups.contains(groupTag)) {
+                throw new IllegalArgumentException(character.getRace() + " cannot be " + character.getCaste());
+            }
+            if (character.getDefensiveGod().prohibitedCasteGroups.contains(groupTag)) {
+                throw new IllegalArgumentException("Followers of " + character.getDefensiveGod() + " cannot be " + character.getCaste());
+            }
         }
     }
 

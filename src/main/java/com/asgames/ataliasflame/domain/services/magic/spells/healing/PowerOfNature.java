@@ -2,8 +2,6 @@ package com.asgames.ataliasflame.domain.services.magic.spells.healing;
 
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
-import com.asgames.ataliasflame.domain.services.HealingService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
@@ -12,9 +10,6 @@ import static com.asgames.ataliasflame.domain.services.storyline.events.Characte
 
 @Component
 public class PowerOfNature extends HealingSpell {
-
-    @Autowired
-    private HealingService healingService;
 
     private static final int SPELL_COST = 5;
 

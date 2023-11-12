@@ -4,8 +4,6 @@ import com.asgames.ataliasflame.domain.model.entities.ActiveBlessing;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.enums.Booster;
-import com.asgames.ataliasflame.domain.services.CharacterCalculationService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
@@ -15,9 +13,6 @@ import static com.asgames.ataliasflame.domain.services.storyline.events.Characte
 
 @Component
 public class ProtectiveHandOfNature extends BlessingSpell {
-
-    @Autowired
-    private CharacterCalculationService characterCalculationService;
 
     private static final int SPELL_COST = 3;
 

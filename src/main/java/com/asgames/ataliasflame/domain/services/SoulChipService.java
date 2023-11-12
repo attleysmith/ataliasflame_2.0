@@ -5,7 +5,7 @@ import com.asgames.ataliasflame.domain.model.entities.SoulChip;
 import com.asgames.ataliasflame.domain.model.enums.SoulChipShape;
 import com.asgames.ataliasflame.domain.model.vos.Energy;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -14,6 +14,7 @@ import static com.asgames.ataliasflame.domain.model.enums.SoulChipShape.valueByO
 import static com.asgames.ataliasflame.domain.services.storyline.events.SoulChipEvents.SoulChipUpgradeEvent.soulChipUpgrade;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.percent;
 
+@RequiredArgsConstructor
 @Service
 public class SoulChipService {
 
@@ -30,8 +31,7 @@ public class SoulChipService {
     private static final int SLEEP_RECOVERY_EFFECT = 80;
     private static final int REST_RECOVERY_EFFECT = 5;
 
-    @Autowired
-    private StoryLineLogger storyLineLogger;
+    private final StoryLineLogger storyLineLogger;
 
     public SoulChip getSoulChip(Character character, int percent) {
         SoulChipShape shape = valueByOrder(character.getSoulChips().size());

@@ -5,7 +5,7 @@ import com.asgames.ataliasflame.domain.model.entities.SoulChip;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
 import com.asgames.ataliasflame.domain.model.enums.CasteGroup;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -19,16 +19,13 @@ import static com.asgames.ataliasflame.domain.services.storyline.events.Characte
 import static com.asgames.ataliasflame.domain.services.storyline.events.SoulChipEvents.NewSoulChipEvent.newSoulChip;
 import static com.asgames.ataliasflame.domain.utils.DiceUtils.roll100;
 
+@RequiredArgsConstructor
 @Service
 public class CasteService {
 
-    @Autowired
-    private StoryLineLogger storyLineLogger;
-
-    @Autowired
-    private CharacterCalculationService characterCalculationService;
-    @Autowired
-    private SoulChipService soulChipService;
+    private final StoryLineLogger storyLineLogger;
+    private final CharacterCalculationService characterCalculationService;
+    private final SoulChipService soulChipService;
 
     public void upgradeCaste(Character character, Caste newCaste) {
         validateConstraints(character, newCaste);

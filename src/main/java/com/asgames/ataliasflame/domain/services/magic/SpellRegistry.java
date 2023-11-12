@@ -2,19 +2,19 @@ package com.asgames.ataliasflame.domain.services.magic;
 
 import com.asgames.ataliasflame.domain.model.enums.SpellName;
 import com.asgames.ataliasflame.domain.services.magic.spells.Spell;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@RequiredArgsConstructor
 @Component
 public class SpellRegistry implements InitializingBean {
 
-    @Autowired
-    private List<Spell> spells;
+    private final List<Spell> spells;
 
     private final Map<SpellName, Spell> spellMap = new HashMap<>();
 

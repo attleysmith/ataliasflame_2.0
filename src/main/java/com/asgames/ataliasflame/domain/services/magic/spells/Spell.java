@@ -6,7 +6,9 @@ import com.asgames.ataliasflame.domain.model.enums.Booster;
 import com.asgames.ataliasflame.domain.model.enums.MagicType;
 import com.asgames.ataliasflame.domain.model.enums.SpellGroup;
 import com.asgames.ataliasflame.domain.model.enums.SpellName;
+import com.asgames.ataliasflame.domain.services.CharacterCalculationService;
 import com.asgames.ataliasflame.domain.services.DamageService;
+import com.asgames.ataliasflame.domain.services.HealingService;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +25,12 @@ public abstract class Spell {
 
     @Autowired
     protected StoryLineLogger storyLineLogger;
-
     @Autowired
     protected DamageService damageService;
+    @Autowired
+    protected CharacterCalculationService characterCalculationService;
+    @Autowired
+    protected HealingService healingService;
 
     @Getter
     protected final SpellName name;
@@ -73,6 +78,13 @@ public abstract class Spell {
         return booster.effects.entrySet().stream()
                 .filter(effect -> effect.getValue() != 0)
                 .map(effect -> effect.getKey().name() + ": " + effect.getValue() + "%")
+                .collect(Collectors.joining("; "));
+    }
+
+    protected static String effectDetailsOf(int defense, int absorption, int durability) {
+        return Map.of("Defense", defense, "Absorption", absorption, "Durability", durability).entrySet().stream()
+                .filter(effect -> effect.getValue() != 0)
+                .map(effect -> effect.getKey() + ": " + effect.getValue())
                 .collect(Collectors.joining("; "));
     }
 

@@ -3,24 +3,21 @@ package com.asgames.ataliasflame.domain.services;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import static com.asgames.ataliasflame.domain.model.enums.Attribute.CONSTITUTION;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.AttributeUpgradeEvent.attributeUpgrade;
 
+@RequiredArgsConstructor
 @Service
 public class AttributeService {
 
     private static final int MAX_ATTRIBUTE_POINTS = 100;
 
-    @Autowired
-    private StoryLineLogger storyLineLogger;
-
-    @Autowired
-    private CharacterCalculationService characterCalculationService;
-    @Autowired
-    private SoulChipService soulChipService;
+    private final StoryLineLogger storyLineLogger;
+    private final CharacterCalculationService characterCalculationService;
+    private final SoulChipService soulChipService;
 
     public void addAttributePoints(Character character, Attribute attribute, int points) {
         if (points > character.getAttributePoints()) {

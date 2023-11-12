@@ -4,19 +4,19 @@ import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Companion;
 import com.asgames.ataliasflame.domain.model.entities.Food;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.HealthRecoveryEvent.healthRecovery;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CompanionEvents.CompanionHealingEvent.companionHealing;
 
+@RequiredArgsConstructor
 @Service
 public class HealingService {
 
     private static final int HEALING_EFFECT_OF_SLEEP = 20;
 
-    @Autowired
-    private StoryLineLogger storyLineLogger;
+    private final StoryLineLogger storyLineLogger;
 
     public void sleep(Character character) {
         recoverHealth(character, HEALING_EFFECT_OF_SLEEP);

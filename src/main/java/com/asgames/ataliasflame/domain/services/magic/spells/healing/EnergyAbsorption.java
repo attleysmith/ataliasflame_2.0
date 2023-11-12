@@ -3,8 +3,6 @@ package com.asgames.ataliasflame.domain.services.magic.spells.healing;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
-import com.asgames.ataliasflame.domain.services.HealingService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.ENERGY_ABSORPTION;
@@ -15,9 +13,6 @@ import static com.asgames.ataliasflame.domain.utils.DiceUtils.successX;
 
 @Component
 public class EnergyAbsorption extends HealingSpell {
-
-    @Autowired
-    private HealingService healingService;
 
     private static final int SPELL_COST = 5;
 

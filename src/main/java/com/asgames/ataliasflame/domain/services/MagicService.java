@@ -5,7 +5,7 @@ import com.asgames.ataliasflame.domain.model.entities.Food;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.services.magic.spells.Spell;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
@@ -15,16 +15,14 @@ import static com.asgames.ataliasflame.domain.services.storyline.events.Characte
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.characterReport;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.MagicRecoveryEvent.magicRecovery;
 
+@RequiredArgsConstructor
 @Service
 public class MagicService {
 
     private static final int MAGIC_RECOVERY_EFFECT_OF_SLEEP = 50;
 
-    @Autowired
-    private StoryLineLogger storyLineLogger;
-
-    @Autowired
-    private CharacterCalculationService characterCalculationService;
+    private final StoryLineLogger storyLineLogger;
+    private final CharacterCalculationService characterCalculationService;
 
     public void sleep(Character character) {
         recoverMagic(character, MAGIC_RECOVERY_EFFECT_OF_SLEEP);

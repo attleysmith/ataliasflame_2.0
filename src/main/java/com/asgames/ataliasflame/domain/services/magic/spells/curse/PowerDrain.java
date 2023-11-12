@@ -4,8 +4,6 @@ import com.asgames.ataliasflame.domain.model.entities.ActiveBlessing;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.enums.Booster;
-import com.asgames.ataliasflame.domain.services.CharacterCalculationService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.POWER_DRAIN;
@@ -16,9 +14,6 @@ import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.calculate;
 
 @Component
 public class PowerDrain extends CurseSpell {
-
-    @Autowired
-    private CharacterCalculationService characterCalculationService;
 
     private static final int SPELL_COST = 10;
 

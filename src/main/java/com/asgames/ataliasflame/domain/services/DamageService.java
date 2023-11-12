@@ -5,7 +5,7 @@ import com.asgames.ataliasflame.domain.model.interfaces.AbsorptionDefense;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
 import com.asgames.ataliasflame.domain.services.storyline.events.CombatEvents.CombatDamageEvent.DamageType;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -15,11 +15,11 @@ import static com.asgames.ataliasflame.domain.services.storyline.events.CombatEv
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.percent;
 import static com.asgames.ataliasflame.domain.utils.DiceUtils.successX;
 
+@RequiredArgsConstructor
 @Service
 public class DamageService {
 
-    @Autowired
-    private StoryLineLogger storyLineLogger;
+    private final StoryLineLogger storyLineLogger;
 
     private static final int CRITICAL_HIT_CHANCE = 2;
     private static final int CRITICAL_HIT_DAMAGE_BONUS = 50;

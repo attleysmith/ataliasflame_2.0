@@ -7,7 +7,7 @@ import com.asgames.ataliasflame.domain.model.enums.MonsterTemplate;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
 import com.asgames.ataliasflame.domain.utils.SelectionValue;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,14 +19,12 @@ import static com.asgames.ataliasflame.domain.services.storyline.events.MonsterE
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.choose;
 import static com.asgames.ataliasflame.domain.utils.DiceUtils.successX;
 
+@RequiredArgsConstructor
 @Service
 public class MonsterService {
 
-    @Autowired
-    private StoryLineLogger storyLineLogger;
-
-    @Autowired
-    private InventoryService inventoryService;
+    private final StoryLineLogger storyLineLogger;
+    private final InventoryService inventoryService;
 
     public List<Monster> populateMonsters(Location location) {
         List<Monster> monsters = new ArrayList<>();

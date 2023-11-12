@@ -6,8 +6,6 @@ import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.entities.SoulChip;
 import com.asgames.ataliasflame.domain.model.enums.Booster;
 import com.asgames.ataliasflame.domain.model.enums.SoulChipShape;
-import com.asgames.ataliasflame.domain.services.CharacterCalculationService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
@@ -37,9 +35,6 @@ public class SoulConnection extends BlessingSpell {
             APE_LIKE, APE_LIKE_SOUL_CONNECTION,
             BIRD_OF_PREY, BIRD_OF_PREY_SOUL_CONNECTION
     );
-
-    @Autowired
-    private CharacterCalculationService characterCalculationService;
 
     public SoulConnection() {
         super(SOUL_CONNECTION);

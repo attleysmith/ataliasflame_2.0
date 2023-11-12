@@ -6,7 +6,7 @@ import com.asgames.ataliasflame.domain.model.enums.*;
 import com.asgames.ataliasflame.domain.model.interfaces.ItemTemplate;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
 import com.asgames.ataliasflame.domain.utils.SelectionValue;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -32,6 +32,7 @@ import static com.asgames.ataliasflame.domain.services.storyline.events.Characte
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.WeaponUseEvent.weaponUse;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.choose;
 
+@RequiredArgsConstructor
 @Service
 public class InventoryService {
 
@@ -66,15 +67,10 @@ public class InventoryService {
             new SelectionValue<>(5, Optional.of(FULL_PLATE_MAIL))
     );
 
-    @Autowired
-    private StoryLineLogger storyLineLogger;
-
-    @Autowired
-    private CharacterCalculationService characterCalculationService;
-    @Autowired
-    private HealingService healingService;
-    @Autowired
-    private MagicService magicService;
+    private final StoryLineLogger storyLineLogger;
+    private final CharacterCalculationService characterCalculationService;
+    private final HealingService healingService;
+    private final MagicService magicService;
 
     public Map<InventoryType, Item> getInventory(Character character) {
         Map<InventoryType, Item> characterInventory = new HashMap<>();

@@ -5,7 +5,7 @@ import com.asgames.ataliasflame.domain.model.entities.Location;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.model.enums.CasteGroup;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -15,18 +15,14 @@ import static com.asgames.ataliasflame.domain.model.enums.God.ATALIA;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.CharacterReportCause.INIT;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.characterReport;
 
+@RequiredArgsConstructor
 @Service
 public class CharacterInitializer {
 
-    @Autowired
-    private StoryLineLogger storyLineLogger;
-
-    @Autowired
-    private AttributeService attributeService;
-    @Autowired
-    private InventoryService inventoryService;
-    @Autowired
-    private LocationService locationService;
+    private final StoryLineLogger storyLineLogger;
+    private final AttributeService attributeService;
+    private final InventoryService inventoryService;
+    private final LocationService locationService;
 
     public Character initialize(Character character) {
         character.setReference(UUID.randomUUID().toString());

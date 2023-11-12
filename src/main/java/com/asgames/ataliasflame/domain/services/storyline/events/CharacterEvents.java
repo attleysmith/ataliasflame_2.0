@@ -28,7 +28,7 @@ public final class CharacterEvents {
     public static class CharacterReportEvent extends CharacterEvent {
 
         public enum CharacterReportCause {
-            INIT, LEVEL_UP, WIN, DIED_OF_DEFEAT, DIED_OF_TRAUMA, DIED_OF_BLESSING_EXPIRY
+            INIT, LEVEL_UP, MAX_LEVEL_REACHED, WIN, DIED_OF_DEFEAT, DIED_OF_TRAUMA, DIED_OF_BLESSING_EXPIRY
         }
 
         private final CharacterReportCause cause;
@@ -48,6 +48,7 @@ public final class CharacterEvents {
                 case INIT -> "Character initialized: " + character;
                 case LEVEL_UP ->
                         "Leveling up -> " + character.getLevel() + " | Attribute points: " + character.getAttributePoints();
+                case MAX_LEVEL_REACHED -> "Max level reached (" + character.getLevel() + "). No more level-up!";
                 case WIN -> "You are the winner! Remaining health: " + character.getHealth().actualValue();
                 case DIED_OF_DEFEAT -> "You are defeated!";
                 case DIED_OF_TRAUMA -> "You died of trauma!";

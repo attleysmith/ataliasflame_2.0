@@ -5,7 +5,7 @@ import com.asgames.ataliasflame.domain.model.entities.DefensiveGodConversionLog;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
 import com.asgames.ataliasflame.domain.model.enums.CasteGroup;
 import com.asgames.ataliasflame.domain.model.enums.God;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -13,11 +13,11 @@ import java.util.UUID;
 import static com.asgames.ataliasflame.domain.model.enums.Caste.MONK;
 import static com.asgames.ataliasflame.domain.model.enums.CasteGroup.CLERIC;
 
+@RequiredArgsConstructor
 @Service
 public class DefensiveGodConversionService {
 
-    @Autowired
-    private CharacterCalculationService characterCalculationService;
+    private final CharacterCalculationService characterCalculationService;
 
     public DefensiveGodConversionLog getConversionLog(Character character) {
         Caste characterCaste = character.getCaste();

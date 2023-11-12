@@ -3,7 +3,7 @@ package com.asgames.ataliasflame.domain.services;
 import com.asgames.ataliasflame.domain.model.dtos.TeamMember;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -20,16 +20,14 @@ import static com.asgames.ataliasflame.domain.utils.DiceUtils.successX;
 import static java.util.stream.Collectors.groupingBy;
 import static org.apache.commons.collections4.ListUtils.union;
 
+@RequiredArgsConstructor
 @Service
 public class CombatService {
 
-    @Autowired
-    private StoryLineLogger storyLineLogger;
-
-    @Autowired
-    private DamageService damageService;
-
     private static final int FOCUS_ON_TARGET = 99;
+
+    private final StoryLineLogger storyLineLogger;
+    private final DamageService damageService;
 
     public void combat(List<? extends Combatant> team1, List<? extends Combatant> team2) {
         if (team1.isEmpty() || team2.isEmpty()) {

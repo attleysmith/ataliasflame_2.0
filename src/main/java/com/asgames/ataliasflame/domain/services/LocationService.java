@@ -5,7 +5,7 @@ import com.asgames.ataliasflame.domain.model.entities.Location;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,18 +16,14 @@ import static com.asgames.ataliasflame.domain.services.storyline.events.Characte
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.characterReport;
 import static com.asgames.ataliasflame.domain.services.storyline.events.LocationEvents.MonstersAppearEvent.monstersAppear;
 
+@RequiredArgsConstructor
 @Service
 public class LocationService {
 
-    @Autowired
-    private StoryLineLogger storyLineLogger;
-
-    @Autowired
-    private MonsterService monsterService;
-    @Autowired
-    private CombatService combatService;
-    @Autowired
-    private ExperienceService experienceService;
+    private final StoryLineLogger storyLineLogger;
+    private final MonsterService monsterService;
+    private final CombatService combatService;
+    private final ExperienceService experienceService;
 
     public Location buildLocation(int level) {
         Location location = Location.build(level);

@@ -1,13 +1,14 @@
 package com.asgames.ataliasflame.application.scenarios;
 
 import com.asgames.ataliasflame.application.model.CharacterInput;
+import com.asgames.ataliasflame.application.scenarios.helpers.EnduranceTestBase;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
-import static com.asgames.ataliasflame.application.scenarios.HelperUtils.isAlive;
-import static com.asgames.ataliasflame.application.scenarios.HelperUtils.isDead;
+import static com.asgames.ataliasflame.application.scenarios.helpers.HelperUtils.isAlive;
+import static com.asgames.ataliasflame.application.scenarios.helpers.HelperUtils.isDead;
 import static com.asgames.ataliasflame.domain.model.enums.Attribute.*;
 import static com.asgames.ataliasflame.domain.model.enums.Caste.*;
 import static com.asgames.ataliasflame.domain.model.enums.Gender.FEMALE;

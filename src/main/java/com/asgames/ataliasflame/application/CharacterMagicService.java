@@ -11,30 +11,22 @@ import com.asgames.ataliasflame.domain.services.magic.SpellRegistry;
 import com.asgames.ataliasflame.domain.services.magic.spells.Spell;
 import com.asgames.ataliasflame.infrastructure.repositories.CharacterRepository;
 import com.asgames.ataliasflame.infrastructure.repositories.MonsterRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class CharacterMagicService {
 
-    @Autowired
-    private CharacterRepository characterRepository;
-    @Autowired
-    private MonsterRepository monsterRepository;
-
-    @Autowired
-    private CharacterMaintenanceService characterMaintenanceService;
-
-    @Autowired
-    private MagicService magicService;
-    @Autowired
-    private SpellService spellService;
-
-    @Autowired
-    private SpellRegistry spellRegistry;
+    private final CharacterRepository characterRepository;
+    private final MonsterRepository monsterRepository;
+    private final CharacterMaintenanceService characterMaintenanceService;
+    private final MagicService magicService;
+    private final SpellService spellService;
+    private final SpellRegistry spellRegistry;
 
     @Transactional
     public Character castSpell(String characterReference, SpellName spellName) {

@@ -1,4 +1,4 @@
-package com.asgames.ataliasflame.application.scenarios;
+package com.asgames.ataliasflame.application.scenarios.helpers;
 
 import com.asgames.ataliasflame.domain.model.enums.MagicType;
 import com.asgames.ataliasflame.domain.model.enums.SpellName;
@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import static com.asgames.ataliasflame.application.scenarios.HelperUtils.*;
+import static com.asgames.ataliasflame.application.scenarios.helpers.HelperUtils.*;
 import static com.asgames.ataliasflame.domain.model.enums.ArmorType.BODY_ARMOR;
 import static com.asgames.ataliasflame.domain.model.enums.ArmorType.HELMET;
 import static com.asgames.ataliasflame.domain.model.enums.MagicType.ATTACK;

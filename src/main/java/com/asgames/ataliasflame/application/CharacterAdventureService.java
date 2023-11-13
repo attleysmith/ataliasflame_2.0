@@ -8,40 +8,27 @@ import com.asgames.ataliasflame.domain.services.*;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
 import com.asgames.ataliasflame.infrastructure.repositories.CharacterRepository;
 import com.asgames.ataliasflame.infrastructure.repositories.DefensiveGodConversionLogRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.DebugEvent.DebugReportCause.SLEEPING;
 import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.DebugEvent.debugReport;
 
+@RequiredArgsConstructor
 @Service
 public class CharacterAdventureService {
 
-    @Autowired
-    private StoryLineLogger storyLineLogger;
-
-    @Autowired
-    private DefensiveGodConversionCodeMapper defensiveGodConversionCodeMapper;
-
-    @Autowired
-    private CharacterRepository characterRepository;
-    @Autowired
-    private DefensiveGodConversionLogRepository defensiveGodConversionLogRepository;
-
-    @Autowired
-    private CharacterMaintenanceService characterMaintenanceService;
-
-    @Autowired
-    private MagicService magicService;
-    @Autowired
-    private HealingService healingService;
-    @Autowired
-    private SoulChipService soulChipService;
-    @Autowired
-    private DefensiveGodConversionService defensiveGodConversionService;
-    @Autowired
-    private InventoryService inventoryService;
+    private final StoryLineLogger storyLineLogger;
+    private final DefensiveGodConversionCodeMapper defensiveGodConversionCodeMapper;
+    private final CharacterRepository characterRepository;
+    private final DefensiveGodConversionLogRepository defensiveGodConversionLogRepository;
+    private final CharacterMaintenanceService characterMaintenanceService;
+    private final MagicService magicService;
+    private final HealingService healingService;
+    private final SoulChipService soulChipService;
+    private final DefensiveGodConversionService defensiveGodConversionService;
+    private final InventoryService inventoryService;
 
     @Transactional
     public Character sleep(String characterReference) {
@@ -50,8 +37,7 @@ public class CharacterAdventureService {
         healingService.sleep(character);
         magicService.sleep(character);
         soulChipService.sleep(character);
-        character.getCompanions().forEach(companion ->
-                healingService.companionSleep(companion));
+        character.getCompanions().forEach(healingService::companionSleep);
         return characterRepository.save(character);
     }
 

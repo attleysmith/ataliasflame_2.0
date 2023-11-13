@@ -9,29 +9,21 @@ import com.asgames.ataliasflame.domain.services.LocationService;
 import com.asgames.ataliasflame.infrastructure.repositories.CharacterRepository;
 import com.asgames.ataliasflame.infrastructure.repositories.ItemRepository;
 import com.asgames.ataliasflame.infrastructure.repositories.LocationRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@RequiredArgsConstructor
 @Service
 public class CharacterLocationService {
 
-    @Autowired
-    private CharacterRepository characterRepository;
-    @Autowired
-    private LocationRepository locationRepository;
-    @Autowired
-    private ItemRepository itemRepository;
-
-    @Autowired
-    private CharacterMaintenanceService characterMaintenanceService;
-    @Autowired
-    private LocationAdventureService locationAdventureService;
-
-    @Autowired
-    private LocationService locationService;
-    @Autowired
-    private InventoryService inventoryService;
+    private final CharacterRepository characterRepository;
+    private final LocationRepository locationRepository;
+    private final ItemRepository itemRepository;
+    private final CharacterMaintenanceService characterMaintenanceService;
+    private final LocationAdventureService locationAdventureService;
+    private final LocationService locationService;
+    private final InventoryService inventoryService;
 
     @Transactional
     public LocationContext enterLocation(String characterReference, String locationReference) {
@@ -95,6 +87,7 @@ public class CharacterLocationService {
                 .build();
     }
 
+    @Transactional
     public LocationContext storeItem(String characterReference, String itemReference) {
         Character character = characterMaintenanceService.getCharacter(characterReference);
         Location location = character.getLocation();

@@ -13,32 +13,24 @@ import com.asgames.ataliasflame.interfaces.mappers.DefensiveGodConversionCodeDto
 import com.asgames.ataliasflame.interfaces.mappers.LocationDtoMapper;
 import com.asgames.ataliasflame.interfaces.mappers.SpellDtoMapper;
 import com.asgames.ataliasflame.interfaces.model.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping(path = "/characters")
 public class CharacterRestController {
 
-    @Autowired
-    private CharacterDtoMapper characterDtoMapper;
-    @Autowired
-    private DefensiveGodConversionCodeDtoMapper defensiveGodConversionCodeDtoMapper;
-    @Autowired
-    private SpellDtoMapper spellDtoMapper;
-    @Autowired
-    private LocationDtoMapper locationDtoMapper;
-
-    @Autowired
-    private CharacterMaintenanceService characterMaintenanceService;
-    @Autowired
-    private CharacterAdventureService characterAdventureService;
-    @Autowired
-    private CharacterMagicService characterMagicService;
-    @Autowired
-    private CharacterLocationService characterLocationService;
+    private final CharacterDtoMapper characterDtoMapper;
+    private final DefensiveGodConversionCodeDtoMapper defensiveGodConversionCodeDtoMapper;
+    private final SpellDtoMapper spellDtoMapper;
+    private final LocationDtoMapper locationDtoMapper;
+    private final CharacterMaintenanceService characterMaintenanceService;
+    private final CharacterAdventureService characterAdventureService;
+    private final CharacterMagicService characterMagicService;
+    private final CharacterLocationService characterLocationService;
 
     @PostMapping()
     public CharacterDto createCharacter(@RequestBody CharacterInput characterInput) {

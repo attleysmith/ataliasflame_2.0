@@ -1,4 +1,4 @@
-package com.asgames.ataliasflame.application.scenarios;
+package com.asgames.ataliasflame.application.scenarios.helpers;
 
 import com.asgames.ataliasflame.interfaces.model.*;
 import org.springframework.lang.Nullable;

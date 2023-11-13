@@ -1,16 +1,19 @@
-package com.asgames.ataliasflame.application.scenarios;
+package com.asgames.ataliasflame.application.scenarios.helpers;
 
 import com.asgames.ataliasflame.application.model.CharacterInput;
+import com.asgames.ataliasflame.application.scenarios.services.ControllerTest;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
 import com.asgames.ataliasflame.domain.model.enums.MagicType;
 import com.asgames.ataliasflame.interfaces.model.*;
 import org.junit.jupiter.api.AfterEach;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.*;
 
-import static com.asgames.ataliasflame.application.scenarios.Decisions.*;
-import static com.asgames.ataliasflame.application.scenarios.HelperUtils.*;
+import static com.asgames.ataliasflame.application.scenarios.helpers.Decisions.*;
+import static com.asgames.ataliasflame.application.scenarios.helpers.HelperUtils.*;
 import static com.asgames.ataliasflame.domain.model.enums.ArmorType.BODY_ARMOR;
 import static com.asgames.ataliasflame.domain.model.enums.ArmorType.HELMET;
 import static com.asgames.ataliasflame.domain.model.enums.ItemType.*;
@@ -19,8 +22,13 @@ import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.SOUL;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.ENERGY_ABSORPTION;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
-public abstract class EnduranceTestBase extends WebTestBase {
+@SpringBootTest(webEnvironment = RANDOM_PORT, properties = {"booster.experience:true", "test.mode.controller:service"})
+public abstract class EnduranceTestBase {
+
+    @Autowired
+    private ControllerTest controller;
 
     protected CharacterDto character;
     protected LocationDto location;
@@ -28,25 +36,25 @@ public abstract class EnduranceTestBase extends WebTestBase {
 
     @AfterEach
     void tearDown() {
-        removeCharacter(character.getReference());
+        controller.removeCharacter(character.getReference());
     }
 
     protected void initializeCharacter(CharacterInput characterInput) {
-        character = createCharacter(characterInput);
-        location = getLocation(character.getLocationReference());
+        character = controller.createCharacter(characterInput);
+        location = controller.getLocation(character.getLocationReference());
         refreshUsableSpells();
     }
 
     protected void addAttributePoints(Attribute attribute, int points) {
-        character = addAttributePoints(character.getReference(), attribute, points);
+        character = controller.addAttributePoints(character.getReference(), attribute, points);
     }
 
     protected void upgradeCaste(Caste newCaste) {
         while (injured(character)) {
-            character = sleep(character.getReference());
+            character = controller.sleep(character.getReference());
         }
 
-        character = upgradeCaste(character.getReference(), newCaste);
+        character = controller.upgradeCaste(character.getReference(), newCaste);
         refreshUsableSpells();
         castHealingMagic();
     }
@@ -89,7 +97,7 @@ public abstract class EnduranceTestBase extends WebTestBase {
             previousNumberOfCompanions = character.getCompanions().size();
 
             if (hasMagicCost(character, spell)) {
-                character = castSpell(character.getReference(), spell.getName());
+                character = controller.castSpell(character.getReference(), spell.getName());
             }
         }
     }
@@ -104,14 +112,14 @@ public abstract class EnduranceTestBase extends WebTestBase {
             return;
         }
         if (notEnoughBlessing(character, location) && hasMagicCost(character, spell)) {
-            character = castSpell(character.getReference(), spell.getName());
+            character = controller.castSpell(character.getReference(), spell.getName());
         }
     }
 
     private void enterNewLocation() {
-        LocationDto newLocation = buildLocation(character.getLevel());
+        LocationDto newLocation = controller.buildLocation(character.getLevel());
 
-        LocationContextDto locationContext = enterLocation(character.getReference(), newLocation.getReference());
+        LocationContextDto locationContext = controller.enterLocation(character.getReference(), newLocation.getReference());
         character = locationContext.getCharacter();
         location = locationContext.getLocation();
     }
@@ -123,7 +131,7 @@ public abstract class EnduranceTestBase extends WebTestBase {
         targetMonsterOrder(location, ATTACK)
                 .forEach(this::castAttackMagic);
 
-        location = getLocation(location.getReference());
+        location = controller.getLocation(location.getReference());
     }
 
     private void castAttackMagic(MonsterDto monster) {
@@ -134,7 +142,7 @@ public abstract class EnduranceTestBase extends WebTestBase {
             boolean hasAvailableSoul = !listReadySouls().isEmpty();
             Optional<SpellDto> attackSpell = chooseAttackSpell(usableSpells.get(ATTACK), character, hasAvailableSoul);
             if (attackSpell.isPresent() && worthyTargetOfAttackSpell(targetMonster, attackSpell.get())) {
-                TargetContextDto targetContext = castTargetingSpell(character.getReference(), attackSpell.get().getName(), targetMonster.getReference());
+                TargetContextDto targetContext = controller.castTargetingSpell(character.getReference(), attackSpell.get().getName(), targetMonster.getReference());
 
                 character = targetContext.getCharacter();
                 targetMonster = targetContext.getMonster();
@@ -148,21 +156,21 @@ public abstract class EnduranceTestBase extends WebTestBase {
         targetMonsterOrder(location, CURSE)
                 .forEach(this::castCurseMagic);
 
-        location = getLocation(location.getReference());
+        location = controller.getLocation(location.getReference());
     }
 
     private void castCurseMagic(MonsterDto monster) {
         boolean hasAvailableSoul = !listReadySouls().isEmpty();
         Optional<SpellDto> curseSpell = chooseCurseSpell(usableSpells.get(CURSE), character, hasAvailableSoul);
         if (curseSpell.isPresent() && worthyTargetOfCurseSpell(monster, character)) {
-            TargetContextDto targetContext = castTargetingSpell(character.getReference(), curseSpell.get().getName(), monster.getReference());
+            TargetContextDto targetContext = controller.castTargetingSpell(character.getReference(), curseSpell.get().getName(), monster.getReference());
 
             character = targetContext.getCharacter();
         }
     }
 
     private void closeCombat() {
-        LocationContextDto locationContext = seizeLocation(character.getReference());
+        LocationContextDto locationContext = controller.seizeLocation(character.getReference());
         character = locationContext.getCharacter();
         location = locationContext.getLocation();
     }
@@ -180,7 +188,7 @@ public abstract class EnduranceTestBase extends WebTestBase {
         location.getItems().stream()
                 .filter(item -> item.getType().equals(FOOD))
                 .forEach(item -> {
-                    LocationContextDto locationContext = useItem(character.getReference(), item.getReference());
+                    LocationContextDto locationContext = controller.useItem(character.getReference(), item.getReference());
                     character = locationContext.getCharacter();
                     location = locationContext.getLocation();
                 });
@@ -190,9 +198,9 @@ public abstract class EnduranceTestBase extends WebTestBase {
         location.getItems().stream()
                 .filter(item -> item.getType().equals(WEAPON))
                 .forEach(item -> {
-                    WeaponDto weaponToUse = getWeapon(location.getReference(), item.getReference());
+                    WeaponDto weaponToUse = controller.getWeapon(location.getReference(), item.getReference());
                     if (needToChangeWeapon(character, weaponToUse)) {
-                        LocationContextDto locationContext = useItem(character.getReference(), weaponToUse.getReference());
+                        LocationContextDto locationContext = controller.useItem(character.getReference(), weaponToUse.getReference());
                         character = locationContext.getCharacter();
                         location = locationContext.getLocation();
                     }
@@ -203,9 +211,9 @@ public abstract class EnduranceTestBase extends WebTestBase {
         location.getItems().stream()
                 .filter(item -> item.getType().equals(WEAPON))
                 .forEach(item -> {
-                    WeaponDto weaponToStore = getWeapon(location.getReference(), item.getReference());
+                    WeaponDto weaponToStore = controller.getWeapon(location.getReference(), item.getReference());
                     if (needToStoreWeapon(character, weaponToStore)) {
-                        LocationContextDto locationContext = storeItem(character.getReference(), weaponToStore.getReference());
+                        LocationContextDto locationContext = controller.storeItem(character.getReference(), weaponToStore.getReference());
                         character = locationContext.getCharacter();
                         location = locationContext.getLocation();
                     }
@@ -216,9 +224,9 @@ public abstract class EnduranceTestBase extends WebTestBase {
         location.getItems().stream()
                 .filter(item -> item.getType().equals(SHIELD))
                 .forEach(item -> {
-                    ShieldDto shieldToUse = getShield(location.getReference(), item.getReference());
+                    ShieldDto shieldToUse = controller.getShield(location.getReference(), item.getReference());
                     if (newShieldAllowed(character) && needToChangeShield(character, shieldToUse)) {
-                        LocationContextDto locationContext = useItem(character.getReference(), shieldToUse.getReference());
+                        LocationContextDto locationContext = controller.useItem(character.getReference(), shieldToUse.getReference());
                         character = locationContext.getCharacter();
                         location = locationContext.getLocation();
                     }
@@ -229,9 +237,9 @@ public abstract class EnduranceTestBase extends WebTestBase {
         location.getItems().stream()
                 .filter(item -> item.getType().equals(SHIELD))
                 .forEach(item -> {
-                    ShieldDto shieldToStore = getShield(location.getReference(), item.getReference());
+                    ShieldDto shieldToStore = controller.getShield(location.getReference(), item.getReference());
                     if (newSpareShieldAllowed(character) && needToStoreShield(character, shieldToStore)) {
-                        LocationContextDto locationContext = storeItem(character.getReference(), shieldToStore.getReference());
+                        LocationContextDto locationContext = controller.storeItem(character.getReference(), shieldToStore.getReference());
                         character = locationContext.getCharacter();
                         location = locationContext.getLocation();
                     }
@@ -242,10 +250,10 @@ public abstract class EnduranceTestBase extends WebTestBase {
         location.getItems().stream()
                 .filter(item -> item.getType().equals(ARMOR))
                 .forEach(item -> {
-                    ArmorDto armorToUse = getArmor(location.getReference(), item.getReference());
+                    ArmorDto armorToUse = controller.getArmor(location.getReference(), item.getReference());
                     if ((armorToUse.getArmorType().equals(HELMET) && needToChangeHelmet(character, armorToUse))
                             || (armorToUse.getArmorType().equals(BODY_ARMOR) && needToChangeBodyArmor(character, armorToUse))) {
-                        LocationContextDto locationContext = useItem(character.getReference(), armorToUse.getReference());
+                        LocationContextDto locationContext = controller.useItem(character.getReference(), armorToUse.getReference());
                         character = locationContext.getCharacter();
                         location = locationContext.getLocation();
                     }
@@ -254,10 +262,10 @@ public abstract class EnduranceTestBase extends WebTestBase {
 
     private void organizeInventory() {
         if (needToSwitchWeapons(character)) {
-            character = switchWeapons(character.getReference());
+            character = controller.switchWeapons(character.getReference());
         }
         if (needToSwitchShields(character)) {
-            character = switchShields(character.getReference());
+            character = controller.switchShields(character.getReference());
         }
     }
 
@@ -272,11 +280,11 @@ public abstract class EnduranceTestBase extends WebTestBase {
                 if (spell.getName().equals(ENERGY_ABSORPTION)) {
                     MonsterDto targetMonster = targetOfEnergyAbsorption(location)
                             .orElseThrow(() -> new IllegalStateException("Wrong healing spell chosen!"));
-                    TargetContextDto targetContext = castTargetingSpell(character.getReference(), spell.getName(), targetMonster.getReference());
+                    TargetContextDto targetContext = controller.castTargetingSpell(character.getReference(), spell.getName(), targetMonster.getReference());
 
                     character = targetContext.getCharacter();
                 } else {
-                    character = castSpell(character.getReference(), spell.getName());
+                    character = controller.castSpell(character.getReference(), spell.getName());
                 }
 
                 readyToGo = noNeedToCastHealingMagic(character);
@@ -287,7 +295,7 @@ public abstract class EnduranceTestBase extends WebTestBase {
     }
 
     private void finishEncounter() {
-        character = timePassed(character.getReference());
+        character = controller.timePassed(character.getReference());
     }
 
     private void sleep() {
@@ -295,11 +303,11 @@ public abstract class EnduranceTestBase extends WebTestBase {
                 && noNeedToRecover(character)) {
             return;
         }
-        character = sleep(character.getReference());
+        character = controller.sleep(character.getReference());
     }
 
     private void refreshUsableSpells() {
-        usableSpells = listCharacterSpells(character.getReference())
+        usableSpells = controller.listCharacterSpells(character.getReference())
                 .stream()
                 .collect(groupingBy(SpellDto::getType));
         for (MagicType magicType : MagicType.values()) {

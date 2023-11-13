@@ -7,20 +7,17 @@ import com.asgames.ataliasflame.interfaces.model.ArmorDto;
 import com.asgames.ataliasflame.interfaces.model.LocationDto;
 import com.asgames.ataliasflame.interfaces.model.ShieldDto;
 import com.asgames.ataliasflame.interfaces.model.WeaponDto;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping(path = "/locations")
 public class LocationRestController {
 
-    @Autowired
-    private LocationDtoMapper locationDtoMapper;
-    @Autowired
-    private CharacterDtoMapper characterDtoMapper;
-
-    @Autowired
-    private LocationAdventureService locationAdventureService;
+    private final LocationDtoMapper locationDtoMapper;
+    private final CharacterDtoMapper characterDtoMapper;
+    private final LocationAdventureService locationAdventureService;
 
     @PostMapping()
     public LocationDto buildLocation(@RequestParam int level) {

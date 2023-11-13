@@ -14,31 +14,22 @@ import com.asgames.ataliasflame.infrastructure.repositories.CharacterRepository;
 import com.asgames.ataliasflame.infrastructure.repositories.DefensiveGodConversionLogRepository;
 import com.asgames.ataliasflame.infrastructure.repositories.LocationRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@RequiredArgsConstructor
 @Service
 public class CharacterMaintenanceService {
 
-    @Autowired
-    private CharacterMapper characterMapper;
-
-    @Autowired
-    private CharacterRepository characterRepository;
-    @Autowired
-    private LocationRepository locationRepository;
-    @Autowired
-    private DefensiveGodConversionLogRepository defensiveGodConversionLogRepository;
-
-    @Autowired
-    private CharacterInitializer characterInitializer;
-    @Autowired
-    private AttributeService attributeService;
-    @Autowired
-    private CasteService casteService;
-    @Autowired
-    private DefensiveGodConversionService defensiveGodConversionService;
+    private final CharacterMapper characterMapper;
+    private final CharacterRepository characterRepository;
+    private final LocationRepository locationRepository;
+    private final DefensiveGodConversionLogRepository defensiveGodConversionLogRepository;
+    private final CharacterInitializer characterInitializer;
+    private final AttributeService attributeService;
+    private final CasteService casteService;
+    private final DefensiveGodConversionService defensiveGodConversionService;
 
     @Transactional
     public Character createCharacter(CharacterInput characterInput) {

@@ -4,20 +4,18 @@ import com.asgames.ataliasflame.domain.model.entities.*;
 import com.asgames.ataliasflame.domain.services.LocationService;
 import com.asgames.ataliasflame.infrastructure.repositories.LocationRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import static com.asgames.ataliasflame.domain.model.enums.ItemType.*;
 
+@RequiredArgsConstructor
 @Service
 public class LocationAdventureService {
 
-    @Autowired
-    private LocationRepository locationRepository;
-
-    @Autowired
-    private LocationService locationService;
+    private final LocationRepository locationRepository;
+    private final LocationService locationService;
 
     @Transactional
     public Location buildLocation(int level) {

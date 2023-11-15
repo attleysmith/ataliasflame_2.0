@@ -52,7 +52,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
             // expect
             assertThat(character.getAttributePoints(), is(0));
 
-        } while (isAlive(character) && character.getLevel() < 100);
+        } while (isAlive(character) && character.getLevel() < SINGLE_CASTE_MAX_LEVEL);
 
         // then do some more adventuring
         for (int i = 0; i < 1000; i++) {
@@ -80,7 +80,7 @@ public class ClericEnduranceTest extends EnduranceTestBase {
         assertThat(character.getTotalMagicPoint(), is(5));
     }
 
-    public void level2Upgrade() {
+    private void level2Upgrade() {
         assertThat(character.getAttributePoints(), is(greaterThanOrEqualTo(5)));
 
         // then

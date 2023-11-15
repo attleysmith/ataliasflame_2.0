@@ -27,6 +27,9 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @SpringBootTest(webEnvironment = RANDOM_PORT, properties = {"booster.experience:true", "test.mode.controller:service"})
 public abstract class EnduranceTestBase {
 
+    protected final static int SINGLE_CASTE_MAX_LEVEL = 100;
+    protected final static int DUAL_CASTE_MAX_LEVEL = 90;
+
     @Autowired
     private ControllerTest controller;
 

@@ -52,7 +52,7 @@ public class SorcererEnduranceTest extends EnduranceTestBase {
             // expect
             assertThat(character.getAttributePoints(), is(0));
 
-        } while (isAlive(character) && character.getLevel() < 100);
+        } while (isAlive(character) && character.getLevel() < SINGLE_CASTE_MAX_LEVEL);
 
         // then do some more adventuring
         for (int i = 0; i < 1000; i++) {

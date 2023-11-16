@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.Set;
 
 import static com.asgames.ataliasflame.domain.model.enums.Caste.ATALIAS_PRIEST;
+import static com.asgames.ataliasflame.domain.model.enums.Caste.TRACKER;
 import static com.asgames.ataliasflame.domain.model.enums.CasteGroup.WANDERER;
 import static com.asgames.ataliasflame.domain.model.enums.Race.ARIMASPI;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.CharacterReportCause.DIED_OF_TRAUMA;
@@ -32,7 +33,7 @@ public class CasteService {
         validateAvailability(character, newCaste);
         validateAttributes(character, newCaste);
 
-        ripOutSoulChip(character);
+        ripOutSoulChip(character, newCaste);
 
         Caste oldCaste = character.getCaste();
         character.setCaste(newCaste);
@@ -71,8 +72,8 @@ public class CasteService {
         });
     }
 
-    private void ripOutSoulChip(Character character) {
-        if (character.getCaste().groupTags.contains(WANDERER)) {
+    private void ripOutSoulChip(Character character, Caste newCaste) {
+        if (newCaste != TRACKER && newCaste.groupTags.contains(WANDERER)) {
             int percent = roll100();
 
             SoulChip soulChip = soulChipService.getSoulChip(character, percent);

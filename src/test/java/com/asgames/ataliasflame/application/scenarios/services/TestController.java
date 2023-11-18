@@ -8,7 +8,7 @@ import com.asgames.ataliasflame.interfaces.model.*;
 
 import java.util.List;
 
-public interface ControllerTest {
+public interface TestController {
 
     CharacterDto createCharacter(CharacterInput characterInput);
 

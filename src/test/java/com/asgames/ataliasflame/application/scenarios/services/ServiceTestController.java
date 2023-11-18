@@ -15,7 +15,7 @@ import java.util.List;
 
 @ConditionalOnProperty(name = "test.mode.controller", havingValue = "service", matchIfMissing = true)
 @Service
-public class ControllerServiceTest implements ControllerTest {
+public class ServiceTestController implements TestController {
 
     @Autowired
     private CharacterRestController characterController;

@@ -1,7 +1,7 @@
 package com.asgames.ataliasflame.application.scenarios.helpers;
 
 import com.asgames.ataliasflame.application.model.CharacterInput;
-import com.asgames.ataliasflame.application.scenarios.services.ControllerTest;
+import com.asgames.ataliasflame.application.scenarios.services.TestController;
 import com.asgames.ataliasflame.domain.model.enums.Attribute;
 import com.asgames.ataliasflame.domain.model.enums.Caste;
 import com.asgames.ataliasflame.domain.model.enums.MagicType;
@@ -31,7 +31,7 @@ public abstract class EnduranceTestBase {
     protected final static int DUAL_CASTE_MAX_LEVEL = 90;
 
     @Autowired
-    private ControllerTest controller;
+    private TestController controller;
 
     protected CharacterDto character;
     protected LocationDto location;

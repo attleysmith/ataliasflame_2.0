@@ -16,7 +16,7 @@ import static java.util.Objects.requireNonNull;
 
 @ConditionalOnProperty(name = "test.mode.controller", havingValue = "rest")
 @Service
-public class ControllerRestTest implements ControllerTest {
+public class RestTestController implements TestController {
 
     @Autowired
     private TestRestTemplate restTemplate;

@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
@@ -93,13 +94,13 @@ public class CharacterRestController {
     }
 
     @PostMapping(value = "/{characterReference}/spells/{spellName}/cast", params = "!target")
-    public CharacterDto castSpell(@PathVariable String characterReference, @PathVariable SpellName spellName) {
-        return characterDtoMapper.toCharacterDto(characterMagicService.castSpell(characterReference, spellName));
+    public CharacterDto castSpell(@PathVariable String characterReference, @PathVariable SpellName spellName, @RequestBody Map<String, String> args) {
+        return characterDtoMapper.toCharacterDto(characterMagicService.castSpell(characterReference, spellName, args));
     }
 
     @PostMapping(value = "/{characterReference}/spells/{spellName}/cast", params = "target")
-    public TargetContextDto castTargetingSpell(@PathVariable String characterReference, @PathVariable SpellName spellName, @RequestParam(name = "target") String monsterReference) {
-        return locationDtoMapper.toTargetContextDto(characterMagicService.castTargetingSpell(characterReference, spellName, monsterReference));
+    public TargetContextDto castTargetingSpell(@PathVariable String characterReference, @PathVariable SpellName spellName, @RequestParam(name = "target") String monsterReference, @RequestBody Map<String, String> args) {
+        return locationDtoMapper.toTargetContextDto(characterMagicService.castTargetingSpell(characterReference, spellName, monsterReference, args));
     }
 
     @PostMapping(value = "/{characterReference}/location/enter")

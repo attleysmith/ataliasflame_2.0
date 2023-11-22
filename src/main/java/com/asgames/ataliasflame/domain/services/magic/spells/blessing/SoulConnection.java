@@ -9,7 +9,6 @@ import com.asgames.ataliasflame.domain.model.enums.SoulChipShape;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Map;
 
 import static com.asgames.ataliasflame.domain.model.enums.Booster.*;
@@ -17,13 +16,12 @@ import static com.asgames.ataliasflame.domain.model.enums.SoulChipShape.*;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.SOUL_CONNECTION;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.BlessingEvent.blessing;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
-import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.WarningReportCause.OCCUPIED_SOULS;
-import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.warningReport;
 import static com.asgames.ataliasflame.domain.services.storyline.events.SoulChipEvents.FatigueEvent.fatigue;
-import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.pointOut;
 
 @Component
 public class SoulConnection extends BlessingSpell {
+
+    private static final String ARG_KEY_SOUL_CHIP = "soulChip";
 
     private static final int SPELL_COST = 5;
 
@@ -41,32 +39,28 @@ public class SoulConnection extends BlessingSpell {
     }
 
     @Override
-    public void enforce(Character character, @Nullable Monster targetMonster) {
-        List<SoulChip> readySouls = listReadySouls(character);
-        if (readySouls.isEmpty()) {
-            storyLineLogger.event(warningReport(OCCUPIED_SOULS));
-        } else {
-            character.getMagic().use(SPELL_COST);
-            storyLineLogger.event(spellCasting(character, this));
+    public void enforce(Character character, @Nullable Monster targetMonster, Map<String, String> args) {
+        SoulConnectionArgs soulConnectionArgs = new SoulConnectionArgs(args);
+        character.getMagic().use(SPELL_COST);
+        storyLineLogger.event(spellCasting(character, this));
 
-            SoulChip soulChip = pointOut(readySouls);
-            soulChip.getHealth().trauma(FATIGUE_EFFECT);
-            storyLineLogger.event(fatigue(soulChip, FATIGUE_EFFECT));
+        SoulChip soulChip = getSoulChip(character, soulConnectionArgs.soulChipReference);
+        soulChip.getHealth().trauma(FATIGUE_EFFECT);
+        storyLineLogger.event(fatigue(soulChip, FATIGUE_EFFECT));
 
-            Booster booster = BOOSTER_EFFECT_MAP.get(soulChip.getShape());
-            if (character.getBlessings().stream()
-                    .noneMatch(blessing -> blessing.getBooster().equals(booster))) {
-                ActiveBlessing activeBlessing = ActiveBlessing.of(character, booster).withSource(soulChip);
-                character.getBlessings().add(activeBlessing);
+        Booster booster = BOOSTER_EFFECT_MAP.get(soulChip.getShape());
+        if (character.getBlessings().stream()
+                .noneMatch(blessing -> blessing.getBooster().equals(booster))) {
+            ActiveBlessing activeBlessing = ActiveBlessing.of(character, booster).withSource(soulChip);
+            character.getBlessings().add(activeBlessing);
 
-                int originalHealth = character.getHealth().totalValue();
-                int originalMagic = character.getMagic().totalValue();
-                characterCalculationService.recalculateProperties(character);
-                character.getHealth().uplift(originalHealth);
-                character.getMagic().uplift(originalMagic);
+            int originalHealth = character.getHealth().totalValue();
+            int originalMagic = character.getMagic().totalValue();
+            characterCalculationService.recalculateProperties(character);
+            character.getHealth().uplift(originalHealth);
+            character.getMagic().uplift(originalMagic);
 
-                storyLineLogger.event(blessing(character, activeBlessing));
-            }
+            storyLineLogger.event(blessing(character, activeBlessing));
         }
     }
 
@@ -84,5 +78,29 @@ public class SoulConnection extends BlessingSpell {
                 "Effect of the connection is increased by the effectiveness of the connected soul chip. " +
                 "Fatigue effect of the soul magic is " + FATIGUE_EFFECT + "%. " +
                 "Cost: " + SPELL_COST + " MP";
+    }
+
+    @Override
+    public void validateArgs(Map<String, String> args) {
+        SoulConnectionArgs.validateArgs(args);
+    }
+
+    private static class SoulConnectionArgs {
+
+        public final String soulChipReference;
+
+        public SoulConnectionArgs(Map<String, String> args) {
+            validateArgs(args);
+            soulChipReference = args.get(ARG_KEY_SOUL_CHIP);
+        }
+
+        public static void validateArgs(Map<String, String> args) {
+            if (!args.containsKey(ARG_KEY_SOUL_CHIP)) {
+                throw new IllegalArgumentException("Missing argument: " + ARG_KEY_SOUL_CHIP);
+            }
+            if (args.size() != 1) {
+                throw new IllegalArgumentException("Incorrect number of arguments.");
+            }
+        }
     }
 }

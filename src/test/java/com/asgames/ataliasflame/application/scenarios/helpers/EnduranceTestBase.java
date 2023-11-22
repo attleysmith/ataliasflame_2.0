@@ -100,7 +100,15 @@ public abstract class EnduranceTestBase {
             previousNumberOfCompanions = character.getCompanions().size();
 
             if (hasMagicCost(character, spell)) {
-                character = controller.castSpell(character.getReference(), spell.getName());
+                Map<String, String> args = new HashMap<>();
+                if (isSoulMagic(spell)) {
+                    chooseSoulChipToSummon(character, listReadySouls()).ifPresent(soulChip -> {
+                        args.put("soulChip", soulChip.getReference());
+                        character = controller.castSpell(character.getReference(), spell.getName(), args);
+                    });
+                } else {
+                    character = controller.castSpell(character.getReference(), spell.getName(), args);
+                }
             }
         }
     }
@@ -115,7 +123,15 @@ public abstract class EnduranceTestBase {
             return;
         }
         if (notEnoughBlessing(character, location) && hasMagicCost(character, spell)) {
-            character = controller.castSpell(character.getReference(), spell.getName());
+            Map<String, String> args = new HashMap<>();
+            if (isSoulMagic(spell)) {
+                chooseSoulChipToUse(character, listReadySouls()).ifPresent(soulChip -> {
+                    args.put("soulChip", soulChip.getReference());
+                    character = controller.castSpell(character.getReference(), spell.getName(), args);
+                });
+            } else {
+                character = controller.castSpell(character.getReference(), spell.getName(), args);
+            }
         }
     }
 
@@ -141,14 +157,25 @@ public abstract class EnduranceTestBase {
         MonsterDto targetMonster = monster;
 
         boolean tryToAttack = true;
-        while (tryToAttack && monsterIsAlive(targetMonster)) {
+        while (tryToAttack && HelperUtils.isAlive(targetMonster)) {
             boolean hasAvailableSoul = !listReadySouls().isEmpty();
             Optional<SpellDto> attackSpell = chooseAttackSpell(usableSpells.get(ATTACK), character, hasAvailableSoul);
             if (attackSpell.isPresent() && worthyTargetOfAttackSpell(targetMonster, attackSpell.get())) {
-                TargetContextDto targetContext = controller.castTargetingSpell(character.getReference(), attackSpell.get().getName(), targetMonster.getReference());
-
-                character = targetContext.getCharacter();
-                targetMonster = targetContext.getMonster();
+                SpellDto spell = attackSpell.get();
+                Map<String, String> args = new HashMap<>();
+                if (isSoulMagic(spell)) {
+                    Optional<SoulChipDto> soulChip = chooseSoulChipToUse(character, listReadySouls());
+                    if (soulChip.isPresent()) {
+                        args.put("soulChip", soulChip.get().getReference());
+                        TargetContextDto targetContext = controller.castTargetingSpell(character.getReference(), spell.getName(), targetMonster.getReference(), args);
+                        character = targetContext.getCharacter();
+                        targetMonster = targetContext.getMonster();
+                    }
+                } else {
+                    TargetContextDto targetContext = controller.castTargetingSpell(character.getReference(), spell.getName(), targetMonster.getReference(), args);
+                    character = targetContext.getCharacter();
+                    targetMonster = targetContext.getMonster();
+                }
             } else {
                 tryToAttack = false;
             }
@@ -166,9 +193,18 @@ public abstract class EnduranceTestBase {
         boolean hasAvailableSoul = !listReadySouls().isEmpty();
         Optional<SpellDto> curseSpell = chooseCurseSpell(usableSpells.get(CURSE), character, hasAvailableSoul);
         if (curseSpell.isPresent() && worthyTargetOfCurseSpell(monster, character)) {
-            TargetContextDto targetContext = controller.castTargetingSpell(character.getReference(), curseSpell.get().getName(), monster.getReference());
-
-            character = targetContext.getCharacter();
+            SpellDto spell = curseSpell.get();
+            Map<String, String> args = new HashMap<>();
+            if (isSoulMagic(spell)) {
+                chooseSoulChipToUse(character, listReadySouls()).ifPresent(soulChip -> {
+                    args.put("soulChip", soulChip.getReference());
+                    TargetContextDto targetContext = controller.castTargetingSpell(character.getReference(), spell.getName(), monster.getReference(), args);
+                    character = targetContext.getCharacter();
+                });
+            } else {
+                TargetContextDto targetContext = controller.castTargetingSpell(character.getReference(), spell.getName(), monster.getReference(), args);
+                character = targetContext.getCharacter();
+            }
         }
     }
 
@@ -273,7 +309,7 @@ public abstract class EnduranceTestBase {
     }
 
     private void castHealingMagic() {
-        boolean reachDeadMonster = location.getMonsters().stream().anyMatch(HelperUtils::monsterIsDead);
+        boolean reachDeadMonster = location.getMonsters().stream().anyMatch(HelperUtils::isDead);
         boolean readyToGo = noNeedToCastHealingMagic(character);
         while (!readyToGo) {
             boolean hasAvailableSoul = !listReadySouls().isEmpty();
@@ -283,11 +319,18 @@ public abstract class EnduranceTestBase {
                 if (spell.getName().equals(ENERGY_ABSORPTION)) {
                     MonsterDto targetMonster = targetOfEnergyAbsorption(location)
                             .orElseThrow(() -> new IllegalStateException("Wrong healing spell chosen!"));
-                    TargetContextDto targetContext = controller.castTargetingSpell(character.getReference(), spell.getName(), targetMonster.getReference());
-
+                    TargetContextDto targetContext = controller.castTargetingSpell(character.getReference(), spell.getName(), targetMonster.getReference(), Map.of());
                     character = targetContext.getCharacter();
                 } else {
-                    character = controller.castSpell(character.getReference(), spell.getName());
+                    Map<String, String> args = new HashMap<>();
+                    if (isSoulMagic(spell)) {
+                        chooseSoulChipToUse(character, listReadySouls()).ifPresent(soulChip -> {
+                            args.put("soulChip", soulChip.getReference());
+                            character = controller.castSpell(character.getReference(), spell.getName(), args);
+                        });
+                    } else {
+                        character = controller.castSpell(character.getReference(), spell.getName(), args);
+                    }
                 }
 
                 readyToGo = noNeedToCastHealingMagic(character);

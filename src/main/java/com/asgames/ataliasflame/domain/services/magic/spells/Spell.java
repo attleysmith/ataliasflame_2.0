@@ -39,7 +39,13 @@ public abstract class Spell {
         this.name = name;
     }
 
-    public abstract void enforce(Character character, Monster targetMonster);
+    protected void enforce(Character character, Monster targetMonster) {
+        throw new UnsupportedOperationException("Arguments needed to enforce spell!");
+    }
+
+    public void enforce(Character character, Monster targetMonster, Map<String, String> args) {
+        enforce(character, targetMonster);
+    }
 
     public abstract int getCost();
 
@@ -61,7 +67,13 @@ public abstract class Spell {
         return name.type;
     }
 
-    protected List<SoulChip> listReadySouls(Character character) {
+    public void validateArgs(Map<String, String> args) {
+        if (args.size() > 0) {
+            throw new IllegalArgumentException("Unknown arguments!");
+        }
+    }
+
+    protected SoulChip getSoulChip(Character character, String soulChipReference) {
         List<SoulChip> unusedSouls = new ArrayList<>(character.getSoulChips());
         character.getCompanions().stream()
                 .filter(companion -> companion.getType().equals(SOUL_CHIP))
@@ -71,7 +83,11 @@ public abstract class Spell {
                 .map(ActiveBlessing::getSource)
                 .filter(Objects::nonNull)
                 .forEach(unusedSouls::remove);
-        return unusedSouls.stream().filter(SoulChip::isReady).toList();
+        return unusedSouls.stream()
+                .filter(SoulChip::isReady)
+                .filter(soulChip -> soulChip.getReference().equals(soulChipReference))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("Referenced soul chip is not available!"));
     }
 
     protected static String effectDetailsOf(Booster booster) {

@@ -53,7 +53,6 @@ public final class CharacterEvents {
                 case DIED_OF_DEFEAT -> "You are defeated!";
                 case DIED_OF_TRAUMA -> "You died of trauma!";
                 case DIED_OF_BLESSING_EXPIRY -> "You died of an expired bless effect!";
-                default -> throw new UnsupportedOperationException("Unknown character report cause!");
             };
         }
     }

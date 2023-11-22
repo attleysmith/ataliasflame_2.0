@@ -5,18 +5,19 @@ import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.entities.SoulChip;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.Map;
 
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.SOUL_STRIKE;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 import static com.asgames.ataliasflame.domain.services.storyline.events.MonsterEvents.CurseCastingEvent.curseCasting;
-import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.WarningReportCause.OCCUPIED_SOULS;
-import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.warningReport;
 import static com.asgames.ataliasflame.domain.services.storyline.events.SoulChipEvents.FatigueEvent.fatigue;
-import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.*;
+import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.calculate;
+import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.percent;
 
 @Component
 public class SoulStrike extends CurseSpell {
+
+    private static final String ARG_KEY_SOUL_CHIP = "soulChip";
 
     private static final int SPELL_COST = 10;
 
@@ -33,39 +34,35 @@ public class SoulStrike extends CurseSpell {
     }
 
     @Override
-    public void enforce(Character character, Monster targetMonster) {
-        List<SoulChip> readySouls = listReadySouls(character);
-        if (readySouls.isEmpty()) {
-            storyLineLogger.event(warningReport(OCCUPIED_SOULS));
-        } else {
-            character.getMagic().use(SPELL_COST);
-            storyLineLogger.event(spellCasting(character, this));
+    public void enforce(Character character, Monster targetMonster, Map<String, String> args) {
+        SoulStrikeArgs soulStrikeArgs = new SoulStrikeArgs(args);
+        character.getMagic().use(SPELL_COST);
+        storyLineLogger.event(spellCasting(character, this));
 
-            SoulChip soulChip = pointOut(readySouls);
-            soulChip.getHealth().trauma(FATIGUE_EFFECT);
-            storyLineLogger.event(fatigue(soulChip, FATIGUE_EFFECT));
+        SoulChip soulChip = getSoulChip(character, soulStrikeArgs.soulChipReference);
+        soulChip.getHealth().trauma(FATIGUE_EFFECT);
+        storyLineLogger.event(fatigue(soulChip, FATIGUE_EFFECT));
 
-            if (targetMonster.isAlive()) {
-                int oldAttack = targetMonster.getAttack();
-                int attackMultiplier = ATTACK_MULTIPLIER + percent(ATTACK_MULTIPLIER, soulChip.getEffectiveness());
-                targetMonster.setAttack(calculate(oldAttack, attackMultiplier));
+        if (targetMonster.isAlive()) {
+            int oldAttack = targetMonster.getAttack();
+            int attackMultiplier = ATTACK_MULTIPLIER + percent(ATTACK_MULTIPLIER, soulChip.getEffectiveness());
+            targetMonster.setAttack(calculate(oldAttack, attackMultiplier));
 
-                int oldDefense = targetMonster.getDefense();
-                int defenseMultiplier = DEFENSE_MULTIPLIER + percent(DEFENSE_MULTIPLIER, soulChip.getEffectiveness());
-                targetMonster.setDefense(calculate(oldDefense, defenseMultiplier));
+            int oldDefense = targetMonster.getDefense();
+            int defenseMultiplier = DEFENSE_MULTIPLIER + percent(DEFENSE_MULTIPLIER, soulChip.getEffectiveness());
+            targetMonster.setDefense(calculate(oldDefense, defenseMultiplier));
 
-                int oldMinDamage = targetMonster.getMinDamage();
-                int oldMaxDamage = targetMonster.getMaxDamage();
-                int damageMultiplier = DAMAGE_MULTIPLIER + percent(DAMAGE_MULTIPLIER, soulChip.getEffectiveness());
-                targetMonster.setMinDamage(calculate(oldMinDamage, damageMultiplier));
-                targetMonster.setMaxDamage(calculate(oldMaxDamage, damageMultiplier));
+            int oldMinDamage = targetMonster.getMinDamage();
+            int oldMaxDamage = targetMonster.getMaxDamage();
+            int damageMultiplier = DAMAGE_MULTIPLIER + percent(DAMAGE_MULTIPLIER, soulChip.getEffectiveness());
+            targetMonster.setMinDamage(calculate(oldMinDamage, damageMultiplier));
+            targetMonster.setMaxDamage(calculate(oldMaxDamage, damageMultiplier));
 
-                int oldHealth = targetMonster.getHealth().totalValue();
-                int healthMultiplier = HEALTH_MULTIPLIER + percent(HEALTH_MULTIPLIER, soulChip.getEffectiveness());
-                targetMonster.getHealth().set(calculate(oldHealth, healthMultiplier));
+            int oldHealth = targetMonster.getHealth().totalValue();
+            int healthMultiplier = HEALTH_MULTIPLIER + percent(HEALTH_MULTIPLIER, soulChip.getEffectiveness());
+            targetMonster.getHealth().set(calculate(oldHealth, healthMultiplier));
 
-                storyLineLogger.event(curseCasting(targetMonster, this, oldAttack, oldDefense, oldMinDamage, oldMaxDamage, oldHealth));
-            }
+            storyLineLogger.event(curseCasting(targetMonster, this, oldAttack, oldDefense, oldMinDamage, oldMaxDamage, oldHealth));
         }
     }
 
@@ -81,5 +78,29 @@ public class SoulStrike extends CurseSpell {
                 "Effect of the strike is increased by the effectiveness of the projected soul chip. " +
                 "Fatigue effect of the soul magic is " + FATIGUE_EFFECT + "%. " +
                 "Cost: " + SPELL_COST + " MP";
+    }
+
+    @Override
+    public void validateArgs(Map<String, String> args) {
+        SoulStrikeArgs.validateArgs(args);
+    }
+
+    private static class SoulStrikeArgs {
+
+        public final String soulChipReference;
+
+        public SoulStrikeArgs(Map<String, String> args) {
+            validateArgs(args);
+            soulChipReference = args.get(ARG_KEY_SOUL_CHIP);
+        }
+
+        public static void validateArgs(Map<String, String> args) {
+            if (!args.containsKey(ARG_KEY_SOUL_CHIP)) {
+                throw new IllegalArgumentException("Missing argument: " + ARG_KEY_SOUL_CHIP);
+            }
+            if (args.size() != 1) {
+                throw new IllegalArgumentException("Incorrect number of arguments.");
+            }
+        }
     }
 }

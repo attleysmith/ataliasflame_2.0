@@ -7,6 +7,7 @@ import com.asgames.ataliasflame.domain.model.enums.SpellName;
 import com.asgames.ataliasflame.interfaces.model.*;
 
 import java.util.List;
+import java.util.Map;
 
 public interface TestController {
 
@@ -22,9 +23,9 @@ public interface TestController {
 
     List<SpellDto> listCharacterSpells(String characterReference);
 
-    CharacterDto castSpell(String characterReference, SpellName spellName);
+    CharacterDto castSpell(String characterReference, SpellName spellName, Map<String, String> args);
 
-    TargetContextDto castTargetingSpell(String characterReference, SpellName spellName, String targetMonsterReference);
+    TargetContextDto castTargetingSpell(String characterReference, SpellName spellName, String targetMonsterReference, Map<String, String> args);
 
     CharacterDto sleep(String characterReference);
 

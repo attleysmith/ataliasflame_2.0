@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 import static com.asgames.ataliasflame.domain.model.enums.ArmorType.DIVINE_ARMOR;
 import static com.asgames.ataliasflame.domain.model.enums.ArmorType.ENERGY_ARMOR;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.CharacterReportEvent.CharacterReportCause.DIED_OF_BLESSING_EXPIRY;
@@ -38,12 +40,13 @@ public class MagicService {
         storyLineLogger.event(magicRecovery(character, oldMagic));
     }
 
-    public void castSpell(Character character, Spell spell, @Nullable Monster targetMonster) {
+    public void castSpell(Character character, Spell spell, @Nullable Monster targetMonster, Map<String, String> args) {
         if (!character.getMagic().has(spell.getCost())) {
             throw new IllegalArgumentException("Character does not have enough magic to cast spell!");
         }
 
-        spell.enforce(character, targetMonster);
+        spell.validateArgs(args);
+        spell.enforce(character, targetMonster, args);
     }
 
     public void removeBlessingMagic(Character character) {

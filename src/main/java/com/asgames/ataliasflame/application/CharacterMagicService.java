@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Service
@@ -29,18 +30,18 @@ public class CharacterMagicService {
     private final SpellRegistry spellRegistry;
 
     @Transactional
-    public Character castSpell(String characterReference, SpellName spellName) {
+    public Character castSpell(String characterReference, SpellName spellName, Map<String, String> args) {
         Character character = characterMaintenanceService.getCharacter(characterReference);
         Spell spell = spellRegistry.get(spellName);
         if (spellService.unknownSpell(character, spell)) {
             throw new IllegalArgumentException("The character is not familiar with the spell!");
         }
-        magicService.castSpell(character, spell, null);
+        magicService.castSpell(character, spell, null, args);
         return characterRepository.save(character);
     }
 
     @Transactional
-    public TargetContext castTargetingSpell(String characterReference, SpellName spellName, String monsterReference) {
+    public TargetContext castTargetingSpell(String characterReference, SpellName spellName, String monsterReference, Map<String, String> args) {
         Character character = characterMaintenanceService.getCharacter(characterReference);
         Spell spell = spellRegistry.get(spellName);
         if (spellService.unknownSpell(character, spell)) {
@@ -51,7 +52,7 @@ public class CharacterMagicService {
                 .filter(locationMonster -> locationMonster.getReference().equals(monsterReference))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("Referenced monster is not at the character's location!"));
-        magicService.castSpell(character, spell, targetMonster);
+        magicService.castSpell(character, spell, targetMonster, args);
 
         return TargetContext.builder()
                 .monster(monsterRepository.save(targetMonster))

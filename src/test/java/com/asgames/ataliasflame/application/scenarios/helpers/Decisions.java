@@ -240,13 +240,9 @@ public final class Decisions {
 
     public static Stream<MonsterDto> targetMonsterOrder(LocationDto location, MagicType magicType) {
         return location.getMonsters().stream()
-                .filter(HelperUtils::monsterIsAlive)
+                .filter(HelperUtils::isAlive)
                 .filter(monster -> hasHealth(monster, MIN_HEALTH_TO_TARGET.get(magicType)))
-                .sorted((monster1, monster2) -> {
-                    Integer monster1Health = actualHealthOf(monster1);
-                    Integer monster2Health = actualHealthOf(monster2);
-                    return monster2Health.compareTo(monster1Health);
-                });
+                .sorted(comparing((MonsterDto monster) -> actualHealthOf(monster)).reversed());
     }
 
     public static boolean worthyTargetOfAttackSpell(MonsterDto monster, SpellDto spell) {
@@ -259,7 +255,19 @@ public final class Decisions {
 
     public static Optional<MonsterDto> targetOfEnergyAbsorption(LocationDto location) {
         return location.getMonsters().stream()
-                .filter(HelperUtils::monsterIsDead)
+                .filter(HelperUtils::isDead)
                 .max(comparing(HelperUtils::actualVitalityOf));
+    }
+
+    public static Optional<SoulChipDto> chooseSoulChipToSummon(CharacterDto character, List<String> readySouls) {
+        return character.getSoulChips().stream()
+                .filter(soulChip -> readySouls.contains(soulChip.getReference()))
+                .max(comparing(HelperUtils::actualHealthOf));
+    }
+
+    public static Optional<SoulChipDto> chooseSoulChipToUse(CharacterDto character, List<String> readySouls) {
+        return character.getSoulChips().stream()
+                .filter(soulChip -> readySouls.contains(soulChip.getReference()))
+                .min(comparing(HelperUtils::actualHealthOf));
     }
 }

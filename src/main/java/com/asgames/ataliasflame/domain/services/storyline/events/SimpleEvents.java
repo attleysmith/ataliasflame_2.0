@@ -4,6 +4,7 @@ import com.asgames.ataliasflame.domain.services.storyline.EventType;
 
 import static com.asgames.ataliasflame.domain.services.storyline.EventType.DEBUG;
 import static com.asgames.ataliasflame.domain.services.storyline.EventType.WARN;
+import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.WarningReportCause.NO_ENEMY;
 
 public final class SimpleEvents {
 
@@ -44,7 +45,6 @@ public final class SimpleEvents {
                 case NO_ANIMAL_APPEARED -> "Animals didn't answer the call.";
                 case NO_GUARDIAN_WARRIOR_APPEARED -> "No guardian warrior appeared.";
                 case NO_DIVINE_GUARDIAN_APPEARED -> "None of the divine guardians appeared.";
-                default -> throw new UnsupportedOperationException("Unknown debug report cause!");
             };
         }
     }
@@ -52,7 +52,7 @@ public final class SimpleEvents {
     public static class WarningEvent extends SimpleEvent {
 
         public enum WarningReportCause {
-            OCCUPIED_SOULS, NO_ENEMY
+            NO_ENEMY
         }
 
         private final WarningReportCause cause;
@@ -68,11 +68,11 @@ public final class SimpleEvents {
 
         @Override
         public String message() {
-            return switch (cause) {
-                case OCCUPIED_SOULS -> "Soul chips are occupied or exhausted!";
-                case NO_ENEMY -> "Combat without an enemy.";
-                default -> throw new UnsupportedOperationException("Unknown warning report cause!");
-            };
+            if (cause.equals(NO_ENEMY)) {
+                return "Combat without an enemy.";
+            } else {
+                throw new UnsupportedOperationException("Unknown warning report cause!");
+            }
         }
     }
 }

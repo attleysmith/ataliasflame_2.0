@@ -11,6 +11,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 import static java.util.Objects.requireNonNull;
 
@@ -51,14 +52,14 @@ public class RestTestController implements TestController {
         return List.of(requireNonNull(restTemplate.getForEntity(path, SpellDto[].class, characterReference).getBody()));
     }
 
-    public CharacterDto castSpell(String characterReference, SpellName spellName) {
+    public CharacterDto castSpell(String characterReference, SpellName spellName, Map<String, String> args) {
         String path = "/characters/{characterReference}/spells/{spellName}/cast";
-        return restTemplate.postForObject(path, null, CharacterDto.class, characterReference, spellName);
+        return restTemplate.postForObject(path, args, CharacterDto.class, characterReference, spellName);
     }
 
-    public TargetContextDto castTargetingSpell(String characterReference, SpellName spellName, String targetMonsterReference) {
+    public TargetContextDto castTargetingSpell(String characterReference, SpellName spellName, String targetMonsterReference, Map<String, String> args) {
         String path = "/characters/{characterReference}/spells/{spellName}/cast?target={targetMonsterReference}";
-        return restTemplate.postForObject(path, null, TargetContextDto.class, characterReference, spellName, targetMonsterReference);
+        return restTemplate.postForObject(path, args, TargetContextDto.class, characterReference, spellName, targetMonsterReference);
     }
 
     public CharacterDto sleep(String characterReference) {

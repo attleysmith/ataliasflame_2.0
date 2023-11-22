@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @ConditionalOnProperty(name = "test.mode.controller", havingValue = "service", matchIfMissing = true)
 @Service
@@ -53,13 +54,13 @@ public class ServiceTestController implements TestController {
     }
 
     @Override
-    public CharacterDto castSpell(String characterReference, SpellName spellName) {
-        return characterController.castSpell(characterReference, spellName);
+    public CharacterDto castSpell(String characterReference, SpellName spellName, Map<String, String> args) {
+        return characterController.castSpell(characterReference, spellName, args);
     }
 
     @Override
-    public TargetContextDto castTargetingSpell(String characterReference, SpellName spellName, String targetMonsterReference) {
-        return characterController.castTargetingSpell(characterReference, spellName, targetMonsterReference);
+    public TargetContextDto castTargetingSpell(String characterReference, SpellName spellName, String targetMonsterReference, Map<String, String> args) {
+        return characterController.castTargetingSpell(characterReference, spellName, targetMonsterReference, args);
     }
 
     @Override

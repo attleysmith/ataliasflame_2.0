@@ -6,14 +6,12 @@ import com.asgames.ataliasflame.domain.model.entities.SoulChip;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.Map;
 
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.SOUL_OUTBURST;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CharacterEvents.SpellCastingEvent.spellCasting;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CombatEvents.CombatDamageEvent.DamageType.DIRECT;
 import static com.asgames.ataliasflame.domain.services.storyline.events.CombatEvents.CombatDamageEvent.DamageType.NOVA;
-import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.WarningReportCause.OCCUPIED_SOULS;
-import static com.asgames.ataliasflame.domain.services.storyline.events.SimpleEvents.WarningEvent.warningReport;
 import static com.asgames.ataliasflame.domain.services.storyline.events.SoulChipEvents.FatigueEvent.fatigue;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.percent;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.pointOut;
@@ -21,6 +19,8 @@ import static com.asgames.ataliasflame.domain.utils.DiceUtils.successX;
 
 @Component
 public class SoulOutburst extends AttackSpell {
+
+    private static final String ARG_KEY_SOUL_CHIP = "soulChip";
 
     private static final int SPELL_COST = 16;
 
@@ -39,30 +39,26 @@ public class SoulOutburst extends AttackSpell {
     }
 
     @Override
-    public void enforce(Character character, Monster targetMonster) {
-        List<SoulChip> readySouls = listReadySouls(character);
-        if (readySouls.isEmpty()) {
-            storyLineLogger.event(warningReport(OCCUPIED_SOULS));
-        } else {
-            character.getMagic().use(SPELL_COST);
-            storyLineLogger.event(spellCasting(character, this));
+    public void enforce(Character character, Monster targetMonster, Map<String, String> args) {
+        SoulOutburstArgs soulOutburstArgs = new SoulOutburstArgs(args);
+        character.getMagic().use(SPELL_COST);
+        storyLineLogger.event(spellCasting(character, this));
 
-            SoulChip soulChip = pointOut(readySouls);
-            soulChip.getHealth().trauma(FATIGUE_EFFECT);
-            storyLineLogger.event(fatigue(soulChip, FATIGUE_EFFECT));
+        SoulChip soulChip = getSoulChip(character, soulOutburstArgs.soulChipReference);
+        soulChip.getHealth().trauma(FATIGUE_EFFECT);
+        storyLineLogger.event(fatigue(soulChip, FATIGUE_EFFECT));
 
-            int bonusDamage = percent(BONUS_DAMAGE, soulChip.getEffectiveness());
-            if (successX(NOVA_EFFECT_CHANCE)) {
-                targetMonster.getLocation().getMonsters().stream()
-                        .filter(Combatant::isAlive)
-                        .forEach(monster -> {
-                            int damage = pointOut(MIN_DAMAGE, MAX_DAMAGE) + bonusDamage;
-                            damageService.doDamage(character, monster, damage, NOVA);
-                        });
-            } else if (targetMonster.isAlive()) {
-                int damage = pointOut(MIN_DAMAGE, MAX_DAMAGE) + bonusDamage;
-                damageService.doDamage(character, targetMonster, damage, DIRECT);
-            }
+        int bonusDamage = percent(BONUS_DAMAGE, soulChip.getEffectiveness());
+        if (successX(NOVA_EFFECT_CHANCE)) {
+            targetMonster.getLocation().getMonsters().stream()
+                    .filter(Combatant::isAlive)
+                    .forEach(monster -> {
+                        int damage = pointOut(MIN_DAMAGE, MAX_DAMAGE) + bonusDamage;
+                        damageService.doDamage(character, monster, damage, NOVA);
+                    });
+        } else if (targetMonster.isAlive()) {
+            int damage = pointOut(MIN_DAMAGE, MAX_DAMAGE) + bonusDamage;
+            damageService.doDamage(character, targetMonster, damage, DIRECT);
         }
     }
 
@@ -88,5 +84,29 @@ public class SoulOutburst extends AttackSpell {
     @Override
     public int getMaxDamage() {
         return MAX_DAMAGE;
+    }
+
+    @Override
+    public void validateArgs(Map<String, String> args) {
+        SoulOutburstArgs.validateArgs(args);
+    }
+
+    private static class SoulOutburstArgs {
+
+        public final String soulChipReference;
+
+        public SoulOutburstArgs(Map<String, String> args) {
+            validateArgs(args);
+            soulChipReference = args.get(ARG_KEY_SOUL_CHIP);
+        }
+
+        public static void validateArgs(Map<String, String> args) {
+            if (!args.containsKey(ARG_KEY_SOUL_CHIP)) {
+                throw new IllegalArgumentException("Missing argument: " + ARG_KEY_SOUL_CHIP);
+            }
+            if (args.size() != 1) {
+                throw new IllegalArgumentException("Incorrect number of arguments.");
+            }
+        }
     }
 }

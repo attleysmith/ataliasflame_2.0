@@ -3,8 +3,7 @@ package com.asgames.ataliasflame.domain.utils;
 import java.util.List;
 
 import static com.asgames.ataliasflame.domain.utils.DiceUtils.roll;
-import static java.lang.Math.max;
-import static java.lang.Math.round;
+import static java.lang.Math.*;
 
 public final class CalculatorUtils {
 
@@ -14,6 +13,14 @@ public final class CalculatorUtils {
 
     public static int percent(int base, int multiplier) {
         return round(base * multiplier / 100f);
+    }
+
+    public static int calculatePercentValueUp(int base, int value) {
+        return (int) ceil((float) value / base * 100);
+    }
+
+    public static int calculatePercentValueDown(int base, int value) {
+        return (int) floor((float) value / base * 100);
     }
 
     public static int calculate(int base, int multiplier) {

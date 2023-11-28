@@ -20,6 +20,9 @@ import static com.asgames.ataliasflame.domain.model.enums.ItemType.*;
 import static com.asgames.ataliasflame.domain.model.enums.MagicType.*;
 import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.SOUL;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.ENERGY_ABSORPTION;
+import static com.asgames.ataliasflame.domain.model.enums.SpellName.RECHARGING;
+import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.calculatePercentValueUp;
+import static java.lang.Math.min;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
@@ -58,8 +61,10 @@ public abstract class EnduranceTestBase {
         }
 
         character = controller.upgradeCaste(character.getReference(), newCaste);
-        refreshUsableSpells();
-        castHealingMagic();
+        if (isAlive(character)) {
+            refreshUsableSpells();
+            castHealingMagic();
+        }
     }
 
     protected void doCombat() {
@@ -323,7 +328,12 @@ public abstract class EnduranceTestBase {
                     character = targetContext.getCharacter();
                 } else {
                     Map<String, String> args = new HashMap<>();
-                    if (isSoulMagic(spell)) {
+                    if (spell.getName().equals(RECHARGING)) {
+                        int injury = calculatePercentValueUp(character.getTotalHealth(), character.getInjury());
+                        int magic = 100 - calculatePercentValueUp(character.getTotalMagicPoint(), character.getUsedMagicPoint());
+                        args.put("energy", String.valueOf(min(injury, magic)));
+                        character = controller.castSpell(character.getReference(), spell.getName(), args);
+                    } else if (isSoulMagic(spell)) {
                         chooseSoulChipToUse(character, listReadySouls()).ifPresent(soulChip -> {
                             args.put("soulChip", soulChip.getReference());
                             character = controller.castSpell(character.getReference(), spell.getName(), args);

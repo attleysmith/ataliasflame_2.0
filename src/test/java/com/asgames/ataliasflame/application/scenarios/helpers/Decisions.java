@@ -72,10 +72,10 @@ public final class Decisions {
 
     private static final Map<SpellName, Integer> HEALING_PREFERENCES = Map.of(
             ENERGY_ABSORPTION, 1,
-            SOUL_POWER, 2,
-            REGENERATION, 3,
-            HEALING_WAVE, 4,
-            RECHARGING, 5,
+            RECHARGING, 2,
+            SOUL_POWER, 3,
+            REGENERATION, 4,
+            HEALING_WAVE, 5,
             BREATH_OF_GOD, 6,
             HEALING_WORD, 7,
             POWER_OF_NATURE, 8,

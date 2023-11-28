@@ -4,6 +4,8 @@ import com.asgames.ataliasflame.interfaces.model.*;
 import org.springframework.lang.Nullable;
 
 import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.SOUL;
+import static com.asgames.ataliasflame.domain.model.enums.SpellName.RECHARGING;
+import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.calculatePercentValueUp;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.percent;
 
 public final class HelperUtils {
@@ -56,6 +58,9 @@ public final class HelperUtils {
     }
 
     public static boolean hasMagicCost(CharacterDto character, SpellDto spell) {
+        if (spell.getName().equals(RECHARGING)) {
+            return calculatePercentValueUp(character.getTotalMagicPoint(), character.getUsedMagicPoint()) < 100;
+        }
         return character.getTotalMagicPoint() - character.getUsedMagicPoint() >= spell.getCost();
     }
 

@@ -19,8 +19,8 @@ import static com.asgames.ataliasflame.domain.model.enums.ArmorType.HELMET;
 import static com.asgames.ataliasflame.domain.model.enums.ItemType.*;
 import static com.asgames.ataliasflame.domain.model.enums.MagicType.*;
 import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.SOUL;
-import static com.asgames.ataliasflame.domain.model.enums.SpellName.ENERGY_ABSORPTION;
-import static com.asgames.ataliasflame.domain.model.enums.SpellName.RECHARGING;
+import static com.asgames.ataliasflame.domain.model.enums.SpellName.*;
+import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.calculatePercentValueDown;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.calculatePercentValueUp;
 import static java.lang.Math.min;
 import static java.util.stream.Collectors.groupingBy;
@@ -152,10 +152,17 @@ public abstract class EnduranceTestBase {
         if (noNeedToCastAttackMagic(location)) {
             return;
         }
-        targetMonsterOrder(location, ATTACK)
-                .forEach(this::castAttackMagic);
 
-        location = controller.getLocation(location.getReference());
+        List<MonsterDto> targetedMonsters = new ArrayList<>();
+        Optional<MonsterDto> targetMonster = targetMonsterOrder(location, ATTACK).findFirst();
+        while (targetMonster.isPresent()) {
+            targetedMonsters.add(targetMonster.get());
+            castAttackMagic(targetMonster.get());
+            location = controller.getLocation(location.getReference());
+            targetMonster = targetMonsterOrder(location, ATTACK)
+                    .filter(monster -> !targetedMonsters.contains(monster))
+                    .findFirst();
+        }
     }
 
     private void castAttackMagic(MonsterDto monster) {
@@ -168,7 +175,15 @@ public abstract class EnduranceTestBase {
             if (attackSpell.isPresent() && worthyTargetOfAttackSpell(targetMonster, attackSpell.get())) {
                 SpellDto spell = attackSpell.get();
                 Map<String, String> args = new HashMap<>();
-                if (isSoulMagic(spell)) {
+                if (spell.getName().equals(BALL_OF_ENERGY)) {
+                    int investedCost = energyBallInvestment(spell, targetMonster, location);
+                    int effort = min(100, calculatePercentValueUp(character.getTotalMagicPoint(), investedCost));
+                    int magic = calculatePercentValueDown(character.getTotalMagicPoint(), actualMagicOf(character));
+                    args.put("energy", String.valueOf(min(effort, magic)));
+                    TargetContextDto targetContext = controller.castTargetingSpell(character.getReference(), spell.getName(), targetMonster.getReference(), args);
+                    character = targetContext.getCharacter();
+                    targetMonster = targetContext.getMonster();
+                } else if (isSoulMagic(spell)) {
                     Optional<SoulChipDto> soulChip = chooseSoulChipToUse(character, listReadySouls());
                     if (soulChip.isPresent()) {
                         args.put("soulChip", soulChip.get().getReference());
@@ -330,7 +345,7 @@ public abstract class EnduranceTestBase {
                     Map<String, String> args = new HashMap<>();
                     if (spell.getName().equals(RECHARGING)) {
                         int injury = calculatePercentValueUp(character.getTotalHealth(), character.getInjury());
-                        int magic = 100 - calculatePercentValueUp(character.getTotalMagicPoint(), character.getUsedMagicPoint());
+                        int magic = calculatePercentValueDown(character.getTotalMagicPoint(), actualMagicOf(character));
                         args.put("energy", String.valueOf(min(injury, magic)));
                         character = controller.castSpell(character.getReference(), spell.getName(), args);
                     } else if (isSoulMagic(spell)) {

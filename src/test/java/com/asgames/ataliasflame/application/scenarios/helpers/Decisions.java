@@ -17,6 +17,7 @@ import static com.asgames.ataliasflame.domain.model.enums.MagicType.ATTACK;
 import static com.asgames.ataliasflame.domain.model.enums.MagicType.CURSE;
 import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.SOUL;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.*;
+import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.calculatePercentValueDown;
 import static java.util.Comparator.comparing;
 
 public final class Decisions {
@@ -53,13 +54,13 @@ public final class Decisions {
             SOUL_OUTBURST, 1,
             INFERNO, 2,
             BLADES_OF_JUDGEMENT, 3,
-            GLACIAL_BLOW, 4,
-            WRATH_OF_NATURE, 5,
-            DIVINE_HAMMER, 6,
-            LIGHTNING_STRIKE, 7,
-            FIREBALL, 8,
-            SPLITTING_WIND, 9,
-            BALL_OF_ENERGY, 10
+            BALL_OF_ENERGY, 4,
+            GLACIAL_BLOW, 5,
+            WRATH_OF_NATURE, 6,
+            DIVINE_HAMMER, 7,
+            LIGHTNING_STRIKE, 8,
+            FIREBALL, 9,
+            SPLITTING_WIND, 10
     );
 
     private static final Map<SpellName, Integer> CURSE_PREFERENCES = Map.of(
@@ -220,6 +221,7 @@ public final class Decisions {
         return usableSpells.stream()
                 .filter(spell -> hasMagicCost(character, spell))
                 .filter(spell -> hasAvailableSoul || !spell.getGroup().equals(SOUL))
+                .filter(spell -> !spell.getName().equals(BALL_OF_ENERGY) || calculatePercentValueDown(character.getTotalMagicPoint(), actualMagicOf(character)) > 0)
                 .min(comparing(spell -> ATTACK_PREFERENCES.getOrDefault(spell.getName(), 0)));
     }
 
@@ -235,6 +237,7 @@ public final class Decisions {
                 .filter(spell -> hasMagicCost(character, spell))
                 .filter(spell -> hasAvailableSoul || !spell.getGroup().equals(SOUL))
                 .filter(spell -> reachDeadMonster || !spell.getName().equals(ENERGY_ABSORPTION))
+                .filter(spell -> !spell.getName().equals(RECHARGING) || calculatePercentValueDown(character.getTotalMagicPoint(), actualMagicOf(character)) > 0)
                 .min(comparing(spell -> HEALING_PREFERENCES.getOrDefault(spell.getName(), 0)));
     }
 
@@ -257,6 +260,19 @@ public final class Decisions {
         return location.getMonsters().stream()
                 .filter(HelperUtils::isDead)
                 .max(comparing(HelperUtils::actualVitalityOf));
+    }
+
+    public static int energyBallInvestment(SpellDto spell, MonsterDto targetMonster, LocationDto location) {
+        if (!spell.getName().equals(BALL_OF_ENERGY)) {
+            throw new IllegalArgumentException("Spell must be BALL_OF_ENERGY!");
+        }
+        int totalMonsterHealth = actualHealthOf(targetMonster) +
+                location.getMonsters().stream()
+                        .filter(monster -> !monster.getReference().equals(targetMonster.getReference()))
+                        .map(HelperUtils::actualHealthOf)
+                        .reduce(0, Integer::sum);
+
+        return spell.getCost() * totalMonsterHealth / averageDamageOf(spell);
     }
 
     public static Optional<SoulChipDto> chooseSoulChipToSummon(CharacterDto character, List<String> readySouls) {

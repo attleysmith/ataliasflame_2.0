@@ -29,6 +29,10 @@ public final class HelperUtils {
         return monster.getTotalHealth() - monster.getInjury();
     }
 
+    public static int actualMagicOf(CharacterDto character) {
+        return character.getTotalMagicPoint() - character.getUsedMagicPoint();
+    }
+
     public static int actualVitalityOf(MonsterDto monster) {
         return monster.getTotalVitality() - monster.getLostVitality();
     }

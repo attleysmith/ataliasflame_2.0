@@ -329,34 +329,26 @@ public abstract class EnduranceTestBase {
     }
 
     private void castHealingMagic() {
-        boolean reachDeadMonster = location.getMonsters().stream().anyMatch(HelperUtils::isDead);
         boolean readyToGo = noNeedToCastHealingMagic(character);
         while (!readyToGo) {
             boolean hasAvailableSoul = !listReadySouls().isEmpty();
-            Optional<SpellDto> healingSpell = chooseHealingSpell(usableSpells.get(HEALING), character, hasAvailableSoul, reachDeadMonster);
+            Optional<SpellDto> healingSpell = chooseHealingSpell(usableSpells.get(HEALING), character, location, hasAvailableSoul);
             if (healingSpell.isPresent()) {
                 SpellDto spell = healingSpell.get();
+                Map<String, String> args = new HashMap<>();
                 if (spell.getName().equals(ENERGY_ABSORPTION)) {
-                    MonsterDto targetMonster = targetOfEnergyAbsorption(location)
-                            .orElseThrow(() -> new IllegalStateException("Wrong healing spell chosen!"));
-                    TargetContextDto targetContext = controller.castTargetingSpell(character.getReference(), spell.getName(), targetMonster.getReference(), Map.of());
-                    character = targetContext.getCharacter();
-                } else {
-                    Map<String, String> args = new HashMap<>();
-                    if (spell.getName().equals(RECHARGING)) {
-                        int injury = calculatePercentValueUp(character.getTotalHealth(), character.getInjury());
-                        int magic = calculatePercentValueDown(character.getTotalMagicPoint(), actualMagicOf(character));
-                        args.put("energy", String.valueOf(min(injury, magic)));
-                        character = controller.castSpell(character.getReference(), spell.getName(), args);
-                    } else if (isSoulMagic(spell)) {
-                        chooseSoulChipToUse(character, listReadySouls()).ifPresent(soulChip -> {
-                            args.put("soulChip", soulChip.getReference());
-                            character = controller.castSpell(character.getReference(), spell.getName(), args);
-                        });
-                    } else {
-                        character = controller.castSpell(character.getReference(), spell.getName(), args);
-                    }
+                    args.put("energy", String.valueOf(getEnergyAbsorptionInvestment()));
+                } else if (spell.getName().equals(RECHARGING)) {
+                    int injury = calculatePercentValueUp(character.getTotalHealth(), character.getInjury());
+                    int magic = calculatePercentValueDown(character.getTotalMagicPoint(), actualMagicOf(character));
+                    args.put("energy", String.valueOf(min(injury, magic)));
+                } else if (isSoulMagic(spell)) {
+                    SoulChipDto soulChip = chooseSoulChipToUse(character, listReadySouls())
+                            .orElseThrow(() -> new IllegalStateException("No soul chip to use!"));
+                    args.put("soulChip", soulChip.getReference());
                 }
+                character = controller.castSpell(character.getReference(), spell.getName(), args);
+                location = controller.getLocation(location.getReference());
 
                 readyToGo = noNeedToCastHealingMagic(character);
             } else {

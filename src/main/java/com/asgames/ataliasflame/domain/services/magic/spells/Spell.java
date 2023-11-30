@@ -9,6 +9,7 @@ import com.asgames.ataliasflame.domain.model.enums.SpellName;
 import com.asgames.ataliasflame.domain.services.CharacterCalculationService;
 import com.asgames.ataliasflame.domain.services.DamageService;
 import com.asgames.ataliasflame.domain.services.HealingService;
+import com.asgames.ataliasflame.domain.services.MagicService;
 import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,8 @@ public abstract class Spell {
     protected CharacterCalculationService characterCalculationService;
     @Autowired
     protected HealingService healingService;
+    @Autowired
+    protected MagicService magicService;
 
     @Getter
     protected final SpellName name;

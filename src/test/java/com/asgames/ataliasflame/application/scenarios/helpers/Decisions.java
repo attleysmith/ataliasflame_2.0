@@ -28,6 +28,7 @@ public final class Decisions {
     private static final int MAX_NUMBER_OF_COMPANIONS = 5;
     private static final int TOLERATED_INJURY_TO_HEAL = 80;
     private static final int TOLERATED_INJURY_TO_SLEEP = 40;
+    private static final int ENERGY_ABSORPTION_INVESTMENT = 1;
 
     private static final Map<MagicType, Integer> MIN_HEALTH_TO_TARGET = Map.of(
             ATTACK, 20,
@@ -232,13 +233,20 @@ public final class Decisions {
                 .min(comparing(spell -> CURSE_PREFERENCES.getOrDefault(spell.getName(), 0)));
     }
 
-    public static Optional<SpellDto> chooseHealingSpell(List<SpellDto> usableSpells, CharacterDto character, boolean hasAvailableSoul, boolean reachDeadMonster) {
+    public static Optional<SpellDto> chooseHealingSpell(List<SpellDto> usableSpells, CharacterDto character, LocationDto location, boolean hasAvailableSoul) {
         return usableSpells.stream()
                 .filter(spell -> hasMagicCost(character, spell))
                 .filter(spell -> hasAvailableSoul || !spell.getGroup().equals(SOUL))
-                .filter(spell -> reachDeadMonster || !spell.getName().equals(ENERGY_ABSORPTION))
-                .filter(spell -> !spell.getName().equals(RECHARGING) || calculatePercentValueDown(character.getTotalMagicPoint(), actualMagicOf(character)) > 0)
+                .filter(spell -> !spell.getName().equals(ENERGY_ABSORPTION) || vitalityToAbsorb(location) > 0)
+                .filter(spell -> !List.of(RECHARGING, ENERGY_ABSORPTION).contains(spell.getName()) || calculatePercentValueDown(character.getTotalMagicPoint(), actualMagicOf(character)) > 0)
                 .min(comparing(spell -> HEALING_PREFERENCES.getOrDefault(spell.getName(), 0)));
+    }
+
+    private static int vitalityToAbsorb(LocationDto location) {
+        return location.getMonsters().stream()
+                .filter(HelperUtils::isDead)
+                .map(HelperUtils::actualVitalityOf)
+                .reduce(0, Integer::sum);
     }
 
     public static Stream<MonsterDto> targetMonsterOrder(LocationDto location, MagicType magicType) {
@@ -256,10 +264,8 @@ public final class Decisions {
         return monster.getAttack() > character.getDefense();
     }
 
-    public static Optional<MonsterDto> targetOfEnergyAbsorption(LocationDto location) {
-        return location.getMonsters().stream()
-                .filter(HelperUtils::isDead)
-                .max(comparing(HelperUtils::actualVitalityOf));
+    public static int getEnergyAbsorptionInvestment() {
+        return ENERGY_ABSORPTION_INVESTMENT;
     }
 
     public static int energyBallInvestment(SpellDto spell, MonsterDto targetMonster, LocationDto location) {

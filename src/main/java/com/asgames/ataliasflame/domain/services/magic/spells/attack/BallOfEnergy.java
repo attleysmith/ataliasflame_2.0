@@ -33,9 +33,9 @@ public class BallOfEnergy extends AttackSpell {
 
     @Override
     public void enforce(Character character, Monster targetMonster, Map<String, String> args) {
-        BallOfEnergyArgs rechargingArgs = new BallOfEnergyArgs(args);
+        BallOfEnergyArgs ballOfEnergyArgs = new BallOfEnergyArgs(args);
 
-        int investedEnergy = percent(character.getMagic().totalValue(), rechargingArgs.energyPercentage);
+        int investedEnergy = percent(character.getMagic().totalValue(), ballOfEnergyArgs.energyPercentage);
         character.getMagic().use(investedEnergy);
         storyLineLogger.event(spellCasting(character, this));
 

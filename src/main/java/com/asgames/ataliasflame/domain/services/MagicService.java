@@ -34,9 +34,17 @@ public class MagicService {
         recoverMagic(character, food.getMagicEffect());
     }
 
-    private void recoverMagic(Character character, int recoveryEffect) {
+    public void recoverMagic(Character character, int recoveryEffect) {
+        restoreMagic(character, () -> character.getMagic().recover(recoveryEffect));
+    }
+
+    public void replenishMagic(Character character, int replenishValue) {
+        restoreMagic(character, () -> character.getMagic().replenish(replenishValue));
+    }
+
+    private void restoreMagic(Character character, Runnable restorationMethod) {
         int oldMagic = character.getMagic().actualValue();
-        character.getMagic().recover(recoveryEffect);
+        restorationMethod.run();
         storyLineLogger.event(magicRecovery(character, oldMagic));
     }
 

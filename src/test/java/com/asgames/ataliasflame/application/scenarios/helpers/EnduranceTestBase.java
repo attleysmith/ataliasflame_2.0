@@ -203,8 +203,14 @@ public abstract class EnduranceTestBase {
     }
 
     private void castCurseMagic() {
-        targetMonsterOrder(location, CURSE)
-                .forEach(this::castCurseMagic);
+        getEnergyBlocking(usableSpells.get(CURSE), character, location)
+                .ifPresentOrElse(energyBlocking -> {
+                            Map<String, String> args = new HashMap<>();
+                            args.put("energy", String.valueOf(getEnergyBlockingInvestment()));
+                            character = controller.castSpell(character.getReference(), energyBlocking.getName(), args);
+                        },
+                        () -> targetMonsterOrder(location, CURSE)
+                                .forEach(this::castCurseMagic));
 
         location = controller.getLocation(location.getReference());
     }

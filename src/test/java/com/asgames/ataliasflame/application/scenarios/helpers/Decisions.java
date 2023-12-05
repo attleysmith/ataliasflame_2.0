@@ -29,6 +29,7 @@ public final class Decisions {
     private static final int TOLERATED_INJURY_TO_HEAL = 80;
     private static final int TOLERATED_INJURY_TO_SLEEP = 40;
     private static final int ENERGY_ABSORPTION_INVESTMENT = 1;
+    private static final int ENERGY_BLOCKING_INVESTMENT = 20;
 
     private static final Map<MagicType, Integer> MIN_HEALTH_TO_TARGET = Map.of(
             ATTACK, 20,
@@ -65,11 +66,10 @@ public final class Decisions {
     );
 
     private static final Map<SpellName, Integer> CURSE_PREFERENCES = Map.of(
-            ENERGY_BLOCKING, 1,
-            SOUL_STRIKE, 2,
-            POWER_DRAIN, 3,
-            WEAKENING, 4,
-            SHACKLE, 5
+            SOUL_STRIKE, 1,
+            POWER_DRAIN, 2,
+            WEAKENING, 3,
+            SHACKLE, 4
     );
 
     private static final Map<SpellName, Integer> HEALING_PREFERENCES = Map.of(
@@ -226,8 +226,17 @@ public final class Decisions {
                 .min(comparing(spell -> ATTACK_PREFERENCES.getOrDefault(spell.getName(), 0)));
     }
 
+    public static Optional<SpellDto> getEnergyBlocking(List<SpellDto> usableSpells, CharacterDto character, LocationDto location) {
+        return usableSpells.stream()
+                .filter(spell -> worthyTargetOfEnergyBlocking(location, character))
+                .filter(spell -> spell.getName().equals(ENERGY_BLOCKING))
+                .filter(spell -> calculatePercentValueDown(character.getTotalMagicPoint(), actualMagicOf(character)) >= ENERGY_BLOCKING_INVESTMENT)
+                .findAny();
+    }
+
     public static Optional<SpellDto> chooseCurseSpell(List<SpellDto> usableSpells, CharacterDto character, boolean hasAvailableSoul) {
         return usableSpells.stream()
+                .filter(spell -> !spell.getName().equals(ENERGY_BLOCKING))
                 .filter(spell -> hasMagicCost(character, spell))
                 .filter(spell -> hasAvailableSoul || !spell.getGroup().equals(SOUL))
                 .min(comparing(spell -> CURSE_PREFERENCES.getOrDefault(spell.getName(), 0)));
@@ -260,12 +269,22 @@ public final class Decisions {
         return hasHealth(monster, averageDamageOf(spell));
     }
 
+    public static boolean worthyTargetOfEnergyBlocking(LocationDto location, CharacterDto character) {
+        return location.getMonsters().stream()
+                .filter(HelperUtils::isAlive)
+                .anyMatch(monster -> monster.getAttack() > character.getDefense());
+    }
+
     public static boolean worthyTargetOfCurseSpell(MonsterDto monster, CharacterDto character) {
         return monster.getAttack() > character.getDefense();
     }
 
     public static int getEnergyAbsorptionInvestment() {
         return ENERGY_ABSORPTION_INVESTMENT;
+    }
+
+    public static int getEnergyBlockingInvestment() {
+        return ENERGY_BLOCKING_INVESTMENT;
     }
 
     public static int energyBallInvestment(SpellDto spell, MonsterDto targetMonster, LocationDto location) {

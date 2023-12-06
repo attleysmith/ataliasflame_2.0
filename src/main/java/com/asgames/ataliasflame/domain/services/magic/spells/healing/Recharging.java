@@ -2,6 +2,7 @@ package com.asgames.ataliasflame.domain.services.magic.spells.healing;
 
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -20,7 +21,7 @@ public class Recharging extends HealingSpell {
     }
 
     @Override
-    public void enforce(Character character, Monster targetMonster, Map<String, String> args) {
+    public void enforce(Character character, @Nullable Monster targetMonster, Map<String, String> args) {
         RechargingArgs rechargingArgs = new RechargingArgs(args);
 
         int investedEnergy = percent(character.getMagic().totalValue(), rechargingArgs.energyPercentage);

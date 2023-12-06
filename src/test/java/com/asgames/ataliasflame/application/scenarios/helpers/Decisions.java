@@ -222,15 +222,14 @@ public final class Decisions {
         return usableSpells.stream()
                 .filter(spell -> hasMagicCost(character, spell))
                 .filter(spell -> hasAvailableSoul || !spell.getGroup().equals(SOUL))
-                .filter(spell -> !spell.getName().equals(BALL_OF_ENERGY) || calculatePercentValueDown(character.getTotalMagicPoint(), actualMagicOf(character)) > 0)
                 .min(comparing(spell -> ATTACK_PREFERENCES.getOrDefault(spell.getName(), 0)));
     }
 
     public static Optional<SpellDto> getEnergyBlocking(List<SpellDto> usableSpells, CharacterDto character, LocationDto location) {
         return usableSpells.stream()
-                .filter(spell -> worthyTargetOfEnergyBlocking(location, character))
                 .filter(spell -> spell.getName().equals(ENERGY_BLOCKING))
                 .filter(spell -> calculatePercentValueDown(character.getTotalMagicPoint(), actualMagicOf(character)) >= ENERGY_BLOCKING_INVESTMENT)
+                .filter(spell -> worthyTargetOfEnergyBlocking(location, character))
                 .findAny();
     }
 
@@ -247,7 +246,6 @@ public final class Decisions {
                 .filter(spell -> hasMagicCost(character, spell))
                 .filter(spell -> hasAvailableSoul || !spell.getGroup().equals(SOUL))
                 .filter(spell -> !spell.getName().equals(ENERGY_ABSORPTION) || vitalityToAbsorb(location) > 0)
-                .filter(spell -> !List.of(RECHARGING, ENERGY_ABSORPTION).contains(spell.getName()) || calculatePercentValueDown(character.getTotalMagicPoint(), actualMagicOf(character)) > 0)
                 .min(comparing(spell -> HEALING_PREFERENCES.getOrDefault(spell.getName(), 0)));
     }
 

@@ -106,7 +106,11 @@ public abstract class EnduranceTestBase {
 
             if (hasMagicCost(character, spell)) {
                 Map<String, String> args = new HashMap<>();
-                if (isSoulMagic(spell)) {
+                if (spell.getName().equals(PROJECTION_OF_ENERGY)) {
+                    int magic = calculatePercentValueDown(character.getTotalMagicPoint(), actualMagicOf(character));
+                    args.put("energy", String.valueOf(magic));
+                    character = controller.castSpell(character.getReference(), spell.getName(), args);
+                } else if (isSoulMagic(spell)) {
                     chooseSoulChipToSummon(character, listReadySouls()).ifPresent(soulChip -> {
                         args.put("soulChip", soulChip.getReference());
                         character = controller.castSpell(character.getReference(), spell.getName(), args);

@@ -4,8 +4,7 @@ import com.asgames.ataliasflame.interfaces.model.*;
 import org.springframework.lang.Nullable;
 
 import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.SOUL;
-import static com.asgames.ataliasflame.domain.model.enums.SpellName.RECHARGING;
-import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.calculatePercentValueUp;
+import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.calculatePercentValueDown;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.percent;
 
 public final class HelperUtils {
@@ -62,10 +61,12 @@ public final class HelperUtils {
     }
 
     public static boolean hasMagicCost(CharacterDto character, SpellDto spell) {
-        if (spell.getName().equals(RECHARGING)) {
-            return calculatePercentValueUp(character.getTotalMagicPoint(), character.getUsedMagicPoint()) < 100;
-        }
-        return character.getTotalMagicPoint() - character.getUsedMagicPoint() >= spell.getCost();
+        boolean specialRule = switch (spell.getName()) {
+            case BALL_OF_ENERGY, ENERGY_BLOCKING, ENERGY_ABSORPTION, RECHARGING, PROJECTION_OF_ENERGY ->
+                    calculatePercentValueDown(character.getTotalMagicPoint(), actualMagicOf(character)) > 0;
+            default -> true;
+        };
+        return specialRule && (actualMagicOf(character) >= spell.getCost());
     }
 
     public static boolean tolerateLoss(CharacterDto character, int toleratedLossPercent) {

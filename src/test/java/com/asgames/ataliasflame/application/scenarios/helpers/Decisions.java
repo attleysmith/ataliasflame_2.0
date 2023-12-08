@@ -18,6 +18,8 @@ import static com.asgames.ataliasflame.domain.model.enums.MagicType.CURSE;
 import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.SOUL;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.*;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.calculatePercentValueDown;
+import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.calculatePercentValueUp;
+import static java.lang.Math.min;
 import static java.util.Comparator.comparing;
 
 public final class Decisions {
@@ -25,18 +27,25 @@ public final class Decisions {
     private Decisions() {
     }
 
-    private static final int MAX_NUMBER_OF_COMPANIONS = 5;
-    private static final int TOLERATED_INJURY_TO_HEAL = 80;
-    private static final int TOLERATED_INJURY_TO_SLEEP = 40;
-    private static final int ENERGY_ABSORPTION_INVESTMENT = 1;
-    private static final int ENERGY_BLOCKING_INVESTMENT = 20;
+    public static final int MAX_NUMBER_OF_COMPANIONS = 5;
+    public static final int TOLERATED_INJURY_TO_HEAL = 80;
+    public static final int TOLERATED_INJURY_TO_SLEEP = 40;
 
-    private static final Map<MagicType, Integer> MIN_HEALTH_TO_TARGET = Map.of(
+    public static final Map<SpellName, Integer> ENERGY_INVESTMENT = Map.of(
+            BALL_OF_ENERGY, 1,
+            RECHARGING, 1,
+            ENERGY_ABSORPTION, 1,
+            ENERGY_SHIELD, 50,
+            ENERGY_BLOCKING, 20,
+            PROJECTION_OF_ENERGY, 70
+    );
+
+    public static final Map<MagicType, Integer> MIN_HEALTH_TO_TARGET = Map.of(
             ATTACK, 20,
             CURSE, 30
     );
 
-    private static final Map<SpellName, Integer> SUMMON_PREFERENCES = Map.of(
+    public static final Map<SpellName, Integer> SUMMON_PREFERENCES = Map.of(
             PROJECTION_OF_ENERGY, 1,
             FRIEND_IN_NEED, 2,
             SUMMON_GUARDIAN, 3,
@@ -44,7 +53,7 @@ public final class Decisions {
             CALLING_THE_SOULS, 5
     );
 
-    private static final Map<SpellName, Integer> BLESSING_PREFERENCES = Map.of(
+    public static final Map<SpellName, Integer> BLESSING_PREFERENCES = Map.of(
             DIVINE_PROTECTION, 1,
             PROTECTIVE_HAND_OF_NATURE, 2,
             STRENGTHENING, 3,
@@ -52,7 +61,7 @@ public final class Decisions {
             ENERGY_SHIELD, 5
     );
 
-    private static final Map<SpellName, Integer> ATTACK_PREFERENCES = Map.of(
+    public static final Map<SpellName, Integer> ATTACK_PREFERENCES = Map.of(
             SOUL_OUTBURST, 1,
             INFERNO, 2,
             BLADES_OF_JUDGEMENT, 3,
@@ -65,14 +74,14 @@ public final class Decisions {
             SPLITTING_WIND, 10
     );
 
-    private static final Map<SpellName, Integer> CURSE_PREFERENCES = Map.of(
+    public static final Map<SpellName, Integer> CURSE_PREFERENCES = Map.of(
             SOUL_STRIKE, 1,
             POWER_DRAIN, 2,
             WEAKENING, 3,
             SHACKLE, 4
     );
 
-    private static final Map<SpellName, Integer> HEALING_PREFERENCES = Map.of(
+    public static final Map<SpellName, Integer> HEALING_PREFERENCES = Map.of(
             ENERGY_ABSORPTION, 1,
             RECHARGING, 2,
             SOUL_POWER, 3,
@@ -84,6 +93,23 @@ public final class Decisions {
             CURE, 9,
             WOUND_HEALING, 10
     );
+
+    public static int actualInjuryPercentage(CharacterDto character) {
+        return calculatePercentValueUp(character.getTotalHealth(), character.getInjury());
+    }
+
+    public static int actualMagicPercentage(CharacterDto character) {
+        return calculatePercentValueDown(character.getTotalMagicPoint(), actualMagicOf(character));
+    }
+
+    public static boolean hasMagicCost(CharacterDto character, SpellDto spell) {
+        boolean specialRule = switch (spell.getName()) {
+            case BALL_OF_ENERGY, ENERGY_SHIELD, ENERGY_BLOCKING, ENERGY_ABSORPTION, RECHARGING, PROJECTION_OF_ENERGY ->
+                    actualMagicPercentage(character) >= ENERGY_INVESTMENT.get(spell.getName());
+            default -> true;
+        };
+        return specialRule && (actualMagicOf(character) >= spell.getCost());
+    }
 
     private static int maxNumberOfBlessings(CharacterDto character, List<MonsterDto> monsters) {
         int overpowering = actualHealthOf(character)
@@ -228,7 +254,7 @@ public final class Decisions {
     public static Optional<SpellDto> getEnergyBlocking(List<SpellDto> usableSpells, CharacterDto character, LocationDto location) {
         return usableSpells.stream()
                 .filter(spell -> spell.getName().equals(ENERGY_BLOCKING))
-                .filter(spell -> calculatePercentValueDown(character.getTotalMagicPoint(), actualMagicOf(character)) >= ENERGY_BLOCKING_INVESTMENT)
+                .filter(spell -> hasMagicCost(character, spell))
                 .filter(spell -> worthyTargetOfEnergyBlocking(location, character))
                 .findAny();
     }
@@ -277,15 +303,12 @@ public final class Decisions {
         return monster.getAttack() > character.getDefense();
     }
 
-    public static int getEnergyAbsorptionInvestment() {
-        return ENERGY_ABSORPTION_INVESTMENT;
+    public static int energyBallEffort(SpellDto spell, CharacterDto character, MonsterDto targetMonster, LocationDto location) {
+        int investedCost = energyBallInvestment(spell, targetMonster, location);
+        return min(100, calculatePercentValueUp(character.getTotalMagicPoint(), investedCost));
     }
 
-    public static int getEnergyBlockingInvestment() {
-        return ENERGY_BLOCKING_INVESTMENT;
-    }
-
-    public static int energyBallInvestment(SpellDto spell, MonsterDto targetMonster, LocationDto location) {
+    private static int energyBallInvestment(SpellDto spell, MonsterDto targetMonster, LocationDto location) {
         if (!spell.getName().equals(BALL_OF_ENERGY)) {
             throw new IllegalArgumentException("Spell must be BALL_OF_ENERGY!");
         }

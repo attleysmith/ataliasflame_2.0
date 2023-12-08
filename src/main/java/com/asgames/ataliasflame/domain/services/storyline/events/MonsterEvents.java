@@ -71,7 +71,7 @@ public final class MonsterEvents {
         public String message() {
             return curse.getName() + " casted on " + monster.getCode() +
                     " (" + monster.shortRef() + ") | AP: " + oldAttack + " -> " + monster.getAttack() +
-                    "; DP: " + oldDefense + " -> " + monster.getDefense() + "; HP: " + oldHealth + " -> " + monster.getHealth().actualValue() +
+                    "; DP: " + oldDefense + " -> " + monster.getDefense() + "; HP: " + oldHealth + " -> " + monster.getHealth().totalValue() +
                     "; DMG: " + oldMinDamage + "-" + oldMaxDamage + " -> " + monster.getMinDamage() + "-" + monster.getMaxDamage();
         }
     }

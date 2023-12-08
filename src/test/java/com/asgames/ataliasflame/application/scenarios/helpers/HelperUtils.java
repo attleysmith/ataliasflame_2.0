@@ -4,7 +4,7 @@ import com.asgames.ataliasflame.interfaces.model.*;
 import org.springframework.lang.Nullable;
 
 import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.SOUL;
-import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.calculatePercentValueDown;
+import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.average;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.percent;
 
 public final class HelperUtils {
@@ -60,26 +60,17 @@ public final class HelperUtils {
         return actualHealthOf(monster) >= expectedHealth;
     }
 
-    public static boolean hasMagicCost(CharacterDto character, SpellDto spell) {
-        boolean specialRule = switch (spell.getName()) {
-            case BALL_OF_ENERGY, ENERGY_BLOCKING, ENERGY_ABSORPTION, RECHARGING, PROJECTION_OF_ENERGY ->
-                    calculatePercentValueDown(character.getTotalMagicPoint(), actualMagicOf(character)) > 0;
-            default -> true;
-        };
-        return specialRule && (actualMagicOf(character) >= spell.getCost());
-    }
-
     public static boolean tolerateLoss(CharacterDto character, int toleratedLossPercent) {
         int toleratedLossValue = percent(character.getTotalHealth(), toleratedLossPercent);
         return character.getInjury() <= toleratedLossValue;
     }
 
     public static int averageDamageOf(SpellDto spell) {
-        return (spell.getMinDamage() + spell.getMaxDamage()) / 2;
+        return average(spell.getMinDamage(), spell.getMaxDamage());
     }
 
     public static int averageDamageOf(WeaponDto weapon) {
-        return (weapon.getMinDamage() + weapon.getMaxDamage()) / 2;
+        return average(weapon.getMinDamage(), weapon.getMaxDamage());
     }
 
     public static boolean isOneHanded(@Nullable WeaponDto weapon) {

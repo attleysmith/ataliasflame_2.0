@@ -11,6 +11,14 @@ public final class CalculatorUtils {
         // utility class
     }
 
+    public static int average(int a, int b) {
+        return (a + b) / 2;
+    }
+
+    public static int weight(int a, int shareA, int b, int shareB) {
+        return ((a * shareA) + (b * shareB)) / (shareA + shareB);
+    }
+
     public static int percent(int base, int multiplier) {
         return round(base * multiplier / 100f);
     }

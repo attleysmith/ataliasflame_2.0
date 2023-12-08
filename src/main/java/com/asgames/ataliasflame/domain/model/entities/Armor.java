@@ -13,7 +13,7 @@ import static jakarta.persistence.EnumType.STRING;
 @Entity
 @SuperBuilder
 @Data
-@ToString(callSuper=true)
+@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor // JPA needs it
 @AllArgsConstructor // Builder needs it

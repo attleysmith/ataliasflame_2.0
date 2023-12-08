@@ -11,7 +11,7 @@ import static jakarta.persistence.FetchType.LAZY;
 @Entity
 @SuperBuilder
 @Data
-@ToString(callSuper=true)
+@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor // JPA needs it
 @AllArgsConstructor // Builder needs it

@@ -20,8 +20,6 @@ import static com.asgames.ataliasflame.domain.model.enums.ItemType.*;
 import static com.asgames.ataliasflame.domain.model.enums.MagicType.*;
 import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.SOUL;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.*;
-import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.calculatePercentValueDown;
-import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.calculatePercentValueUp;
 import static java.lang.Math.min;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
@@ -107,7 +105,7 @@ public abstract class EnduranceTestBase {
             if (hasMagicCost(character, spell)) {
                 Map<String, String> args = new HashMap<>();
                 if (spell.getName().equals(PROJECTION_OF_ENERGY)) {
-                    int magic = calculatePercentValueDown(character.getTotalMagicPoint(), actualMagicOf(character));
+                    int magic = actualMagicPercentage(character);
                     args.put("energy", String.valueOf(magic));
                     character = controller.castSpell(character.getReference(), spell.getName(), args);
                 } else if (isSoulMagic(spell)) {
@@ -133,7 +131,9 @@ public abstract class EnduranceTestBase {
         }
         if (notEnoughBlessing(character, location) && hasMagicCost(character, spell)) {
             Map<String, String> args = new HashMap<>();
-            if (isSoulMagic(spell)) {
+            if (spell.getName().equals(ENERGY_SHIELD)) {
+                args.put("energy", String.valueOf(ENERGY_INVESTMENT.get(ENERGY_SHIELD)));
+            } else if (isSoulMagic(spell)) {
                 chooseSoulChipToUse(character, listReadySouls()).ifPresent(soulChip -> {
                     args.put("soulChip", soulChip.getReference());
                     character = controller.castSpell(character.getReference(), spell.getName(), args);
@@ -180,9 +180,8 @@ public abstract class EnduranceTestBase {
                 SpellDto spell = attackSpell.get();
                 Map<String, String> args = new HashMap<>();
                 if (spell.getName().equals(BALL_OF_ENERGY)) {
-                    int investedCost = energyBallInvestment(spell, targetMonster, location);
-                    int effort = min(100, calculatePercentValueUp(character.getTotalMagicPoint(), investedCost));
-                    int magic = calculatePercentValueDown(character.getTotalMagicPoint(), actualMagicOf(character));
+                    int effort = energyBallEffort(spell, character, targetMonster, location);
+                    int magic = actualMagicPercentage(character);
                     args.put("energy", String.valueOf(min(effort, magic)));
                     TargetContextDto targetContext = controller.castTargetingSpell(character.getReference(), spell.getName(), targetMonster.getReference(), args);
                     character = targetContext.getCharacter();
@@ -210,7 +209,7 @@ public abstract class EnduranceTestBase {
         getEnergyBlocking(usableSpells.get(CURSE), character, location)
                 .ifPresentOrElse(energyBlocking -> {
                             Map<String, String> args = new HashMap<>();
-                            args.put("energy", String.valueOf(getEnergyBlockingInvestment()));
+                            args.put("energy", String.valueOf(ENERGY_INVESTMENT.get(ENERGY_BLOCKING)));
                             character = controller.castSpell(character.getReference(), energyBlocking.getName(), args);
                         },
                         () -> targetMonsterOrder(location, CURSE)
@@ -347,10 +346,10 @@ public abstract class EnduranceTestBase {
                 SpellDto spell = healingSpell.get();
                 Map<String, String> args = new HashMap<>();
                 if (spell.getName().equals(ENERGY_ABSORPTION)) {
-                    args.put("energy", String.valueOf(getEnergyAbsorptionInvestment()));
+                    args.put("energy", String.valueOf(ENERGY_INVESTMENT.get(ENERGY_ABSORPTION)));
                 } else if (spell.getName().equals(RECHARGING)) {
-                    int injury = calculatePercentValueUp(character.getTotalHealth(), character.getInjury());
-                    int magic = calculatePercentValueDown(character.getTotalMagicPoint(), actualMagicOf(character));
+                    int injury = actualInjuryPercentage(character);
+                    int magic = actualMagicPercentage(character);
                     args.put("energy", String.valueOf(min(injury, magic)));
                 } else if (isSoulMagic(spell)) {
                     SoulChipDto soulChip = chooseSoulChipToUse(character, listReadySouls())

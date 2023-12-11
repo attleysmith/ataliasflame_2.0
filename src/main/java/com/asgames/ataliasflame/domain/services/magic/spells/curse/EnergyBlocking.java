@@ -2,6 +2,7 @@ package com.asgames.ataliasflame.domain.services.magic.spells.curse;
 
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
+import com.asgames.ataliasflame.domain.services.magic.spells.EnergySpell;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
@@ -14,9 +15,7 @@ import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.calculate;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.percent;
 
 @Component
-public class EnergyBlocking extends CurseSpell {
-
-    private static final String ARG_KEY_ENERGY = "energy";
+public class EnergyBlocking extends CurseSpell implements EnergySpell {
 
     public EnergyBlocking() {
         super(ENERGY_BLOCKING);
@@ -24,14 +23,14 @@ public class EnergyBlocking extends CurseSpell {
 
     @Override
     public void enforce(Character character, @Nullable Monster targetMonster, Map<String, String> args) {
-        EnergyBlockingArgs energyBlockingArgs = new EnergyBlockingArgs(args);
+        EnergyArgs energyArgs = new EnergyArgs(args);
 
-        int investedEnergy = percent(character.getMagic().totalValue(), energyBlockingArgs.energyPercentage);
+        int investedEnergy = percent(character.getMagic().totalValue(), energyArgs.energyPercentage);
         character.getMagic().use(investedEnergy);
         storyLineLogger.event(spellCasting(character, this));
 
         character.getLocation().getMonsters().forEach(monster ->
-                blockEnergy(monster, energyBlockingArgs.energyPercentage));
+                blockEnergy(monster, energyArgs.energyPercentage));
     }
 
     private void blockEnergy(Monster monster, int percentage) {
@@ -63,33 +62,6 @@ public class EnergyBlocking extends CurseSpell {
 
     @Override
     public void validateArgs(Map<String, String> args) {
-        EnergyBlockingArgs.validateArgs(args);
-    }
-
-    private static class EnergyBlockingArgs {
-
-        public final int energyPercentage;
-
-        public EnergyBlockingArgs(Map<String, String> args) {
-            validateArgs(args);
-            energyPercentage = Integer.parseInt(args.get(ARG_KEY_ENERGY));
-        }
-
-        public static void validateArgs(Map<String, String> args) {
-            if (!args.containsKey(ARG_KEY_ENERGY)) {
-                throw new IllegalArgumentException("Missing argument: " + ARG_KEY_ENERGY);
-            }
-            if (args.size() != 1) {
-                throw new IllegalArgumentException("Incorrect number of arguments.");
-            }
-            try {
-                int percentage = Integer.parseInt(args.get(ARG_KEY_ENERGY));
-                if (percentage < 1 || 100 < percentage) {
-                    throw new IllegalArgumentException("Argument [" + ARG_KEY_ENERGY + "] must be between 1 and 100.");
-                }
-            } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("Argument [" + ARG_KEY_ENERGY + "] must be a number!");
-            }
-        }
+        EnergyArgs.validateArgs(args);
     }
 }

@@ -5,6 +5,7 @@ import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.enums.ArmorType;
 import com.asgames.ataliasflame.domain.model.vos.Energy;
+import com.asgames.ataliasflame.domain.services.magic.spells.EnergySpell;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
@@ -19,9 +20,7 @@ import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.percent;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.weight;
 
 @Component
-public class EnergyShield extends BlessingSpell {
-
-    private static final String ARG_KEY_ENERGY = "energy";
+public class EnergyShield extends BlessingSpell implements EnergySpell {
 
     // armor effect
     private static final int DEFENSE = 0;
@@ -32,15 +31,15 @@ public class EnergyShield extends BlessingSpell {
 
     @Override
     public void enforce(Character character, @Nullable Monster targetMonster, Map<String, String> args) {
-        EnergyShieldArgs energyShieldArgs = new EnergyShieldArgs(args);
+        EnergyArgs energyArgs = new EnergyArgs(args);
 
-        int investedEnergy = percent(character.getMagic().totalValue(), energyShieldArgs.energyPercentage);
+        int investedEnergy = percent(character.getMagic().totalValue(), energyArgs.energyPercentage);
         character.getMagic().use(investedEnergy);
         storyLineLogger.event(spellCasting(character, this));
 
         character.getCover().getEnergyArmor()
                 .ifPresentOrElse(
-                        armor -> meltEnergyArmor(armor, energyShieldArgs.energyPercentage, investedEnergy),
+                        armor -> meltEnergyArmor(armor, energyArgs.energyPercentage, investedEnergy),
                         () -> {
                             character.getCover().set(Armor.builder()
                                     .reference(UUID.randomUUID().toString())
@@ -48,7 +47,7 @@ public class EnergyShield extends BlessingSpell {
                                     .type(ARMOR)
                                     .armorType(ArmorType.ENERGY_ARMOR)
                                     .defense(DEFENSE)
-                                    .absorption(energyShieldArgs.energyPercentage)
+                                    .absorption(energyArgs.energyPercentage)
                                     .durability(Energy.withTotal(investedEnergy))
                                     .build());
                             characterCalculationService.recalculateProperties(character);
@@ -88,33 +87,6 @@ public class EnergyShield extends BlessingSpell {
 
     @Override
     public void validateArgs(Map<String, String> args) {
-        EnergyShieldArgs.validateArgs(args);
-    }
-
-    private static class EnergyShieldArgs {
-
-        public final int energyPercentage;
-
-        public EnergyShieldArgs(Map<String, String> args) {
-            validateArgs(args);
-            energyPercentage = Integer.parseInt(args.get(ARG_KEY_ENERGY));
-        }
-
-        public static void validateArgs(Map<String, String> args) {
-            if (!args.containsKey(ARG_KEY_ENERGY)) {
-                throw new IllegalArgumentException("Missing argument: " + ARG_KEY_ENERGY);
-            }
-            if (args.size() != 1) {
-                throw new IllegalArgumentException("Incorrect number of arguments.");
-            }
-            try {
-                int percentage = Integer.parseInt(args.get(ARG_KEY_ENERGY));
-                if (percentage < 1 || 100 < percentage) {
-                    throw new IllegalArgumentException("Argument [" + ARG_KEY_ENERGY + "] must be between 1 and 100.");
-                }
-            } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("Argument [" + ARG_KEY_ENERGY + "] must be a number!");
-            }
-        }
+        EnergyArgs.validateArgs(args);
     }
 }

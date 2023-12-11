@@ -3,6 +3,7 @@ package com.asgames.ataliasflame.domain.services.magic.spells.curse;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.entities.SoulChip;
+import com.asgames.ataliasflame.domain.services.magic.spells.SoulSpell;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -15,9 +16,7 @@ import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.calculate;
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.percent;
 
 @Component
-public class SoulStrike extends CurseSpell {
-
-    private static final String ARG_KEY_SOUL_CHIP = "soulChip";
+public class SoulStrike extends CurseSpell implements SoulSpell {
 
     private static final int SPELL_COST = 10;
 
@@ -35,11 +34,11 @@ public class SoulStrike extends CurseSpell {
 
     @Override
     public void enforce(Character character, Monster targetMonster, Map<String, String> args) {
-        SoulStrikeArgs soulStrikeArgs = new SoulStrikeArgs(args);
+        SoulArgs soulArgs = new SoulArgs(args);
         character.getMagic().use(SPELL_COST);
         storyLineLogger.event(spellCasting(character, this));
 
-        SoulChip soulChip = getSoulChip(character, soulStrikeArgs.soulChipReference);
+        SoulChip soulChip = getSoulChip(character, soulArgs.soulChipReference);
         soulChip.getHealth().trauma(FATIGUE_EFFECT);
         storyLineLogger.event(fatigue(soulChip, FATIGUE_EFFECT));
 
@@ -82,25 +81,6 @@ public class SoulStrike extends CurseSpell {
 
     @Override
     public void validateArgs(Map<String, String> args) {
-        SoulStrikeArgs.validateArgs(args);
-    }
-
-    private static class SoulStrikeArgs {
-
-        public final String soulChipReference;
-
-        public SoulStrikeArgs(Map<String, String> args) {
-            validateArgs(args);
-            soulChipReference = args.get(ARG_KEY_SOUL_CHIP);
-        }
-
-        public static void validateArgs(Map<String, String> args) {
-            if (!args.containsKey(ARG_KEY_SOUL_CHIP)) {
-                throw new IllegalArgumentException("Missing argument: " + ARG_KEY_SOUL_CHIP);
-            }
-            if (args.size() != 1) {
-                throw new IllegalArgumentException("Incorrect number of arguments.");
-            }
-        }
+        SoulArgs.validateArgs(args);
     }
 }

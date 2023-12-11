@@ -3,6 +3,7 @@ package com.asgames.ataliasflame.domain.services.magic.spells.healing;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
+import com.asgames.ataliasflame.domain.services.magic.spells.EnergySpell;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
@@ -14,9 +15,7 @@ import static com.asgames.ataliasflame.domain.services.storyline.events.MonsterE
 import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.percent;
 
 @Component
-public class EnergyAbsorption extends HealingSpell {
-
-    private static final String ARG_KEY_ENERGY = "energy";
+public class EnergyAbsorption extends HealingSpell implements EnergySpell {
 
     public EnergyAbsorption() {
         super(ENERGY_ABSORPTION);
@@ -24,9 +23,9 @@ public class EnergyAbsorption extends HealingSpell {
 
     @Override
     public void enforce(Character character, @Nullable Monster targetMonster, Map<String, String> args) {
-        EnergyAbsorptionArgs energyAbsorptionArgs = new EnergyAbsorptionArgs(args);
+        EnergyArgs energyArgs = new EnergyArgs(args);
 
-        int investedEnergy = percent(character.getMagic().totalValue(), energyAbsorptionArgs.energyPercentage);
+        int investedEnergy = percent(character.getMagic().totalValue(), energyArgs.energyPercentage);
         character.getMagic().use(investedEnergy);
         storyLineLogger.event(spellCasting(character, this));
 
@@ -34,7 +33,7 @@ public class EnergyAbsorption extends HealingSpell {
                 .filter(Combatant::isDead)
                 .filter(monster -> monster.getVitality().hasOne())
                 .forEach(monster -> {
-                    absorbHealth(character, monster, energyAbsorptionArgs.energyPercentage);
+                    absorbHealth(character, monster, energyArgs.energyPercentage);
                     absorbMagic(character, monster);
                 });
     }
@@ -72,33 +71,6 @@ public class EnergyAbsorption extends HealingSpell {
 
     @Override
     public void validateArgs(Map<String, String> args) {
-        EnergyAbsorptionArgs.validateArgs(args);
-    }
-
-    private static class EnergyAbsorptionArgs {
-
-        public final int energyPercentage;
-
-        public EnergyAbsorptionArgs(Map<String, String> args) {
-            validateArgs(args);
-            energyPercentage = Integer.parseInt(args.get(ARG_KEY_ENERGY));
-        }
-
-        public static void validateArgs(Map<String, String> args) {
-            if (!args.containsKey(ARG_KEY_ENERGY)) {
-                throw new IllegalArgumentException("Missing argument: " + ARG_KEY_ENERGY);
-            }
-            if (args.size() != 1) {
-                throw new IllegalArgumentException("Incorrect number of arguments.");
-            }
-            try {
-                int percentage = Integer.parseInt(args.get(ARG_KEY_ENERGY));
-                if (percentage < 1 || 100 < percentage) {
-                    throw new IllegalArgumentException("Argument [" + ARG_KEY_ENERGY + "] must be between 1 and 100.");
-                }
-            } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("Argument [" + ARG_KEY_ENERGY + "] must be a number!");
-            }
-        }
+        EnergyArgs.validateArgs(args);
     }
 }

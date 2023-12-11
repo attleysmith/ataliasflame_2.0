@@ -20,6 +20,8 @@ import static com.asgames.ataliasflame.domain.model.enums.ItemType.*;
 import static com.asgames.ataliasflame.domain.model.enums.MagicType.*;
 import static com.asgames.ataliasflame.domain.model.enums.SpellGroup.SOUL;
 import static com.asgames.ataliasflame.domain.model.enums.SpellName.*;
+import static com.asgames.ataliasflame.domain.services.magic.spells.EnergySpell.ARG_KEY_ENERGY;
+import static com.asgames.ataliasflame.domain.services.magic.spells.SoulSpell.ARG_KEY_SOUL_CHIP;
 import static java.lang.Math.min;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
@@ -106,11 +108,11 @@ public abstract class EnduranceTestBase {
                 Map<String, String> args = new HashMap<>();
                 if (spell.getName().equals(PROJECTION_OF_ENERGY)) {
                     int magic = actualMagicPercentage(character);
-                    args.put("energy", String.valueOf(magic));
+                    args.put(ARG_KEY_ENERGY, String.valueOf(magic));
                     character = controller.castSpell(character.getReference(), spell.getName(), args);
                 } else if (isSoulMagic(spell)) {
                     chooseSoulChipToSummon(character, listReadySouls()).ifPresent(soulChip -> {
-                        args.put("soulChip", soulChip.getReference());
+                        args.put(ARG_KEY_SOUL_CHIP, soulChip.getReference());
                         character = controller.castSpell(character.getReference(), spell.getName(), args);
                     });
                 } else {
@@ -132,10 +134,10 @@ public abstract class EnduranceTestBase {
         if (notEnoughBlessing(character, location) && hasMagicCost(character, spell)) {
             Map<String, String> args = new HashMap<>();
             if (spell.getName().equals(ENERGY_SHIELD)) {
-                args.put("energy", String.valueOf(ENERGY_INVESTMENT.get(ENERGY_SHIELD)));
+                args.put(ARG_KEY_ENERGY, String.valueOf(ENERGY_INVESTMENT.get(ENERGY_SHIELD)));
             } else if (isSoulMagic(spell)) {
                 chooseSoulChipToUse(character, listReadySouls()).ifPresent(soulChip -> {
-                    args.put("soulChip", soulChip.getReference());
+                    args.put(ARG_KEY_SOUL_CHIP, soulChip.getReference());
                     character = controller.castSpell(character.getReference(), spell.getName(), args);
                 });
             } else {
@@ -182,14 +184,14 @@ public abstract class EnduranceTestBase {
                 if (spell.getName().equals(BALL_OF_ENERGY)) {
                     int effort = energyBallEffort(spell, character, targetMonster, location);
                     int magic = actualMagicPercentage(character);
-                    args.put("energy", String.valueOf(min(effort, magic)));
+                    args.put(ARG_KEY_ENERGY, String.valueOf(min(effort, magic)));
                     TargetContextDto targetContext = controller.castTargetingSpell(character.getReference(), spell.getName(), targetMonster.getReference(), args);
                     character = targetContext.getCharacter();
                     targetMonster = targetContext.getMonster();
                 } else if (isSoulMagic(spell)) {
                     Optional<SoulChipDto> soulChip = chooseSoulChipToUse(character, listReadySouls());
                     if (soulChip.isPresent()) {
-                        args.put("soulChip", soulChip.get().getReference());
+                        args.put(ARG_KEY_SOUL_CHIP, soulChip.get().getReference());
                         TargetContextDto targetContext = controller.castTargetingSpell(character.getReference(), spell.getName(), targetMonster.getReference(), args);
                         character = targetContext.getCharacter();
                         targetMonster = targetContext.getMonster();
@@ -209,7 +211,7 @@ public abstract class EnduranceTestBase {
         getEnergyBlocking(usableSpells.get(CURSE), character, location)
                 .ifPresentOrElse(energyBlocking -> {
                             Map<String, String> args = new HashMap<>();
-                            args.put("energy", String.valueOf(ENERGY_INVESTMENT.get(ENERGY_BLOCKING)));
+                            args.put(ARG_KEY_ENERGY, String.valueOf(ENERGY_INVESTMENT.get(ENERGY_BLOCKING)));
                             character = controller.castSpell(character.getReference(), energyBlocking.getName(), args);
                         },
                         () -> targetMonsterOrder(location, CURSE)
@@ -226,7 +228,7 @@ public abstract class EnduranceTestBase {
             Map<String, String> args = new HashMap<>();
             if (isSoulMagic(spell)) {
                 chooseSoulChipToUse(character, listReadySouls()).ifPresent(soulChip -> {
-                    args.put("soulChip", soulChip.getReference());
+                    args.put(ARG_KEY_SOUL_CHIP, soulChip.getReference());
                     TargetContextDto targetContext = controller.castTargetingSpell(character.getReference(), spell.getName(), monster.getReference(), args);
                     character = targetContext.getCharacter();
                 });
@@ -346,15 +348,15 @@ public abstract class EnduranceTestBase {
                 SpellDto spell = healingSpell.get();
                 Map<String, String> args = new HashMap<>();
                 if (spell.getName().equals(ENERGY_ABSORPTION)) {
-                    args.put("energy", String.valueOf(ENERGY_INVESTMENT.get(ENERGY_ABSORPTION)));
+                    args.put(ARG_KEY_ENERGY, String.valueOf(ENERGY_INVESTMENT.get(ENERGY_ABSORPTION)));
                 } else if (spell.getName().equals(RECHARGING)) {
                     int injury = actualInjuryPercentage(character);
                     int magic = actualMagicPercentage(character);
-                    args.put("energy", String.valueOf(min(injury, magic)));
+                    args.put(ARG_KEY_ENERGY, String.valueOf(min(injury, magic)));
                 } else if (isSoulMagic(spell)) {
                     SoulChipDto soulChip = chooseSoulChipToUse(character, listReadySouls())
                             .orElseThrow(() -> new IllegalStateException("No soul chip to use!"));
-                    args.put("soulChip", soulChip.getReference());
+                    args.put(ARG_KEY_SOUL_CHIP, soulChip.getReference());
                 }
                 character = controller.castSpell(character.getReference(), spell.getName(), args);
                 location = controller.getLocation(location.getReference());

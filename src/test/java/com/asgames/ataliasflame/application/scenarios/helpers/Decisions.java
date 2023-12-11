@@ -25,6 +25,7 @@ import static java.util.Comparator.comparing;
 public final class Decisions {
 
     private Decisions() {
+        // utility class
     }
 
     public static final int MAX_NUMBER_OF_COMPANIONS = 5;

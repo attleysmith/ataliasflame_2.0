@@ -10,6 +10,7 @@ import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.percent;
 public final class HelperUtils {
 
     private HelperUtils() {
+        // utility class
     }
 
     public static int actualHealthOf(CharacterDto character) {

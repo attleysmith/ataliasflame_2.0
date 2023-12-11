@@ -1,7 +1,7 @@
 package com.asgames.ataliasflame.domain.services.magic.spells;
 
 import com.asgames.ataliasflame.domain.model.entities.Character;
-import com.asgames.ataliasflame.domain.model.entities.*;
+import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.enums.Booster;
 import com.asgames.ataliasflame.domain.model.enums.MagicType;
 import com.asgames.ataliasflame.domain.model.enums.SpellGroup;
@@ -14,13 +14,8 @@ import com.asgames.ataliasflame.domain.services.storyline.StoryLineLogger;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
-
-import static com.asgames.ataliasflame.domain.model.enums.CompanionType.SOUL_CHIP;
 
 public abstract class Spell {
 
@@ -74,23 +69,6 @@ public abstract class Spell {
         if (args.size() > 0) {
             throw new IllegalArgumentException("Unknown arguments!");
         }
-    }
-
-    protected SoulChip getSoulChip(Character character, String soulChipReference) {
-        List<SoulChip> unusedSouls = new ArrayList<>(character.getSoulChips());
-        character.getCompanions().stream()
-                .filter(companion -> companion.getType().equals(SOUL_CHIP))
-                .map(companion -> ((SummonedSoulChip) companion).getSource())
-                .forEach(unusedSouls::remove);
-        character.getBlessings().stream()
-                .map(ActiveBlessing::getSource)
-                .filter(Objects::nonNull)
-                .forEach(unusedSouls::remove);
-        return unusedSouls.stream()
-                .filter(SoulChip::isReady)
-                .filter(soulChip -> soulChip.getReference().equals(soulChipReference))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("Referenced soul chip is not available!"));
     }
 
     protected static String effectDetailsOf(Booster booster) {

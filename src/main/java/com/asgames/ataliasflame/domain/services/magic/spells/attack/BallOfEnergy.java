@@ -3,6 +3,7 @@ package com.asgames.ataliasflame.domain.services.magic.spells.attack;
 import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
+import com.asgames.ataliasflame.domain.services.magic.spells.EnergySpell;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,9 +18,7 @@ import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.pointOut;
 import static java.lang.Math.floor;
 
 @Component
-public class BallOfEnergy extends AttackSpell {
-
-    private static final String ARG_KEY_ENERGY = "energy";
+public class BallOfEnergy extends AttackSpell implements EnergySpell {
 
     private static final int BALL_COST = 3;
 
@@ -33,9 +32,9 @@ public class BallOfEnergy extends AttackSpell {
 
     @Override
     public void enforce(Character character, Monster targetMonster, Map<String, String> args) {
-        BallOfEnergyArgs ballOfEnergyArgs = new BallOfEnergyArgs(args);
+        EnergyArgs energyArgs = new EnergyArgs(args);
 
-        int investedEnergy = percent(character.getMagic().totalValue(), ballOfEnergyArgs.energyPercentage);
+        int investedEnergy = percent(character.getMagic().totalValue(), energyArgs.energyPercentage);
         character.getMagic().use(investedEnergy);
         storyLineLogger.event(spellCasting(character, this));
 
@@ -91,33 +90,6 @@ public class BallOfEnergy extends AttackSpell {
 
     @Override
     public void validateArgs(Map<String, String> args) {
-        BallOfEnergyArgs.validateArgs(args);
-    }
-
-    private static class BallOfEnergyArgs {
-
-        public final int energyPercentage;
-
-        public BallOfEnergyArgs(Map<String, String> args) {
-            validateArgs(args);
-            energyPercentage = Integer.parseInt(args.get(ARG_KEY_ENERGY));
-        }
-
-        public static void validateArgs(Map<String, String> args) {
-            if (!args.containsKey(ARG_KEY_ENERGY)) {
-                throw new IllegalArgumentException("Missing argument: " + ARG_KEY_ENERGY);
-            }
-            if (args.size() != 1) {
-                throw new IllegalArgumentException("Incorrect number of arguments.");
-            }
-            try {
-                int percentage = Integer.parseInt(args.get(ARG_KEY_ENERGY));
-                if (percentage < 1 || 100 < percentage) {
-                    throw new IllegalArgumentException("Argument [" + ARG_KEY_ENERGY + "] must be between 1 and 100.");
-                }
-            } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("Argument [" + ARG_KEY_ENERGY + "] must be a number!");
-            }
-        }
+        EnergyArgs.validateArgs(args);
     }
 }

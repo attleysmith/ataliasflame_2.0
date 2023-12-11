@@ -4,6 +4,7 @@ import com.asgames.ataliasflame.domain.model.entities.Character;
 import com.asgames.ataliasflame.domain.model.entities.Monster;
 import com.asgames.ataliasflame.domain.model.entities.SoulChip;
 import com.asgames.ataliasflame.domain.model.interfaces.Combatant;
+import com.asgames.ataliasflame.domain.services.magic.spells.SoulSpell;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -18,9 +19,7 @@ import static com.asgames.ataliasflame.domain.utils.CalculatorUtils.pointOut;
 import static com.asgames.ataliasflame.domain.utils.DiceUtils.successX;
 
 @Component
-public class SoulOutburst extends AttackSpell {
-
-    private static final String ARG_KEY_SOUL_CHIP = "soulChip";
+public class SoulOutburst extends AttackSpell implements SoulSpell {
 
     private static final int SPELL_COST = 16;
 
@@ -40,11 +39,11 @@ public class SoulOutburst extends AttackSpell {
 
     @Override
     public void enforce(Character character, Monster targetMonster, Map<String, String> args) {
-        SoulOutburstArgs soulOutburstArgs = new SoulOutburstArgs(args);
+        SoulArgs soulArgs = new SoulArgs(args);
         character.getMagic().use(SPELL_COST);
         storyLineLogger.event(spellCasting(character, this));
 
-        SoulChip soulChip = getSoulChip(character, soulOutburstArgs.soulChipReference);
+        SoulChip soulChip = getSoulChip(character, soulArgs.soulChipReference);
         soulChip.getHealth().trauma(FATIGUE_EFFECT);
         storyLineLogger.event(fatigue(soulChip, FATIGUE_EFFECT));
 
@@ -88,25 +87,6 @@ public class SoulOutburst extends AttackSpell {
 
     @Override
     public void validateArgs(Map<String, String> args) {
-        SoulOutburstArgs.validateArgs(args);
-    }
-
-    private static class SoulOutburstArgs {
-
-        public final String soulChipReference;
-
-        public SoulOutburstArgs(Map<String, String> args) {
-            validateArgs(args);
-            soulChipReference = args.get(ARG_KEY_SOUL_CHIP);
-        }
-
-        public static void validateArgs(Map<String, String> args) {
-            if (!args.containsKey(ARG_KEY_SOUL_CHIP)) {
-                throw new IllegalArgumentException("Missing argument: " + ARG_KEY_SOUL_CHIP);
-            }
-            if (args.size() != 1) {
-                throw new IllegalArgumentException("Incorrect number of arguments.");
-            }
-        }
+        SoulArgs.validateArgs(args);
     }
 }
